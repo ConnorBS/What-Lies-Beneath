@@ -1,0 +1,170 @@
+[gd_scene load_steps=18 format=2]
+
+[ext_resource path="res://Scenes/Actor/Player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scenes/Game Camera.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Assets/Levels/Gas Station/Gas-Station_GasPumps_Front.png" type="Texture" id=3]
+[ext_resource path="res://Assets/Levels/Gas Station/Gas-Station_Pillar4.png" type="Texture" id=4]
+[ext_resource path="res://Assets/Levels/Gas Station/Gas-Station_Pillar2.png" type="Texture" id=5]
+[ext_resource path="res://Assets/Levels/Gas Station/Gas-Station_Pillar3.png" type="Texture" id=6]
+[ext_resource path="res://Assets/Levels/Gas Station/Gas-Station_Pillar1.png" type="Texture" id=7]
+[ext_resource path="res://Assets/Levels/Gas Station/Gas-Station_BuildingFront.png" type="Texture" id=8]
+[ext_resource path="res://Assets/Levels/Gas Station/Gas-Station_GasPumps_Back.png" type="Texture" id=9]
+[ext_resource path="res://Assets/Levels/Gas Station/Parrallax-Background.png" type="Texture" id=10]
+[ext_resource path="res://Assets/Levels/Gas Station/Gas-Station_BuildingWall.png" type="Texture" id=11]
+[ext_resource path="res://Assets/Levels/Gas Station/Gas-Station_BuildingRoof.png" type="Texture" id=12]
+[ext_resource path="res://Assets/Levels/Gas Station/Gas-Station-Background.png" type="Texture" id=13]
+[ext_resource path="res://Scripts/Levels/Outside Gas Station.gd" type="Script" id=14]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 1182.5, 73.5 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 68.875, 293.25 )
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 1094.25, 151.75 )
+
+[node name="Outside Gas Station" type="Node"]
+script = ExtResource( 14 )
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2( 0.9, 1 )
+
+[node name="Parrallax" type="TextureRect" parent="ParallaxBackground/ParallaxLayer"]
+margin_left = -888.0
+margin_right = 2275.0
+margin_bottom = 116.0
+texture = ExtResource( 10 )
+stretch_mode = 2
+
+[node name="Background" type="TextureRect" parent="."]
+margin_right = 2022.0
+margin_bottom = 360.0
+texture = ExtResource( 13 )
+
+[node name="OutOfBounds" type="StaticBody2D" parent="Background"]
+
+[node name="Bottom" type="CollisionShape2D" parent="Background/OutOfBounds"]
+position = Vector2( 1043.5, 433 )
+shape = SubResource( 1 )
+
+[node name="Left" type="CollisionShape2D" parent="Background/OutOfBounds"]
+position = Vector2( -70.125, 212.75 )
+shape = SubResource( 2 )
+
+[node name="Right" type="CollisionShape2D" parent="Background/OutOfBounds"]
+position = Vector2( 2092, 140 )
+shape = SubResource( 2 )
+
+[node name="Top" type="CollisionShape2D" parent="Background/OutOfBounds"]
+position = Vector2( 1091.25, 0.75 )
+shape = SubResource( 3 )
+
+[node name="GasStation" type="StaticBody2D" parent="Background"]
+
+[node name="PillarPost" type="CollisionPolygon2D" parent="Background/GasStation"]
+polygon = PoolVector2Array( 515, 232, 509, 226, 519, 226, 524, 232 )
+
+[node name="PillarPost2" type="CollisionPolygon2D" parent="Background/GasStation"]
+position = Vector2( 105, 52 )
+polygon = PoolVector2Array( 515, 232, 509, 226, 519, 226, 524, 232 )
+
+[node name="PillarPost3" type="CollisionPolygon2D" parent="Background/GasStation"]
+position = Vector2( 449, 51 )
+polygon = PoolVector2Array( 515, 232, 509, 226, 519, 226, 524, 232 )
+
+[node name="PillarPost4" type="CollisionPolygon2D" parent="Background/GasStation"]
+position = Vector2( 668, 18 )
+polygon = PoolVector2Array( 515, 232, 509, 226, 519, 226, 524, 232 )
+
+[node name="Ballon" type="CollisionPolygon2D" parent="Background/GasStation"]
+position = Vector2( 686, 18 )
+polygon = PoolVector2Array( 506, 232, 503, 228, 520, 227, 522, 230 )
+
+[node name="PillarPost5" type="CollisionPolygon2D" parent="Background/GasStation"]
+position = Vector2( 613, -25 )
+polygon = PoolVector2Array( 515, 232, 509, 226, 519, 226, 524, 232 )
+
+[node name="GasPump" type="CollisionPolygon2D" parent="Background/GasStation"]
+position = Vector2( 613, -25 )
+polygon = PoolVector2Array( 422, 279, 411, 270, 425, 269, 435, 279 )
+
+[node name="GasPump2" type="CollisionPolygon2D" parent="Background/GasStation"]
+position = Vector2( 704, -24 )
+polygon = PoolVector2Array( 422, 279, 411, 270, 425, 269, 435, 279 )
+
+[node name="GasPump3" type="CollisionPolygon2D" parent="Background/GasStation"]
+position = Vector2( 686, -57 )
+polygon = PoolVector2Array( 422, 280, 411, 270, 425, 269, 435, 279 )
+
+[node name="GasPump4" type="CollisionPolygon2D" parent="Background/GasStation"]
+position = Vector2( 597, -58 )
+polygon = PoolVector2Array( 422, 280, 411, 270, 425, 269, 435, 279 )
+
+[node name="BuildingFootPrint" type="CollisionPolygon2D" parent="Background/GasStation"]
+position = Vector2( 597, -58 )
+polygon = PoolVector2Array( 16, 303, -56, 267, 335, 268, 355, 302, 359, 307, 359, 315, 246, 316, 240, 310, 240, 303 )
+
+[node name="ActorsAndObjects" type="YSort" parent="."]
+
+[node name="Player" parent="ActorsAndObjects" instance=ExtResource( 1 )]
+position = Vector2( 298, 191 )
+
+[node name="GameCamera" parent="ActorsAndObjects/Player" instance=ExtResource( 2 )]
+zoom = Vector2( 0.5, 0.5 )
+
+[node name="GasBuildingFront" type="Sprite" parent="ActorsAndObjects"]
+position = Vector2( 629, 244 )
+texture = ExtResource( 8 )
+centered = false
+offset = Vector2( 0, -39 )
+
+[node name="GasBuildingWall" type="Sprite" parent="ActorsAndObjects"]
+position = Vector2( 541, 245 )
+texture = ExtResource( 11 )
+centered = false
+offset = Vector2( 0, -80 )
+
+[node name="GasBuildingRoof" type="Sprite" parent="ActorsAndObjects"]
+position = Vector2( 628, 284 )
+texture = ExtResource( 12 )
+centered = false
+offset = Vector2( -119, -190 )
+
+[node name="GasPumpsBack" type="Sprite" parent="ActorsAndObjects"]
+position = Vector2( 1008, 222 )
+texture = ExtResource( 9 )
+centered = false
+offset = Vector2( 0, -50 )
+
+[node name="GasPumpsFront" type="Sprite" parent="ActorsAndObjects"]
+position = Vector2( 1023, 255 )
+texture = ExtResource( 3 )
+centered = false
+offset = Vector2( 0, -51 )
+
+[node name="GasPumpsPillar1" type="Sprite" parent="ActorsAndObjects"]
+position = Vector2( 509, 232 )
+texture = ExtResource( 7 )
+centered = false
+offset = Vector2( 0, -85 )
+
+[node name="GasPumpsPillar2" type="Sprite" parent="ActorsAndObjects"]
+position = Vector2( 614, 284 )
+texture = ExtResource( 5 )
+centered = false
+offset = Vector2( 0, -81 )
+
+[node name="GasPumpsPillar3" type="Sprite" parent="ActorsAndObjects"]
+position = Vector2( 1177, 250 )
+texture = ExtResource( 6 )
+centered = false
+offset = Vector2( 0, -79 )
+
+[node name="GasPumpsPillar4" type="Sprite" parent="ActorsAndObjects"]
+position = Vector2( 1120, 207 )
+texture = ExtResource( 4 )
+centered = false
+offset = Vector2( 0, -36 )

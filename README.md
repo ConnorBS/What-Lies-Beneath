@@ -114,8 +114,8 @@ Download Version 3.5 from Godot Download files [Here](https://godotengine.org/do
 
 ### Player Movement Milestone
 #### General Movement
-- [ ] Walking 
-- [ ] Running (Hold-Shift)
+- [x] Walking 
+- [x] Running (Hold-Shift)
 - [ ] Hidden Stamina Bar
 - [ ] Climb Ladder
 - [ ] Fall/Drop
@@ -125,8 +125,8 @@ Download Version 3.5 from Godot Download files [Here](https://godotengine.org/do
 - [ ] Interactable Object (Shimmer)
 #### Basic Combat
 - [ ] Aiming (across the walkable axis)
-- [ ] While Aiming you can only Walking
-- [ ] Button to pull out gun 
+- [x] While Aiming you can only Walking
+- [x] Button to pull out gun 
 #### Game Camera
 - [ ] Dynamic Camera Primarily on Character
 <p align="right">(<a href="#what-lies-beneath">back to top</a>)</p>
