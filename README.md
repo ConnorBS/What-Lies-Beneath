@@ -122,8 +122,8 @@ Download Version 3.5 from Godot Download files [Here](https://godotengine.org/do
 - [ ] Fall/Drop
 #### Interactions
 - [ ] Push/Pull Box/Climb Box
-- [ ] Kneeling (Looting/Interacting) 
-- [x] Interactable Object (Shimmer)
+- [x] Kneeling (Looting/Interacting) 
+- [ ] Interactable Object (Shimmer)
 #### Basic Combat
 - [x] Aiming (across the walkable axis)
 - [x] While Aiming you can only Walking
