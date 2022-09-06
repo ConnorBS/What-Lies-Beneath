@@ -113,22 +113,23 @@ Download Version 3.5 from Godot Download files [Here](https://godotengine.org/do
 ## Milestone Table
 
 ### Player Movement Milestone
+[GIF Library](https://imgur.com/a/XAhMfN8)
 #### General Movement
-- [ ] Walking 
-- [ ] Running (Hold-Shift)
+- [x] Walking 
+- [x] Running (Hold-Shift)
 - [ ] Hidden Stamina Bar
 - [ ] Climb Ladder
 - [ ] Fall/Drop
 #### Interactions
 - [ ] Push/Pull Box/Climb Box
-- [ ] Kneeling (Looting/Interacting) 
+- [x] Kneeling (Looting/Interacting) 
 - [ ] Interactable Object (Shimmer)
 #### Basic Combat
-- [ ] Aiming (across the walkable axis)
-- [ ] While Aiming you can only Walking
-- [ ] Button to pull out gun 
+- [x] Aiming (across the walkable axis)
+- [x] While Aiming you can only Walking
+- [x] Button to pull out gun 
 #### Game Camera
-- [ ] Dynamic Camera Primarily on Character
+- [x] Dynamic Camera Primarily on Character
 <p align="right">(<a href="#what-lies-beneath">back to top</a>)</p>
 
 ### Menu System Milestone
