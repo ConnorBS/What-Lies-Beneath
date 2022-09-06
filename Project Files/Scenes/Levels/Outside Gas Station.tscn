@@ -28,6 +28,8 @@ extents = Vector2( 1094.25, 151.75 )
 [sub_resource type="ShaderMaterial" id=4]
 shader = ExtResource( 15 )
 shader_param/color = Vector3( 0.35, 0.48, 0.95 )
+shader_param/noise_scale = 20.0
+shader_param/alpha_power = 0.25
 shader_param/OCTAVES = 4
 
 [node name="Outside Gas Station" type="Node"]
@@ -233,16 +235,5 @@ centered = false
 offset = Vector2( 0, -36 )
 
 [node name="FogShader" type="ColorRect" parent="."]
-visible = false
-modulate = Color( 0.529412, 0.529412, 0.529412, 1 )
 material = SubResource( 4 )
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = -8.0
-margin_top = -18.0
-margin_right = 1147.0
-margin_bottom = -173.0
-rect_pivot_offset = Vector2( 525, 325 )
-size_flags_horizontal = 3
-size_flags_vertical = 3
-color = Color( 0.396078, 0.396078, 0.396078, 1 )
+color = Color( 0.407843, 0.407843, 0.407843, 1 )

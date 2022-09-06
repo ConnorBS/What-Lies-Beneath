@@ -223,7 +223,6 @@ volume_db = -12.0
 pitch_scale = 0.6
 
 [node name="Light2D" type="Light2D" parent="."]
-visible = false
 position = Vector2( -1, -31 )
 texture = ExtResource( 17 )
 energy = 0.5
