@@ -113,6 +113,7 @@ Download Version 3.5 from Godot Download files [Here](https://godotengine.org/do
 ## Milestone Table
 
 ### Player Movement Milestone
+[GIF Library](https://imgur.com/a/XAhMfN8)
 #### General Movement
 - [x] Walking 
 - [x] Running (Hold-Shift)
