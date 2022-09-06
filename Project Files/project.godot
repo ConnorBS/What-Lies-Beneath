@@ -11,7 +11,7 @@ config_version=4
 [application]
 
 config/name="What Lies Beneath"
-run/main_scene="res://Scenes/Levels/Outside Gas Station.tscn"
+run/main_scene="res://Scenes/Levels/Gas Station/Outside Gas Station.tscn"
 config/icon="res://icon.png"
 
 [audio]

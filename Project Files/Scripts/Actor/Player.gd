@@ -2,6 +2,7 @@ extends KinematicBody2D
 
 
 onready var state_machine = $AnimationTree.get("parameters/playback")
+onready var interact_pop_up_message = $InteractPopUp
 onready var bullet_ray = $Bullet
 onready var target_mouse_reticle = preload("res://Assets/UI/Mouse Cursors/Target.png")
 export (int) var run_speed = 160
@@ -11,7 +12,7 @@ var sprint_state = false
 var gun_out_state = false
 var interact_state = false
 var aim_state = false
-
+var infront_of_interactable_object = false
 var gun_selected = PlayerInventory.equipped_gun
 
 
@@ -108,16 +109,17 @@ func get_input()->Vector2:
 			change_mouse(target_mouse_reticle)
 			aim_state = true
 		
-	if Input.is_action_just_pressed("interact"):
-		if interact_state:
-			change_animation("Kneeling_Up")
-			interact_state = false
-			return velocity
-		else:
-			change_animation("Kneeling_Down")
-			####Could hold out from saying interact State to be triggered by dialog/cutscene time
-			interact_state = true
-			return velocity
+	if infront_of_interactable_object:
+		if Input.is_action_just_pressed("interact"):
+			if interact_state:
+				change_animation("Kneeling_Up")
+				interact_state = false
+				return velocity
+			else:
+				change_animation("Kneeling_Down")
+				####Could hold out from saying interact State to be triggered by dialog/cutscene time
+				interact_state = true
+				return velocity
 	if Input.is_action_just_pressed("equip_gun"):
 		if gun_out_state:
 			if check_equipped_gun() == PlayerInventory.GUNTYPES.PISTOL:
@@ -250,3 +252,23 @@ func aiming_gun()->Vector2:
 		target = self.to_local(bullet_ray.get_collision_point())
 
 	return target
+
+
+func update_interaction(in_range:bool)->void:
+	infront_of_interactable_object = in_range
+	if in_range:
+		interact_pop_up_message.show()
+	else:
+		interact_pop_up_message.hide()
+	
+	
+
+
+func _on_InteractableHitBox_area_entered(area):
+	if area.is_in_group("Interact"):
+		update_interaction(true)
+
+
+func _on_InteractableHitBox_area_exited(area):
+	if area.is_in_group("Interact"):
+		update_interaction(false)

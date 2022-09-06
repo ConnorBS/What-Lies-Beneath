@@ -122,13 +122,13 @@ Download Version 3.5 from Godot Download files [Here](https://godotengine.org/do
 #### Interactions
 - [ ] Push/Pull Box/Climb Box
 - [ ] Kneeling (Looting/Interacting) 
-- [ ] Interactable Object (Shimmer)
+- [x] Interactable Object (Shimmer)
 #### Basic Combat
-- [ ] Aiming (across the walkable axis)
+- [x] Aiming (across the walkable axis)
 - [x] While Aiming you can only Walking
 - [x] Button to pull out gun 
 #### Game Camera
-- [ ] Dynamic Camera Primarily on Character
+- [x] Dynamic Camera Primarily on Character
 <p align="right">(<a href="#what-lies-beneath">back to top</a>)</p>
 
 ### Menu System Milestone

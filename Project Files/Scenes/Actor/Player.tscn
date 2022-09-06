@@ -1,4 +1,4 @@
-[gd_scene load_steps=60 format=2]
+[gd_scene load_steps=64 format=2]
 
 [ext_resource path="res://Assets/Animation/Player/Putting_In_Pistol.tres" type="Animation" id=1]
 [ext_resource path="res://Assets/Animation/Player/Walking.tres" type="Animation" id=2]
@@ -17,10 +17,15 @@
 [ext_resource path="res://Assets/Animation/Player/Raising_Pistol.tres" type="Animation" id=15]
 [ext_resource path="res://Assets/Audio/Player/FootStep_Running_Gravel.wav" type="AudioStream" id=16]
 [ext_resource path="res://Assets/Sprites/Player/Light.png" type="Texture" id=17]
+[ext_resource path="res://Assets/UI/Button Images/Tab.png" type="Texture" id=18]
+[ext_resource path="res://Assets/Fonts/crumbled-pixels/crumbled-pixels.regular.ttf" type="DynamicFontData" id=19]
 
 [sub_resource type="CapsuleShape2D" id=2]
 radius = 6.0
-height = 44.0
+height = 50.0
+
+[sub_resource type="RectangleShape2D" id=45]
+extents = Vector2( 10, 9 )
 
 [sub_resource type="AnimationNodeAnimation" id=35]
 animation = "Aiming_Pistol"
@@ -156,8 +161,13 @@ graph_offset = Vector2( -457.867, -408.568 )
 [sub_resource type="RectangleShape2D" id=34]
 extents = Vector2( 10, 2.5 )
 
+[sub_resource type="DynamicFont" id=44]
+size = 23
+font_data = ExtResource( 19 )
+
 [node name="Player" type="KinematicBody2D"]
 light_mask = 3
+position = Vector2( 0, 1 )
 script = ExtResource( 11 )
 
 [node name="Sprite" type="Sprite" parent="."]
@@ -172,7 +182,17 @@ frame = 9
 position = Vector2( 0, -34 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerHitBox"]
+position = Vector2( 0, 3 )
 shape = SubResource( 2 )
+
+[node name="InteractableHitBox" type="Area2D" parent="."]
+position = Vector2( 1, -34 )
+collision_layer = 16384
+collision_mask = 16384
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractableHitBox"]
+position = Vector2( -1, 25 )
+shape = SubResource( 45 )
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
 tree_root = SubResource( 25 )
@@ -210,6 +230,37 @@ Place Holder"
 align = 1
 valign = 1
 
+[node name="InteractPopUp" type="HBoxContainer" parent="."]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -19.0
+margin_top = -23.0
+margin_right = 60.0
+margin_bottom = -4.0
+rect_scale = Vector2( 0.5, 0.5 )
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="TextureRect" type="TextureRect" parent="InteractPopUp"]
+margin_right = 20.0
+margin_bottom = 19.0
+rect_min_size = Vector2( 20, 18 )
+texture = ExtResource( 18 )
+stretch_mode = 6
+
+[node name="Interact" type="Label" parent="InteractPopUp"]
+margin_left = 24.0
+margin_right = 79.0
+margin_bottom = 19.0
+custom_fonts/font = SubResource( 44 )
+text = "Interact"
+align = 1
+valign = 1
+
 [node name="Bullet" type="RayCast2D" parent="."]
 position = Vector2( 30, -50 )
 enabled = true
@@ -225,6 +276,8 @@ pitch_scale = 0.6
 [node name="Light2D" type="Light2D" parent="."]
 position = Vector2( -1, -31 )
 texture = ExtResource( 17 )
-energy = 0.5
+energy = 0.4
 
+[connection signal="area_entered" from="InteractableHitBox" to="." method="_on_InteractableHitBox_area_entered"]
+[connection signal="area_exited" from="InteractableHitBox" to="." method="_on_InteractableHitBox_area_exited"]
 [connection signal="animation_finished" from="AnimationTree/AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
