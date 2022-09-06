@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=2]
+[gd_scene load_steps=60 format=2]
 
 [ext_resource path="res://Assets/Animation/Player/Putting_In_Pistol.tres" type="Animation" id=1]
 [ext_resource path="res://Assets/Animation/Player/Walking.tres" type="Animation" id=2]
@@ -12,10 +12,18 @@
 [ext_resource path="res://Assets/Animation/Player/Walk_With_Pistol.tres" type="Animation" id=10]
 [ext_resource path="res://Scripts/Actor/Player.gd" type="Script" id=11]
 [ext_resource path="res://Assets/Animation/Player/Idle_Pistol.tres" type="Animation" id=12]
+[ext_resource path="res://Assets/Animation/Player/Aiming_Pistol.tres" type="Animation" id=13]
+[ext_resource path="res://Assets/Animation/Player/Lowering_Pistol.tres" type="Animation" id=14]
+[ext_resource path="res://Assets/Animation/Player/Raising_Pistol.tres" type="Animation" id=15]
+[ext_resource path="res://Assets/Audio/Player/FootStep_Running_Gravel.wav" type="AudioStream" id=16]
+[ext_resource path="res://Assets/Sprites/Player/Light.png" type="Texture" id=17]
 
 [sub_resource type="CapsuleShape2D" id=2]
 radius = 6.0
 height = 44.0
+
+[sub_resource type="AnimationNodeAnimation" id=35]
+animation = "Aiming_Pistol"
 
 [sub_resource type="AnimationNodeAnimation" id=3]
 animation = "Idle"
@@ -29,11 +37,17 @@ animation = "Kneeling_Down"
 [sub_resource type="AnimationNodeAnimation" id=5]
 animation = "Kneeling_Up"
 
+[sub_resource type="AnimationNodeAnimation" id=36]
+animation = "Lowering_Pistol"
+
 [sub_resource type="AnimationNodeAnimation" id=6]
 animation = "Pulling_Out_Pistol"
 
 [sub_resource type="AnimationNodeAnimation" id=7]
 animation = "Putting_In_Pistol"
+
+[sub_resource type="AnimationNodeAnimation" id=37]
+animation = "Raising_Pistol"
 
 [sub_resource type="AnimationNodeAnimation" id=8]
 animation = "Running"
@@ -93,50 +107,57 @@ switch_mode = 2
 [sub_resource type="AnimationNodeStateMachineTransition" id=33]
 switch_mode = 2
 
+[sub_resource type="AnimationNodeStateMachineTransition" id=38]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=39]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=40]
+switch_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=41]
+switch_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=42]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=43]
+switch_mode = 2
+
 [sub_resource type="AnimationNodeStateMachine" id=25]
+states/Aiming_Pistol/node = SubResource( 35 )
+states/Aiming_Pistol/position = Vector2( 162.133, -339.715 )
 states/Idle/node = SubResource( 3 )
 states/Idle/position = Vector2( -58, 106 )
 states/Idle_Pistol/node = SubResource( 27 )
-states/Idle_Pistol/position = Vector2( 259, -161 )
+states/Idle_Pistol/position = Vector2( 281, -147 )
 states/Kneeling_Down/node = SubResource( 4 )
 states/Kneeling_Down/position = Vector2( 294, 258 )
 states/Kneeling_Up/node = SubResource( 5 )
 states/Kneeling_Up/position = Vector2( 18, 244 )
+states/Lowering_Pistol/node = SubResource( 36 )
+states/Lowering_Pistol/position = Vector2( 23.1331, -264.294 )
 states/Pulling_Out_Pistol/node = SubResource( 6 )
-states/Pulling_Out_Pistol/position = Vector2( 319, -66.36 )
+states/Pulling_Out_Pistol/position = Vector2( 452, -77.36 )
 states/Putting_In_Pistol/node = SubResource( 7 )
 states/Putting_In_Pistol/position = Vector2( -40, -49.4 )
+states/Raising_Pistol/node = SubResource( 37 )
+states/Raising_Pistol/position = Vector2( 356.133, -276.294 )
 states/Running/node = SubResource( 8 )
 states/Running/position = Vector2( 566, 145 )
 states/Walk_With_Pistol/node = SubResource( 9 )
 states/Walk_With_Pistol/position = Vector2( 18, -161 )
 states/Walking/node = SubResource( 10 )
 states/Walking/position = Vector2( 434, 33 )
-transitions = [ "Idle", "Pulling_Out_Pistol", SubResource( 11 ), "Walk_With_Pistol", "Putting_In_Pistol", SubResource( 12 ), "Running", "Kneeling_Down", SubResource( 13 ), "Walking", "Kneeling_Down", SubResource( 14 ), "Walking", "Pulling_Out_Pistol", SubResource( 15 ), "Pulling_Out_Pistol", "Walk_With_Pistol", SubResource( 16 ), "Kneeling_Down", "Kneeling_Up", SubResource( 17 ), "Kneeling_Up", "Idle", SubResource( 18 ), "Putting_In_Pistol", "Idle", SubResource( 19 ), "Kneeling_Up", "Walking", SubResource( 20 ), "Walking", "Running", SubResource( 21 ), "Running", "Walking", SubResource( 22 ), "Idle", "Walking", SubResource( 23 ), "Walking", "Idle", SubResource( 24 ), "Pulling_Out_Pistol", "Idle_Pistol", SubResource( 28 ), "Walk_With_Pistol", "Idle_Pistol", SubResource( 29 ), "Idle_Pistol", "Walk_With_Pistol", SubResource( 30 ), "Idle_Pistol", "Putting_In_Pistol", SubResource( 31 ), "Idle_Pistol", "Kneeling_Down", SubResource( 32 ), "Kneeling_Up", "Idle_Pistol", SubResource( 33 ) ]
+transitions = [ "Idle", "Pulling_Out_Pistol", SubResource( 11 ), "Walk_With_Pistol", "Putting_In_Pistol", SubResource( 12 ), "Running", "Kneeling_Down", SubResource( 13 ), "Walking", "Kneeling_Down", SubResource( 14 ), "Walking", "Pulling_Out_Pistol", SubResource( 15 ), "Pulling_Out_Pistol", "Walk_With_Pistol", SubResource( 16 ), "Kneeling_Down", "Kneeling_Up", SubResource( 17 ), "Kneeling_Up", "Idle", SubResource( 18 ), "Putting_In_Pistol", "Idle", SubResource( 19 ), "Kneeling_Up", "Walking", SubResource( 20 ), "Walking", "Running", SubResource( 21 ), "Running", "Walking", SubResource( 22 ), "Idle", "Walking", SubResource( 23 ), "Walking", "Idle", SubResource( 24 ), "Pulling_Out_Pistol", "Idle_Pistol", SubResource( 28 ), "Walk_With_Pistol", "Idle_Pistol", SubResource( 29 ), "Idle_Pistol", "Walk_With_Pistol", SubResource( 30 ), "Idle_Pistol", "Putting_In_Pistol", SubResource( 31 ), "Idle_Pistol", "Kneeling_Down", SubResource( 32 ), "Kneeling_Up", "Idle_Pistol", SubResource( 33 ), "Walk_With_Pistol", "Raising_Pistol", SubResource( 38 ), "Idle_Pistol", "Raising_Pistol", SubResource( 39 ), "Raising_Pistol", "Aiming_Pistol", SubResource( 40 ), "Lowering_Pistol", "Walk_With_Pistol", SubResource( 41 ), "Aiming_Pistol", "Lowering_Pistol", SubResource( 42 ), "Lowering_Pistol", "Idle_Pistol", SubResource( 43 ) ]
 start_node = "Idle"
-graph_offset = Vector2( -674.246, 14.9879 )
+graph_offset = Vector2( -457.867, -408.568 )
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=26]
-
-[sub_resource type="Animation" id=1]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:frame_coords")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Vector2( 1, 0 ) ]
-}
 
 [sub_resource type="RectangleShape2D" id=34]
 extents = Vector2( 10, 2.5 )
 
 [node name="Player" type="KinematicBody2D"]
+light_mask = 3
 script = ExtResource( 11 )
 
 [node name="Sprite" type="Sprite" parent="."]
@@ -145,7 +166,7 @@ texture = ExtResource( 8 )
 offset = Vector2( 0, -30 )
 hframes = 4
 vframes = 7
-frame = 1
+frame = 9
 
 [node name="PlayerHitBox" type="Area2D" parent="."]
 position = Vector2( 0, -34 )
@@ -156,18 +177,19 @@ shape = SubResource( 2 )
 [node name="AnimationTree" type="AnimationTree" parent="."]
 tree_root = SubResource( 25 )
 anim_player = NodePath("AnimationPlayer")
-active = true
 parameters/playback = SubResource( 26 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="AnimationTree"]
 root_node = NodePath("../..")
+anims/Aiming_Pistol = ExtResource( 13 )
 anims/Idle = ExtResource( 3 )
 anims/Idle_Pistol = ExtResource( 12 )
 anims/Kneeling_Down = ExtResource( 4 )
 anims/Kneeling_Up = ExtResource( 7 )
+anims/Lowering_Pistol = ExtResource( 14 )
 anims/Pulling_Out_Pistol = ExtResource( 5 )
 anims/Putting_In_Pistol = ExtResource( 1 )
-anims/RESET = SubResource( 1 )
+anims/Raising_Pistol = ExtResource( 15 )
 anims/Reload_Pistol = ExtResource( 9 )
 anims/Running = ExtResource( 6 )
 anims/Walk_With_Pistol = ExtResource( 10 )
@@ -187,5 +209,23 @@ text = "Animation
 Place Holder"
 align = 1
 valign = 1
+
+[node name="Bullet" type="RayCast2D" parent="."]
+position = Vector2( 30, -50 )
+enabled = true
+cast_to = Vector2( 200, 0 )
+collision_mask = 32768
+collide_with_areas = true
+
+[node name="SFX" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 16 )
+volume_db = -12.0
+pitch_scale = 0.6
+
+[node name="Light2D" type="Light2D" parent="."]
+visible = false
+position = Vector2( -1, -31 )
+texture = ExtResource( 17 )
+energy = 0.5
 
 [connection signal="animation_finished" from="AnimationTree/AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
