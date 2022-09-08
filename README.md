@@ -6,7 +6,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/ConnorBS/What-Lies-Beneath">
-    <img src="Project Management/0. File Collection/Screenshot.png" alt="Logo" height=200% width=200%>
+    <img src="Project Management/0. File Collection/0. Initial/Screenshot.png" alt="Logo" height=200% width=200%>
   </a>
 
 <h3 align="center">What Lies Beneath</h3>
@@ -118,7 +118,7 @@ Download Version 3.5 from Godot Download files [Here](https://godotengine.org/do
 - [x] Walking 
 - [x] Running (Hold-Shift)
 - [ ] Hidden Stamina Bar
-- [ ] Climb Ladder
+- [x] Climb Ladder
 - [ ] Fall/Drop
 #### Interactions
 - [ ] Push/Pull Box/Climb Box
