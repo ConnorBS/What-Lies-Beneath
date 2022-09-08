@@ -1,0 +1,32 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Assets/Levels/Gas Station/Ladder.png" type="Texture" id=1]
+[ext_resource path="res://Scripts/Object/Interactable_Ladder.gd" type="Script" id=2]
+
+[sub_resource type="RectangleShape2D" id=13]
+extents = Vector2( 10, 3.125 )
+
+[sub_resource type="RectangleShape2D" id=12]
+extents = Vector2( 10, 3.25 )
+
+[node name="Ladder" type="Sprite"]
+position = Vector2( 1072, 259 )
+texture = ExtResource( 1 )
+offset = Vector2( 15, -57 )
+script = ExtResource( 2 )
+
+[node name="Bottom" type="Area2D" parent="." groups=["Interact", "Ladder", "Ladder_Bottom"]]
+collision_layer = 16384
+collision_mask = 16384
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bottom"]
+position = Vector2( 18, 2.125 )
+shape = SubResource( 13 )
+
+[node name="Top" type="Area2D" parent="." groups=["Interact", "Ladder", "Ladder_Top"]]
+collision_layer = 16384
+collision_mask = 16384
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Top"]
+position = Vector2( 18, -116 )
+shape = SubResource( 12 )

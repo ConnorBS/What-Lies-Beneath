@@ -1,6 +1,6 @@
 extends KinematicBody2D
 
-
+onready var level_manager = get_parent().get_parent().get_parent()
 onready var state_machine = $AnimationTree.get("parameters/playback")
 onready var interact_pop_up_message = $InteractPopUp
 onready var bullet_ray = $Bullet
@@ -13,12 +13,25 @@ var gun_out_state = false
 var interact_state = false
 var aim_state = false
 var infront_of_interactable_object = false
-var gun_selected = PlayerInventory.equipped_gun
 
+export (int) var current_floor = 1
+#########################
+########Climbing#########
+#########################
+export (int) var climb_speed = 30
+var climbing = false
+var climbing_reached_top = false
+var climbing_reached_bottom = false
+onready var climb_tween = $ClimbingInterations/ClimbTween
+#onready var player_pivot = self.op
+
+var gun_selected = PlayerInventory.equipped_gun
+var interactable_object = null
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	$AnimationTree.active = true
+	level_manager.enable_floor(current_floor)
 	pass # Replace with function body.
 
 func check_equipped_gun() -> int:
@@ -33,6 +46,8 @@ func change_animation(animationToChangeTo:String)->void:
 		#####################
 		state_machine.travel(animationToChangeTo)
 		print (animationToChangeTo)
+		if animationToChangeTo == "Idle":
+				pass
 func change_mouse(mouse_cursor)->void:
 	if mouse_cursor == null:
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
@@ -56,33 +71,94 @@ func check_if_current_animation_allows_movement() -> bool:
 		return false
 	elif animation_playing == "Lowering_Pistol":
 		return false
+	elif animation_playing == "Climbing_Up_To_Standing":
+		return false
+	elif animation_playing == "Climbing_Down_To_Standing":
+		return false
+	elif animation_playing == "Standing_To_Climbing_Up":
+		return false
+	elif animation_playing == "Standing_To_Climbing_Down":
+		return false
+#	elif animation_playing == "Aiming_Pistol":
+#		return false
 	else:
 		return true
-		
-		
+func check_if_current_animation_transition_climbing()->bool:
+	
+	var animation_playing = state_machine.get_current_node()
+	if animation_playing == "Standing_To_Climbing_Up":
+		return true
+	elif animation_playing == "Standing_To_Climbing_Down":
+		return true
+	elif animation_playing == "Climbing_Up_To_Standing":
+		return true
+	elif animation_playing == "Climbing_Down_To_Standing":
+		return true
+	return false
+	
+func move_sprite_while_climbing():
+	var vector = Vector2.ZERO
+	var animation_playing = state_machine.get_current_node()
+	if animation_playing == "Standing_To_Climbing_Up":
+		vector = Vector2(0,-1) * (climb_speed *1)
+	elif animation_playing == "Standing_To_Climbing_Down":
+		vector = Vector2(0,1) * climb_speed * 2.5
+	elif animation_playing == "Climbing_Up_To_Standing":
+		vector = Vector2.UP * climb_speed * 1.5
+	elif animation_playing == "Climbing_Down_To_Standing":
+		vector = Vector2.DOWN * climb_speed
+	return vector
+	
 func _process(delta):
+#	print(get_canvas_transform())
+#	print("Canvas: ",get_global_transform())
+#	print ("Mouse: ", get_global_mouse_position())
+#	print (get_viewport().canvas_transform.xform(get_global_mouse_position()))
 	if check_if_current_animation_allows_movement() == true:
 		
 		move_and_slide(get_input())
-		
+	
+	######################################
+	####Moves Sprite while Climbing#######
+	######################################
+	elif check_if_current_animation_transition_climbing():
+		var vector = snap_to_ladder(interactable_object)
+		vector.y = move_sprite_while_climbing().y
+		move_and_slide(vector)
 	######################################
 	##Calls draw to update laser pointer##
 	######################################
 	if aim_state:
-		update()
+		############With Laser Pointer#############
+#		update()
+		##########Without Laser Pointer#########
+		aiming_gun()
 	######################################
 	
 func _draw():
 	if aim_state:
-		laser_pointer_to_mouse(aiming_gun())
+		###Removed Laser Pointer Visual
+#		laser_pointer_to_mouse(aiming_gun())
+		aiming_gun()
 
+func snap_to_ladder(ladder_node):
+#	print("Ladder Pos:",to_global(ladder_node.position), " || Self Pos: ",self.position)
+	var vector = Vector2.ZERO
+	if ladder_node != null:
+		vector.x = self.position.direction_to(to_global(ladder_node.get_parent().position)).x
+	
+#	vector *= self.position.distance_to(to_global(ladder_node.position))
+	return vector
 ### Checking to break Interact State ("Kneeling_Down")
 func _input(event):
 	if interact_state == true:
-		if ((event is InputEventKey) || (event is InputEventJoypadButton)) && event.pressed:
+		if ((event is InputEventKey) or (event is InputEventJoypadButton)) and event.pressed:
 			change_animation("Idle")
 			interact_state = false
-	
+#	if aim_state == true:
+#		###Removed Laser Pointer Visual
+##		laser_pointer_to_mouse(aiming_gun())
+#		aiming_gun()
 	
 #func check_to_break_interact_state()->void:
 #	if Input.is_action_pressed()
@@ -90,6 +166,10 @@ func _input(event):
 func get_input()->Vector2:
 	var current = state_machine.get_current_node()
 	var velocity = Vector2.ZERO
+	
+	##############################################
+	##############GUN Logic#######################
+	##############################################
 	if Input.is_action_just_pressed("use_weapon"):
 		#state_machine.travel(attacks[randi() % 2])
 		return velocity
@@ -108,10 +188,25 @@ func get_input()->Vector2:
 			change_animation("Aiming_Pistol")
 			change_mouse(target_mouse_reticle)
 			aim_state = true
-		
+	#############################################
+	##############Interactions###################
+	#############################################
 	if infront_of_interactable_object:
 		if Input.is_action_just_pressed("interact"):
-			if interact_state:
+			###############################
+			##########Climbing#############
+			###############################
+			if interactable_object.is_in_group("Ladder"):
+				if climbing:
+					climbing_state (false)
+				else:
+					climbing_state (true)
+				print(velocity)
+				return velocity
+			##############################
+			######Interactable Object#####
+			##############################
+			elif interact_state:
 				change_animation("Kneeling_Up")
 				interact_state = false
 				return velocity
@@ -120,6 +215,10 @@ func get_input()->Vector2:
 				####Could hold out from saying interact State to be triggered by dialog/cutscene time
 				interact_state = true
 				return velocity
+	
+	##############################################
+	#############Pull Out Weapon##################
+	##############################################
 	if Input.is_action_just_pressed("equip_gun"):
 		if gun_out_state:
 			if check_equipped_gun() == PlayerInventory.GUNTYPES.PISTOL:
@@ -132,17 +231,23 @@ func get_input()->Vector2:
 				gun_out_state = true
 				return velocity
 
+	##############################################
+	###############Sprint Logic###################
+	##############################################
 	if Input.is_action_just_pressed("toggle_sprint"):
 		sprint_state = !sprint_state
 	if Input.is_action_pressed("sprint"):
 		sprint_state = true
 	elif Input.is_action_just_released("sprint"):
 		sprint_state = false
-		
-	if Input.is_action_pressed("move_right"):
+	
+	##############################################
+	#############Movement Logic###################
+	##############################################
+	if Input.is_action_pressed("move_right") and !climbing:
 		velocity.x += 1
 		$Sprite.scale.x = 1
-	if Input.is_action_pressed("move_left"):
+	if Input.is_action_pressed("move_left") and !climbing:
 		velocity.x -= 1
 		$Sprite.scale.x = -1
 	if Input.is_action_pressed("move_up"):
@@ -150,8 +255,16 @@ func get_input()->Vector2:
 	if Input.is_action_pressed("move_down"):
 		velocity.y += 1
 		
+	if climbing:
+		if velocity.y < 0 :
+			change_animation("Climbing_Up")
+		elif velocity.y > 0 :
+			change_animation("Climbing_Down")
+		else:
+			change_animation("Climbing_Idle")
+		return velocity * climb_speed
 	###Determine movement speed
-	if (sprint_state == true) && (gun_out_state == false):
+	if (sprint_state == true) and (gun_out_state == false):
 		velocity = velocity.normalized() * run_speed
 		if velocity.length() != 0:
 			change_animation("Running")
@@ -171,6 +284,7 @@ func get_input()->Vector2:
 		elif interact_state == false:
 			change_animation("Idle")
 	return velocity
+
 
 func laser_pointer_to_mouse(target):
 	if state_machine.get_current_node() == "Aiming_Pistol":
@@ -221,6 +335,9 @@ func aiming_gun()->Vector2:
 	##############################################################
 	##########Limit range of gun##################################
 	##############################################################
+	var min_mouse_cord = Vector2(gun_position.x,0) ## Mouse Clamping
+	var max_mouse_cord = Vector2.ZERO ## Mouse Clamping
+	
 	if direction_to_target.y > max_slope:
 		direction_to_target.y = max_slope
 		direction_to_target.x = sqrt(1-pow(direction_to_target.y,2))
@@ -236,9 +353,23 @@ func aiming_gun()->Vector2:
 	if flipped:
 		if direction_to_target.x > 0:
 			direction_to_target.x = -direction_to_target.x 
+			
 	else:
 		if direction_to_target.x < 0:
 			direction_to_target.x = -direction_to_target.x 
+			
+	##############################################################
+	##########Set Mouse in Bounds#################################
+	##############################################################
+
+	var max_x = 2000
+	if flipped:
+		max_x = -max_x
+		clamp_mouse_to_aim(gun_position,-max_slope,gun_position.x,max_x)
+	else:
+		
+		clamp_mouse_to_aim(gun_position,max_slope,gun_position.x,max_x)
+
 	##############################################################
 	#####Set Offical Target, and update RayCast to hit Target#####
 	##############################################################
@@ -252,23 +383,90 @@ func aiming_gun()->Vector2:
 		target = self.to_local(bullet_ray.get_collision_point())
 
 	return target
-
-
-func update_interaction(in_range:bool)->void:
+func clamp_mouse_to_aim(starting_point:Vector2,slope:float,min_x:float,max_x:float)->Vector2:
+	var mouse_pos = get_local_mouse_position()
+	var new_mouse_pos = Vector2.ZERO
+	new_mouse_pos.x = clamp(mouse_pos.x,min_x,max_x)
+	##y=mx+b
+	var min_y = -slope*(new_mouse_pos.x-starting_point.x)+starting_point.y
+	var max_y = slope*(new_mouse_pos.x-starting_point.x)+starting_point.y
+	new_mouse_pos.y = clamp(mouse_pos.y,min_y,max_y)
+	Input.warp_mouse_position(get_viewport().canvas_transform.xform(to_global(new_mouse_pos)))
+	return new_mouse_pos
+func update_interaction(in_range:bool,area)->void:
 	infront_of_interactable_object = in_range
+	interactable_object = area
 	if in_range:
 		interact_pop_up_message.show()
 	else:
 		interact_pop_up_message.hide()
 	
-	
-
+#func set_climbing(state:bool):
+#	if climbing
 
 func _on_InteractableHitBox_area_entered(area):
 	if area.is_in_group("Interact"):
-		update_interaction(true)
+		update_interaction(true,area)
 
 
 func _on_InteractableHitBox_area_exited(area):
 	if area.is_in_group("Interact"):
-		update_interaction(false)
+		if !climbing:
+			update_interaction(false,null)
+
+
+func _on_ClimbingHitBoxTop_area_entered(area):
+	if climbing and check_if_current_animation_transition_climbing() == false:
+		climbing_reached_top = true
+		climbing_trigger(area.get_parent().up_floor)
+
+
+func _on_ClimbingHitBoxTop_area_exited(area):
+	if climbing:
+		climbing_reached_top = false
+
+
+func _on_ClimbingHitBoxBottom_area_entered(area):
+	if climbing and check_if_current_animation_transition_climbing() == false:
+		climbing_reached_bottom = true
+		climbing_trigger(area.get_parent().down_floor)
+
+func climbing_state(state):
+	climbing = state
+	if climbing:
+		var new_level = current_floor
+		if interactable_object.is_in_group("Ladder_Bottom"):
+			change_animation("Climbing_Up")
+#			new_level += interactable_object.get_parent().travels_up_and_down_floor_count
+		elif interactable_object.is_in_group("Ladder_Top"):
+			change_animation("Climbing_Down")
+#			new_level -= interactable_object.get_parent().travels_up_and_down_floor_count
+		$ClimbingInterations/ClimbingHitBoxBottom.monitoring = true
+		$ClimbingInterations/ClimbingHitBoxTop.monitoring = true
+		$InteractableHitBox.monitoring = false
+		$GroundPosition.disabled = true
+		level_manager.move_to_floor(interactable_object.get_parent().ladder_floor,self)
+	else:
+		$ClimbingInterations/ClimbingHitBoxBottom.monitoring = false
+		$ClimbingInterations/ClimbingHitBoxTop.monitoring = false
+		$InteractableHitBox.monitoring = true
+		$GroundPosition.set_deferred("disabled", false)
+		update_interaction(false,null)
+		
+func _on_ClimbingHitBoxBottom_area_exited(area):
+	if climbing:
+		climbing_reached_bottom = false
+
+func climbing_trigger(new_level):
+		change_animation("Idle")
+		climbing_reached_bottom = false
+		climbing_reached_top = false
+		climbing_state(false)
+		current_floor = new_level
+		level_manager.set_deferred("move_to_floor",[current_floor,self])
+
+
+
+func move_a_floor(new_floor):
+	level_manager.move_to_floor(new_floor,self)
+	return
