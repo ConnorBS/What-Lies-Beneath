@@ -6,7 +6,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/ConnorBS/What-Lies-Beneath">
-    <img src="Project Management/0. File Collection/Screenshot.png" alt="Logo" height=200% width=200%>
+    <img src="Project Management/0. File Collection/0. Initial/Screenshot.png" alt="Logo" height=200% width=200%>
   </a>
 
 <h3 align="center">What Lies Beneath</h3>
