@@ -13,6 +13,20 @@ var gun_out_state = false
 var interact_state = false
 var aim_state = false
 var infront_of_interactable_object = false
+<<<<<<< HEAD
+=======
+
+export (int) var current_floor = 1
+#########################
+########Climbing#########
+#########################
+export (int) var climb_speed = 30
+var climbing = false
+var climbing_reached_top = false
+var climbing_reached_bottom = false
+#onready var player_pivot = self.op
+
+>>>>>>> 09c508b (Ladders working to move between levels)
 var gun_selected = PlayerInventory.equipped_gun
 
 
@@ -58,8 +72,37 @@ func check_if_current_animation_allows_movement() -> bool:
 		return false
 	else:
 		return true
+<<<<<<< HEAD
 		
 		
+=======
+func check_if_current_animation_transition_climbing()->bool:
+	
+	var animation_playing = state_machine.get_current_node()
+	if animation_playing == "Standing_To_Climbing_Up":
+		return true
+	elif animation_playing == "Standing_To_Climbing_Down":
+		return true
+	elif animation_playing == "Climbing_Up_To_Standing":
+		return true
+	elif animation_playing == "Climbing_Down_To_Standing":
+		return true
+	return false
+	
+func move_sprite_while_climbing():
+	var vector = Vector2.ZERO
+	var animation_playing = state_machine.get_current_node()
+	if animation_playing == "Standing_To_Climbing_Up":
+		vector = Vector2(0,-1) * (climb_speed *1)
+	elif animation_playing == "Standing_To_Climbing_Down":
+		vector = Vector2(0,1) * climb_speed * 2.5
+	elif animation_playing == "Climbing_Up_To_Standing":
+		vector = Vector2(0,-1) * climb_speed * 1.5
+	elif animation_playing == "Climbing_Down_To_Standing":
+		vector = Vector2(0,1) * climb_speed#*.5
+	return vector
+	
+>>>>>>> 09c508b (Ladders working to move between levels)
 func _process(delta):
 	if check_if_current_animation_allows_movement() == true:
 		
@@ -271,4 +314,72 @@ func _on_InteractableHitBox_area_entered(area):
 
 func _on_InteractableHitBox_area_exited(area):
 	if area.is_in_group("Interact"):
+<<<<<<< HEAD
 		update_interaction(false)
+=======
+		if !climbing:
+			update_interaction(false,null)
+
+
+func _on_ClimbingHitBoxTop_area_entered(area):
+	if climbing and check_if_current_animation_transition_climbing() == false:
+		climbing_reached_top = true
+		climbing_trigger(area.get_parent().up_floor)
+
+
+func _on_ClimbingHitBoxTop_area_exited(area):	
+	if climbing:
+		climbing_reached_top = false
+
+
+func _on_ClimbingHitBoxBottom_area_entered(area):
+	if climbing and check_if_current_animation_transition_climbing() == false:
+		if area.is_in_group("Ladder"):
+			climbing_reached_bottom = true
+			climbing_trigger(area.get_parent().down_floor)
+
+func climbing_state(state):
+	climbing = state
+	if climbing:
+		var new_level = current_floor
+		if interactable_object.is_in_group("Ladder_Bottom"):
+			change_animation("Climbing_Up")
+#			new_level += interactable_object.get_parent().travels_up_and_down_floor_count
+		elif interactable_object.is_in_group("Ladder_Top"):
+			change_animation("Climbing_Down")
+#			new_level -= interactable_object.get_parent().travels_up_and_down_floor_count
+		$ClimbingInterations/ClimbingHitBoxBottom.monitoring = true
+		$ClimbingInterations/ClimbingHitBoxTop.monitoring = true
+		$InteractableHitBox.monitoring = false
+		$GroundPosition.disabled =true
+		level_manager.move_to_floor(interactable_object.get_parent().ladder_floor,self)
+	else:
+		$ClimbingInterations/ClimbingHitBoxBottom.monitoring = false
+		$ClimbingInterations/ClimbingHitBoxTop.monitoring = false
+		$InteractableHitBox.monitoring = true
+		$GroundPosition.set_deferred("disabled", false)
+		update_interaction(false,null)
+		
+func _on_ClimbingHitBoxBottom_area_exited(area):
+	if climbing:
+		climbing_reached_bottom = false
+
+func climbing_trigger(new_level):
+		change_animation("Idle")
+		climbing_reached_bottom = false
+		climbing_reached_top = false
+		move_a_floor(new_level)
+		climbing_state(false)
+		current_floor = new_level
+		level_manager.move_to_floor(current_floor,self)
+
+
+
+func move_a_floor(new_floor):
+	self.set_collision_layer_bit(current_floor-1,false)
+	self.set_collision_mask_bit(current_floor-1,false)
+	self.set_collision_layer_bit(new_floor-1,true)
+	self.set_collision_mask_bit(new_floor-1,true)
+	level_manager.move_to_floor(new_floor,self)
+	return
+>>>>>>> 09c508b (Ladders working to move between levels)

@@ -105,6 +105,15 @@ aim={
  ]
 }
 
+[layer_names]
+
+2d_physics/layer_1="Floor1"
+2d_physics/layer_2="Floor2"
+2d_physics/layer_3="Floor3"
+2d_physics/layer_9="PlayerHitbox"
+2d_physics/layer_15="InteractionObjects"
+2d_physics/layer_16="BulletBarriers"
+
 [network]
 
 limits/debugger_stdout/max_chars_per_second=10000000
