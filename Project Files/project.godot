@@ -107,12 +107,12 @@ aim={
 
 [layer_names]
 
-2d_physics/layer_1="Floor1"
-2d_physics/layer_2="Floor2"
-2d_physics/layer_3="Floor3"
-2d_physics/layer_9="PlayerHitbox"
-2d_physics/layer_15="InteractionObjects"
-2d_physics/layer_16="BulletBarriers"
+2d_physics/layer_1="Level1"
+2d_physics/layer_2="Level2"
+2d_physics/layer_3="Level3"
+2d_physics/layer_9="PlayerHitBox"
+2d_physics/layer_15="InteractableObject"
+2d_physics/layer_16="BulletCollisionBarrier"
 
 [network]
 

@@ -1,6 +1,6 @@
 extends Camera2D
 
-onready var level_node = get_parent().get_parent().get_parent()
+onready var level_node = get_parent().get_parent().get_parent().get_parent()
 onready var player_node = get_parent()
 
 var min_pos = Vector2.ZERO

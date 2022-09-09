@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=2]
+[gd_scene load_steps=32 format=2]
 
 [ext_resource path="res://Assets/Levels/Gas Station/Gas-Station_GasPumps_Front.png" type="Texture" id=1]
 [ext_resource path="res://Assets/Levels/Gas Station/Gas-Station_Pillar2.png" type="Texture" id=2]
@@ -14,10 +14,16 @@
 [ext_resource path="res://Assets/Levels/Gas Station/Interact_News.png" type="Texture" id=12]
 [ext_resource path="res://Scenes/Actor/Player.tscn" type="PackedScene" id=13]
 [ext_resource path="res://Scenes/Game Camera.tscn" type="PackedScene" id=14]
-[ext_resource path="res://Scenes/Actor/Interactable_Object.tscn" type="PackedScene" id=15]
+[ext_resource path="res://Scenes/Object/Interactable_Object.tscn" type="PackedScene" id=15]
 [ext_resource path="res://Scripts/Levels/Gas Station/Outside Gas Station.gd" type="Script" id=16]
 [ext_resource path="res://Shaders/Fog/fog.shader" type="Shader" id=17]
 [ext_resource path="res://Shaders/Fog/noise2.tres" type="Texture" id=18]
+[ext_resource path="res://Scenes/Object/Interactable_Ladder.tscn" type="PackedScene" id=19]
+[ext_resource path="res://Assets/Levels/Gas Station/Gas-Station_BuildingOverHang.png" type="Texture" id=20]
+[ext_resource path="res://Assets/Levels/Gas Station/Gas-Station-Background-Flat.png" type="Texture" id=21]
+[ext_resource path="res://Assets/Levels/Gas Station/Gas-Station_G-Sign.png" type="Texture" id=22]
+[ext_resource path="res://Assets/Levels/Gas Station/Gas-Station_S-Sign.png" type="Texture" id=23]
+[ext_resource path="res://Assets/Levels/Gas Station/Gas-Station_A-Sign.png" type="Texture" id=24]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 1182.5, 73.5 )
@@ -27,6 +33,9 @@ extents = Vector2( 68.875, 293.25 )
 
 [sub_resource type="RectangleShape2D" id=3]
 extents = Vector2( 1094.25, 151.75 )
+
+[sub_resource type="RectangleShape2D" id=12]
+extents = Vector2( 347, 125.125 )
 
 [sub_resource type="Gradient" id=10]
 
@@ -63,7 +72,17 @@ margin_bottom = 116.0
 texture = ExtResource( 9 )
 stretch_mode = 2
 
-[node name="Background" type="TextureRect" parent="."]
+[node name="FlatBackground" type="TextureRect" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+texture = ExtResource( 21 )
+
+[node name="Level1" type="Node2D" parent="."]
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Background" type="TextureRect" parent="Level1"]
 margin_right = 2022.0
 margin_bottom = 360.0
 texture = ExtResource( 6 )
@@ -71,189 +90,145 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-<<<<<<< HEAD
-[node name="OutOfBounds" type="StaticBody2D" parent="Background"]
-=======
 [node name="OutOfBounds" type="StaticBody2D" parent="Level1/Background"]
-collision_layer = 8
-collision_mask = 8
 __meta__ = {
 "_edit_lock_": true
 }
->>>>>>> 09c508b (Ladders working to move between levels)
 
-[node name="Bottom" type="CollisionShape2D" parent="Background/OutOfBounds"]
+[node name="Bottom" type="CollisionShape2D" parent="Level1/Background/OutOfBounds"]
 position = Vector2( 1043.5, 433 )
 shape = SubResource( 1 )
 
-[node name="Left" type="CollisionShape2D" parent="Background/OutOfBounds"]
+[node name="Left" type="CollisionShape2D" parent="Level1/Background/OutOfBounds"]
 position = Vector2( -70.125, 212.75 )
 shape = SubResource( 2 )
 
-[node name="Right" type="CollisionShape2D" parent="Background/OutOfBounds"]
+[node name="Right" type="CollisionShape2D" parent="Level1/Background/OutOfBounds"]
 position = Vector2( 2092, 140 )
 shape = SubResource( 2 )
 
-[node name="Top" type="CollisionShape2D" parent="Background/OutOfBounds"]
+[node name="Top" type="CollisionShape2D" parent="Level1/Background/OutOfBounds"]
 position = Vector2( 1091.25, 0.75 )
 shape = SubResource( 3 )
 
-[node name="GasStation" type="StaticBody2D" parent="Background"]
+[node name="GasStation" type="StaticBody2D" parent="Level1/Background"]
+__meta__ = {
+"_edit_lock_": true
+}
 
-[node name="PillarPost" type="CollisionPolygon2D" parent="Background/GasStation"]
+[node name="PillarPost" type="CollisionPolygon2D" parent="Level1/Background/GasStation"]
 polygon = PoolVector2Array( 515, 232, 509, 226, 519, 226, 524, 232 )
 
-[node name="PillarPost2" type="CollisionPolygon2D" parent="Background/GasStation"]
+[node name="PillarPost2" type="CollisionPolygon2D" parent="Level1/Background/GasStation"]
 position = Vector2( 105, 52 )
 polygon = PoolVector2Array( 515, 232, 509, 226, 519, 226, 524, 232 )
 
-[node name="PillarPost3" type="CollisionPolygon2D" parent="Background/GasStation"]
+[node name="PillarPost3" type="CollisionPolygon2D" parent="Level1/Background/GasStation"]
 position = Vector2( 449, 51 )
 polygon = PoolVector2Array( 515, 232, 509, 226, 519, 226, 524, 232 )
 
-[node name="PillarPost4" type="CollisionPolygon2D" parent="Background/GasStation"]
+[node name="PillarPost4" type="CollisionPolygon2D" parent="Level1/Background/GasStation"]
 position = Vector2( 668, 18 )
 polygon = PoolVector2Array( 515, 232, 509, 226, 519, 226, 524, 232 )
 
-[node name="Ballon" type="CollisionPolygon2D" parent="Background/GasStation"]
+[node name="Ballon" type="CollisionPolygon2D" parent="Level1/Background/GasStation"]
 position = Vector2( 686, 18 )
 polygon = PoolVector2Array( 506, 232, 503, 228, 520, 227, 522, 230 )
 
-<<<<<<< HEAD
-[node name="PillarPost5" type="CollisionPolygon2D" parent="Background/GasStation"]
-=======
 [node name="Ladder" type="CollisionPolygon2D" parent="Level1/Background/GasStation"]
 position = Vector2( 580, 29 )
 polygon = PoolVector2Array( 498, 230, 499, 227, 521, 227, 522, 230 )
 
 [node name="PillarPost5" type="CollisionPolygon2D" parent="Level1/Background/GasStation"]
->>>>>>> 09c508b (Ladders working to move between levels)
 position = Vector2( 613, -25 )
 polygon = PoolVector2Array( 515, 232, 509, 226, 519, 226, 524, 232 )
 
-[node name="GasPump" type="CollisionPolygon2D" parent="Background/GasStation"]
+[node name="GasPump" type="CollisionPolygon2D" parent="Level1/Background/GasStation"]
 position = Vector2( 613, -25 )
 polygon = PoolVector2Array( 422, 279, 411, 270, 425, 269, 435, 279 )
 
-[node name="GasPump2" type="CollisionPolygon2D" parent="Background/GasStation"]
+[node name="GasPump2" type="CollisionPolygon2D" parent="Level1/Background/GasStation"]
 position = Vector2( 704, -24 )
 polygon = PoolVector2Array( 422, 279, 411, 270, 425, 269, 435, 279 )
 
-[node name="GasPump3" type="CollisionPolygon2D" parent="Background/GasStation"]
+[node name="GasPump3" type="CollisionPolygon2D" parent="Level1/Background/GasStation"]
 position = Vector2( 686, -57 )
 polygon = PoolVector2Array( 422, 280, 411, 270, 425, 269, 435, 279 )
 
-[node name="GasPump4" type="CollisionPolygon2D" parent="Background/GasStation"]
+[node name="GasPump4" type="CollisionPolygon2D" parent="Level1/Background/GasStation"]
 position = Vector2( 597, -58 )
 polygon = PoolVector2Array( 422, 280, 411, 270, 425, 269, 435, 279 )
 
-[node name="BuildingFootPrint" type="CollisionPolygon2D" parent="Background/GasStation"]
+[node name="BuildingFootPrint" type="CollisionPolygon2D" parent="Level1/Background/GasStation"]
 position = Vector2( 597, -58 )
 polygon = PoolVector2Array( 16, 303, -56, 267, 335, 268, 355, 302, 359, 307, 359, 314, 245, 314, 240, 310, 240, 303 )
 
-[node name="Bullet Collisions" type="StaticBody2D" parent="Background"]
+[node name="Bullet Collisions" type="StaticBody2D" parent="Level1/Background"]
 collision_layer = 32768
 collision_mask = 32768
+__meta__ = {
+"_edit_lock_": true
+}
 
-[node name="PillarPost1" type="CollisionPolygon2D" parent="Background/Bullet Collisions"]
+[node name="PillarPost1" type="CollisionPolygon2D" parent="Level1/Background/Bullet Collisions"]
 polygon = PoolVector2Array( 512, 212, 513, 194, 521, 195, 521, 211, 516, 215 )
-<<<<<<< HEAD
-one_way_collision = true
-=======
->>>>>>> 09c508b (Ladders working to move between levels)
 
-[node name="PillarPost2" type="CollisionPolygon2D" parent="Background/Bullet Collisions"]
+[node name="PillarPost2" type="CollisionPolygon2D" parent="Level1/Background/Bullet Collisions"]
 position = Vector2( 105, 51 )
 polygon = PoolVector2Array( 513, 218, 513, 194, 521, 195, 522, 221, 517, 221 )
-<<<<<<< HEAD
-one_way_collision = true
-=======
->>>>>>> 09c508b (Ladders working to move between levels)
 
-[node name="PillarPost3" type="CollisionPolygon2D" parent="Background/Bullet Collisions"]
+[node name="PillarPost3" type="CollisionPolygon2D" parent="Level1/Background/Bullet Collisions"]
 position = Vector2( 450, 51 )
 polygon = PoolVector2Array( 513, 206, 513, 194, 519, 194, 519, 214, 516, 220 )
-<<<<<<< HEAD
-one_way_collision = true
-=======
->>>>>>> 09c508b (Ladders working to move between levels)
 
-[node name="PillarPost4" type="CollisionPolygon2D" parent="Background/Bullet Collisions"]
+[node name="PillarPost4" type="CollisionPolygon2D" parent="Level1/Background/Bullet Collisions"]
 position = Vector2( 668, 17 )
 polygon = PoolVector2Array( 513, 218, 513, 194, 521, 195, 522, 221, 517, 221 )
-<<<<<<< HEAD
-one_way_collision = true
-=======
->>>>>>> 09c508b (Ladders working to move between levels)
 
-[node name="PillarPost5" type="CollisionPolygon2D" parent="Background/Bullet Collisions"]
+[node name="PillarPost5" type="CollisionPolygon2D" parent="Level1/Background/Bullet Collisions"]
 position = Vector2( 612, -26 )
 polygon = PoolVector2Array( 513, 218, 513, 194, 521, 195, 522, 221, 517, 221 )
-<<<<<<< HEAD
-one_way_collision = true
-=======
->>>>>>> 09c508b (Ladders working to move between levels)
 
-[node name="GasPump1" type="CollisionPolygon2D" parent="Background/Bullet Collisions"]
+[node name="GasPump1" type="CollisionPolygon2D" parent="Level1/Background/Bullet Collisions"]
 position = Vector2( 502, -18 )
 polygon = PoolVector2Array( 511, 219, 511, 214, 513, 207, 519, 202, 525, 209, 523, 216, 516, 219 )
-<<<<<<< HEAD
-one_way_collision = true
-=======
->>>>>>> 09c508b (Ladders working to move between levels)
 
-[node name="GasPump2" type="CollisionPolygon2D" parent="Background/Bullet Collisions"]
+[node name="GasPump2" type="CollisionPolygon2D" parent="Level1/Background/Bullet Collisions"]
 position = Vector2( 516, 12 )
 polygon = PoolVector2Array( 514, 228, 512, 217, 510, 208, 518, 211, 526, 212, 524, 234, 519, 235 )
-<<<<<<< HEAD
-one_way_collision = true
-=======
->>>>>>> 09c508b (Ladders working to move between levels)
 
-[node name="GasPump3" type="CollisionPolygon2D" parent="Background/Bullet Collisions"]
+[node name="GasPump3" type="CollisionPolygon2D" parent="Level1/Background/Bullet Collisions"]
 position = Vector2( 589, -17 )
 polygon = PoolVector2Array( 511, 219, 511, 214, 513, 207, 519, 202, 525, 209, 523, 216, 516, 219 )
-<<<<<<< HEAD
-one_way_collision = true
-=======
->>>>>>> 09c508b (Ladders working to move between levels)
 
-[node name="GasPump4" type="CollisionPolygon2D" parent="Background/Bullet Collisions"]
+[node name="GasPump4" type="CollisionPolygon2D" parent="Level1/Background/Bullet Collisions"]
 position = Vector2( 607, 13 )
 polygon = PoolVector2Array( 514, 228, 512, 217, 510, 208, 518, 211, 526, 212, 524, 234, 519, 235 )
-<<<<<<< HEAD
-one_way_collision = true
-=======
->>>>>>> 09c508b (Ladders working to move between levels)
 
-[node name="Roof" type="CollisionPolygon2D" parent="Background/Bullet Collisions"]
+[node name="Roof" type="CollisionPolygon2D" parent="Level1/Background/Bullet Collisions"]
 position = Vector2( 120, -34 )
 polygon = PoolVector2Array( 424, 179, 454, 178, 505, 179, 821, 205, 853, 223, 852, 238, 500, 239 )
-<<<<<<< HEAD
-one_way_collision = true
-=======
->>>>>>> 09c508b (Ladders working to move between levels)
 
-[node name="Roof2" type="CollisionPolygon2D" parent="Background/Bullet Collisions"]
+[node name="Roof2" type="CollisionPolygon2D" parent="Level1/Background/Bullet Collisions"]
 position = Vector2( 120, -34 )
 polygon = PoolVector2Array( 424, 202, 452, 203, 487, 214, 499, 242, 430, 227 )
-<<<<<<< HEAD
-one_way_collision = true
-=======
->>>>>>> 09c508b (Ladders working to move between levels)
 
-[node name="ActorsAndObjects" type="YSort" parent="."]
+[node name="Ladder" parent="Level1/Background" instance=ExtResource( 19 )]
+position = Vector2( 1091, 259 )
+disabled = true
 
-[node name="Player" parent="ActorsAndObjects" instance=ExtResource( 13 )]
-position = Vector2( 298, 191 )
+[node name="ActorsAndObjects" type="YSort" parent="Level1"]
 
-[node name="GameCamera" parent="ActorsAndObjects/Player" instance=ExtResource( 14 )]
+[node name="Player" parent="Level1/ActorsAndObjects" instance=ExtResource( 13 )]
+position = Vector2( 1046, 291 )
 
-[node name="Interact_News" parent="ActorsAndObjects" instance=ExtResource( 15 )]
+[node name="GameCamera" parent="Level1/ActorsAndObjects/Player" instance=ExtResource( 14 )]
+
+[node name="Interact_News" parent="Level1/ActorsAndObjects" instance=ExtResource( 15 )]
 texture = ExtResource( 12 )
 spriteToLoad = ExtResource( 12 )
 
-[node name="GasBuildingFront" type="Sprite" parent="ActorsAndObjects"]
+[node name="GasBuildingFront" type="Sprite" parent="Level1/ActorsAndObjects"]
 position = Vector2( 629, 244 )
 texture = ExtResource( 4 )
 centered = false
@@ -262,7 +237,22 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="GasBuildingWall" type="Sprite" parent="ActorsAndObjects"]
+[node name="GasBuildingRoof" type="Sprite" parent="Level1/ActorsAndObjects"]
+position = Vector2( 1065, 253 )
+texture = ExtResource( 10 )
+centered = false
+offset = Vector2( -524, -159 )
+
+[node name="GasBuildingOverHang" type="Sprite" parent="Level1/ActorsAndObjects"]
+position = Vector2( 628, 284 )
+texture = ExtResource( 20 )
+centered = false
+offset = Vector2( -119, -190 )
+
+[node name="Ladder" parent="Level1/ActorsAndObjects" instance=ExtResource( 19 )]
+position = Vector2( 1091, 259 )
+
+[node name="GasBuildingWall" type="Sprite" parent="Level1/ActorsAndObjects"]
 position = Vector2( 541, 210 )
 texture = ExtResource( 11 )
 centered = false
@@ -271,16 +261,7 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="GasBuildingRoof" type="Sprite" parent="ActorsAndObjects"]
-position = Vector2( 628, 284 )
-texture = ExtResource( 10 )
-centered = false
-offset = Vector2( -119, -190 )
-__meta__ = {
-"_edit_lock_": true
-}
-
-[node name="GasPumpsBack" type="Sprite" parent="ActorsAndObjects"]
+[node name="GasPumpsBack" type="Sprite" parent="Level1/ActorsAndObjects"]
 position = Vector2( 1008, 222 )
 texture = ExtResource( 8 )
 centered = false
@@ -289,7 +270,7 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="GasPumpsFront" type="Sprite" parent="ActorsAndObjects"]
+[node name="GasPumpsFront" type="Sprite" parent="Level1/ActorsAndObjects"]
 position = Vector2( 1023, 255 )
 texture = ExtResource( 1 )
 centered = false
@@ -298,7 +279,7 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="GasPumpsPillar1" type="Sprite" parent="ActorsAndObjects"]
+[node name="GasPumpsPillar1" type="Sprite" parent="Level1/ActorsAndObjects"]
 position = Vector2( 509, 232 )
 texture = ExtResource( 3 )
 centered = false
@@ -307,7 +288,7 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="GasPumpsPillar2" type="Sprite" parent="ActorsAndObjects"]
+[node name="GasPumpsPillar2" type="Sprite" parent="Level1/ActorsAndObjects"]
 position = Vector2( 614, 284 )
 texture = ExtResource( 2 )
 centered = false
@@ -316,7 +297,7 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="GasPumpsPillar3" type="Sprite" parent="ActorsAndObjects"]
+[node name="GasPumpsPillar3" type="Sprite" parent="Level1/ActorsAndObjects"]
 position = Vector2( 1177, 250 )
 texture = ExtResource( 7 )
 centered = false
@@ -325,7 +306,7 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="GasPumpsPillar4" type="Sprite" parent="ActorsAndObjects"]
+[node name="GasPumpsPillar4" type="Sprite" parent="Level1/ActorsAndObjects"]
 position = Vector2( 1120, 207 )
 texture = ExtResource( 5 )
 centered = false
@@ -334,12 +315,10 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-<<<<<<< HEAD
-=======
 [node name="Level2" type="Node2D" parent="."]
-visible = false
 
 [node name="Background" type="TextureRect" parent="Level2"]
+visible = false
 margin_left = 541.0
 margin_top = 94.0
 margin_right = 2563.0
@@ -385,11 +364,8 @@ polygon = PoolVector2Array( -443, 94, -397, 94, -398, 91, -443, 91 )
 position = Vector2( 722, -57 )
 polygon = PoolVector2Array( -443, 94, -397, 94, -398, 91, -443, 91 )
 
-[node name="BackgroundLadder" type="Node2D" parent="Level2"]
-position = Vector2( 1072, 259 )
-
-[node name="Ladder" parent="Level2/BackgroundLadder" instance=ExtResource( 19 )]
-position = Vector2( 0, 0 )
+[node name="Ladder" parent="Level2/Background" instance=ExtResource( 19 )]
+position = Vector2( 550, 165 )
 
 [node name="ActorsAndObjects" type="YSort" parent="Level2"]
 
@@ -411,7 +387,6 @@ texture = ExtResource( 23 )
 centered = false
 offset = Vector2( 0, -37 )
 
->>>>>>> 09c508b (Ladders working to move between levels)
 [node name="FogShader" type="TextureRect" parent="."]
 material = SubResource( 4 )
 texture = ExtResource( 18 )
