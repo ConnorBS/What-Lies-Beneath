@@ -8,6 +8,16 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "Sprite",
+"class": "InteractableObjects",
+"language": "GDScript",
+"path": "res://Scripts/Classes/Interactable Object Class.gd"
+} ]
+_global_script_class_icons={
+"InteractableObjects": ""
+}
+
 [application]
 
 config/name="What Lies Beneath"
@@ -112,7 +122,9 @@ aim={
 2d_physics/layer_2="Level2"
 2d_physics/layer_3="Level3"
 2d_physics/layer_9="PlayerHitBox"
-2d_physics/layer_15="InteractableObject"
+2d_physics/layer_11="InteractableObjectFloor1"
+2d_physics/layer_12="InteractableObjectFloor2"
+2d_physics/layer_13="InteractableObjectFloor3"
 2d_physics/layer_16="BulletCollisionBarrier"
 
 [network]

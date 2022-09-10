@@ -553,7 +553,7 @@ func climbing_state(state):
 		$ClimbingInterations/ClimbingHitBoxTop.monitoring = true
 		$InteractableHitBox.monitoring = false
 		$GroundPosition.disabled =true
-		level_manager.move_to_floor(interactable_object.get_parent().ladder_floor,self)
+		level_manager.move_to_floor(interactable_object.get_parent().floor_placement,self)
 	else:
 		$ClimbingInterations/ClimbingHitBoxBottom.monitoring = false
 		$ClimbingInterations/ClimbingHitBoxTop.monitoring = false
@@ -573,7 +573,7 @@ func climbing_trigger(new_level):
 		move_a_floor(new_level)
 		climbing_state(false)
 		current_floor = new_level
-#		level_manager.move_to_floor(current_floor,self)
+		level_manager.move_to_floor(current_floor,self)
 
 func snap_to_ladder(ladder_area2d):
 	var vector = Vector2.ZERO
@@ -609,13 +609,17 @@ func move_sprite_while_climbing():
 	return vector
 
 func move_a_floor(new_floor):
-	self.set_collision_layer_bit(current_floor-1,false)
-	self.set_collision_mask_bit(current_floor-1,false)
-	self.set_collision_layer_bit(new_floor-1,true)
-	self.set_collision_mask_bit(new_floor-1,true)
+	change_collision_and_mask(self,current_floor-1,false)
+	change_collision_and_mask(self,new_floor-1,true)
+	change_collision_and_mask($InteractableHitBox,current_floor+9,false)
+	change_collision_and_mask($InteractableHitBox,new_floor+9,true)
+	
 	level_manager.move_to_floor(new_floor,self)
-	return
-
+	pass
+func change_collision_and_mask(node,floor_update,state):
+	node.set_collision_layer_bit(floor_update,state)
+	node.set_collision_mask_bit(floor_update,state)
+	pass
 ###########################################
 ################Stamina####################
 ###########################################

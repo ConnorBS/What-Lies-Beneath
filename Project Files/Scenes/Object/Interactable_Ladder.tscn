@@ -16,15 +16,15 @@ offset = Vector2( -3, -57 )
 script = ExtResource( 2 )
 
 [node name="Bottom" type="Area2D" parent="." groups=["Interact", "Ladder", "Ladder_Bottom"]]
-collision_layer = 16384
-collision_mask = 16384
+collision_layer = 0
+collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Bottom"]
 shape = SubResource( 13 )
 
 [node name="Top" type="Area2D" parent="." groups=["Interact", "Ladder", "Ladder_Top"]]
-collision_layer = 16384
-collision_mask = 16384
+collision_layer = 0
+collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Top"]
 position = Vector2( 0, -113 )

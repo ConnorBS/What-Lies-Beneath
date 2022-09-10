@@ -216,7 +216,6 @@ polygon = PoolVector2Array( 424, 202, 452, 203, 487, 214, 499, 242, 430, 227 )
 
 [node name="Ladder" parent="Level1/Background" instance=ExtResource( 19 )]
 position = Vector2( 1091, 259 )
-disabled = true
 
 [node name="ActorsAndObjects" type="YSort" parent="Level1"]
 
@@ -370,6 +369,13 @@ polygon = PoolVector2Array( -443, 94, -397, 94, -398, 91, -443, 91 )
 
 [node name="Ladder" parent="Level2/Background" instance=ExtResource( 19 )]
 position = Vector2( 550, 165 )
+
+[node name="JumpDown" type="Area2D" parent="Level2" groups=["Interact", "JumpDown"]]
+collision_layer = 2048
+collision_mask = 2048
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Level2/JumpDown"]
+polygon = PoolVector2Array( 1188, 142, 1174, 142, 1122, 114, 1132, 114 )
 
 [node name="ActorsAndObjects" type="YSort" parent="Level2"]
 

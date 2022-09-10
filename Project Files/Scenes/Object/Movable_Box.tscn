@@ -22,8 +22,8 @@ position = Vector2( -31, -5 )
 shape = SubResource( 5 )
 
 [node name="RightInteraction" type="Area2D" parent="." groups=["Box", "Box:Climb", "Box:Right", "Interact"]]
-collision_layer = 16384
-collision_mask = 16384
+collision_layer = 1024
+collision_mask = 1024
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RightInteraction"]
 position = Vector2( 31, -5 )

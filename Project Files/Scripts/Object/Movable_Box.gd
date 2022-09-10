@@ -8,6 +8,8 @@ enum {NONE,LEFT,RIGHT}
 onready var player_location = NONE
 
 onready var ground_shape = $GroundShape
+onready var right_interaction = $RightInteraction
+onready var left_interaction = $LeftInteraction
 
 var player_latched = false
 var moving = false
@@ -22,6 +24,18 @@ func update_floor(floor_number):
 	self.set_collision_mask_bit(0,false)
 	self.set_collision_layer_bit(floor_number-1,true)
 	self.set_collision_mask_bit(floor_number-1,true)
+	
+	### Interactions
+	right_interaction.set_collision_layer_bit(9,false)
+	right_interaction.set_collision_mask_bit(9,false)
+	right_interaction.set_collision_layer_bit(9+floor_number,true)
+	right_interaction.set_collision_mask_bit(9+floor_number,true)
+	
+	
+	left_interaction.set_collision_layer_bit(9,false)
+	left_interaction.set_collision_mask_bit(9,false)
+	left_interaction.set_collision_layer_bit(9+floor_number,true)
+	left_interaction.set_collision_mask_bit(9+floor_number,true)
 
 
 func _process(delta):
