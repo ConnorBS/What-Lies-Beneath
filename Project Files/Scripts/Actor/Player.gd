@@ -10,7 +10,9 @@ onready var stamina = $Stamina
 var has_stamina = true
 export (int) var run_speed = 160
 export (int) var walk_speed = 80
+var push_box_speed = 40
 
+enum BOX_SIDE {NONE,LEFT,RIGHT}
 ###############################
 #########Player States#########
 ###############################
@@ -18,6 +20,8 @@ var sprint_state = false
 var gun_out_state = false
 var interact_state = false
 var aim_state = false
+var push_box_state = false
+var side_of_box = BOX_SIDE.NONE
 var infront_of_interactable_object = false
 var flipped = false
 
@@ -35,7 +39,12 @@ var climbing = false
 var climbing_reached_top = false
 var climbing_reached_bottom = false
 onready var climb_tween = $ClimbingInterations/ClimbTween
-#onready var player_pivot = self.op
+
+#########################
+#########Boxes###########
+#########################
+signal move_box
+
 
 var gun_selected = PlayerInventory.equipped_gun
 var interactable_object = null
@@ -84,16 +93,14 @@ func check_if_current_animation_allows_movement() -> bool:
 		return false
 	elif animation_playing == "Lowering_Pistol":
 		return false
-	elif animation_playing == "Climbing_Up_To_Standing":
+		
+	#######CLimbing#######
+	elif check_if_current_animation_transition_climbing():
 		return false
-	elif animation_playing == "Climbing_Down_To_Standing":
+		
+	#####Boxes#####
+	elif check_if_current_animation_transition_pushing():
 		return false
-	elif animation_playing == "Standing_To_Climbing_Up":
-		return false
-	elif animation_playing == "Standing_To_Climbing_Down":
-		return false
-#	elif animation_playing == "Aiming_Pistol":
-#		return false
 	else:
 		return true
 func check_if_current_animation_transition_climbing()->bool:
@@ -109,6 +116,19 @@ func check_if_current_animation_transition_climbing()->bool:
 		return true
 	return false
 
+func check_if_current_animation_transition_pushing()->bool:
+	
+	var animation_playing = state_machine.get_current_node()
+	if animation_playing == "Standing_To_Pushing":
+		return true
+	elif animation_playing == "Pushing_To_Standing":
+		return true
+	elif animation_playing == "Climbing_Down_Box":
+		return true
+	elif animation_playing == "Climbing_Up_Box":
+		return true
+	return false
+	
 func check_if_current_climbing_animation()->bool:
 	var animation_playing = state_machine.get_current_node()
 	if animation_playing == "Climbing_Up":
@@ -131,18 +151,6 @@ func enable_ground_checker(prev_animation):
 		$GroundPosition.set_deferred("disabled", false)
 	
 
-func move_sprite_while_climbing():
-	var vector = Vector2.ZERO
-	var animation_playing = state_machine.get_current_node()
-	if animation_playing == "Standing_To_Climbing_Up":
-		vector = Vector2(0,-1) * (climb_speed *1)
-	elif animation_playing == "Standing_To_Climbing_Down":
-		vector = Vector2(0,1) * climb_speed * 2.5
-	elif animation_playing == "Climbing_Up_To_Standing":
-		vector = Vector2.UP * climb_speed * 2.5
-	elif animation_playing == "Climbing_Down_To_Standing":
-		vector = Vector2.DOWN #* climb_speed *.5
-	return vector
 	
 func _process(delta):
 	###############################################
@@ -155,16 +163,32 @@ func _process(delta):
 	#####Input Check if Animation allows it########
 	###############################################
 	if check_if_current_animation_allows_movement() == true:
-		move_and_slide(get_input())
-	
+		PlayerState.set_Player_Active(true)
+		var vector = get_input()
+#		print ("Moving Character by ",vector)
+		move_and_slide(vector)
+		if push_box_state:
+			print (vector)
+	else:
+		PlayerState.set_Player_Active(false)
 	######################################
 	####Moves Sprite while Climbing#######
 	######################################
-	elif check_if_current_animation_transition_climbing():
+	if check_if_current_animation_transition_climbing():
 		var vector = snap_to_ladder(interactable_object)
 		vector.y = move_sprite_while_climbing().y
-		print ("ladder Vector: ",vector)
+#		print ("ladder Vector: ",vector)
 		move_and_slide(vector)
+		
+	######################################
+	####Moves Sprite while Pushing #######
+	######################################
+#	elif check_if_current_animation_transition_pushing():
+#		var vector = snap_to_box(interactable_object)
+#		print ("Box Vector: ",vector)
+#		move_and_slide(vector)
+#		interactable_object.get_parent().move_and_slide(-vector)
+	
 	######################################
 	##Calls draw to update laser pointer##
 	######################################
@@ -181,25 +205,6 @@ func _draw():
 #		laser_pointer_to_mouse(aiming_gun())
 		aiming_gun()
 
-func snap_to_ladder(ladder_area2d):
-	var vector = Vector2.ZERO
-	if ladder_area2d != null:
-		var global_ladder_position = ladder_area2d.get_parent().global_position
-		vector.x = global_ladder_position.x-self.global_position.x
-		##################################
-		#####Adjust for Sprite Width######
-		##################################
-		if global_position.x> global_ladder_position.x:
-			if flipped:
-				vector.x -= 10
-			else:
-				vector.x -= 15
-		else:
-			if flipped:
-				vector.x += 15
-			else:
-				vector.x += 10
-	return vector
 
 
 ### Checking to break Interact State ("Kneeling_Down")
@@ -213,9 +218,7 @@ func _input(event):
 ##		laser_pointer_to_mouse(aiming_gun())
 #		aiming_gun()
 	
-#func check_to_break_interact_state()->void:
-#	if Input.is_action_pressed()
-#	pass
+
 func get_input()->Vector2:
 	var current = state_machine.get_current_node()
 	var velocity = Vector2.ZERO
@@ -255,11 +258,16 @@ func get_input()->Vector2:
 					climbing_state (false)
 				else:
 					climbing_state (true)
-				print(velocity)
 				return velocity
 			##############################
 			######Interactable Object#####
 			##############################
+			if interactable_object.is_in_group("Box"):
+				if push_box_state:
+					return push_box(false,interactable_object)
+				else:
+					return push_box(true,interactable_object)
+				return velocity
 			elif interact_state:
 				change_animation("Kneeling_Up")
 				interact_state = false
@@ -300,17 +308,20 @@ func get_input()->Vector2:
 	##############################################
 	if Input.is_action_pressed("move_right") and !climbing:
 		velocity.x += 1
-		$Sprite.scale.x = 1
-		flipped = false
+		if !push_box_state:
+			flip_sprite(false)
 	if Input.is_action_pressed("move_left") and !climbing:
 		velocity.x -= 1
-		$Sprite.scale.x = -1
-		flipped = true
-	if Input.is_action_pressed("move_up"):
+		if !push_box_state:
+			flip_sprite(true)
+	if Input.is_action_pressed("move_up") and !push_box_state:
 		velocity.y -= 1
-	if Input.is_action_pressed("move_down"):
+	if Input.is_action_pressed("move_down") and !push_box_state:
 		velocity.y += 1
 		
+	##############################################
+	###################Climbing ##################
+	##############################################
 	if climbing:
 		if check_if_current_climbing_animation() == true:
 			if velocity.y < 0 :
@@ -321,11 +332,32 @@ func get_input()->Vector2:
 				change_animation("Climbing_Idle")
 		return velocity * climb_speed
 		###Determine movement speed
+	
+	##############################################
+	################## Pushing ###################
+	##############################################
+	elif push_box_state:
+#		if check_if_current_climbing_animation() == true:
+		
+		if velocity.x < 0 :
+			if flipped:
+				change_animation("Pushing_Box")
+			else:
+				change_animation("Pulling_Box")
+		elif velocity.x > 0 :
+			if flipped:
+				change_animation("Pushing_Box")
+			else:
+				change_animation("Pulling_Box")
+		else:
+			change_animation("Pushing_Idle")
+		return velocity * push_box_speed
+		
 	else:
 		if (sprint_state == true) and (gun_out_state == false) and has_stamina:
 			velocity = velocity.normalized() * run_speed
-			stamina.use()
 			if velocity.length() != 0:
+				stamina.use()
 				change_animation("Running")
 		else:
 			velocity = velocity.normalized() * walk_speed
@@ -344,6 +376,13 @@ func get_input()->Vector2:
 				change_animation("Idle")
 	return velocity
 
+func flip_sprite(state:bool)->void:
+	if flipped != state:
+		flipped = state
+		if flipped:
+			$Sprite.scale.x = -1
+		else:
+			$Sprite.scale.x = 1
 
 func laser_pointer_to_mouse(target):
 	if state_machine.get_current_node() == "Aiming_Pistol":
@@ -467,12 +506,19 @@ func update_interaction(in_range:bool,area)->void:
 func _on_InteractableHitBox_area_entered(area):
 	if area.is_in_group("Interact"):
 		update_interaction(true,area)
+		if area.is_in_group("Box:Left"):
+			side_of_box = BOX_SIDE.LEFT
+		elif area.is_in_group("Box:Right"):
+			side_of_box = BOX_SIDE.RIGHT
 
 
 func _on_InteractableHitBox_area_exited(area):
 	if area.is_in_group("Interact"):
 		if !climbing:
 			update_interaction(false,null)
+			
+		if area.is_in_group("Box"):
+			side_of_box = BOX_SIDE.NONE
 
 
 func _on_ClimbingHitBoxTop_area_entered(area):
@@ -527,9 +573,40 @@ func climbing_trigger(new_level):
 		move_a_floor(new_level)
 		climbing_state(false)
 		current_floor = new_level
-		level_manager.move_to_floor(current_floor,self)
+#		level_manager.move_to_floor(current_floor,self)
 
+func snap_to_ladder(ladder_area2d):
+	var vector = Vector2.ZERO
+	if ladder_area2d != null:
+		var global_ladder_position = ladder_area2d.get_parent().global_position
+		vector.x = global_ladder_position.x-self.global_position.x
+		##################################
+		#####Adjust for Sprite Width######
+		##################################
+		if global_position.x> global_ladder_position.x:
+			if flipped:
+				vector.x -= 10
+			else:
+				vector.x -= 15
+		else:
+			if flipped:
+				vector.x += 15
+			else:
+				vector.x += 10
+	return vector
 
+func move_sprite_while_climbing():
+	var vector = Vector2.ZERO
+	var animation_playing = state_machine.get_current_node()
+	if animation_playing == "Standing_To_Climbing_Up":
+		vector = Vector2(0,-1) * (climb_speed *1)
+	elif animation_playing == "Standing_To_Climbing_Down":
+		vector = Vector2(0,1) * climb_speed * 2.5
+	elif animation_playing == "Climbing_Up_To_Standing":
+		vector = Vector2.UP * climb_speed * 2.5
+	elif animation_playing == "Climbing_Down_To_Standing":
+		vector = Vector2.DOWN #* climb_speed *.5
+	return vector
 
 func move_a_floor(new_floor):
 	self.set_collision_layer_bit(current_floor-1,false)
@@ -539,10 +616,70 @@ func move_a_floor(new_floor):
 	level_manager.move_to_floor(new_floor,self)
 	return
 
-
+###########################################
+################Stamina####################
+###########################################
 func _on_Stamina_out_of_stamina():
 	has_stamina = false
 
 
 func _on_Stamina_stamina_filled():
 	has_stamina = true
+
+###########################################
+###############Push Boxes##################
+###########################################
+func push_box(state:bool,box_area2D:Area2D)->Vector2:
+	if push_box_state != state:
+		push_box_state = state
+		if push_box_state:
+			change_animation("Pushing_Idle")
+			var box_node = box_area2D.get_parent()
+			push_box_speed = box_node.push_box_speed
+			if side_of_box == BOX_SIDE.LEFT:
+				flip_sprite(false)
+			elif side_of_box == BOX_SIDE.RIGHT:
+				flip_sprite(true)
+			
+			
+			return snap_to_box(box_node.player_latched(push_box_state))
+#			box_node.position = to_local(box_node.position)
+##			connect("move_box",box_node,)
+#			get_parent().remove_child(box_node)
+#			add_child(box_node)
+		else:
+			change_animation("Idle")
+			var box_node = box_area2D.get_parent()
+			
+#			box_node.position = to_global(box_node.position)
+#			self.remove_child(box_node)
+#			get_parent().add_child(box_node)
+			return snap_to_box(box_node.player_latched(push_box_state))
+	return Vector2.ZERO
+	
+func snap_to_box(snap_pos:Vector2):
+	var vector = Vector2.ZERO
+	
+	if snap_pos.y <self.global_position.y:
+		vector.y = snap_pos.y-self.global_position.y
+	else:
+		vector.y = self.global_position.y-snap_pos.y
+	
+	if snap_pos.x <self.global_position.x:
+		vector.x = snap_pos.x-self.global_position.x
+	else:
+		vector.x = self.global_position.x-snap_pos.x
+	##################################
+	#####Adjust for Sprite Width######
+	##################################
+	if global_position.x> snap_pos.x:
+		if flipped:
+			vector.x -= 10
+		else:
+			vector.x -= 15
+	else:
+		if flipped:
+			vector.x += 15
+		else:
+			vector.x += 10
+	return vector

@@ -1,45 +1,45 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Scripts/Object/Movable_Box.gd" type="Script" id=1]
+[ext_resource path="res://Assets/Sprites/Objects/Box.png" type="Texture" id=2]
 
 [sub_resource type="RectangleShape2D" id=5]
-extents = Vector2( 23, 24.5 )
+extents = Vector2( 23, 4.75 )
 
-[sub_resource type="Gradient" id=12]
-offsets = PoolRealArray( 0, 0.432258, 0.812903 )
-colors = PoolColorArray( 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1 )
-
-[sub_resource type="GradientTexture" id=13]
-gradient = SubResource( 12 )
-
-[sub_resource type="ParticlesMaterial" id=14]
-lifetime_randomness = 0.31
-emission_shape = 2
-emission_box_extents = Vector3( -5, -5, 1 )
-flag_disable_z = true
-spread = 119.85
-gravity = Vector3( 0, -5, 0 )
-orbit_velocity = 0.0
-orbit_velocity_random = 0.0
-color_initial_ramp = SubResource( 13 )
-
-[node name="InteractableObject" type="Sprite"]
-position = Vector2( 837, 256 )
-offset = Vector2( 10, -13 )
+[node name="InteractableObject" type="KinematicBody2D"]
 script = ExtResource( 1 )
 
-[node name="Area2D" type="Area2D" parent="." groups=["Box", "Interact"]]
+[node name="CrateSprite" type="Sprite" parent="."]
+texture = ExtResource( 2 )
+offset = Vector2( 0, -31 )
+
+[node name="LeftInteraction" type="Area2D" parent="." groups=["Box", "Box:Climb", "Box:Left", "Interact"]]
 collision_layer = 16384
 collision_mask = 16384
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2( 12, -10.5 )
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftInteraction"]
+position = Vector2( -31, -5 )
 shape = SubResource( 5 )
 
-[node name="Particles2D" type="Particles2D" parent="."]
-position = Vector2( 10, -17 )
-scale = Vector2( 2, 2 )
-lifetime = 5.0
-explosiveness = 0.22
-randomness = 0.74
-process_material = SubResource( 14 )
+[node name="RightInteraction" type="Area2D" parent="." groups=["Box", "Box:Climb", "Box:Right", "Interact"]]
+collision_layer = 16384
+collision_mask = 16384
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightInteraction"]
+position = Vector2( 31, -5 )
+shape = SubResource( 5 )
+
+[node name="LeftSidePlayerSnap" type="Position2D" parent="."]
+position = Vector2( -42, 0 )
+
+[node name="RightSidePlayerSnap" type="Position2D" parent="."]
+position = Vector2( 42, 0 )
+
+[node name="GroundShape" type="CollisionPolygon2D" parent="."]
+position = Vector2( -31, -62 )
+polygon = PoolVector2Array( 0, 62, 7, 55, 55, 55, 62, 62 )
+
+[connection signal="area_entered" from="LeftInteraction" to="." method="_on_LeftInteraction_area_entered"]
+[connection signal="area_exited" from="LeftInteraction" to="." method="_on_LeftInteraction_area_exited"]
+[connection signal="area_entered" from="RightInteraction" to="." method="_on_RightInteraction_area_entered"]
+[connection signal="area_exited" from="RightInteraction" to="." method="_on_RightInteraction_area_exited"]

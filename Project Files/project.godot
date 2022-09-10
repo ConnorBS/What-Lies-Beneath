@@ -21,6 +21,7 @@ default_bus_layout=""
 [autoload]
 
 PlayerInventory="*res://Scripts/Global/Player Inventory.gd"
+PlayerState="*res://Scripts/Global/Player State.gd"
 
 [display]
 

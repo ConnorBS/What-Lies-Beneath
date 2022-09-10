@@ -20,6 +20,8 @@ func move_to_floor(new_floor,node_to_move):
 	current_floor = new_floor
 	print (current_floor)
 
+
+#####Disable Backgrounds to avoid unintential overwriting
 func disable_floor(floor_to_disable):
 	var level_node = find_node(make_floor_name(floor_to_disable)).find_node("Background")
 #	var background_node = level_node.find_node("Background")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=2]
+[gd_scene load_steps=33 format=2]
 
 [ext_resource path="res://Assets/Levels/Gas Station/Gas-Station_GasPumps_Front.png" type="Texture" id=1]
 [ext_resource path="res://Assets/Levels/Gas Station/Gas-Station_Pillar2.png" type="Texture" id=2]
@@ -24,6 +24,7 @@
 [ext_resource path="res://Assets/Levels/Gas Station/Gas-Station_G-Sign.png" type="Texture" id=22]
 [ext_resource path="res://Assets/Levels/Gas Station/Gas-Station_S-Sign.png" type="Texture" id=23]
 [ext_resource path="res://Assets/Levels/Gas Station/Gas-Station_A-Sign.png" type="Texture" id=24]
+[ext_resource path="res://Scenes/Object/Movable_Box.tscn" type="PackedScene" id=25]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 1182.5, 73.5 )
@@ -314,6 +315,9 @@ offset = Vector2( 0, -36 )
 __meta__ = {
 "_edit_lock_": true
 }
+
+[node name="Crate" parent="Level1/ActorsAndObjects" instance=ExtResource( 25 )]
+position = Vector2( 1211, 289 )
 
 [node name="Level2" type="Node2D" parent="."]
 
