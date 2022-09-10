@@ -11,7 +11,7 @@ onready var ground_shape = $GroundShape
 onready var right_interaction = $RightInteraction
 onready var left_interaction = $LeftInteraction
 
-var player_latched = false
+var player_grabbed = false
 var moving = false
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -39,7 +39,7 @@ func update_floor(floor_number):
 
 
 func _process(delta):
-	if player_latched and PlayerState.get_Player_Active():
+	if player_grabbed and PlayerState.get_Player_Active():
 		##############################################
 		#############Movement Logic###################
 		##############################################
@@ -52,7 +52,7 @@ func _process(delta):
 		move_and_slide(velocity * push_box_speed)
 
 func player_latched (state)->Vector2:
-	player_latched = state
+	player_grabbed = state
 	return snap_position()
 	
 func snap_position()->Vector2:

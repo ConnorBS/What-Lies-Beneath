@@ -14,6 +14,7 @@ func _ready():
 func move_to_floor(new_floor,node_to_move):
 	print("moving_floor(",new_floor,", ",node_to_move.name,")")
 	disable_floor(current_floor)
+	yield(get_tree(), "idle_frame")
 	node_to_move.get_parent().remove_child(node_to_move)
 	find_node(make_floor_name(new_floor)).find_node("ActorsAndObjects").add_child(node_to_move)
 	enable_floor(new_floor)

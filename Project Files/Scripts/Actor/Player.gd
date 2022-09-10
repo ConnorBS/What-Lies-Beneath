@@ -38,7 +38,6 @@ export (int) var climb_speed = 30
 var climbing = false
 var climbing_reached_top = false
 var climbing_reached_bottom = false
-onready var climb_tween = $ClimbingInterations/ClimbTween
 
 #########################
 #########Boxes###########
@@ -63,7 +62,8 @@ func change_animation(animationToChangeTo:String)->void:
 	if state_machine.get_current_node() != animationToChangeTo:
 		
 		##TO BE REMOVED WHEN ALL ANIMATIONS ACCOUNTED FOR
-		$animationPlaceholder.hide()
+		$CenterContainer/animationPlaceholder.hide()
+		$CenterContainer/animationPlaceholder.text = "Animation\nPlace Holder\n"
 		#####################
 		state_machine.travel(animationToChangeTo)
 		print (animationToChangeTo)
@@ -165,10 +165,10 @@ func _process(delta):
 	if check_if_current_animation_allows_movement() == true:
 		PlayerState.set_Player_Active(true)
 		var vector = get_input()
-#		print ("Moving Character by ",vector)
+#		if push_box_state:
+#			move(vector)
+#		else:
 		move_and_slide(vector)
-		if push_box_state:
-			print (vector)
 	else:
 		PlayerState.set_Player_Active(false)
 	######################################
@@ -346,12 +346,12 @@ func get_input()->Vector2:
 				change_animation("Pulling_Box")
 		elif velocity.x > 0 :
 			if flipped:
-				change_animation("Pushing_Box")
-			else:
 				change_animation("Pulling_Box")
+			else:
+				change_animation("Pushing_Box")
 		else:
 			change_animation("Pushing_Idle")
-		return velocity * push_box_speed
+		return (velocity * push_box_speed) + snap_to_box(interactable_object.get_parent().snap_position())
 		
 	else:
 		if (sprint_state == true) and (gun_out_state == false) and has_stamina:
@@ -555,8 +555,8 @@ func climbing_state(state):
 		$GroundPosition.disabled =true
 		level_manager.move_to_floor(interactable_object.get_parent().floor_placement,self)
 	else:
-		$ClimbingInterations/ClimbingHitBoxBottom.monitoring = false
-		$ClimbingInterations/ClimbingHitBoxTop.monitoring = false
+		$ClimbingInterations/ClimbingHitBoxBottom.set_deferred("monitoring", false)
+		$ClimbingInterations/ClimbingHitBoxTop.set_deferred("monitoring", false)
 		$InteractableHitBox.monitoring = true
 		##Ground position handled in process for after animation now
 #		$GroundPosition.set_deferred("disabled", false)
@@ -663,27 +663,29 @@ func push_box(state:bool,box_area2D:Area2D)->Vector2:
 	
 func snap_to_box(snap_pos:Vector2):
 	var vector = Vector2.ZERO
+	print("SNAP: ",snap_pos," || Sprite Global Pos: ",self.global_position)
+	print("SNAP  - Global = ",snap_pos-global_position, " || Global-snap=",global_position-snap_pos)
+#	if snap_pos.y < self.global_position.y:
+	vector.y = snap_pos.y-self.global_position.y
+#	else:
+#		vector.y = self.global_position.y-snap_pos.y
 	
-	if snap_pos.y <self.global_position.y:
-		vector.y = snap_pos.y-self.global_position.y
-	else:
-		vector.y = self.global_position.y-snap_pos.y
-	
-	if snap_pos.x <self.global_position.x:
-		vector.x = snap_pos.x-self.global_position.x
-	else:
-		vector.x = self.global_position.x-snap_pos.x
+#	if snap_pos.x > self.global_position.x:
+	vector.x = snap_pos.x-self.global_position.x
+#	else:
+#		vector.x = self.global_position.x-snap_pos.x
 	##################################
 	#####Adjust for Sprite Width######
 	##################################
-	if global_position.x> snap_pos.x:
-		if flipped:
-			vector.x -= 10
-		else:
-			vector.x -= 15
-	else:
-		if flipped:
-			vector.x += 15
-		else:
-			vector.x += 10
-	return vector
+#	if global_position.x> snap_pos.x:
+#		if flipped:
+#			vector.x -= 10
+#		else:
+#			vector.x -= 15
+#	else:
+#		if flipped:
+#			vector.x += 15
+#		else:
+#			vector.x += 10
+	print ("SNAP SPACE ",vector)
+	return vector * 20

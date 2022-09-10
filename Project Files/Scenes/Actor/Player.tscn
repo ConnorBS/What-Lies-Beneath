@@ -395,14 +395,26 @@ anims/Walking = ExtResource( 2 )
 position = Vector2( 0, -3 )
 shape = SubResource( 34 )
 
-[node name="animationPlaceholder" type="Label" parent="."]
-margin_left = -20.0
-margin_top = -15.0
-margin_right = 61.0
-margin_bottom = 16.0
+[node name="CenterContainer" type="CenterContainer" parent="."]
+margin_left = -69.0
+margin_top = -25.0
+margin_right = 213.0
+margin_bottom = 25.0
 rect_scale = Vector2( 0.5, 0.5 )
+
+[node name="animationPlaceholder" type="Label" parent="CenterContainer"]
+margin_left = 100.0
+margin_top = 1.0
+margin_right = 181.0
+margin_bottom = 49.0
+grow_horizontal = 2
+grow_vertical = 2
+rect_pivot_offset = Vector2( 40, 28 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
 text = "Animation
-Place Holder"
+Place Holder
+Idle"
 align = 1
 valign = 1
 
