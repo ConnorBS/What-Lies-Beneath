@@ -119,7 +119,7 @@ Download Version 3.5 from Godot Download files [Here](https://godotengine.org/do
 - [x] Running (Hold-Shift)
 - [x] Hidden Stamina Bar
 - [x] Climb Ladder
-- [ ] Fall/Drop
+- [x] Fall/Drop
 #### Interactions
 - [ ] Push/Pull Box/Climb Box
 - [x] Kneeling (Looting/Interacting) 

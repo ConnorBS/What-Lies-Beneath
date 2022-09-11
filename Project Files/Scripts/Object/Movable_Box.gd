@@ -18,7 +18,10 @@ func _ready():
 	update_floor(floor_placement)
 	pass # Replace with function body.
 
-
+func update_collision_layer_and_mask(node,floor_to_adjust,state):
+	node.set_collision_layer_bit(floor_to_adjust,state)
+	node.set_collision_mask_bit(floor_to_adjust,state)
+	
 func update_floor(floor_number):
 	self.set_collision_layer_bit(0,false)
 	self.set_collision_mask_bit(0,false)
@@ -88,3 +91,19 @@ func _on_RightInteraction_area_exited(area):
 	if area.is_in_group("Player"):
 		player_location = NONE
 	pass # Replace with function body.
+
+func player_climb():
+	if player_location == LEFT:
+		player_grabbed = false
+		return [$LeftSidePlayerSnap/LeftClimbPos1.global_position,$LeftSidePlayerSnap/LeftClimbPos2.global_position]
+	if player_location == RIGHT:
+		player_grabbed = false
+		return [$RightSidePlayerSnap/RightClimbPos1.global_position,$RightSidePlayerSnap/RightClimbPos2.global_position]
+		
+func stand_on_box(is_on_box:bool):
+	if is_on_box:
+		update_collision_layer_and_mask($UpperBoxFloor,top_floor-1,true)
+		update_collision_layer_and_mask($LeftFallDown,top_floor+9,true)
+		update_collision_layer_and_mask($RightFallDown,top_floor+9,true)
+		
+	pass

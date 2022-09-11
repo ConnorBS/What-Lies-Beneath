@@ -26,7 +26,7 @@ config/icon="res://icon.png"
 
 [audio]
 
-default_bus_layout=""
+default_bus_layout="res://audio_bus_layout.tres"
 
 [autoload]
 

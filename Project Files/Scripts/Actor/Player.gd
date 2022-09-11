@@ -10,6 +10,7 @@ onready var stamina = $Stamina
 var has_stamina = true
 export (int) var run_speed = 160
 export (int) var walk_speed = 80
+export (int) var fall_speed = 160
 var push_box_speed = 40
 
 enum BOX_SIDE {NONE,LEFT,RIGHT}
@@ -21,8 +22,10 @@ var gun_out_state = false
 var interact_state = false
 var aim_state = false
 var push_box_state = false
+var climb_box_state = false
 var side_of_box = BOX_SIDE.NONE
 var infront_of_interactable_object = false
+var falling = false
 var flipped = false
 
 ###############################
@@ -43,7 +46,14 @@ var climbing_reached_bottom = false
 #########Boxes###########
 #########################
 signal move_box
+var climb_box_positions:Array
 
+#########################
+#########Falling#########
+#########################
+var falling_start_position = Vector2.ZERO
+var falling_end_position = Vector2.ZERO
+var falling_vector = Vector2.ZERO
 
 var gun_selected = PlayerInventory.equipped_gun
 var interactable_object = null
@@ -93,6 +103,8 @@ func check_if_current_animation_allows_movement() -> bool:
 		return false
 	elif animation_playing == "Lowering_Pistol":
 		return false
+	elif animation_playing == "Climbing_Up_Box":
+		return false
 		
 	#######CLimbing#######
 	elif check_if_current_animation_transition_climbing():
@@ -100,6 +112,9 @@ func check_if_current_animation_allows_movement() -> bool:
 		
 	#####Boxes#####
 	elif check_if_current_animation_transition_pushing():
+		return false
+	#####Falling#####
+	elif check_if_current_animation_is_falling():
 		return false
 	else:
 		return true
@@ -138,6 +153,15 @@ func check_if_current_climbing_animation()->bool:
 	elif animation_playing == "Climbing_Idle":
 		return true
 	return false
+func check_if_current_animation_is_falling()->bool:
+	var animation_playing = state_machine.get_current_node()
+	if animation_playing == "Standing_To_Falling":
+		return true
+	elif animation_playing == "Falling":
+		return true
+	elif animation_playing == "Landing":
+		return true
+	return false
 
 func update_previous_animation():
 	if state_machine.get_current_node() != previous_animation:
@@ -158,11 +182,22 @@ func _process(delta):
 	###############################################
 	if check_if_animation_has_changed():
 		enable_ground_checker(previous_animation)
+	if state_machine.get_current_node() == "Climbing_Up_Box":
+		change_animation("Idle")
+	###############################################
+	################ Falling Logic#################
+	###############################################
 
+	if falling:
+		PlayerState.set_Player_Active(false)
+		if global_position.y > falling_end_position.y:
+			landing()
+		else:
+			move_and_slide(falling_vector)
 	###############################################
 	#####Input Check if Animation allows it########
 	###############################################
-	if check_if_current_animation_allows_movement() == true:
+	elif check_if_current_animation_allows_movement() == true:
 		PlayerState.set_Player_Active(true)
 		var vector = get_input()
 #		if push_box_state:
@@ -181,8 +216,12 @@ func _process(delta):
 		move_and_slide(vector)
 		
 	######################################
-	####Moves Sprite while Pushing #######
+	##Moves Sprite while Climbing Box ####
 	######################################
+	if !climb_box_positions.empty():
+		move_and_slide(climb_box(climb_box_positions))
+		if climb_box_positions.empty():
+			stand_on_box()
 #	elif check_if_current_animation_transition_pushing():
 #		var vector = snap_to_box(interactable_object)
 #		print ("Box Vector: ",vector)
@@ -314,8 +353,12 @@ func get_input()->Vector2:
 		velocity.x -= 1
 		if !push_box_state:
 			flip_sprite(true)
-	if Input.is_action_pressed("move_up") and !push_box_state:
+	if Input.is_action_pressed("move_up"):# and !push_box_state:
 		velocity.y -= 1
+		#####Climbs Box####
+		if push_box_state:
+			change_animation("Climbing_Up_Box")
+			return climb_box(InteractableObjects.player_climb())
 	if Input.is_action_pressed("move_down") and !push_box_state:
 		velocity.y += 1
 		
@@ -480,7 +523,7 @@ func aiming_gun()->Vector2:
 		target = self.to_local(bullet_ray.get_collision_point())
 
 	return target
-func clamp_mouse_to_aim(starting_point:Vector2,slope:float,min_x:float,max_x:float)->Vector2:
+func clamp_mouse_to_aim(starting_point:Vector2,slope:float,min_x:float,max_x:float):
 	var mouse_pos = get_local_mouse_position()
 	var new_mouse_pos = Vector2.ZERO
 	new_mouse_pos.x = clamp(mouse_pos.x,min_x,max_x)
@@ -489,7 +532,7 @@ func clamp_mouse_to_aim(starting_point:Vector2,slope:float,min_x:float,max_x:flo
 	var max_y = slope*(new_mouse_pos.x-starting_point.x)+starting_point.y
 	new_mouse_pos.y = clamp(mouse_pos.y,min_y,max_y)
 	Input.warp_mouse_position(get_viewport().canvas_transform.xform(to_global(new_mouse_pos)))
-	return new_mouse_pos
+#	return new_mouse_pos
 	
 	
 func update_interaction(in_range:bool,area)->void:
@@ -510,15 +553,23 @@ func _on_InteractableHitBox_area_entered(area):
 			side_of_box = BOX_SIDE.LEFT
 		elif area.is_in_group("Box:Right"):
 			side_of_box = BOX_SIDE.RIGHT
+	
+	if area.is_in_group("Fall"):
+		
+		print ("fall detected")
+		falling_trigger(area,true)
 
 
 func _on_InteractableHitBox_area_exited(area):
 	if area.is_in_group("Interact"):
-		if !climbing:
+		if interactable_object == area and !climbing:
 			update_interaction(false,null)
+			print ("success")
+#		if !climbing:
+#			update_interaction(false,null)
 			
-		if area.is_in_group("Box"):
-			side_of_box = BOX_SIDE.NONE
+			if area.is_in_group("Box"):
+				side_of_box = BOX_SIDE.NONE
 
 
 func _on_ClimbingHitBoxTop_area_entered(area):
@@ -573,7 +624,7 @@ func climbing_trigger(new_level):
 		move_a_floor(new_level)
 		climbing_state(false)
 		current_floor = new_level
-		level_manager.move_to_floor(current_floor,self)
+#		level_manager.move_to_floor(current_floor,self)
 
 func snap_to_ladder(ladder_area2d):
 	var vector = Vector2.ZERO
@@ -603,7 +654,7 @@ func move_sprite_while_climbing():
 	elif animation_playing == "Standing_To_Climbing_Down":
 		vector = Vector2(0,1) * climb_speed * 2.5
 	elif animation_playing == "Climbing_Up_To_Standing":
-		vector = Vector2.UP * climb_speed * 2.5
+		vector = Vector2.UP * climb_speed * 2.75
 	elif animation_playing == "Climbing_Down_To_Standing":
 		vector = Vector2.DOWN #* climb_speed *.5
 	return vector
@@ -689,3 +740,37 @@ func snap_to_box(snap_pos:Vector2):
 #			vector.x += 10
 	print ("SNAP SPACE ",vector)
 	return vector * 20
+
+
+func climb_box(positions:Array) -> Vector2:
+	climb_box_positions = positions
+	var vector = Vector2.ZERO
+	if !positions.empty():
+		vector = positions[0]
+		climb_box_positions.remove(0)
+	return vector
+
+func stand_on_box():
+	move_a_floor(interactable_object.up_floor)
+	climb_box_state = false
+	interactable_object.stand_on_box(true)
+###########################################
+############### Falling ###################
+###########################################
+
+func falling_trigger(area:Area2D,state:bool):
+	if falling != state:
+		falling = state
+		if falling:
+			interactable_object = area
+			$GroundPosition.disabled =true
+			falling_start_position = global_position
+			falling_end_position =falling_start_position + Vector2(0,area.fall_distance)
+			falling_vector = Vector2(0,area.fall_distance)
+			change_animation("Falling")
+			move_a_floor(area.down_floor)
+			
+func landing():
+	falling = false
+	change_animation("Idle")
+	$GroundPosition.set_deferred("disabled", false)

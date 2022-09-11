@@ -1,4 +1,4 @@
-[gd_scene load_steps=122 format=2]
+[gd_scene load_steps=132 format=2]
 
 [ext_resource path="res://Assets/Animation/Player/Putting_In_Pistol.tres" type="Animation" id=1]
 [ext_resource path="res://Assets/Animation/Player/Walking.tres" type="Animation" id=2]
@@ -34,6 +34,9 @@
 [ext_resource path="res://Assets/Animation/Player/Pulling_Box.tres" type="Animation" id=32]
 [ext_resource path="res://Assets/Animation/Player/Standing_To_Pushing.tres" type="Animation" id=33]
 [ext_resource path="res://Assets/Animation/Player/Pushing_To_Standing.tres" type="Animation" id=34]
+[ext_resource path="res://Assets/Animation/Player/Standing_To_Falling.tres" type="Animation" id=35]
+[ext_resource path="res://Assets/Animation/Player/Falling.tres" type="Animation" id=36]
+[ext_resource path="res://Assets/Animation/Player/Landing.tres" type="Animation" id=37]
 
 [sub_resource type="CapsuleShape2D" id=2]
 radius = 6.0
@@ -66,6 +69,9 @@ animation = "Climbing_Up_Box"
 [sub_resource type="AnimationNodeAnimation" id=51]
 animation = "Climbing_Up_To_Standing"
 
+[sub_resource type="AnimationNodeAnimation" id=94]
+animation = "Falling"
+
 [sub_resource type="AnimationNodeAnimation" id=3]
 animation = "Idle"
 
@@ -77,6 +83,9 @@ animation = "Kneeling_Down"
 
 [sub_resource type="AnimationNodeAnimation" id=5]
 animation = "Kneeling_Up"
+
+[sub_resource type="AnimationNodeAnimation" id=95]
+animation = "Landing"
 
 [sub_resource type="AnimationNodeAnimation" id=36]
 animation = "Lowering_Pistol"
@@ -110,6 +119,9 @@ animation = "Standing_To_Climbing_Down"
 
 [sub_resource type="AnimationNodeAnimation" id=64]
 animation = "Standing_To_Climbing_Up"
+
+[sub_resource type="AnimationNodeAnimation" id=96]
+animation = "Standing_To_Falling"
 
 [sub_resource type="AnimationNodeAnimation" id=81]
 animation = "Standing_To_Pushing"
@@ -250,6 +262,16 @@ switch_mode = 2
 [sub_resource type="AnimationNodeStateMachineTransition" id=93]
 switch_mode = 2
 
+[sub_resource type="AnimationNodeStateMachineTransition" id=97]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=98]
+switch_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=99]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=100]
+switch_mode = 2
+
 [sub_resource type="AnimationNodeStateMachine" id=25]
 states/Aiming_Pistol/node = SubResource( 35 )
 states/Aiming_Pistol/position = Vector2( 162.133, -339.715 )
@@ -267,14 +289,18 @@ states/Climbing_Up_Box/node = SubResource( 76 )
 states/Climbing_Up_Box/position = Vector2( 55.858, 334.276 )
 states/Climbing_Up_To_Standing/node = SubResource( 51 )
 states/Climbing_Up_To_Standing/position = Vector2( -327.142, 33 )
+states/Falling/node = SubResource( 94 )
+states/Falling/position = Vector2( 533.754, 340.62 )
 states/Idle/node = SubResource( 3 )
 states/Idle/position = Vector2( -40, 69 )
 states/Idle_Pistol/node = SubResource( 27 )
 states/Idle_Pistol/position = Vector2( 281, -147 )
 states/Kneeling_Down/node = SubResource( 4 )
-states/Kneeling_Down/position = Vector2( 525, 215 )
+states/Kneeling_Down/position = Vector2( 607, 147 )
 states/Kneeling_Up/node = SubResource( 5 )
-states/Kneeling_Up/position = Vector2( 201, 192 )
+states/Kneeling_Up/position = Vector2( 168, 147 )
+states/Landing/node = SubResource( 95 )
+states/Landing/position = Vector2( 512.754, 413.62 )
 states/Lowering_Pistol/node = SubResource( 36 )
 states/Lowering_Pistol/position = Vector2( 23.1331, -264.294 )
 states/Pulling_Box/node = SubResource( 77 )
@@ -292,25 +318,27 @@ states/Putting_In_Pistol/position = Vector2( -40, -49.4 )
 states/Raising_Pistol/node = SubResource( 37 )
 states/Raising_Pistol/position = Vector2( 356.133, -276.294 )
 states/Running/node = SubResource( 8 )
-states/Running/position = Vector2( 466, 82 )
+states/Running/position = Vector2( 687, 28 )
 states/Standing_To_Climbing_Down/node = SubResource( 63 )
 states/Standing_To_Climbing_Down/position = Vector2( -327.142, 167 )
 states/Standing_To_Climbing_Up/node = SubResource( 64 )
 states/Standing_To_Climbing_Up/position = Vector2( -327.142, 233 )
+states/Standing_To_Falling/node = SubResource( 96 )
+states/Standing_To_Falling/position = Vector2( 671.754, 267.276 )
 states/Standing_To_Pushing/node = SubResource( 81 )
 states/Standing_To_Pushing/position = Vector2( 244.133, 352.276 )
 states/Walk_With_Pistol/node = SubResource( 9 )
 states/Walk_With_Pistol/position = Vector2( 18, -161 )
 states/Walking/node = SubResource( 10 )
-states/Walking/position = Vector2( 253, 56 )
-transitions = [ "Idle", "Pulling_Out_Pistol", SubResource( 11 ), "Walk_With_Pistol", "Putting_In_Pistol", SubResource( 12 ), "Running", "Kneeling_Down", SubResource( 13 ), "Walking", "Kneeling_Down", SubResource( 14 ), "Walking", "Pulling_Out_Pistol", SubResource( 15 ), "Pulling_Out_Pistol", "Walk_With_Pistol", SubResource( 16 ), "Kneeling_Down", "Kneeling_Up", SubResource( 17 ), "Kneeling_Up", "Idle", SubResource( 18 ), "Putting_In_Pistol", "Idle", SubResource( 19 ), "Kneeling_Up", "Walking", SubResource( 20 ), "Walking", "Running", SubResource( 21 ), "Running", "Walking", SubResource( 22 ), "Idle", "Walking", SubResource( 23 ), "Walking", "Idle", SubResource( 24 ), "Pulling_Out_Pistol", "Idle_Pistol", SubResource( 28 ), "Walk_With_Pistol", "Idle_Pistol", SubResource( 29 ), "Idle_Pistol", "Walk_With_Pistol", SubResource( 30 ), "Idle_Pistol", "Putting_In_Pistol", SubResource( 31 ), "Idle_Pistol", "Kneeling_Down", SubResource( 32 ), "Kneeling_Up", "Idle_Pistol", SubResource( 33 ), "Walk_With_Pistol", "Raising_Pistol", SubResource( 38 ), "Idle_Pistol", "Raising_Pistol", SubResource( 39 ), "Raising_Pistol", "Aiming_Pistol", SubResource( 40 ), "Lowering_Pistol", "Walk_With_Pistol", SubResource( 41 ), "Aiming_Pistol", "Lowering_Pistol", SubResource( 42 ), "Lowering_Pistol", "Idle_Pistol", SubResource( 43 ), "Climbing_Idle", "Climbing_Down", SubResource( 52 ), "Climbing_Idle", "Climbing_Up", SubResource( 53 ), "Climbing_Up", "Climbing_Down", SubResource( 54 ), "Climbing_Down", "Climbing_Up", SubResource( 55 ), "Climbing_Down", "Climbing_Idle", SubResource( 56 ), "Climbing_Up", "Climbing_Idle", SubResource( 57 ), "Idle", "Standing_To_Climbing_Down", SubResource( 65 ), "Idle", "Standing_To_Climbing_Up", SubResource( 66 ), "Standing_To_Climbing_Up", "Climbing_Up", SubResource( 67 ), "Standing_To_Climbing_Down", "Climbing_Down", SubResource( 68 ), "Climbing_Down", "Climbing_Down_To_Standing", SubResource( 69 ), "Climbing_Up", "Climbing_Up_To_Standing", SubResource( 70 ), "Climbing_Down_To_Standing", "Idle", SubResource( 71 ), "Climbing_Up_To_Standing", "Idle", SubResource( 72 ), "Idle", "Standing_To_Pushing", SubResource( 82 ), "Pushing_To_Standing", "Idle", SubResource( 83 ), "Standing_To_Pushing", "Pushing_Box", SubResource( 84 ), "Pushing_Box", "Pushing_Idle", SubResource( 85 ), "Pushing_Idle", "Pulling_Box", SubResource( 86 ), "Pulling_Box", "Pushing_Idle", SubResource( 87 ), "Pushing_Idle", "Pushing_Box", SubResource( 88 ), "Pulling_Box", "Pushing_To_Standing", SubResource( 89 ), "Idle", "Climbing_Up_Box", SubResource( 90 ), "Idle", "Climbing_Down_Box", SubResource( 91 ), "Climbing_Down_Box", "Idle", SubResource( 92 ), "Climbing_Up_Box", "Idle", SubResource( 93 ) ]
+states/Walking/position = Vector2( 489, 15 )
+transitions = [ "Idle", "Pulling_Out_Pistol", SubResource( 11 ), "Walk_With_Pistol", "Putting_In_Pistol", SubResource( 12 ), "Running", "Kneeling_Down", SubResource( 13 ), "Walking", "Kneeling_Down", SubResource( 14 ), "Walking", "Pulling_Out_Pistol", SubResource( 15 ), "Pulling_Out_Pistol", "Walk_With_Pistol", SubResource( 16 ), "Kneeling_Down", "Kneeling_Up", SubResource( 17 ), "Kneeling_Up", "Idle", SubResource( 18 ), "Putting_In_Pistol", "Idle", SubResource( 19 ), "Kneeling_Up", "Walking", SubResource( 20 ), "Walking", "Running", SubResource( 21 ), "Running", "Walking", SubResource( 22 ), "Idle", "Walking", SubResource( 23 ), "Walking", "Idle", SubResource( 24 ), "Pulling_Out_Pistol", "Idle_Pistol", SubResource( 28 ), "Walk_With_Pistol", "Idle_Pistol", SubResource( 29 ), "Idle_Pistol", "Walk_With_Pistol", SubResource( 30 ), "Idle_Pistol", "Putting_In_Pistol", SubResource( 31 ), "Idle_Pistol", "Kneeling_Down", SubResource( 32 ), "Kneeling_Up", "Idle_Pistol", SubResource( 33 ), "Walk_With_Pistol", "Raising_Pistol", SubResource( 38 ), "Idle_Pistol", "Raising_Pistol", SubResource( 39 ), "Raising_Pistol", "Aiming_Pistol", SubResource( 40 ), "Lowering_Pistol", "Walk_With_Pistol", SubResource( 41 ), "Aiming_Pistol", "Lowering_Pistol", SubResource( 42 ), "Lowering_Pistol", "Idle_Pistol", SubResource( 43 ), "Climbing_Idle", "Climbing_Down", SubResource( 52 ), "Climbing_Idle", "Climbing_Up", SubResource( 53 ), "Climbing_Up", "Climbing_Down", SubResource( 54 ), "Climbing_Down", "Climbing_Up", SubResource( 55 ), "Climbing_Down", "Climbing_Idle", SubResource( 56 ), "Climbing_Up", "Climbing_Idle", SubResource( 57 ), "Idle", "Standing_To_Climbing_Down", SubResource( 65 ), "Idle", "Standing_To_Climbing_Up", SubResource( 66 ), "Standing_To_Climbing_Up", "Climbing_Up", SubResource( 67 ), "Standing_To_Climbing_Down", "Climbing_Down", SubResource( 68 ), "Climbing_Down", "Climbing_Down_To_Standing", SubResource( 69 ), "Climbing_Up", "Climbing_Up_To_Standing", SubResource( 70 ), "Climbing_Down_To_Standing", "Idle", SubResource( 71 ), "Climbing_Up_To_Standing", "Idle", SubResource( 72 ), "Idle", "Standing_To_Pushing", SubResource( 82 ), "Pushing_To_Standing", "Idle", SubResource( 83 ), "Standing_To_Pushing", "Pushing_Box", SubResource( 84 ), "Pushing_Box", "Pushing_Idle", SubResource( 85 ), "Pushing_Idle", "Pulling_Box", SubResource( 86 ), "Pulling_Box", "Pushing_Idle", SubResource( 87 ), "Pushing_Idle", "Pushing_Box", SubResource( 88 ), "Pulling_Box", "Pushing_To_Standing", SubResource( 89 ), "Idle", "Climbing_Up_Box", SubResource( 90 ), "Idle", "Climbing_Down_Box", SubResource( 91 ), "Climbing_Down_Box", "Idle", SubResource( 92 ), "Climbing_Up_Box", "Idle", SubResource( 93 ), "Idle", "Standing_To_Falling", SubResource( 97 ), "Standing_To_Falling", "Falling", SubResource( 98 ), "Falling", "Landing", SubResource( 99 ), "Landing", "Kneeling_Up", SubResource( 100 ) ]
 start_node = "Idle"
-graph_offset = Vector2( -581.113, 152.091 )
+graph_offset = Vector2( -466.69, 39.4315 )
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=26]
 
 [sub_resource type="RectangleShape2D" id=34]
-extents = Vector2( 10, 2.5 )
+extents = Vector2( 10, 3.75 )
 
 [sub_resource type="DynamicFont" id=44]
 size = 23
@@ -371,10 +399,12 @@ anims/Climbing_Idle = ExtResource( 26 )
 anims/Climbing_Up = ExtResource( 23 )
 anims/Climbing_Up_Box = ExtResource( 30 )
 anims/Climbing_Up_To_Standing = ExtResource( 21 )
+anims/Falling = ExtResource( 36 )
 anims/Idle = ExtResource( 3 )
 anims/Idle_Pistol = ExtResource( 12 )
 anims/Kneeling_Down = ExtResource( 4 )
 anims/Kneeling_Up = ExtResource( 7 )
+anims/Landing = ExtResource( 37 )
 anims/Lowering_Pistol = ExtResource( 14 )
 anims/Pulling_Box = ExtResource( 32 )
 anims/Pulling_Out_Pistol = ExtResource( 5 )
@@ -387,12 +417,13 @@ anims/Reload_Pistol = ExtResource( 9 )
 anims/Running = ExtResource( 6 )
 anims/Standing_To_Climbing_Down = ExtResource( 25 )
 anims/Standing_To_Climbing_Up = ExtResource( 24 )
+anims/Standing_To_Falling = ExtResource( 35 )
 anims/Standing_To_Pushing = ExtResource( 33 )
 anims/Walk_With_Pistol = ExtResource( 10 )
 anims/Walking = ExtResource( 2 )
 
 [node name="GroundPosition" type="CollisionShape2D" parent="."]
-position = Vector2( 0, -3 )
+position = Vector2( 0, -4.25 )
 shape = SubResource( 34 )
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
@@ -460,6 +491,7 @@ collide_with_areas = true
 stream = ExtResource( 16 )
 volume_db = -12.0
 pitch_scale = 0.6
+bus = "SFX"
 
 [node name="Light2D" type="Light2D" parent="."]
 position = Vector2( -1, -31 )

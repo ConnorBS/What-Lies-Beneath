@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=2]
+[gd_scene load_steps=34 format=2]
 
 [ext_resource path="res://Assets/Levels/Gas Station/Gas-Station_GasPumps_Front.png" type="Texture" id=1]
 [ext_resource path="res://Assets/Levels/Gas Station/Gas-Station_Pillar2.png" type="Texture" id=2]
@@ -25,6 +25,7 @@
 [ext_resource path="res://Assets/Levels/Gas Station/Gas-Station_S-Sign.png" type="Texture" id=23]
 [ext_resource path="res://Assets/Levels/Gas Station/Gas-Station_A-Sign.png" type="Texture" id=24]
 [ext_resource path="res://Scenes/Object/Movable_Box.tscn" type="PackedScene" id=25]
+[ext_resource path="res://Scripts/Object/FallDownPoint.gd" type="Script" id=26]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 1182.5, 73.5 )
@@ -346,6 +347,7 @@ polygon = PoolVector2Array( -442.5, -290, -501.5, -320, -549.5, -320, -502.5, -2
 [node name="Right" type="CollisionPolygon2D" parent="Level2/Background/OutOfBounds"]
 position = Vector2( 1093, 313 )
 polygon = PoolVector2Array( -442.5, -290, -503, -320, -503, -293, -442.5, -263 )
+disabled = true
 
 [node name="Top" type="CollisionShape2D" parent="Level2/Background/OutOfBounds"]
 position = Vector2( 312, -106 )
@@ -370,12 +372,14 @@ polygon = PoolVector2Array( -443, 94, -397, 94, -398, 91, -443, 91 )
 [node name="Ladder" parent="Level2/Background" instance=ExtResource( 19 )]
 position = Vector2( 550, 165 )
 
-[node name="JumpDown" type="Area2D" parent="Level2" groups=["Interact", "JumpDown"]]
-collision_layer = 2048
-collision_mask = 2048
+[node name="FallDown" type="Area2D" parent="Level2" groups=["Fall"]]
+collision_layer = 0
+collision_mask = 0
+script = ExtResource( 26 )
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Level2/JumpDown"]
-polygon = PoolVector2Array( 1188, 142, 1174, 142, 1122, 114, 1132, 114 )
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Level2/FallDown" groups=["Fall"]]
+position = Vector2( -15, 0 )
+polygon = PoolVector2Array( 1181, 106, 1228, 140, 1271, 139, 1219, 105 )
 
 [node name="ActorsAndObjects" type="YSort" parent="Level2"]
 
