@@ -226,10 +226,12 @@ position = Vector2( 1046, 291 )
 [node name="GameCamera" parent="Level1/ActorsAndObjects/Player" instance=ExtResource( 14 )]
 
 [node name="Interact_News" parent="Level1/ActorsAndObjects" instance=ExtResource( 15 )]
+modulate = Color( 1, 1, 1, 0.564706 )
 texture = ExtResource( 12 )
 spriteToLoad = ExtResource( 12 )
 
 [node name="GasBuildingFront" type="Sprite" parent="Level1/ActorsAndObjects"]
+modulate = Color( 1, 1, 1, 0.564706 )
 position = Vector2( 629, 244 )
 texture = ExtResource( 4 )
 centered = false
@@ -239,21 +241,25 @@ __meta__ = {
 }
 
 [node name="GasBuildingRoof" type="Sprite" parent="Level1/ActorsAndObjects"]
+modulate = Color( 1, 1, 1, 0.564706 )
 position = Vector2( 1065, 253 )
 texture = ExtResource( 10 )
 centered = false
 offset = Vector2( -524, -159 )
 
 [node name="GasBuildingOverHang" type="Sprite" parent="Level1/ActorsAndObjects"]
+modulate = Color( 1, 1, 1, 0.564706 )
 position = Vector2( 628, 284 )
 texture = ExtResource( 20 )
 centered = false
 offset = Vector2( -119, -190 )
 
 [node name="Ladder" parent="Level1/ActorsAndObjects" instance=ExtResource( 19 )]
+modulate = Color( 1, 1, 1, 0.564706 )
 position = Vector2( 1091, 259 )
 
 [node name="GasBuildingWall" type="Sprite" parent="Level1/ActorsAndObjects"]
+modulate = Color( 1, 1, 1, 0.564706 )
 position = Vector2( 541, 210 )
 texture = ExtResource( 11 )
 centered = false
@@ -263,6 +269,7 @@ __meta__ = {
 }
 
 [node name="GasPumpsBack" type="Sprite" parent="Level1/ActorsAndObjects"]
+modulate = Color( 1, 1, 1, 0.564706 )
 position = Vector2( 1008, 222 )
 texture = ExtResource( 8 )
 centered = false
@@ -272,6 +279,7 @@ __meta__ = {
 }
 
 [node name="GasPumpsFront" type="Sprite" parent="Level1/ActorsAndObjects"]
+modulate = Color( 1, 1, 1, 0.564706 )
 position = Vector2( 1023, 255 )
 texture = ExtResource( 1 )
 centered = false
@@ -281,6 +289,7 @@ __meta__ = {
 }
 
 [node name="GasPumpsPillar1" type="Sprite" parent="Level1/ActorsAndObjects"]
+modulate = Color( 1, 1, 1, 0.564706 )
 position = Vector2( 509, 232 )
 texture = ExtResource( 3 )
 centered = false
@@ -290,6 +299,7 @@ __meta__ = {
 }
 
 [node name="GasPumpsPillar2" type="Sprite" parent="Level1/ActorsAndObjects"]
+modulate = Color( 1, 1, 1, 0.564706 )
 position = Vector2( 614, 284 )
 texture = ExtResource( 2 )
 centered = false
@@ -299,6 +309,7 @@ __meta__ = {
 }
 
 [node name="GasPumpsPillar3" type="Sprite" parent="Level1/ActorsAndObjects"]
+modulate = Color( 1, 1, 1, 0.564706 )
 position = Vector2( 1177, 250 )
 texture = ExtResource( 7 )
 centered = false
@@ -308,6 +319,7 @@ __meta__ = {
 }
 
 [node name="GasPumpsPillar4" type="Sprite" parent="Level1/ActorsAndObjects"]
+modulate = Color( 1, 1, 1, 0.564706 )
 position = Vector2( 1120, 207 )
 texture = ExtResource( 5 )
 centered = false
@@ -384,18 +396,21 @@ polygon = PoolVector2Array( 1181, 106, 1228, 140, 1271, 139, 1219, 105 )
 [node name="ActorsAndObjects" type="YSort" parent="Level2"]
 
 [node name="GSign" type="Sprite" parent="Level2/ActorsAndObjects"]
+modulate = Color( 1, 1, 1, 0.701961 )
 position = Vector2( 695, 131 )
 texture = ExtResource( 22 )
 centered = false
 offset = Vector2( 0, -37 )
 
 [node name="ASign" type="Sprite" parent="Level2/ActorsAndObjects"]
+modulate = Color( 1, 1, 1, 0.701961 )
 position = Vector2( 757, 131 )
 texture = ExtResource( 24 )
 centered = false
 offset = Vector2( 0, -37 )
 
 [node name="SSign" type="Sprite" parent="Level2/ActorsAndObjects"]
+modulate = Color( 1, 1, 1, 0.701961 )
 position = Vector2( 820, 131 )
 texture = ExtResource( 23 )
 centered = false

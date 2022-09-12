@@ -53,6 +53,7 @@ func _process(delta):
 		if Input.is_action_pressed("move_left"):
 			velocity.x -= 1
 		move_and_slide(velocity * push_box_speed)
+		
 
 func player_latched (state)->Vector2:
 	player_grabbed = state
