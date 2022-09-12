@@ -117,13 +117,13 @@ Download Version 3.5 from Godot Download files [Here](https://godotengine.org/do
 #### General Movement
 - [x] Walking 
 - [x] Running (Hold-Shift)
-- [ ] Hidden Stamina Bar
-- [ ] Climb Ladder
-- [ ] Fall/Drop
+- [x] Hidden Stamina Bar
+- [x] Climb Ladder
+- [x] Fall/Drop
 #### Interactions
 - [ ] Push/Pull Box/Climb Box
 - [x] Kneeling (Looting/Interacting) 
-- [ ] Interactable Object (Shimmer)
+- [x] Interactable Object (Shimmer)
 #### Basic Combat
 - [x] Aiming (across the walkable axis)
 - [x] While Aiming you can only Walking
