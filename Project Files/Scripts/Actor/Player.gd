@@ -172,7 +172,7 @@ func check_if_animation_has_changed()->bool:
 	return false
 func enable_ground_checker(prev_animation):
 	if prev_animation == "Climbing_Up_To_Standing" or prev_animation == "Climbing_Down_To_Standing":
-		$GroundPosition.set_deferred("disabled", false)
+		change_collision_and_mask(self,current_floor-1,true)
 	
 
 	
@@ -204,24 +204,25 @@ func _process(delta):
 #			move(vector)
 #		else:
 		move_and_slide(vector)
-	else:
-		PlayerState.set_Player_Active(false)
+	elif !climb_box_positions.empty():
+		move_and_slide(climb_box(climb_box_positions))
+		if climb_box_positions.empty():
+			stand_on_box()
 	######################################
 	####Moves Sprite while Climbing#######
 	######################################
-	if check_if_current_animation_transition_climbing():
+	elif check_if_current_animation_transition_climbing():
 		var vector = snap_to_ladder(interactable_object)
 		vector.y = move_sprite_while_climbing().y
 #		print ("ladder Vector: ",vector)
 		move_and_slide(vector)
 		
+	else:
+		PlayerState.set_Player_Active(false)
 	######################################
 	##Moves Sprite while Climbing Box ####
 	######################################
-	if !climb_box_positions.empty():
-		move_and_slide(climb_box(climb_box_positions))
-		if climb_box_positions.empty():
-			stand_on_box()
+
 #	elif check_if_current_animation_transition_pushing():
 #		var vector = snap_to_box(interactable_object)
 #		print ("Box Vector: ",vector)
@@ -358,7 +359,7 @@ func get_input()->Vector2:
 		#####Climbs Box####
 		if push_box_state:
 			change_animation("Climbing_Up_Box")
-			return climb_box(InteractableObjects.player_climb())
+			return climb_box(interactable_object.get_parent().player_climb())
 	if Input.is_action_pressed("move_down") and !push_box_state:
 		velocity.y += 1
 		
@@ -562,11 +563,8 @@ func _on_InteractableHitBox_area_entered(area):
 
 func _on_InteractableHitBox_area_exited(area):
 	if area.is_in_group("Interact"):
-		if interactable_object == area and !climbing:
+		if interactable_object == area and !climbing and !climb_box_state:
 			update_interaction(false,null)
-			print ("success")
-#		if !climbing:
-#			update_interaction(false,null)
 			
 			if area.is_in_group("Box"):
 				side_of_box = BOX_SIDE.NONE
@@ -603,7 +601,7 @@ func climbing_state(state):
 		$ClimbingInterations/ClimbingHitBoxBottom.monitoring = true
 		$ClimbingInterations/ClimbingHitBoxTop.monitoring = true
 		$InteractableHitBox.monitoring = false
-		$GroundPosition.disabled =true
+		change_collision_and_mask(self,current_floor-1,false)
 		level_manager.move_to_floor(interactable_object.get_parent().floor_placement,self)
 	else:
 		$ClimbingInterations/ClimbingHitBoxBottom.set_deferred("monitoring", false)
@@ -661,7 +659,7 @@ func move_sprite_while_climbing():
 
 func move_a_floor(new_floor):
 	change_collision_and_mask(self,current_floor-1,false)
-	change_collision_and_mask(self,new_floor-1,true)
+#	change_collision_and_mask(self,new_floor-1,true)
 	change_collision_and_mask($InteractableHitBox,current_floor+9,false)
 	change_collision_and_mask($InteractableHitBox,new_floor+9,true)
 	
@@ -751,9 +749,10 @@ func climb_box(positions:Array) -> Vector2:
 	return vector
 
 func stand_on_box():
-	move_a_floor(interactable_object.up_floor)
+	move_a_floor(interactable_object.get_parent().top_floor)
 	climb_box_state = false
-	interactable_object.stand_on_box(true)
+	interactable_object.get_parent().stand_on_box(true)
+	interactable_object = null
 ###########################################
 ############### Falling ###################
 ###########################################
@@ -763,14 +762,15 @@ func falling_trigger(area:Area2D,state:bool):
 		falling = state
 		if falling:
 			interactable_object = area
-			$GroundPosition.disabled =true
+#			change_collision_and_mask(self,0,false)
 			falling_start_position = global_position
 			falling_end_position =falling_start_position + Vector2(0,area.fall_distance)
 			falling_vector = Vector2(0,area.fall_distance)
 			change_animation("Falling")
 			move_a_floor(area.down_floor)
+			current_floor = area.down_floor
 			
 func landing():
 	falling = false
 	change_animation("Idle")
-	$GroundPosition.set_deferred("disabled", false)
+	change_collision_and_mask(self,current_floor-1,true)
