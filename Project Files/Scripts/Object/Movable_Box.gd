@@ -64,7 +64,7 @@ func snap_position()->Vector2:
 		return $LeftSidePlayerSnap.global_position
 	elif player_location == RIGHT:
 		return $RightSidePlayerSnap.global_position
-	printerr("Called without Player Detected")
+	printerr("snap_position: Called without Player Detected")
 	return Vector2.ZERO
 
 
@@ -100,7 +100,7 @@ func player_climb():
 	if player_location == RIGHT:
 		player_grabbed = false
 		return [$RightSidePlayerSnap/RightClimbPos1.global_position,$RightSidePlayerSnap/RightClimbPos2.global_position]
-		
+	return []
 func stand_on_box(is_on_box:bool):
 	if is_on_box:
 		update_collision_layer_and_mask($UpperBoxFloor,top_floor-1,true)

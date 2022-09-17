@@ -72,8 +72,8 @@ func change_animation(animationToChangeTo:String)->void:
 	if state_machine.get_current_node() != animationToChangeTo:
 		
 		##TO BE REMOVED WHEN ALL ANIMATIONS ACCOUNTED FOR
-		$CenterContainer/animationPlaceholder.hide()
-		$CenterContainer/animationPlaceholder.text = "Animation\nPlace Holder\n"
+#		$CenterContainer/animationPlaceholder.hide()
+#		$CenterContainer/animationPlaceholder.text = "Animation\nPlace Holder\n"
 		#####################
 		state_machine.travel(animationToChangeTo)
 		print (animationToChangeTo)
@@ -173,6 +173,10 @@ func check_if_animation_has_changed()->bool:
 func enable_ground_checker(prev_animation):
 	if prev_animation == "Climbing_Up_To_Standing" or prev_animation == "Climbing_Down_To_Standing":
 		change_collision_and_mask(self,current_floor-1,true)
+	if prev_animation == "Climbing_Up_Box": #or prev_animation == "Idle":
+		climb_box_state = false
+		push_box_state = false
+		change_collision_and_mask(self,current_floor-1,true)
 	
 
 	
@@ -181,7 +185,10 @@ func _process(delta):
 	#########Logic After Animation Change##########
 	###############################################
 	if check_if_animation_has_changed():
+		
 		enable_ground_checker(previous_animation)
+		$CenterContainer/animationPlaceholder.hide()
+		$CenterContainer/animationPlaceholder.text = "Animation\nPlace Holder\n"
 	if state_machine.get_current_node() == "Climbing_Up_Box":
 		change_animation("Idle")
 	###############################################
@@ -197,7 +204,7 @@ func _process(delta):
 	###############################################
 	#####Input Check if Animation allows it########
 	###############################################
-	elif check_if_current_animation_allows_movement() == true:
+	elif check_if_current_animation_allows_movement() == true and !climb_box_state:
 		PlayerState.set_Player_Active(true)
 		var vector = get_input()
 #		if push_box_state:
@@ -358,7 +365,8 @@ func get_input()->Vector2:
 		velocity.y -= 1
 		#####Climbs Box####
 		if push_box_state:
-			change_animation("Climbing_Up_Box")
+			trigger_climb_on_box()
+			
 			return climb_box(interactable_object.get_parent().player_climb())
 	if Input.is_action_pressed("move_down") and !push_box_state:
 		velocity.y += 1
@@ -712,8 +720,8 @@ func push_box(state:bool,box_area2D:Area2D)->Vector2:
 	
 func snap_to_box(snap_pos:Vector2):
 	var vector = Vector2.ZERO
-	print("SNAP: ",snap_pos," || Sprite Global Pos: ",self.global_position)
-	print("SNAP  - Global = ",snap_pos-global_position, " || Global-snap=",global_position-snap_pos)
+#	print("SNAP: ",snap_pos," || Sprite Global Pos: ",self.global_position)
+#	print("SNAP  - Global = ",snap_pos-global_position, " || Global-snap=",global_position-snap_pos)
 #	if snap_pos.y < self.global_position.y:
 	vector.y = snap_pos.y-self.global_position.y
 #	else:
@@ -736,23 +744,43 @@ func snap_to_box(snap_pos:Vector2):
 #			vector.x += 15
 #		else:
 #			vector.x += 10
-	print ("SNAP SPACE ",vector)
+#	print ("SNAP SPACE ",vector)
 	return vector * 20
 
 
 func climb_box(positions:Array) -> Vector2:
+	
+	climb_box_state = true
 	climb_box_positions = positions
 	var vector = Vector2.ZERO
 	if !positions.empty():
-		vector = positions[0]
-		climb_box_positions.remove(0)
+		if (climb_box_positions[0]-global_position).length() <= 10:
+			climb_box_positions.remove(0)
+		else:
+			vector = positions[0] - self.global_position
+		
 	return vector
 
 func stand_on_box():
-	move_a_floor(interactable_object.get_parent().top_floor)
-	climb_box_state = false
+	var new_floor = interactable_object.get_parent().top_floor
+	move_a_floor(new_floor)
+	change_collision_and_mask(self,new_floor-1,true)
+	
+	current_floor = new_floor
 	interactable_object.get_parent().stand_on_box(true)
-	interactable_object = null
+	climb_box_state = false
+	
+	_on_InteractableHitBox_area_exited(interactable_object)
+	
+#	interactable_object = null
+func trigger_climb_on_box():
+	var new_floor = interactable_object.get_parent().top_floor
+#	move_a_floor(new_floor)
+	level_manager.move_to_floor(new_floor,self)
+	change_animation("Climbing_Up_Box")
+	change_collision_and_mask(self,current_floor-1,false)
+	
+	
 ###########################################
 ############### Falling ###################
 ###########################################

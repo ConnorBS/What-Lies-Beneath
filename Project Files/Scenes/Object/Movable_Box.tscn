@@ -84,7 +84,7 @@ position = Vector2( 0, -46.5 )
 shape = SubResource( 6 )
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="UpperBoxFloor"]
-position = Vector2( 0, -79 )
+position = Vector2( 0, -78 )
 shape = SubResource( 6 )
 
 [connection signal="area_entered" from="LeftInteraction" to="." method="_on_LeftInteraction_area_entered"]
