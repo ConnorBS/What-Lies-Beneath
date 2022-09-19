@@ -121,7 +121,7 @@ Download Version 3.5 from Godot Download files [Here](https://godotengine.org/do
 - [x] Climb Ladder
 - [x] Fall/Drop
 #### Interactions
-- [ ] Push/Pull Box/Climb Box
+- [x] Push/Pull Box/Climb Box
 - [x] Kneeling (Looting/Interacting) 
 - [x] Interactable Object (Shimmer)
 #### Basic Combat
