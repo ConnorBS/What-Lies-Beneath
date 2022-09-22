@@ -21,7 +21,9 @@ _global_script_class_icons={
 [application]
 
 config/name="What Lies Beneath"
+config/description="A side-scrolling horror game"
 run/main_scene="res://Scenes/Levels/Gas Station/Outside Gas Station.tscn"
+boot_splash/image="res://Assets/UI/Loading Screens/LoadingScreen.png"
 config/icon="res://icon.png"
 
 [audio]
