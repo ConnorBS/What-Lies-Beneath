@@ -13,10 +13,10 @@ onready var left_interaction = $LeftInteraction
 
 var player_grabbed = false
 var moving = false
-# Called when the node enters the scene tree for the first time.
+
+
 func _ready():
 	update_floor(floor_placement)
-	pass # Replace with function body.
 
 func update_collision_layer_and_mask(node,floor_to_adjust,state):
 	node.set_collision_layer_bit(floor_to_adjust,state)
@@ -72,26 +72,22 @@ func _on_LeftInteraction_area_entered(area):
 	if area.is_in_group("Player"):
 		player_location = LEFT
 		print ("LEFT")
-	pass # Replace with function body.
 
 
 func _on_LeftInteraction_area_exited(area):
 	if area.is_in_group("Player"):
 		player_location = NONE
-	pass # Replace with function body.
 
 
 func _on_RightInteraction_area_entered(area):
 	if area.is_in_group("Player"):
 		player_location = RIGHT
 		print ("Right")
-	pass # Replace with function body.
 
 
 func _on_RightInteraction_area_exited(area):
 	if area.is_in_group("Player"):
 		player_location = NONE
-	pass # Replace with function body.
 
 func player_climb():
 	if player_location == LEFT:
@@ -101,6 +97,7 @@ func player_climb():
 		player_grabbed = false
 		return [$RightSidePlayerSnap/RightClimbPos1.global_position,$RightSidePlayerSnap/RightClimbPos2.global_position]
 	return []
+	
 func stand_on_box(is_on_box:bool):
 	if is_on_box:
 		update_collision_layer_and_mask($UpperBoxFloor,top_floor-1,true)

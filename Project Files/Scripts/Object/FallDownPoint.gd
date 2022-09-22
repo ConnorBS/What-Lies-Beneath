@@ -2,7 +2,6 @@ extends Area2D
 
 
 export (int) var down_floor = 1
-#export (int) var up_floor = 2
 export (int) var floor_placement = 2
 export (bool) var hitboxes_enabled = true
 export (float) var fall_distance = 100.00

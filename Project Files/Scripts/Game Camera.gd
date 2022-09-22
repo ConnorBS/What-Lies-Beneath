@@ -16,7 +16,6 @@ var buff
 
 func _ready():
 	max_pos = Vector2(level_node.level_width,level_node.level_height)
-#	print(camera_length_to_border)
 	pass
 
 	
@@ -34,7 +33,6 @@ func update_against_boundaries()->void:
 func dynamic_Camera(new_pos)->Vector2:
 	###Right
 	var change = Vector2.ZERO
-#	print ("Old = ",old_pos," || New = ",new_pos)
 	if old_pos.x - new_pos.x < 0:
 		change.x += 1
 	###Left
@@ -51,7 +49,6 @@ func dynamic_Camera(new_pos)->Vector2:
 	return change
 	
 func update_camera(direction):
-#	print (direction)
 	if direction == Vector2.ZERO:
 		cameraSnap()
 	else:
@@ -70,15 +67,12 @@ func update_camera(direction):
 	position = camera_swing/2
 	
 func cameraSnap():
-#	print (cameraSwing)
 	camera_swing = camera_swing/1.01
 	if camera_swing < Vector2(5,5) and camera_swing > -Vector2(5,5):
 		camera_swing = Vector2.ZERO
 
 func _process(delta):
-#	print (player_node.global_position)
 	update_camera(dynamic_Camera(player_node.position))
 	update_against_boundaries()
 	old_pos = player_node.position
-#	print ("Camera Swing: ",camera_swing)
 	pass

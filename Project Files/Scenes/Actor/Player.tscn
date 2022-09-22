@@ -368,7 +368,6 @@ texture = ExtResource( 8 )
 offset = Vector2( 0, -30 )
 hframes = 4
 vframes = 7
-frame = 21
 
 [node name="PlayerHitBox" type="Area2D" parent="." groups=["Player"]]
 position = Vector2( 0, -34 )
@@ -438,9 +437,9 @@ margin_bottom = 50.0
 rect_scale = Vector2( 0.5, 0.5 )
 
 [node name="animationPlaceholder" type="Label" parent="CenterContainer"]
-margin_left = 86.0
+margin_left = 100.0
 margin_top = 1.0
-margin_right = 196.0
+margin_right = 181.0
 margin_bottom = 49.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -449,7 +448,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "Animation
 Place Holder
-Climbing_Up_Box"
+Idle"
 align = 1
 valign = 1
 

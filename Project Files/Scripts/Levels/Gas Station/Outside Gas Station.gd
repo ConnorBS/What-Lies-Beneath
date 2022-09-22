@@ -25,17 +25,11 @@ func move_to_floor(new_floor,node_to_move):
 #####Disable Backgrounds to avoid unintential overwriting
 func disable_floor(floor_to_disable):
 	var level_node = find_node(make_floor_name(floor_to_disable)).find_node("Background")
-#	var background_node = level_node.find_node("Background")
-#	for collision_shapes in background_node.find_node("OutOfBounds").get_children():
-#		collision_shapes.call_deferred("disabled", true)
 	level_node.hide()
 	
 
 func enable_floor(floor_to_enable):
 	var level_node = find_node(make_floor_name(floor_to_enable)).find_node("Background")
-#	var background_node = level_node.find_node("Background")
-#	for collision_shapes in background_node.find_node("OutOfBounds").get_children():
-#		collision_shapes.call_deferred("disabled", false)
 	level_node.show()
 	
 func get_current_level():

@@ -62,7 +62,7 @@ var interactable_object = null
 func _ready():
 	$AnimationTree.active = true
 	level_manager.enable_floor(current_floor)
-	pass # Replace with function body.
+	pass 
 
 func check_equipped_gun() -> int:
 	gun_selected = PlayerInventory.equipped_gun
@@ -70,11 +70,6 @@ func check_equipped_gun() -> int:
 	
 func change_animation(animationToChangeTo:String)->void:
 	if state_machine.get_current_node() != animationToChangeTo:
-		
-		##TO BE REMOVED WHEN ALL ANIMATIONS ACCOUNTED FOR
-#		$CenterContainer/animationPlaceholder.hide()
-#		$CenterContainer/animationPlaceholder.text = "Animation\nPlace Holder\n"
-		#####################
 		state_machine.travel(animationToChangeTo)
 		print (animationToChangeTo)
 		if animationToChangeTo == "Idle":
@@ -173,7 +168,7 @@ func check_if_animation_has_changed()->bool:
 func enable_ground_checker(prev_animation):
 	if prev_animation == "Climbing_Up_To_Standing" or prev_animation == "Climbing_Down_To_Standing":
 		change_collision_and_mask(self,current_floor-1,true)
-	if prev_animation == "Climbing_Up_Box": #or prev_animation == "Idle":
+	if prev_animation == "Climbing_Up_Box":
 		climb_box_state = false
 		push_box_state = false
 		change_collision_and_mask(self,current_floor-1,true)
@@ -207,9 +202,6 @@ func _process(delta):
 	elif check_if_current_animation_allows_movement() == true and !climb_box_state:
 		PlayerState.set_Player_Active(true)
 		var vector = get_input()
-#		if push_box_state:
-#			move(vector)
-#		else:
 		move_and_slide(vector)
 	elif !climb_box_positions.empty():
 		move_and_slide(climb_box(climb_box_positions))
@@ -226,15 +218,6 @@ func _process(delta):
 		
 	else:
 		PlayerState.set_Player_Active(false)
-	######################################
-	##Moves Sprite while Climbing Box ####
-	######################################
-
-#	elif check_if_current_animation_transition_pushing():
-#		var vector = snap_to_box(interactable_object)
-#		print ("Box Vector: ",vector)
-#		move_and_slide(vector)
-#		interactable_object.get_parent().move_and_slide(-vector)
 	
 	######################################
 	##Calls draw to update laser pointer##
@@ -283,7 +266,7 @@ func get_input()->Vector2:
 				aim_state = false
 				change_mouse(null)
 				##Erases laser pointer:
-				clear_aiming()
+#				clear_aiming()
 				return velocity
 			else:
 				return velocity
@@ -361,7 +344,7 @@ func get_input()->Vector2:
 		velocity.x -= 1
 		if !push_box_state:
 			flip_sprite(true)
-	if Input.is_action_pressed("move_up"):# and !push_box_state:
+	if Input.is_action_pressed("move_up"):
 		velocity.y -= 1
 		#####Climbs Box####
 		if push_box_state:
@@ -383,14 +366,11 @@ func get_input()->Vector2:
 			else:
 				change_animation("Climbing_Idle")
 		return velocity * climb_speed
-		###Determine movement speed
 	
 	##############################################
 	################## Pushing ###################
 	##############################################
-	elif push_box_state:
-#		if check_if_current_climbing_animation() == true:
-		
+	elif push_box_state:		
 		if velocity.x < 0 :
 			if flipped:
 				change_animation("Pushing_Box")
@@ -541,7 +521,6 @@ func clamp_mouse_to_aim(starting_point:Vector2,slope:float,min_x:float,max_x:flo
 	var max_y = slope*(new_mouse_pos.x-starting_point.x)+starting_point.y
 	new_mouse_pos.y = clamp(mouse_pos.y,min_y,max_y)
 	Input.warp_mouse_position(get_viewport().canvas_transform.xform(to_global(new_mouse_pos)))
-#	return new_mouse_pos
 	
 	
 func update_interaction(in_range:bool,area)->void:
@@ -551,9 +530,7 @@ func update_interaction(in_range:bool,area)->void:
 		interact_pop_up_message.show()
 	else:
 		interact_pop_up_message.hide()
-	
-#func set_climbing(state:bool):
-#	if climbing
+
 
 func _on_InteractableHitBox_area_entered(area):
 	if area.is_in_group("Interact"):
@@ -585,7 +562,7 @@ func _on_ClimbingHitBoxTop_area_entered(area):
 			climbing_trigger(area.get_parent().up_floor)
 
 
-func _on_ClimbingHitBoxTop_area_exited(area):	
+func _on_ClimbingHitBoxTop_area_exited(area):
 	if climbing:
 		climbing_reached_top = false
 
@@ -602,10 +579,8 @@ func climbing_state(state):
 		var new_level = current_floor
 		if interactable_object.is_in_group("Ladder_Bottom"):
 			change_animation("Climbing_Up")
-#			new_level += interactable_object.get_parent().travels_up_and_down_floor_count
 		elif interactable_object.is_in_group("Ladder_Top"):
 			change_animation("Climbing_Down")
-#			new_level -= interactable_object.get_parent().travels_up_and_down_floor_count
 		$ClimbingInterations/ClimbingHitBoxBottom.monitoring = true
 		$ClimbingInterations/ClimbingHitBoxTop.monitoring = true
 		$InteractableHitBox.monitoring = false
@@ -630,7 +605,6 @@ func climbing_trigger(new_level):
 		move_a_floor(new_level)
 		climbing_state(false)
 		current_floor = new_level
-#		level_manager.move_to_floor(current_floor,self)
 
 func snap_to_ladder(ladder_area2d):
 	var vector = Vector2.ZERO
@@ -662,12 +636,11 @@ func move_sprite_while_climbing():
 	elif animation_playing == "Climbing_Up_To_Standing":
 		vector = Vector2.UP * climb_speed * 2.75
 	elif animation_playing == "Climbing_Down_To_Standing":
-		vector = Vector2.DOWN #* climb_speed *.5
+		vector = Vector2.DOWN
 	return vector
 
 func move_a_floor(new_floor):
 	change_collision_and_mask(self,current_floor-1,false)
-#	change_collision_and_mask(self,new_floor-1,true)
 	change_collision_and_mask($InteractableHitBox,current_floor+9,false)
 	change_collision_and_mask($InteractableHitBox,new_floor+9,true)
 	
@@ -701,50 +674,19 @@ func push_box(state:bool,box_area2D:Area2D)->Vector2:
 				flip_sprite(false)
 			elif side_of_box == BOX_SIDE.RIGHT:
 				flip_sprite(true)
-			
-			
 			return snap_to_box(box_node.player_latched(push_box_state))
-#			box_node.position = to_local(box_node.position)
-##			connect("move_box",box_node,)
-#			get_parent().remove_child(box_node)
-#			add_child(box_node)
+
 		else:
 			change_animation("Idle")
 			var box_node = box_area2D.get_parent()
-			
-#			box_node.position = to_global(box_node.position)
-#			self.remove_child(box_node)
-#			get_parent().add_child(box_node)
 			return snap_to_box(box_node.player_latched(push_box_state))
 	return Vector2.ZERO
 	
-func snap_to_box(snap_pos:Vector2):
+func snap_to_box(snap_pos:Vector2)->Vector2:
 	var vector = Vector2.ZERO
-#	print("SNAP: ",snap_pos," || Sprite Global Pos: ",self.global_position)
-#	print("SNAP  - Global = ",snap_pos-global_position, " || Global-snap=",global_position-snap_pos)
-#	if snap_pos.y < self.global_position.y:
 	vector.y = snap_pos.y-self.global_position.y
-#	else:
-#		vector.y = self.global_position.y-snap_pos.y
-	
-#	if snap_pos.x > self.global_position.x:
 	vector.x = snap_pos.x-self.global_position.x
-#	else:
-#		vector.x = self.global_position.x-snap_pos.x
-	##################################
-	#####Adjust for Sprite Width######
-	##################################
-#	if global_position.x> snap_pos.x:
-#		if flipped:
-#			vector.x -= 10
-#		else:
-#			vector.x -= 15
-#	else:
-#		if flipped:
-#			vector.x += 15
-#		else:
-#			vector.x += 10
-#	print ("SNAP SPACE ",vector)
+
 	return vector * 20
 
 
@@ -772,10 +714,8 @@ func stand_on_box():
 	
 	_on_InteractableHitBox_area_exited(interactable_object)
 	
-#	interactable_object = null
 func trigger_climb_on_box():
 	var new_floor = interactable_object.get_parent().top_floor
-#	move_a_floor(new_floor)
 	level_manager.move_to_floor(new_floor,self)
 	change_animation("Climbing_Up_Box")
 	change_collision_and_mask(self,current_floor-1,false)
@@ -790,7 +730,6 @@ func falling_trigger(area:Area2D,state:bool):
 		falling = state
 		if falling:
 			interactable_object = area
-#			change_collision_and_mask(self,0,false)
 			falling_start_position = global_position
 			falling_end_position =falling_start_position + Vector2(0,area.fall_distance)
 			falling_vector = Vector2(0,area.fall_distance)
