@@ -71,7 +71,7 @@ func check_equipped_gun() -> int:
 func change_animation(animationToChangeTo:String)->void:
 	if state_machine.get_current_node() != animationToChangeTo:
 		state_machine.travel(animationToChangeTo)
-		print (animationToChangeTo)
+		#print (animationToChangeTo)
 		if animationToChangeTo == "Idle":
 			
 				pass
@@ -82,7 +82,6 @@ func change_mouse(mouse_cursor)->void:
 	elif mouse_cursor == target_mouse_reticle:
 		Input.set_custom_mouse_cursor(mouse_cursor,Input.CURSOR_ARROW,Vector2(10,10))
 		Input.set_mouse_mode(Input.MOUSE_MODE_CONFINED)
-#		Input.set_custom_mouse_cursor(mouse_cursor,0,Vector2(10	,10))
 	
 func check_if_current_animation_allows_movement() -> bool:
 	var animation_playing = state_machine.get_current_node()
@@ -213,26 +212,21 @@ func _process(delta):
 	elif check_if_current_animation_transition_climbing():
 		var vector = snap_to_ladder(interactable_object)
 		vector.y = move_sprite_while_climbing().y
-#		print ("ladder Vector: ",vector)
 		move_and_slide(vector)
 		
 	else:
 		PlayerState.set_Player_Active(false)
 	
 	######################################
-	##Calls draw to update laser pointer##
+	###########Aiming Gun#################
 	######################################
 	if aim_state:
-		############With Laser Pointer#############
-#		update()
-		##########Without Laser Pointer#########
 		aiming_gun()
 	######################################
 	update_previous_animation()
 func _draw():
 	if aim_state:
 		###Removed Laser Pointer Visual
-#		laser_pointer_to_mouse(aiming_gun())
 		aiming_gun()
 
 
@@ -243,10 +237,6 @@ func _input(event):
 		if ((event is InputEventKey) or (event is InputEventJoypadButton)) and event.pressed:
 			change_animation("Idle")
 			interact_state = false
-#	if aim_state == true:
-#		###Removed Laser Pointer Visual
-##		laser_pointer_to_mouse(aiming_gun())
-#		aiming_gun()
 	
 
 func get_input()->Vector2:
@@ -265,8 +255,6 @@ func get_input()->Vector2:
 				change_animation("Idle_Pistol")
 				aim_state = false
 				change_mouse(null)
-				##Erases laser pointer:
-#				clear_aiming()
 				return velocity
 			else:
 				return velocity
@@ -512,11 +500,12 @@ func aiming_gun()->Vector2:
 		target = self.to_local(bullet_ray.get_collision_point())
 
 	return target
+	
 func clamp_mouse_to_aim(starting_point:Vector2,slope:float,min_x:float,max_x:float):
 	var mouse_pos = get_local_mouse_position()
 	var new_mouse_pos = Vector2.ZERO
 	new_mouse_pos.x = clamp(mouse_pos.x,min_x,max_x)
-	##y=mx+b
+	## Using the formula y = mx + b
 	var min_y = -slope*(new_mouse_pos.x-starting_point.x)+starting_point.y
 	var max_y = slope*(new_mouse_pos.x-starting_point.x)+starting_point.y
 	new_mouse_pos.y = clamp(mouse_pos.y,min_y,max_y)
@@ -541,8 +530,6 @@ func _on_InteractableHitBox_area_entered(area):
 			side_of_box = BOX_SIDE.RIGHT
 	
 	if area.is_in_group("Fall"):
-		
-		print ("fall detected")
 		falling_trigger(area,true)
 
 
@@ -590,8 +577,6 @@ func climbing_state(state):
 		$ClimbingInterations/ClimbingHitBoxBottom.set_deferred("monitoring", false)
 		$ClimbingInterations/ClimbingHitBoxTop.set_deferred("monitoring", false)
 		$InteractableHitBox.monitoring = true
-		##Ground position handled in process for after animation now
-#		$GroundPosition.set_deferred("disabled", false)
 		update_interaction(false,null)
 		
 func _on_ClimbingHitBoxBottom_area_exited(area):
