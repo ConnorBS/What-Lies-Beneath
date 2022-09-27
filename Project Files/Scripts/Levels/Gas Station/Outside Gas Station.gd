@@ -52,4 +52,5 @@ func set_player_pos(spawPointNumber:int)->void:
 	playerNode.position = spawnNode.position
 	playerNode.get_parent().remove_child(playerNode)
 	spawnNode.get_parent().add_child(playerNode)
+	playerNode.update_floor_collision(int(spawnNode.get_parent().get_parent().name[5]))
 	

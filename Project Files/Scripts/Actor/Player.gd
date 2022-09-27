@@ -200,7 +200,7 @@ func _process(delta):
 	###############################################
 	elif check_if_current_animation_allows_movement() == true and !climb_box_state:
 		PlayerState.set_Player_Active(true)
-		var vector = get_input()
+		var vector = _get_input()
 		move_and_slide(vector)
 	elif !climb_box_positions.empty():
 		move_and_slide(climb_box(climb_box_positions))
@@ -239,7 +239,7 @@ func _input(event):
 			interact_state = false
 	
 
-func get_input()->Vector2:
+func _get_input()->Vector2:
 	var current = state_machine.get_current_node()
 	var velocity = Vector2.ZERO
 	
@@ -629,6 +629,14 @@ func move_a_floor(new_floor):
 	change_collision_and_mask($InteractableHitBox,new_floor+9,true)
 	
 	level_manager.move_to_floor(new_floor,self)
+	pass
+	
+func update_floor_collision(new_floor):
+	change_collision_and_mask(self,current_floor-1,false)
+	change_collision_and_mask(self,new_floor-1,true)
+	change_collision_and_mask($InteractableHitBox,current_floor+9,false)
+	change_collision_and_mask($InteractableHitBox,new_floor+9,true)
+	current_floor = new_floor
 	pass
 func change_collision_and_mask(node,floor_update,state):
 	node.set_collision_layer_bit(floor_update,state)
