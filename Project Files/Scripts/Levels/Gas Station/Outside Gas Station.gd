@@ -4,11 +4,13 @@ var level_width = 2022
 var level_height = 360
 var current_floor 
 export (Dictionary) var entrance_locations = {0:Vector2(200,200)}
-
+onready var playerNode = find_node("Player")
 
 func _ready():
+	
+	set_player_pos(PlayerState.Spawn_Point)
 	$FogShader.rect_size = Vector2(level_width,level_height)
-	current_floor = find_node("Player",true).current_floor
+	current_floor = playerNode.current_floor
 	pass
 
 func move_to_floor(new_floor,node_to_move):
@@ -38,3 +40,17 @@ func get_current_level():
 
 func make_floor_name(floor_number:int)->String:
 	return "Level"+str(floor_number)
+
+func set_player_pos(spawPointNumber:int)->void:
+	var newPos = "SpawnPoint"+str(spawPointNumber)
+	var spawnNode = find_node(newPos)
+	if spawnNode == null:
+		newPos = "SpawnPoint1"
+		spawnNode = find_node(newPos)
+		if spawnNode == null:
+			return
+	playerNode.position = spawnNode.position
+	playerNode.get_parent().remove_child(playerNode)
+	spawnNode.get_parent().add_child(playerNode)
+	playerNode.update_floor_collision(int(spawnNode.get_parent().get_parent().name[5]))
+	

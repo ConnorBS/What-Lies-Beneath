@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=2]
+[gd_scene load_steps=36 format=2]
 
 [ext_resource path="res://Assets/Levels/Gas Station/Gas-Station_GasPumps_Front.png" type="Texture" id=1]
 [ext_resource path="res://Assets/Levels/Gas Station/Gas-Station_Pillar2.png" type="Texture" id=2]
@@ -26,6 +26,8 @@
 [ext_resource path="res://Assets/Levels/Gas Station/Gas-Station_A-Sign.png" type="Texture" id=24]
 [ext_resource path="res://Scenes/Object/Movable_Box.tscn" type="PackedScene" id=25]
 [ext_resource path="res://Scripts/Object/FallDownPoint.gd" type="Script" id=26]
+[ext_resource path="res://Scenes/Object/ExitZone.tscn" type="PackedScene" id=27]
+[ext_resource path="res://Scenes/SpawnPoint1.tscn" type="PackedScene" id=28]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 1182.5, 73.5 )
@@ -105,13 +107,13 @@ shape = SubResource( 1 )
 position = Vector2( -70.125, 212.75 )
 shape = SubResource( 2 )
 
-[node name="Right" type="CollisionShape2D" parent="Level1/Background/OutOfBounds"]
-position = Vector2( 2092, 140 )
-shape = SubResource( 2 )
-
 [node name="Top" type="CollisionShape2D" parent="Level1/Background/OutOfBounds"]
 position = Vector2( 1091.25, 0.75 )
 shape = SubResource( 3 )
+
+[node name="Right" type="CollisionShape2D" parent="Level1/Background/OutOfBounds"]
+position = Vector2( 2090, 157 )
+shape = SubResource( 2 )
 
 [node name="GasStation" type="StaticBody2D" parent="Level1/Background"]
 __meta__ = {
@@ -217,6 +219,22 @@ polygon = PoolVector2Array( 424, 202, 452, 203, 487, 214, 499, 242, 430, 227 )
 
 [node name="Ladder" parent="Level1/Background" instance=ExtResource( 19 )]
 position = Vector2( 1091, 259 )
+
+[node name="Exit2" parent="Level1/Background" instance=ExtResource( 27 )]
+SceneToLoad = "res://Scenes/Levels/Gas Station/Outside Gas Station.tscn"
+PointToLoad = 2
+
+[node name="Left2" type="CollisionShape2D" parent="Level1/Background/Exit2"]
+position = Vector2( -61.125, 212.75 )
+shape = SubResource( 2 )
+
+[node name="Exit1" parent="Level1/Background" instance=ExtResource( 27 )]
+SceneToLoad = "res://Scenes/Levels/Gas Station/Outside Gas Station.tscn"
+PointToLoad = 1
+
+[node name="Right" type="CollisionShape2D" parent="Level1/Background/Exit1"]
+position = Vector2( 2085, 160 )
+shape = SubResource( 2 )
 
 [node name="ActorsAndObjects" type="YSort" parent="Level1"]
 
@@ -331,6 +349,11 @@ __meta__ = {
 [node name="Crate" parent="Level1/ActorsAndObjects" instance=ExtResource( 25 )]
 position = Vector2( 1211, 289 )
 
+[node name="SpawnPoint1" parent="Level1/ActorsAndObjects" instance=ExtResource( 28 )]
+
+[node name="SpawnPoint2" type="Position2D" parent="Level1/ActorsAndObjects"]
+position = Vector2( 1977, 307 )
+
 [node name="Level2" type="Node2D" parent="."]
 
 [node name="Background" type="TextureRect" parent="Level2"]
@@ -415,6 +438,9 @@ position = Vector2( 820, 131 )
 texture = ExtResource( 23 )
 centered = false
 offset = Vector2( 0, -37 )
+
+[node name="SpawnPoint3" type="Position2D" parent="Level2/ActorsAndObjects"]
+position = Vector2( 638, 128 )
 
 [node name="FogShader" type="TextureRect" parent="."]
 material = SubResource( 4 )
