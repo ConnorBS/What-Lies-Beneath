@@ -414,7 +414,7 @@ func laser_pointer_to_mouse(target):
 func clear_aiming()->void:
 	bullet_ray.enabled = false
 
-func aiming_gun(max_slope = .5/1)Vector2:
+func aiming_gun(max_slope = .5/1)->Vector2:
 	bullet_ray.enabled = true
 	var target= get_local_mouse_position()
 	var direction_to_target 
