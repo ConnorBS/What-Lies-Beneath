@@ -255,6 +255,7 @@ func get_input()->Vector2:
 				change_animation("Idle_Pistol")
 				aim_state = false
 				change_mouse(null)
+				clear_aiming()
 				return velocity
 			else:
 				return velocity
@@ -411,16 +412,14 @@ func laser_pointer_to_mouse(target):
 
 
 func clear_aiming()->void:
-	update()
 	bullet_ray.enabled = false
 
-func aiming_gun()->Vector2:
+func aiming_gun(max_slope = .5/1)Vector2:
 	bullet_ray.enabled = true
 	var target= get_local_mouse_position()
 	var direction_to_target 
 	var distance_to_travel = 2000
 	var gun_position = bullet_ray.position
-	var max_slope = .5/1
 	var facing = Vector2(1,0)
 	###################################################
 	##########Set origin position of gun###############
