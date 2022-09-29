@@ -453,6 +453,7 @@ align = 1
 valign = 1
 
 [node name="InteractPopUp" type="HBoxContainer" parent="."]
+visible = false
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5

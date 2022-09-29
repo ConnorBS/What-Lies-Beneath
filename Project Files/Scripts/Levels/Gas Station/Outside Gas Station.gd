@@ -14,7 +14,6 @@ func _ready():
 	pass
 
 func move_to_floor(new_floor,node_to_move):
-	print("moving_floor(",new_floor,", ",node_to_move.name,")")
 	disable_floor(current_floor)
 	yield(get_tree(), "idle_frame")
 	node_to_move.get_parent().remove_child(node_to_move)
@@ -39,7 +38,7 @@ func get_current_level():
 	return current_floor
 
 func make_floor_name(floor_number:int)->String:
-	return "Level"+str(floor_number)
+	return "Floor"+str(floor_number)
 
 func set_player_pos(spawPointNumber:int)->void:
 	var newPos = "SpawnPoint"+str(spawPointNumber)

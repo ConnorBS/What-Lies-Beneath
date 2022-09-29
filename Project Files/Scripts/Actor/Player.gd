@@ -707,6 +707,7 @@ func stand_on_box():
 	_on_InteractableHitBox_area_exited(interactable_object)
 	
 func trigger_climb_on_box():
+	climb_box_state=true
 	var new_floor = interactable_object.get_parent().top_floor
 	level_manager.move_to_floor(new_floor,self)
 	change_animation("Climbing_Up_Box")
