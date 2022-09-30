@@ -71,7 +71,7 @@ func cameraSnap():
 	if camera_swing < Vector2(5,5) and camera_swing > -Vector2(5,5):
 		camera_swing = Vector2.ZERO
 
-func _process(delta):
+func _process(_delta):
 	update_camera(dynamic_Camera(player_node.position))
 	update_against_boundaries()
 	old_pos = player_node.position

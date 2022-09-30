@@ -41,7 +41,7 @@ func update_floor(floor_number):
 	left_interaction.set_collision_mask_bit(9+floor_number,true)
 
 
-func _process(delta):
+func _process(_delta):
 	if player_grabbed and PlayerState.get_Player_Active():
 		##############################################
 		#############Movement Logic###################
@@ -52,7 +52,7 @@ func _process(delta):
 			velocity.x += 1
 		if Input.is_action_pressed("move_left"):
 			velocity.x -= 1
-		move_and_slide(velocity * push_box_speed)
+		var _velocity = move_and_slide(velocity * push_box_speed)
 		
 
 func player_latched (state)->Vector2:

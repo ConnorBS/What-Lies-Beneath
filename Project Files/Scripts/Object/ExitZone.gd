@@ -22,5 +22,5 @@ func _on_Exit1_body_entered(body):
 	if body.is_in_group("Player"):
 		PlayerState.Spawn_Point = PointToLoad
 #		var LoadingLevel = SceneToLoad.instance()
-		get_tree().change_scene(SceneToLoad)
+		var _newScene = get_tree().change_scene(SceneToLoad)
 	pass # Replace with function body.

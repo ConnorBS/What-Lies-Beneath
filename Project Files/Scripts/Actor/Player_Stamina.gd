@@ -2,7 +2,7 @@ extends ProgressBar
 
 export (int) var stamina_max = 100
 export (int) var refresh_rate = 1
-export (int) var use_rate = .5
+export (float) var use_rate = .5
 
  
 signal out_of_stamina
@@ -14,7 +14,7 @@ func _ready():
 	max_value = stamina_max
 	value = stamina_max
 	
-func _process(delta):
+func _process(_delta):
 	if running:
 		running = false
 	else:

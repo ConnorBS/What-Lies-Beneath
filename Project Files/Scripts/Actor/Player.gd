@@ -45,7 +45,6 @@ var climbing_reached_bottom = false
 #########################
 #########Boxes###########
 #########################
-signal move_box
 var climb_box_positions:Array
 
 #########################
@@ -174,7 +173,7 @@ func enable_ground_checker(prev_animation):
 	
 
 	
-func _process(delta):
+func _process(_delta):
 	###############################################
 	#########Logic After Animation Change##########
 	###############################################
@@ -194,16 +193,16 @@ func _process(delta):
 		if global_position.y > falling_end_position.y:
 			landing()
 		else:
-			move_and_slide(falling_vector)
+			var _velocity = move_and_slide(falling_vector)
 	###############################################
 	#####Input Check if Animation allows it########
 	###############################################
 	elif check_if_current_animation_allows_movement() == true and !climb_box_state:
 		PlayerState.set_Player_Active(true)
 		var vector = _get_input()
-		move_and_slide(vector)
+		var _velocity = move_and_slide(vector)
 	elif !climb_box_positions.empty():
-		move_and_slide(climb_box(climb_box_positions))
+		var _velocity = move_and_slide(climb_box(climb_box_positions))
 		if climb_box_positions.empty():
 			stand_on_box()
 	######################################
@@ -212,7 +211,7 @@ func _process(delta):
 	elif check_if_current_animation_transition_climbing():
 		var vector = snap_to_ladder(interactable_object)
 		vector.y = move_sprite_while_climbing().y
-		move_and_slide(vector)
+		var _velocity = move_and_slide(vector)
 		
 	else:
 		PlayerState.set_Player_Active(false)
@@ -240,7 +239,6 @@ func _input(event):
 	
 
 func _get_input()->Vector2:
-	var current = state_machine.get_current_node()
 	var velocity = Vector2.ZERO
 	
 	##############################################
@@ -286,7 +284,6 @@ func _get_input()->Vector2:
 					return push_box(false,interactable_object)
 				else:
 					return push_box(true,interactable_object)
-				return velocity
 			elif interact_state:
 				change_animation("Kneeling_Up")
 				interact_state = false
@@ -414,13 +411,12 @@ func laser_pointer_to_mouse(target):
 func clear_aiming()->void:
 	bullet_ray.enabled = false
 
-func aiming_gun(max_slope = .5/1)->Vector2:
+func aiming_gun(max_slope = .5/1)->void:
 	bullet_ray.enabled = true
 	var target= get_local_mouse_position()
 	var direction_to_target 
 	var distance_to_travel = 2000
 	var gun_position = bullet_ray.position
-	var facing = Vector2(1,0)
 	###################################################
 	##########Set origin position of gun###############
 	###################################################
@@ -451,8 +447,6 @@ func aiming_gun(max_slope = .5/1)->Vector2:
 	##############################################################
 	##########Limit range of gun##################################
 	##############################################################
-	var min_mouse_cord = Vector2(gun_position.x,0) ## Mouse Clamping
-	var max_mouse_cord = Vector2.ZERO ## Mouse Clamping
 	
 	if direction_to_target.y > max_slope:
 		direction_to_target.y = max_slope
@@ -498,8 +492,8 @@ func aiming_gun(max_slope = .5/1)->Vector2:
 	if bullet_ray.is_colliding():
 		target = self.to_local(bullet_ray.get_collision_point())
 
-	return target
-	
+
+
 func clamp_mouse_to_aim(starting_point:Vector2,slope:float,min_x:float,max_x:float):
 	var mouse_pos = get_local_mouse_position()
 	var new_mouse_pos = Vector2.ZERO
@@ -522,11 +516,12 @@ func update_interaction(in_range:bool,area)->void:
 
 func _on_InteractableHitBox_area_entered(area):
 	if area.is_in_group("Interact"):
-		update_interaction(true,area)
-		if area.is_in_group("Box:Left"):
-			side_of_box = BOX_SIDE.LEFT
-		elif area.is_in_group("Box:Right"):
-			side_of_box = BOX_SIDE.RIGHT
+		if !climbing and !climb_box_state:
+			update_interaction(true,area)
+			if area.is_in_group("Box:Left"):
+				side_of_box = BOX_SIDE.LEFT
+			elif area.is_in_group("Box:Right"):
+				side_of_box = BOX_SIDE.RIGHT
 	
 	if area.is_in_group("Fall"):
 		falling_trigger(area,true)
@@ -542,27 +537,26 @@ func _on_InteractableHitBox_area_exited(area):
 
 
 func _on_ClimbingHitBoxTop_area_entered(area):
-	if climbing and check_if_current_climbing_animation() == true:
-		if area.is_in_group("Ladder"):
+	if area.is_in_group("Ladder"):
+		if climbing and check_if_current_climbing_animation() == true and !climb_box_state:
 			climbing_reached_top = true
 			climbing_trigger(area.get_parent().up_floor)
 
 
 func _on_ClimbingHitBoxTop_area_exited(area):
-	if climbing:
+	if area.is_in_group("Ladder"):
 		climbing_reached_top = false
 
 
 func _on_ClimbingHitBoxBottom_area_entered(area):
-	if climbing and check_if_current_climbing_animation() == true:
-		if area.is_in_group("Ladder"):
+	if area.is_in_group("Ladder"):
+		if climbing and check_if_current_climbing_animation() == true and !climb_box_state:
 			climbing_reached_bottom = true
 			climbing_trigger(area.get_parent().down_floor)
 
 func climbing_state(state):
 	climbing = state
 	if climbing:
-		var new_level = current_floor
 		if interactable_object.is_in_group("Ladder_Bottom"):
 			change_animation("Climbing_Up")
 		elif interactable_object.is_in_group("Ladder_Top"):
@@ -578,7 +572,7 @@ func climbing_state(state):
 		$InteractableHitBox.monitoring = true
 		update_interaction(false,null)
 		
-func _on_ClimbingHitBoxBottom_area_exited(area):
+func _on_ClimbingHitBoxBottom_area_exited(_area):
 	if climbing:
 		climbing_reached_bottom = false
 

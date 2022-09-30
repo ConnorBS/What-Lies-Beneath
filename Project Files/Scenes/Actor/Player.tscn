@@ -529,6 +529,7 @@ position = Vector2( -1, 22 )
 shape = SubResource( 46 )
 
 [node name="Stamina" type="ProgressBar" parent="."]
+visible = false
 margin_left = 15.0
 margin_top = -27.0
 margin_right = 30.0
