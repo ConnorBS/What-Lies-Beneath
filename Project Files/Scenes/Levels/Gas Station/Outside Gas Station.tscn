@@ -58,7 +58,7 @@ shader_param/tile_factor_2 = 0.3
 shader_param/noise_texture_2 = ExtResource( 18 )
 shader_param/gradient_texture = SubResource( 11 )
 
-[node name="Outside Gas Station" type="Node"]
+[node name="Outside Gas Station" type="Node" groups=["Level"]]
 script = ExtResource( 16 )
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
@@ -242,6 +242,7 @@ shape = SubResource( 2 )
 position = Vector2( 1046, 291 )
 
 [node name="GameCamera" parent="Floor1/ActorsAndObjects/Player" instance=ExtResource( 14 )]
+offset = Vector2( 0, -50 )
 
 [node name="Interact_News" parent="Floor1/ActorsAndObjects" instance=ExtResource( 15 )]
 modulate = Color( 1, 1, 1, 0.564706 )
