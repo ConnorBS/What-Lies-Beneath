@@ -18,6 +18,9 @@ var zoom_flag = false
 var buff
 
 func _ready():
+	print (get_viewport())
+	print (get_viewport().size)
+	print (get_viewport().size/2*self.zoom)
 	base_zoom = zoom
 	max_pos = Vector2(level_node.level_width,level_node.level_height)
 	_viewportNode = _find_viewportNode()
@@ -84,10 +87,12 @@ func update_zoom():
 		if _viewportNode.anchor_right == 1.0 and _viewportNode.anchor_bottom == 1.0:
 			zoom_flag = false
 		else:
+			camera_swing = Vector2.ZERO
 			center()
 			zoom_flag = true
-		zoom.x = base_zoom.y-(1-_viewportNode.anchor_right)*base_zoom.x * zoom_intensity_on_pause
-		zoom.y = base_zoom.y-(1-_viewportNode.anchor_bottom)*base_zoom.y * zoom_intensity_on_pause
+			
+			zoom.x = base_zoom.y-(1-_viewportNode.anchor_right)*base_zoom.x * zoom_intensity_on_pause
+			zoom.y = base_zoom.y-(1-_viewportNode.anchor_bottom)*base_zoom.y * zoom_intensity_on_pause
 		
 func _find_viewportNode()->Viewport:
 	var node = get_parent()

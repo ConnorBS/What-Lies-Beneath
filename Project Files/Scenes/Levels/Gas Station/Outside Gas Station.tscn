@@ -242,6 +242,7 @@ shape = SubResource( 2 )
 position = Vector2( 1046, 291 )
 
 [node name="GameCamera" parent="Floor1/ActorsAndObjects/Player" instance=ExtResource( 14 )]
+pause_mode = 2
 offset = Vector2( 0, -50 )
 
 [node name="Interact_News" parent="Floor1/ActorsAndObjects" instance=ExtResource( 15 )]
