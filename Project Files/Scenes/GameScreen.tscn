@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Scenes/Levels/Gas Station/Outside Gas Station.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scripts/GameScreen.gd" type="Script" id=2]
+[ext_resource path="res://Scenes/UI/HealthOverlay.tscn" type="PackedScene" id=3]
 
 [sub_resource type="Animation" id=3]
 resource_name = "MainMenu_Down"
@@ -76,6 +77,18 @@ tracks/5/keys = {
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
 "values": [ 25, 0.0 ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("ViewportContainer/HealthOverlay:self_modulate")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
 }
 
 [sub_resource type="Animation" id=1]
@@ -152,6 +165,18 @@ tracks/5/keys = {
 "update": 0,
 "values": [ 0.0, 25 ]
 }
+tracks/6/type = "value"
+tracks/6/path = NodePath("ViewportContainer/HealthOverlay:self_modulate")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
 
 [sub_resource type="Animation" id=2]
 length = 0.001
@@ -227,6 +252,18 @@ tracks/5/keys = {
 "update": 0,
 "values": [ 0.0 ]
 }
+tracks/6/type = "value"
+tracks/6/path = NodePath("ViewportContainer/HealthOverlay:self_modulate")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ) ]
+}
 
 [node name="GameScreen" type="CanvasLayer"]
 pause_mode = 2
@@ -241,7 +278,6 @@ stretch = true
 
 [node name="Viewport" type="Viewport" parent="ViewportContainer"]
 size = Vector2( 1024, 600 )
-size_override_stretch = true
 handle_input_locally = false
 hdr = false
 disable_3d = true
@@ -251,6 +287,8 @@ audio_listener_enable_2d = true
 
 [node name="Outside Gas Station" parent="ViewportContainer/Viewport" instance=ExtResource( 1 )]
 pause_mode = 1
+
+[node name="HealthOverlay" parent="ViewportContainer" instance=ExtResource( 3 )]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/MainMenu_Down = SubResource( 3 )
