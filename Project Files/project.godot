@@ -13,9 +13,15 @@ _global_script_classes=[ {
 "class": "InteractableObjects",
 "language": "GDScript",
 "path": "res://Scripts/Classes/Interactable Object Class.gd"
+}, {
+"base": "Reference",
+"class": "Inventory",
+"language": "GDScript",
+"path": "res://Scripts/Classes/Item Classes.gd"
 } ]
 _global_script_class_icons={
-"InteractableObjects": ""
+"InteractableObjects": "",
+"Inventory": ""
 }
 
 [application]

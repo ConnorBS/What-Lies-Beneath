@@ -15,10 +15,12 @@ func _get_input():
 			_animationPlayerNode.play("MainMenu_Down")
 			menu_visible = false
 			get_tree().paused = false
+			PlayerState.set_Player_Active(true)
 		else:
 			_animationPlayerNode.play("MainMenu_Up")
 			menu_visible = true
 			get_tree().paused = true
+			PlayerState.set_Player_Active(false)
 
 func _process(_delta):
 	_get_input()
