@@ -269,6 +269,14 @@ tracks/6/keys = {
 pause_mode = 2
 script = ExtResource( 2 )
 
+[node name="HSlider" type="HSlider" parent="."]
+anchor_left = 0.716
+anchor_top = 0.906
+anchor_right = 0.939
+anchor_bottom = 0.936
+margin_right = 16.0
+margin_bottom = 16.0
+
 [node name="ViewportContainer" type="ViewportContainer" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -294,3 +302,6 @@ pause_mode = 1
 anims/MainMenu_Down = SubResource( 3 )
 anims/MainMenu_Up = SubResource( 1 )
 anims/RESET = SubResource( 2 )
+
+[connection signal="drag_ended" from="HSlider" to="ViewportContainer/HealthOverlay" method="_on_HSlider_drag_ended"]
+[connection signal="value_changed" from="HSlider" to="ViewportContainer/HealthOverlay" method="_on_HSlider_value_changed"]

@@ -139,7 +139,7 @@ Download Version 3.5 from Godot Download files [Here](https://godotengine.org/do
 alt="IMAGE ALT TEXT HERE" width="240" height="180" border="10" /></a>
 - [ ] Options to: Use, Reload, Equip, Remove
 - [ ] Gun Equipment Slot
-- [ ] Still Screenshot of the Game in the top left with colour overlay indicating health
+- [x] Still Screenshot of the Game in the top left with colour overlay indicating health
 #### Map Placeholder
 #### Memo - Journal Pages
 - [ ] Left right over Journal Objects
@@ -149,7 +149,7 @@ alt="IMAGE ALT TEXT HERE" width="240" height="180" border="10" /></a>
 #### Options
 - [ ] Music and Sound Controls
 #### Global Player State
-- [ ] Health
+- [x] Health
 - [ ] Equipped Item
 - [ ] Inventory
 - [ ] Important Inventory Items
