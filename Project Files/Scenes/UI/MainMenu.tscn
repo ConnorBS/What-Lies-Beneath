@@ -1,0 +1,300 @@
+[gd_scene load_steps=14 format=2]
+
+[ext_resource path="res://Assets/Fonts/DynamicFonts/LinkButton_Fonts_MainMenu.tres" type="DynamicFont" id=1]
+[ext_resource path="res://Assets/Fonts/DynamicFonts/Label_TitleFont_MainMenu.tres" type="DynamicFont" id=2]
+[ext_resource path="res://Assets/Fonts/DynamicFonts/RichText_Content_MainMenu.tres" type="DynamicFont" id=3]
+[ext_resource path="res://Assets/Sprites/Equipment/WWII Weapons/Colt M1911.png" type="Texture" id=4]
+[ext_resource path="res://Assets/Sprites/Equipment/WWII Weapons/Mosin Nagant.png" type="Texture" id=5]
+[ext_resource path="res://Assets/Sprites/Equipment/WWII Weapons/Type 99 Arisaka.png" type="Texture" id=6]
+[ext_resource path="res://Assets/Sprites/Equipment/WWII Weapons/Type 99 LMG.png" type="Texture" id=7]
+[ext_resource path="res://Assets/Sprites/Equipment/WWII Weapons/Panzerschreck.png" type="Texture" id=8]
+[ext_resource path="res://Assets/Sprites/Equipment/WWII Weapons/Sten.png" type="Texture" id=9]
+
+[sub_resource type="Image" id=6]
+data = {
+"data": PoolByteArray( 71, 140, 191, 14, 71, 140, 191, 57, 71, 140, 191, 104, 71, 140, 191, 122, 71, 140, 191, 123, 71, 140, 191, 123, 71, 140, 191, 123, 71, 140, 191, 123, 71, 140, 191, 122, 71, 140, 191, 104, 71, 140, 191, 57, 71, 140, 191, 14, 71, 140, 191, 58, 71, 140, 191, 116, 71, 140, 191, 16, 71, 140, 191, 8, 71, 140, 191, 8, 71, 140, 191, 8, 71, 140, 191, 8, 71, 140, 191, 8, 71, 140, 191, 8, 71, 140, 191, 16, 71, 140, 191, 116, 71, 140, 191, 58, 71, 140, 191, 105, 71, 140, 191, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 71, 140, 191, 15, 71, 140, 191, 105, 71, 140, 191, 123, 71, 140, 191, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 71, 140, 191, 6, 71, 140, 191, 123, 71, 140, 191, 123, 71, 140, 191, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 71, 140, 191, 8, 71, 140, 191, 123, 71, 140, 191, 123, 71, 140, 191, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 71, 140, 191, 8, 71, 140, 191, 123, 71, 140, 191, 123, 71, 140, 191, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 71, 140, 191, 8, 71, 140, 191, 123, 71, 140, 191, 123, 71, 140, 191, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 71, 140, 191, 8, 71, 140, 191, 123, 71, 140, 191, 123, 71, 140, 191, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 71, 140, 191, 6, 71, 140, 191, 123, 71, 140, 191, 105, 71, 140, 191, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 71, 140, 191, 14, 71, 140, 191, 105, 71, 140, 191, 58, 71, 140, 191, 117, 71, 140, 191, 15, 71, 140, 191, 8, 71, 140, 191, 8, 71, 140, 191, 8, 71, 140, 191, 8, 71, 140, 191, 8, 71, 140, 191, 8, 71, 140, 191, 17, 71, 140, 191, 116, 71, 140, 191, 58, 71, 140, 191, 14, 71, 140, 191, 58, 71, 140, 191, 104, 71, 140, 191, 122, 71, 140, 191, 123, 71, 140, 191, 123, 71, 140, 191, 123, 71, 140, 191, 123, 71, 140, 191, 122, 71, 140, 191, 104, 71, 140, 191, 57, 71, 140, 191, 14 ),
+"format": "RGBA8",
+"height": 12,
+"mipmaps": false,
+"width": 12
+}
+
+[sub_resource type="ImageTexture" id=3]
+flags = 4
+flags = 4
+image = SubResource( 6 )
+size = Vector2( 12, 12 )
+
+[sub_resource type="StyleBoxTexture" id=4]
+content_margin_left = 4.0
+content_margin_right = 4.0
+content_margin_top = 4.0
+content_margin_bottom = 4.0
+texture = SubResource( 3 )
+region_rect = Rect2( 0, 0, 12, 12 )
+margin_left = 5.0
+margin_right = 5.0
+margin_top = 5.0
+margin_bottom = 5.0
+expand_margin_left = 1.0
+expand_margin_right = 1.0
+expand_margin_top = 1.0
+expand_margin_bottom = 1.0
+
+[sub_resource type="Theme" id=5]
+Label/fonts/font = ExtResource( 2 )
+LinkButton/colors/font_color = Color( 0.88, 0.88, 0.88, 1 )
+LinkButton/colors/font_color_focus = Color( 0.94, 0.94, 0.94, 1 )
+LinkButton/colors/font_color_hover = Color( 0.94, 0.94, 0.94, 1 )
+LinkButton/colors/font_color_pressed = Color( 1, 1, 1, 1 )
+LinkButton/constants/underline_spacing = 2
+LinkButton/fonts/font = ExtResource( 1 )
+LinkButton/styles/focus = SubResource( 4 )
+RichTextLabel/fonts/bold_font = null
+RichTextLabel/fonts/bold_italics_font = null
+RichTextLabel/fonts/italics_font = null
+RichTextLabel/fonts/mono_font = null
+RichTextLabel/fonts/normal_font = ExtResource( 3 )
+
+[node name="MainMenu" type="CanvasLayer"]
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 50.0
+margin_top = 50.0
+margin_right = -50.0
+margin_bottom = -50.0
+theme = SubResource( 5 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+margin_right = 924.0
+margin_bottom = 500.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="TopRow" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+margin_right = 924.0
+margin_bottom = 157.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 25
+
+[node name="Status" type="VBoxContainer" parent="MarginContainer/VBoxContainer/TopRow"]
+margin_right = 291.0
+margin_bottom = 157.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="StatusLabel" type="Label" parent="MarginContainer/VBoxContainer/TopRow/Status"]
+margin_left = 106.0
+margin_right = 184.0
+margin_bottom = 27.0
+size_flags_horizontal = 4
+text = "Status"
+align = 1
+valign = 1
+
+[node name="Equipment" type="VBoxContainer" parent="MarginContainer/VBoxContainer/TopRow"]
+margin_left = 316.0
+margin_right = 607.0
+margin_bottom = 157.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="EquipmentLabel" type="Label" parent="MarginContainer/VBoxContainer/TopRow/Equipment"]
+margin_left = 87.0
+margin_right = 204.0
+margin_bottom = 27.0
+size_flags_horizontal = 4
+text = "Equipment"
+align = 1
+valign = 1
+
+[node name="Equipment" type="TextureRect" parent="MarginContainer/VBoxContainer/TopRow/Equipment"]
+margin_top = 31.0
+margin_right = 291.0
+margin_bottom = 157.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource( 4 )
+expand = true
+stretch_mode = 6
+
+[node name="Command" type="VBoxContainer" parent="MarginContainer/VBoxContainer/TopRow"]
+margin_left = 632.0
+margin_right = 924.0
+margin_bottom = 157.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="EquipmentLabel" type="Label" parent="MarginContainer/VBoxContainer/TopRow/Command"]
+margin_left = 94.0
+margin_right = 198.0
+margin_bottom = 27.0
+size_flags_horizontal = 4
+text = "Commands"
+align = 1
+valign = 1
+
+[node name="Use" type="LinkButton" parent="MarginContainer/VBoxContainer/TopRow/Command"]
+margin_top = 31.0
+margin_right = 36.0
+margin_bottom = 55.0
+focus_mode = 2
+size_flags_horizontal = 0
+text = "Use"
+
+[node name="Reload" type="LinkButton" parent="MarginContainer/VBoxContainer/TopRow/Command"]
+margin_top = 59.0
+margin_right = 72.0
+margin_bottom = 83.0
+focus_mode = 2
+size_flags_horizontal = 0
+text = "Reload"
+
+[node name="Equip" type="LinkButton" parent="MarginContainer/VBoxContainer/TopRow/Command"]
+margin_top = 87.0
+margin_right = 60.0
+margin_bottom = 111.0
+focus_mode = 2
+size_flags_horizontal = 0
+text = "Equip"
+
+[node name="Remove" type="LinkButton" parent="MarginContainer/VBoxContainer/TopRow/Command"]
+margin_top = 115.0
+margin_right = 72.0
+margin_bottom = 139.0
+focus_mode = 2
+size_flags_horizontal = 0
+text = "Remove"
+
+[node name="ItemRow" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+margin_top = 161.0
+margin_right = 924.0
+margin_bottom = 318.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Item1" type="TextureRect" parent="MarginContainer/VBoxContainer/ItemRow"]
+margin_right = 181.0
+margin_bottom = 157.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource( 6 )
+expand = true
+stretch_mode = 6
+
+[node name="Item2" type="TextureRect" parent="MarginContainer/VBoxContainer/ItemRow"]
+margin_left = 185.0
+margin_right = 367.0
+margin_bottom = 157.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource( 5 )
+expand = true
+stretch_mode = 6
+
+[node name="Item3" type="TextureRect" parent="MarginContainer/VBoxContainer/ItemRow"]
+margin_left = 371.0
+margin_right = 552.0
+margin_bottom = 157.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource( 7 )
+expand = true
+stretch_mode = 6
+
+[node name="Item4" type="TextureRect" parent="MarginContainer/VBoxContainer/ItemRow"]
+margin_left = 556.0
+margin_right = 738.0
+margin_bottom = 157.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource( 9 )
+expand = true
+stretch_mode = 6
+
+[node name="Item5" type="TextureRect" parent="MarginContainer/VBoxContainer/ItemRow"]
+margin_left = 742.0
+margin_right = 924.0
+margin_bottom = 157.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource( 8 )
+expand = true
+stretch_mode = 6
+
+[node name="DescriptionRow" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+margin_top = 322.0
+margin_right = 924.0
+margin_bottom = 472.0
+rect_min_size = Vector2( 922, 150 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/DescriptionRow"]
+margin_right = 924.0
+margin_bottom = 150.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 15
+alignment = 1
+
+[node name="ItemName" type="Label" parent="MarginContainer/VBoxContainer/DescriptionRow/VBoxContainer"]
+margin_right = 924.0
+margin_bottom = 27.0
+size_flags_horizontal = 3
+text = "Item Name"
+
+[node name="CenterContainer" type="CenterContainer" parent="MarginContainer/VBoxContainer/DescriptionRow/VBoxContainer"]
+margin_top = 42.0
+margin_right = 924.0
+margin_bottom = 150.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer/DescriptionRow/VBoxContainer/CenterContainer"]
+margin_left = 62.0
+margin_right = 862.0
+margin_bottom = 108.0
+grow_horizontal = 2
+grow_vertical = 2
+rect_min_size = Vector2( 800, 108 )
+size_flags_horizontal = 7
+size_flags_vertical = 3
+text = "Lorem ipsum dolor sit amet. Quo quia dolorem vel amet velit sit odit dolores eos laudantium adipisci cum perspiciatis tenetur! Est laboriosam fuga et internos porro in molestiae nesciunt est aspernatur suscipit."
+scroll_active = false
+
+[node name="BottomRow" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+margin_top = 476.0
+margin_right = 924.0
+margin_bottom = 500.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+custom_constants/separation = 200
+alignment = 1
+
+[node name="Map" type="LinkButton" parent="MarginContainer/VBoxContainer/BottomRow"]
+margin_left = 24.0
+margin_right = 60.0
+margin_bottom = 24.0
+text = "Map"
+
+[node name="Memo" type="LinkButton" parent="MarginContainer/VBoxContainer/BottomRow"]
+margin_left = 260.0
+margin_right = 308.0
+margin_bottom = 24.0
+focus_mode = 2
+text = "Memo"
+
+[node name="KeyItems" type="LinkButton" parent="MarginContainer/VBoxContainer/BottomRow"]
+margin_left = 508.0
+margin_right = 616.0
+margin_bottom = 24.0
+text = "Key Items"
+
+[node name="Options" type="LinkButton" parent="MarginContainer/VBoxContainer/BottomRow"]
+margin_left = 816.0
+margin_right = 900.0
+margin_bottom = 24.0
+text = "Options"

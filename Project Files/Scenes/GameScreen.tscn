@@ -1,182 +1,11 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Scenes/Levels/Gas Station/Outside Gas Station.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scripts/GameScreen.gd" type="Script" id=2]
 [ext_resource path="res://Scenes/UI/HealthOverlay.tscn" type="PackedScene" id=3]
-
-[sub_resource type="Animation" id=3]
-resource_name = "MainMenu_Down"
-tracks/0/type = "value"
-tracks/0/path = NodePath("ViewportContainer:anchor_left")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 1 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ 0.0 ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("ViewportContainer:anchor_top")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 1 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ 0.0 ]
-}
-tracks/2/type = "value"
-tracks/2/path = NodePath("ViewportContainer:anchor_right")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
-"times": PoolRealArray( 0, 1 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ 0.25, 1.0 ]
-}
-tracks/3/type = "value"
-tracks/3/path = NodePath("ViewportContainer:anchor_bottom")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/keys = {
-"times": PoolRealArray( 0, 1 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ 0.25, 1.0 ]
-}
-tracks/4/type = "value"
-tracks/4/path = NodePath("ViewportContainer:margin_top")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/keys = {
-"times": PoolRealArray( 0, 1 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ 25, 0.0 ]
-}
-tracks/5/type = "value"
-tracks/5/path = NodePath("ViewportContainer:margin_left")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/keys = {
-"times": PoolRealArray( 0, 1 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ 25, 0.0 ]
-}
-tracks/6/type = "value"
-tracks/6/path = NodePath("ViewportContainer/HealthOverlay:self_modulate")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/imported = false
-tracks/6/enabled = true
-tracks/6/keys = {
-"times": PoolRealArray( 0, 1 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
-}
-
-[sub_resource type="Animation" id=1]
-resource_name = "MainMenu_Up"
-tracks/0/type = "value"
-tracks/0/path = NodePath("ViewportContainer:anchor_left")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ 0.0 ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("ViewportContainer:anchor_top")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ 0.0 ]
-}
-tracks/2/type = "value"
-tracks/2/path = NodePath("ViewportContainer:anchor_right")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
-"times": PoolRealArray( 0, 1 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ 1.0, 0.25 ]
-}
-tracks/3/type = "value"
-tracks/3/path = NodePath("ViewportContainer:anchor_bottom")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/keys = {
-"times": PoolRealArray( 0, 1 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ 1.0, 0.25 ]
-}
-tracks/4/type = "value"
-tracks/4/path = NodePath("ViewportContainer:margin_top")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/keys = {
-"times": PoolRealArray( 0, 1 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ 0.0, 25 ]
-}
-tracks/5/type = "value"
-tracks/5/path = NodePath("ViewportContainer:margin_left")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/keys = {
-"times": PoolRealArray( 0, 1 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ 0.0, 25 ]
-}
-tracks/6/type = "value"
-tracks/6/path = NodePath("ViewportContainer/HealthOverlay:self_modulate")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/imported = false
-tracks/6/enabled = true
-tracks/6/keys = {
-"times": PoolRealArray( 0, 1 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
-}
+[ext_resource path="res://Scenes/UI/MainMenu.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Assets/Animation/UI/MainMenu/ScenesMainMenu_Up.tres" type="Animation" id=5]
+[ext_resource path="res://Assets/Animation/UI/MainMenu/ScenesMainMenu_Down.tres" type="Animation" id=6]
 
 [sub_resource type="Animation" id=2]
 length = 0.001
@@ -270,12 +99,15 @@ pause_mode = 2
 script = ExtResource( 2 )
 
 [node name="HSlider" type="HSlider" parent="."]
+visible = false
 anchor_left = 0.716
 anchor_top = 0.906
 anchor_right = 0.939
 anchor_bottom = 0.936
 margin_right = 16.0
 margin_bottom = 16.0
+
+[node name="MainMenu" parent="." instance=ExtResource( 4 )]
 
 [node name="ViewportContainer" type="ViewportContainer" parent="."]
 anchor_right = 1.0
@@ -297,10 +129,11 @@ audio_listener_enable_2d = true
 pause_mode = 1
 
 [node name="HealthOverlay" parent="ViewportContainer" instance=ExtResource( 3 )]
+color = Color( 0, 0.321569, 0, 0.513726 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/MainMenu_Down = SubResource( 3 )
-anims/MainMenu_Up = SubResource( 1 )
+anims/MainMenu_Down = ExtResource( 6 )
+anims/MainMenu_Up = ExtResource( 5 )
 anims/RESET = SubResource( 2 )
 
 [connection signal="drag_ended" from="HSlider" to="ViewportContainer/HealthOverlay" method="_on_HSlider_drag_ended"]
