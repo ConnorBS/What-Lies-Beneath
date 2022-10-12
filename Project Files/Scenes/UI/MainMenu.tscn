@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://Assets/Fonts/DynamicFonts/LinkButton_Fonts_MainMenu.tres" type="DynamicFont" id=1]
 [ext_resource path="res://Assets/Fonts/DynamicFonts/Label_TitleFont_MainMenu.tres" type="DynamicFont" id=2]
@@ -9,8 +9,17 @@
 [ext_resource path="res://Assets/Sprites/Equipment/WWII Weapons/Type 99 LMG.png" type="Texture" id=7]
 [ext_resource path="res://Assets/Sprites/Equipment/WWII Weapons/Panzerschreck.png" type="Texture" id=8]
 [ext_resource path="res://Assets/Sprites/Equipment/WWII Weapons/Sten.png" type="Texture" id=9]
+[ext_resource path="res://Shaders/Smoke/Smoke.shader" type="Shader" id=10]
+[ext_resource path="res://Assets/Fonts/DynamicFonts/Label_TitleFont_MainMenu_Bold.tres" type="DynamicFont" id=11]
+[ext_resource path="res://Assets/Fonts/DynamicFonts/RichText_Content_MainMenu_Bold.tres" type="DynamicFont" id=12]
+[ext_resource path="res://Assets/Fonts/DynamicFonts/RichText_TitleContent_MainMenu.tres" type="DynamicFont" id=13]
+[ext_resource path="res://Assets/Fonts/DynamicFonts/RichText_TitleContent_MainMenu_Bold.tres" type="DynamicFont" id=14]
 
-[sub_resource type="Image" id=6]
+[sub_resource type="ShaderMaterial" id=6]
+shader = ExtResource( 10 )
+shader_param/OCTAVES = 3
+
+[sub_resource type="Image" id=11]
 data = {
 "data": PoolByteArray( 71, 140, 191, 14, 71, 140, 191, 57, 71, 140, 191, 104, 71, 140, 191, 122, 71, 140, 191, 123, 71, 140, 191, 123, 71, 140, 191, 123, 71, 140, 191, 123, 71, 140, 191, 122, 71, 140, 191, 104, 71, 140, 191, 57, 71, 140, 191, 14, 71, 140, 191, 58, 71, 140, 191, 116, 71, 140, 191, 16, 71, 140, 191, 8, 71, 140, 191, 8, 71, 140, 191, 8, 71, 140, 191, 8, 71, 140, 191, 8, 71, 140, 191, 8, 71, 140, 191, 16, 71, 140, 191, 116, 71, 140, 191, 58, 71, 140, 191, 105, 71, 140, 191, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 71, 140, 191, 15, 71, 140, 191, 105, 71, 140, 191, 123, 71, 140, 191, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 71, 140, 191, 6, 71, 140, 191, 123, 71, 140, 191, 123, 71, 140, 191, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 71, 140, 191, 8, 71, 140, 191, 123, 71, 140, 191, 123, 71, 140, 191, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 71, 140, 191, 8, 71, 140, 191, 123, 71, 140, 191, 123, 71, 140, 191, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 71, 140, 191, 8, 71, 140, 191, 123, 71, 140, 191, 123, 71, 140, 191, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 71, 140, 191, 8, 71, 140, 191, 123, 71, 140, 191, 123, 71, 140, 191, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 71, 140, 191, 6, 71, 140, 191, 123, 71, 140, 191, 105, 71, 140, 191, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 71, 140, 191, 14, 71, 140, 191, 105, 71, 140, 191, 58, 71, 140, 191, 117, 71, 140, 191, 15, 71, 140, 191, 8, 71, 140, 191, 8, 71, 140, 191, 8, 71, 140, 191, 8, 71, 140, 191, 8, 71, 140, 191, 8, 71, 140, 191, 17, 71, 140, 191, 116, 71, 140, 191, 58, 71, 140, 191, 14, 71, 140, 191, 58, 71, 140, 191, 104, 71, 140, 191, 122, 71, 140, 191, 123, 71, 140, 191, 123, 71, 140, 191, 123, 71, 140, 191, 123, 71, 140, 191, 122, 71, 140, 191, 104, 71, 140, 191, 57, 71, 140, 191, 14 ),
 "format": "RGBA8",
@@ -22,7 +31,7 @@ data = {
 [sub_resource type="ImageTexture" id=3]
 flags = 4
 flags = 4
-image = SubResource( 6 )
+image = SubResource( 11 )
 size = Vector2( 12, 12 )
 
 [sub_resource type="StyleBoxTexture" id=4]
@@ -41,6 +50,14 @@ expand_margin_right = 1.0
 expand_margin_top = 1.0
 expand_margin_bottom = 1.0
 
+[sub_resource type="StyleBoxFlat" id=8]
+bg_color = Color( 0, 0, 0, 1 )
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color( 1, 1, 1, 1 )
+
 [sub_resource type="Theme" id=5]
 Label/fonts/font = ExtResource( 2 )
 LinkButton/colors/font_color = Color( 0.88, 0.88, 0.88, 1 )
@@ -50,71 +67,133 @@ LinkButton/colors/font_color_pressed = Color( 1, 1, 1, 1 )
 LinkButton/constants/underline_spacing = 2
 LinkButton/fonts/font = ExtResource( 1 )
 LinkButton/styles/focus = SubResource( 4 )
-RichTextLabel/fonts/bold_font = null
+Panel/styles/panel = SubResource( 8 )
+RichTextLabel/fonts/bold_font = ExtResource( 11 )
 RichTextLabel/fonts/bold_italics_font = null
 RichTextLabel/fonts/italics_font = null
 RichTextLabel/fonts/mono_font = null
-RichTextLabel/fonts/normal_font = ExtResource( 3 )
+RichTextLabel/fonts/normal_font = ExtResource( 2 )
+
+[sub_resource type="Theme" id=10]
+LinkButton/fonts/font = ExtResource( 2 )
 
 [node name="MainMenu" type="CanvasLayer"]
+
+[node name="SmokeShader" type="ColorRect" parent="."]
+material = SubResource( 6 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.337255, 0.337255, 0.337255, 1 )
+
+[node name="TopColourBar" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 0.095
+color = Color( 0, 0, 0, 1 )
+
+[node name="MiddleColourBar" type="ColorRect" parent="."]
+anchor_top = 0.345
+anchor_right = 1.0
+anchor_bottom = 0.54
+color = Color( 0, 0, 0, 0.611765 )
+
+[node name="BottomColourBar" type="ColorRect" parent="."]
+anchor_top = 0.87
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0, 0, 1 )
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 50.0
-margin_top = 50.0
-margin_right = -50.0
-margin_bottom = -50.0
+margin_left = 35.0
+margin_right = -35.0
+margin_bottom = -10.0
 theme = SubResource( 5 )
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
-margin_right = 924.0
-margin_bottom = 500.0
+margin_right = 954.0
+margin_bottom = 590.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+custom_constants/separation = 10
 
 [node name="TopRow" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
-margin_right = 924.0
-margin_bottom = 157.0
+margin_right = 954.0
+margin_bottom = 188.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/separation = 25
 
 [node name="Status" type="VBoxContainer" parent="MarginContainer/VBoxContainer/TopRow"]
-margin_right = 291.0
-margin_bottom = 157.0
+margin_right = 301.0
+margin_bottom = 188.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+custom_constants/separation = 10
 
-[node name="StatusLabel" type="Label" parent="MarginContainer/VBoxContainer/TopRow/Status"]
-margin_left = 106.0
-margin_right = 184.0
-margin_bottom = 27.0
-size_flags_horizontal = 4
+[node name="StatusLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer/TopRow/Status"]
+margin_right = 301.0
+margin_bottom = 60.0
+grow_vertical = 2
+rect_min_size = Vector2( 0, 60 )
+rect_pivot_offset = Vector2( 0, 25 )
+size_flags_horizontal = 3
+bbcode_enabled = true
+bbcode_text = "[center][b]S[/b]tatus[/center]"
 text = "Status"
-align = 1
-valign = 1
+scroll_active = false
+
+[node name="Panel" type="Panel" parent="MarginContainer/VBoxContainer/TopRow/Status"]
+margin_top = 70.0
+margin_right = 301.0
+margin_bottom = 188.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
 [node name="Equipment" type="VBoxContainer" parent="MarginContainer/VBoxContainer/TopRow"]
-margin_left = 316.0
-margin_right = 607.0
-margin_bottom = 157.0
+margin_left = 326.0
+margin_right = 627.0
+margin_bottom = 188.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 22
+
+[node name="EquipmentLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer/TopRow/Equipment"]
+margin_right = 301.0
+margin_bottom = 60.0
+rect_min_size = Vector2( 0, 60 )
+bbcode_enabled = true
+bbcode_text = "[center][b]E[/b]quipment[/center]"
+text = "Equipment"
+
+[node name="Panel" type="Panel" parent="MarginContainer/VBoxContainer/TopRow/Equipment"]
+margin_top = 82.0
+margin_right = 301.0
+margin_bottom = 188.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="EquipmentLabel" type="Label" parent="MarginContainer/VBoxContainer/TopRow/Equipment"]
-margin_left = 87.0
-margin_right = 204.0
-margin_bottom = 27.0
-size_flags_horizontal = 4
-text = "Equipment"
-align = 1
-valign = 1
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/TopRow/Equipment/Panel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 50.0
+margin_top = 10.0
+margin_right = -50.0
+margin_bottom = -10.0
 
-[node name="Equipment" type="TextureRect" parent="MarginContainer/VBoxContainer/TopRow/Equipment"]
-margin_top = 31.0
-margin_right = 291.0
-margin_bottom = 157.0
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/TopRow/Equipment/Panel/MarginContainer"]
+margin_right = 201.0
+margin_bottom = 86.0
+size_flags_vertical = 5
+text = "- 2 - "
+align = 2
+valign = 2
+
+[node name="Equipment" type="TextureRect" parent="MarginContainer/VBoxContainer/TopRow/Equipment/Panel/MarginContainer"]
+margin_right = 201.0
+margin_bottom = 86.0
+grow_horizontal = 0
+grow_vertical = 0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 texture = ExtResource( 4 )
@@ -122,179 +201,311 @@ expand = true
 stretch_mode = 6
 
 [node name="Command" type="VBoxContainer" parent="MarginContainer/VBoxContainer/TopRow"]
-margin_left = 632.0
-margin_right = 924.0
-margin_bottom = 157.0
+margin_left = 652.0
+margin_right = 954.0
+margin_bottom = 188.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 10
+
+[node name="CommandLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer/TopRow/Command"]
+margin_right = 302.0
+margin_bottom = 60.0
+rect_min_size = Vector2( 0, 60 )
+bbcode_enabled = true
+bbcode_text = "[center][b]C[/b]ommands[/center]"
+text = "Commands"
+scroll_active = false
+
+[node name="Panel" type="Panel" parent="MarginContainer/VBoxContainer/TopRow/Command"]
+margin_top = 70.0
+margin_right = 302.0
+margin_bottom = 188.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="EquipmentLabel" type="Label" parent="MarginContainer/VBoxContainer/TopRow/Command"]
-margin_left = 94.0
-margin_right = 198.0
-margin_bottom = 27.0
-size_flags_horizontal = 4
-text = "Commands"
-align = 1
-valign = 1
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/TopRow/Command/Panel"]
+margin_left = 18.0
+margin_top = 10.0
+margin_right = 40.0
+margin_bottom = 40.0
 
-[node name="Use" type="LinkButton" parent="MarginContainer/VBoxContainer/TopRow/Command"]
-margin_top = 31.0
-margin_right = 36.0
-margin_bottom = 55.0
+[node name="Use" type="LinkButton" parent="MarginContainer/VBoxContainer/TopRow/Command/Panel/VBoxContainer"]
+margin_right = 22.0
+margin_bottom = 21.0
 focus_mode = 2
 size_flags_horizontal = 0
 text = "Use"
+underline = 2
 
-[node name="Reload" type="LinkButton" parent="MarginContainer/VBoxContainer/TopRow/Command"]
-margin_top = 59.0
-margin_right = 72.0
-margin_bottom = 83.0
+[node name="Reload" type="LinkButton" parent="MarginContainer/VBoxContainer/TopRow/Command/Panel/VBoxContainer"]
+margin_top = 25.0
+margin_right = 38.0
+margin_bottom = 46.0
 focus_mode = 2
 size_flags_horizontal = 0
 text = "Reload"
+underline = 2
 
-[node name="Equip" type="LinkButton" parent="MarginContainer/VBoxContainer/TopRow/Command"]
-margin_top = 87.0
-margin_right = 60.0
-margin_bottom = 111.0
+[node name="Equip" type="LinkButton" parent="MarginContainer/VBoxContainer/TopRow/Command/Panel/VBoxContainer"]
+margin_top = 50.0
+margin_right = 32.0
+margin_bottom = 71.0
 focus_mode = 2
 size_flags_horizontal = 0
 text = "Equip"
+underline = 2
 
-[node name="Remove" type="LinkButton" parent="MarginContainer/VBoxContainer/TopRow/Command"]
-margin_top = 115.0
-margin_right = 72.0
-margin_bottom = 139.0
+[node name="Remove" type="LinkButton" parent="MarginContainer/VBoxContainer/TopRow/Command/Panel/VBoxContainer"]
+margin_top = 75.0
+margin_right = 43.0
+margin_bottom = 96.0
 focus_mode = 2
 size_flags_horizontal = 0
 text = "Remove"
+underline = 2
+
+[node name="Spacer" type="Control" parent="MarginContainer/VBoxContainer"]
+visible = false
+margin_top = 186.0
+margin_right = 954.0
+margin_bottom = 201.0
+rect_min_size = Vector2( 0, 15 )
 
 [node name="ItemRow" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
-margin_top = 161.0
-margin_right = 924.0
-margin_bottom = 318.0
+margin_top = 198.0
+margin_right = 954.0
+margin_bottom = 323.0
+rect_min_size = Vector2( 0, 125 )
+size_flags_horizontal = 3
+size_flags_vertical = 0
+
+[node name="Container1" type="MarginContainer" parent="MarginContainer/VBoxContainer/ItemRow"]
+margin_right = 187.0
+margin_bottom = 125.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Item1" type="TextureRect" parent="MarginContainer/VBoxContainer/ItemRow"]
-margin_right = 181.0
-margin_bottom = 157.0
+[node name="Item1" type="TextureRect" parent="MarginContainer/VBoxContainer/ItemRow/Container1"]
+margin_right = 187.0
+margin_bottom = 125.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 texture = ExtResource( 6 )
 expand = true
 stretch_mode = 6
 
-[node name="Item2" type="TextureRect" parent="MarginContainer/VBoxContainer/ItemRow"]
-margin_left = 185.0
-margin_right = 367.0
-margin_bottom = 157.0
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/ItemRow/Container1"]
+margin_right = 187.0
+margin_bottom = 125.0
+size_flags_vertical = 1
+text = "- 2 -"
+align = 2
+valign = 2
+
+[node name="Container2" type="MarginContainer" parent="MarginContainer/VBoxContainer/ItemRow"]
+margin_left = 191.0
+margin_right = 379.0
+margin_bottom = 125.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+__meta__ = {
+"_editor_description_": ""
+}
+
+[node name="Item2" type="TextureRect" parent="MarginContainer/VBoxContainer/ItemRow/Container2"]
+margin_right = 188.0
+margin_bottom = 125.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 texture = ExtResource( 5 )
 expand = true
 stretch_mode = 6
 
-[node name="Item3" type="TextureRect" parent="MarginContainer/VBoxContainer/ItemRow"]
-margin_left = 371.0
-margin_right = 552.0
-margin_bottom = 157.0
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/ItemRow/Container2"]
+margin_right = 188.0
+margin_bottom = 125.0
+size_flags_vertical = 1
+text = "- 10 -"
+align = 2
+valign = 2
+
+[node name="Container3" type="MarginContainer" parent="MarginContainer/VBoxContainer/ItemRow"]
+margin_left = 383.0
+margin_right = 570.0
+margin_bottom = 125.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+__meta__ = {
+"_editor_description_": ""
+}
+
+[node name="Item3" type="TextureRect" parent="MarginContainer/VBoxContainer/ItemRow/Container3"]
+margin_right = 187.0
+margin_bottom = 125.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 texture = ExtResource( 7 )
 expand = true
 stretch_mode = 6
 
-[node name="Item4" type="TextureRect" parent="MarginContainer/VBoxContainer/ItemRow"]
-margin_left = 556.0
-margin_right = 738.0
-margin_bottom = 157.0
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/ItemRow/Container3"]
+margin_right = 187.0
+margin_bottom = 125.0
+size_flags_vertical = 1
+text = "- 88 -"
+align = 1
+valign = 2
+
+[node name="Container4" type="MarginContainer" parent="MarginContainer/VBoxContainer/ItemRow"]
+margin_left = 574.0
+margin_right = 762.0
+margin_bottom = 125.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+__meta__ = {
+"_editor_description_": ""
+}
+
+[node name="Item4" type="TextureRect" parent="MarginContainer/VBoxContainer/ItemRow/Container4"]
+margin_right = 188.0
+margin_bottom = 125.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 texture = ExtResource( 9 )
 expand = true
 stretch_mode = 6
 
-[node name="Item5" type="TextureRect" parent="MarginContainer/VBoxContainer/ItemRow"]
-margin_left = 742.0
-margin_right = 924.0
-margin_bottom = 157.0
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/ItemRow/Container4"]
+margin_right = 188.0
+margin_bottom = 125.0
+size_flags_vertical = 1
+text = "- 5-"
+align = 2
+valign = 2
+
+[node name="Container5" type="MarginContainer" parent="MarginContainer/VBoxContainer/ItemRow"]
+margin_left = 766.0
+margin_right = 954.0
+margin_bottom = 125.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+__meta__ = {
+"_editor_description_": ""
+}
+
+[node name="Item5" type="TextureRect" parent="MarginContainer/VBoxContainer/ItemRow/Container5"]
+margin_right = 188.0
+margin_bottom = 125.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 texture = ExtResource( 8 )
 expand = true
 stretch_mode = 6
 
-[node name="DescriptionRow" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
-margin_top = 322.0
-margin_right = 924.0
-margin_bottom = 472.0
-rect_min_size = Vector2( 922, 150 )
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/ItemRow/Container5"]
+margin_right = 188.0
+margin_bottom = 125.0
+size_flags_vertical = 1
+text = "- 0 -"
+align = 2
+valign = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/DescriptionRow"]
-margin_right = 924.0
-margin_bottom = 150.0
+[node name="ItemDescription" type="CenterContainer" parent="MarginContainer/VBoxContainer"]
+margin_top = 333.0
+margin_right = 954.0
+margin_bottom = 498.0
+size_flags_vertical = 2
+
+[node name="DescriptionPanel" type="Panel" parent="MarginContainer/VBoxContainer/ItemDescription"]
+margin_left = 127.0
+margin_right = 827.0
+margin_bottom = 165.0
+rect_min_size = Vector2( 700, 165 )
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_constants/separation = 15
-alignment = 1
 
-[node name="ItemName" type="Label" parent="MarginContainer/VBoxContainer/DescriptionRow/VBoxContainer"]
-margin_right = 924.0
-margin_bottom = 27.0
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/ItemDescription/DescriptionPanel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 20.0
+margin_top = 20.0
+margin_right = -20.0
+margin_bottom = -20.0
 size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ItemName" type="RichTextLabel" parent="MarginContainer/VBoxContainer/ItemDescription/DescriptionPanel/VBoxContainer"]
+margin_right = 660.0
+margin_bottom = 35.0
+rect_min_size = Vector2( 0, 35 )
+custom_fonts/bold_font = ExtResource( 14 )
+custom_fonts/normal_font = ExtResource( 13 )
+bbcode_enabled = true
+bbcode_text = "[b]I[/b]tem Name"
 text = "Item Name"
+scroll_active = false
 
-[node name="CenterContainer" type="CenterContainer" parent="MarginContainer/VBoxContainer/DescriptionRow/VBoxContainer"]
-margin_top = 42.0
-margin_right = 924.0
-margin_bottom = 150.0
+[node name="CenterContainer" type="CenterContainer" parent="MarginContainer/VBoxContainer/ItemDescription/DescriptionPanel/VBoxContainer"]
+margin_top = 39.0
+margin_right = 660.0
+margin_bottom = 125.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer/DescriptionRow/VBoxContainer/CenterContainer"]
-margin_left = 62.0
-margin_right = 862.0
-margin_bottom = 108.0
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer/ItemDescription/DescriptionPanel/VBoxContainer/CenterContainer"]
+margin_left = 30.0
+margin_top = 5.0
+margin_right = 630.0
+margin_bottom = 80.0
 grow_horizontal = 2
 grow_vertical = 2
-rect_min_size = Vector2( 800, 108 )
+rect_min_size = Vector2( 600, 75 )
 size_flags_horizontal = 7
 size_flags_vertical = 3
+custom_fonts/bold_font = ExtResource( 12 )
+custom_fonts/normal_font = ExtResource( 3 )
+bbcode_enabled = true
+bbcode_text = "[b]L[/b]orem ipsum dolor sit amet. Quo quia dolorem vel amet velit sit odit dolores eos laudantium adipisci cum perspiciatis tenetur! Est laboriosam fuga et internos porro in molestiae nesciunt est aspernatur suscipit."
 text = "Lorem ipsum dolor sit amet. Quo quia dolorem vel amet velit sit odit dolores eos laudantium adipisci cum perspiciatis tenetur! Est laboriosam fuga et internos porro in molestiae nesciunt est aspernatur suscipit."
 scroll_active = false
 
 [node name="BottomRow" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
-margin_top = 476.0
-margin_right = 924.0
-margin_bottom = 500.0
+margin_top = 532.0
+margin_right = 954.0
+margin_bottom = 590.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
-custom_constants/separation = 200
+theme = SubResource( 10 )
+custom_constants/separation = 150
 alignment = 1
 
 [node name="Map" type="LinkButton" parent="MarginContainer/VBoxContainer/BottomRow"]
-margin_left = 24.0
-margin_right = 60.0
-margin_bottom = 24.0
+margin_left = 21.0
+margin_right = 95.0
+margin_bottom = 58.0
 text = "Map"
+underline = 2
 
 [node name="Memo" type="LinkButton" parent="MarginContainer/VBoxContainer/BottomRow"]
-margin_left = 260.0
-margin_right = 308.0
-margin_bottom = 24.0
+margin_left = 245.0
+margin_right = 350.0
+margin_bottom = 58.0
 focus_mode = 2
 text = "Memo"
+underline = 2
 
 [node name="KeyItems" type="LinkButton" parent="MarginContainer/VBoxContainer/BottomRow"]
-margin_left = 508.0
-margin_right = 616.0
-margin_bottom = 24.0
+margin_left = 500.0
+margin_right = 657.0
+margin_bottom = 58.0
 text = "Key Items"
+underline = 2
 
 [node name="Options" type="LinkButton" parent="MarginContainer/VBoxContainer/BottomRow"]
-margin_left = 816.0
-margin_right = 900.0
-margin_bottom = 24.0
+margin_left = 807.0
+margin_right = 933.0
+margin_bottom = 58.0
 text = "Options"
+underline = 2

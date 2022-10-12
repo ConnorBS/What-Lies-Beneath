@@ -1,7 +1,7 @@
 [gd_resource type="DynamicFont" load_steps=2 format=2]
 
-[ext_resource path="res://Assets/Fonts/X-Typewriter/XTypewriter-z8oP4.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://Assets/Fonts/Humane_Jenson/1543Humane_Jenson.TTF" type="DynamicFontData" id=1]
 
 [resource]
-size = 20
+size = 15
 font_data = ExtResource( 1 )

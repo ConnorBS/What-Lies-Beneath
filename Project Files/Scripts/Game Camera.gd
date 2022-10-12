@@ -8,6 +8,7 @@ var max_pos = Vector2.ZERO
 onready var old_pos = position
 onready var camera_length_to_border = get_viewport().size/2*self.zoom
 
+var _viewportMargins
 var _viewportNode 
 
 export (Vector2) var camera_swing_max = Vector2(100,100)
@@ -24,7 +25,9 @@ func _ready():
 	base_zoom = zoom
 	max_pos = Vector2(level_node.level_width,level_node.level_height)
 	_viewportNode = _find_viewportNode()
+	_viewportMargins = Vector2(_viewportNode.margin_right,_viewportNode.margin_bottom)
 	print (_viewportNode)
+	print (_viewportMargins)
 	pass
 
 func _find_border_length()->Vector2:
@@ -84,13 +87,17 @@ func cameraSnap():
 		
 func update_zoom():
 	if _viewportNode != null:
-		if _viewportNode.anchor_right == 1.0 and _viewportNode.anchor_bottom == 1.0:
+		if (_viewportNode.anchor_right == 1.0 and _viewportNode.anchor_bottom == 1.0):# or Vector2(_viewportNode.margin_right,_viewportNode.margin_bottom) ==_viewportMargins:
 			zoom_flag = false
 		else:
 			camera_swing = Vector2.ZERO
 			center()
 			zoom_flag = true
-			
+			print ("Camera ZOOM")
+#			if  (_viewportNode.anchor_right == 1.0 and _viewportNode.anchor_bottom == 1.0):
+#				zoom.x -= .01
+#				zoom.y -= .01
+#			else:
 			zoom.x = base_zoom.y-(1-_viewportNode.anchor_right)*base_zoom.x * zoom_intensity_on_pause
 			zoom.y = base_zoom.y-(1-_viewportNode.anchor_bottom)*base_zoom.y * zoom_intensity_on_pause
 		

@@ -3,7 +3,7 @@
 [resource]
 resource_name = "MainMenu_Down"
 tracks/0/type = "value"
-tracks/0/path = NodePath("ViewportContainer:anchor_left")
+tracks/0/path = NodePath("GameWindowPanel/ViewportContainer/HealthOverlay:self_modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -12,10 +12,10 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 1 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ 0.038, 0.0 ]
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("ViewportContainer:anchor_top")
+tracks/1/path = NodePath("GameWindowPanel:margin_left")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -24,10 +24,10 @@ tracks/1/keys = {
 "times": PoolRealArray( 0, 1 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ 0.143, 0.0 ]
+"values": [ 37.0, 0 ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("ViewportContainer:anchor_right")
+tracks/2/path = NodePath("GameWindowPanel:margin_top")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -36,10 +36,10 @@ tracks/2/keys = {
 "times": PoolRealArray( 0, 1 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ 0.364, 1.0 ]
+"values": [ 69.0, 0 ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("ViewportContainer:anchor_bottom")
+tracks/3/path = NodePath("GameWindowPanel:margin_right")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -48,10 +48,10 @@ tracks/3/keys = {
 "times": PoolRealArray( 0, 1 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ 0.347, 1.0 ]
+"values": [ 334.0, 0 ]
 }
 tracks/4/type = "value"
-tracks/4/path = NodePath("ViewportContainer/HealthOverlay:self_modulate")
+tracks/4/path = NodePath("GameWindowPanel:margin_bottom")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/imported = false
@@ -60,5 +60,5 @@ tracks/4/keys = {
 "times": PoolRealArray( 0, 1 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+"values": [ 189.0, 0 ]
 }
