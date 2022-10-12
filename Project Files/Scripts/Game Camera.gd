@@ -25,7 +25,7 @@ func _ready():
 	base_zoom = zoom
 	max_pos = Vector2(level_node.level_width,level_node.level_height)
 	_viewportNode = _find_viewportNode()
-	_viewportMargins = Vector2(_viewportNode.margin_right,_viewportNode.margin_bottom)
+	_viewportMargins = Vector2(_viewportNode.get_parent().margin_right,_viewportNode.get_parent().margin_bottom)
 	print (_viewportNode)
 	print (_viewportMargins)
 	pass
@@ -34,15 +34,16 @@ func _find_border_length()->Vector2:
 	return get_viewport().size/2*self.zoom
 	
 func update_against_boundaries(length_to_border = camera_length_to_border)->void:
-	if global_position.x - length_to_border.x < min_pos.x:
-		global_position.x = min_pos.x + length_to_border.x
-	elif global_position.x + length_to_border.x > max_pos.x:
-		global_position.x = max_pos.x - length_to_border.x
 	
-	if global_position.y - length_to_border.y < min_pos.y:
-		global_position.y = min_pos.y + length_to_border.y
-	elif global_position.y + length_to_border.y > max_pos.y:
-		global_position.y = max_pos.y - length_to_border.y
+	if global_position.x - length_to_border.x   < min_pos.x + offset.x:
+		global_position.x = min_pos.x + length_to_border.x + offset.x
+	elif global_position.x + length_to_border.x > max_pos.x  + offset.x:
+		global_position.x = max_pos.x - length_to_border.x + offset.x
+	
+	if global_position.y - length_to_border.y < min_pos.y - offset.y :
+		global_position.y = min_pos.y + length_to_border.y - offset.y
+	elif global_position.y + length_to_border.y  > max_pos.y - offset.y:
+		global_position.y = max_pos.y - length_to_border.y - offset.y
 
 func dynamic_Camera(new_pos)->Vector2:
 	###Right
@@ -87,20 +88,21 @@ func cameraSnap():
 		
 func update_zoom():
 	if _viewportNode != null:
-		if (_viewportNode.anchor_right == 1.0 and _viewportNode.anchor_bottom == 1.0):# or Vector2(_viewportNode.margin_right,_viewportNode.margin_bottom) ==_viewportMargins:
+		print (Vector2(_viewportNode.get_parent().margin_right,_viewportNode.get_parent().margin_bottom)==_viewportMargins)
+		if (_viewportNode.anchor_right == 1.0 and _viewportNode.anchor_bottom == 1.0) and Vector2(_viewportNode.get_parent().margin_right,_viewportNode.get_parent().margin_bottom) ==_viewportMargins:
 			zoom_flag = false
 		else:
 			camera_swing = Vector2.ZERO
 			center()
 			zoom_flag = true
 			print ("Camera ZOOM")
-#			if  (_viewportNode.anchor_right == 1.0 and _viewportNode.anchor_bottom == 1.0):
-#				zoom.x -= .01
-#				zoom.y -= .01
-#			else:
-			zoom.x = base_zoom.y-(1-_viewportNode.anchor_right)*base_zoom.x * zoom_intensity_on_pause
-			zoom.y = base_zoom.y-(1-_viewportNode.anchor_bottom)*base_zoom.y * zoom_intensity_on_pause
-		
+			if  (_viewportNode.anchor_right == 1.0 and _viewportNode.anchor_bottom == 1.0):
+				zoom.x = base_zoom.y-(1-_viewportNode.get_parent().margin_right/_viewportMargins.x)*base_zoom.x * zoom_intensity_on_pause
+				zoom.y = base_zoom.y-(1-_viewportNode.get_parent().margin_bottom/_viewportMargins.y)*base_zoom.y * zoom_intensity_on_pause
+			else:
+				zoom.x = base_zoom.y-(1-_viewportNode.anchor_right)*base_zoom.x * zoom_intensity_on_pause
+				zoom.y = base_zoom.y-(1-_viewportNode.anchor_bottom)*base_zoom.y * zoom_intensity_on_pause
+			
 func _find_viewportNode()->Viewport:
 	var node = get_parent()
 	print ( !(node == ViewportContainer)," and ", node != null)

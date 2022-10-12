@@ -471,6 +471,7 @@ text = "Lorem ipsum dolor sit amet. Quo quia dolorem vel amet velit sit odit dol
 scroll_active = false
 
 [node name="BottomRow" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+modulate = Color( 0.803922, 0.133333, 0.133333, 1 )
 margin_top = 532.0
 margin_right = 954.0
 margin_bottom = 590.0
@@ -509,3 +510,10 @@ margin_right = 933.0
 margin_bottom = 58.0
 text = "Options"
 underline = 2
+
+[node name="ColorRect" type="ColorRect" parent="."]
+margin_left = 50.0
+margin_top = 530.0
+margin_right = 1015.0
+margin_bottom = 602.0
+color = Color( 1, 1, 1, 0 )
