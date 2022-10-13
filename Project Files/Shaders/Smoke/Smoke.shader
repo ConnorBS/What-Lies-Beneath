@@ -33,7 +33,7 @@ float fbm(vec2 coord){
 }
 
 void fragment() {
-	vec2 scaled_coord = UV * 6.0;
+	vec2 scaled_coord = UV * 3.0;
 	
 	float warp = UV.y;
 	float dist_from_center = abs(UV.x - 0.5) * 4.0;
@@ -42,17 +42,17 @@ void fragment() {
 	}
 	
 	vec2 warp_vec = vec2(warp, 0.0);
-	float motion_fbm = fbm(scaled_coord + vec2(TIME * 0.4, TIME * 1.3)); // used for distorting the smoke_fbm texture
-	float smoke_fbm = fbm(scaled_coord + vec2(0.0, TIME * 1.0) + motion_fbm + warp_vec * dist_from_center);
+	float motion_fbm = fbm(scaled_coord + vec2(TIME * 0.2, TIME * .3)); // used for distorting the smoke_fbm texture
+	float smoke_fbm = fbm(scaled_coord + vec2(0.0, TIME * 0.5) + motion_fbm + warp_vec * dist_from_center);
 	
 	
 	float thres = 0.1;
-	smoke_fbm = clamp(smoke_fbm - thres, 0.0, 1.0) / (1.0 - thres);
+	smoke_fbm = clamp(smoke_fbm - thres, 0.0, 0.6) / (1.0 - thres);
 	if (smoke_fbm < 0.1) {
 		smoke_fbm *= smoke_fbm/0.1;
 	}
 	smoke_fbm = sqrt(smoke_fbm);
-	smoke_fbm = clamp(smoke_fbm, 0.0, 1.0);
+	smoke_fbm = clamp(smoke_fbm, 0.0, .6);
 	
 	COLOR = vec4(smoke_fbm);
 }
