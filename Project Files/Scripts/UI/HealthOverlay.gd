@@ -15,9 +15,6 @@ func _ready():
 	set_health(95,100)
 
 
-func _on_HSlider_drag_ended(value_changed):
-	pass # Replace with function body.
-
 
 func _on_HSlider_value_changed(value):
 	print (value)

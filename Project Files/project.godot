@@ -18,10 +18,16 @@ _global_script_classes=[ {
 "class": "Inventory",
 "language": "GDScript",
 "path": "res://Scripts/Classes/Item Classes.gd"
+}, {
+"base": "CanvasLayer",
+"class": "MenuClass",
+"language": "GDScript",
+"path": "res://Scripts/Classes/Menu Class.gd"
 } ]
 _global_script_class_icons={
 "InteractableObjects": "",
-"Inventory": ""
+"Inventory": "",
+"MenuClass": ""
 }
 
 [application]
@@ -41,6 +47,7 @@ default_bus_layout="res://audio_bus_layout.tres"
 
 PlayerInventory="*res://Scripts/Global/Player Inventory.gd"
 PlayerState="*res://Scripts/Global/Player State.gd"
+Settings="*res://Scripts/Global/Settings.gd"
 
 [display]
 

@@ -19,15 +19,16 @@ var zoom_flag = false
 var buff
 
 func _ready():
-	print (get_viewport())
-	print (get_viewport().size)
-	print (get_viewport().size/2*self.zoom)
+#	print (get_viewport())
+#	print (get_viewport().size)
+#	print (get_viewport().size/2*self.zoom)
 	base_zoom = zoom
 	max_pos = Vector2(level_node.level_width,level_node.level_height)
 	_viewportNode = _find_viewportNode()
-	_viewportMargins = Vector2(_viewportNode.get_parent().margin_right,_viewportNode.get_parent().margin_bottom)
-	print (_viewportNode)
-	print (_viewportMargins)
+	if _viewportNode != null:
+		_viewportMargins = Vector2(_viewportNode.get_parent().margin_right,_viewportNode.get_parent().margin_bottom)
+#	print (_viewportNode)
+#	print (_viewportMargins)
 	pass
 
 func _find_border_length()->Vector2:
@@ -88,14 +89,14 @@ func cameraSnap():
 		
 func update_zoom():
 	if _viewportNode != null:
-		print (Vector2(_viewportNode.get_parent().margin_right,_viewportNode.get_parent().margin_bottom)==_viewportMargins)
+#		print (Vector2(_viewportNode.get_parent().margin_right,_viewportNode.get_parent().margin_bottom)==_viewportMargins)
 		if (_viewportNode.anchor_right == 1.0 and _viewportNode.anchor_bottom == 1.0) and Vector2(_viewportNode.get_parent().margin_right,_viewportNode.get_parent().margin_bottom) ==_viewportMargins:
 			zoom_flag = false
 		else:
 			camera_swing = Vector2.ZERO
 			center()
 			zoom_flag = true
-			print ("Camera ZOOM")
+			
 			if  (_viewportNode.anchor_right == 1.0 and _viewportNode.anchor_bottom == 1.0):
 				zoom.x = base_zoom.y-(1-_viewportNode.get_parent().margin_right/_viewportMargins.x)*base_zoom.x * zoom_intensity_on_pause
 				zoom.y = base_zoom.y-(1-_viewportNode.get_parent().margin_bottom/_viewportMargins.y)*base_zoom.y * zoom_intensity_on_pause
@@ -105,10 +106,10 @@ func update_zoom():
 			
 func _find_viewportNode()->Viewport:
 	var node = get_parent()
-	print ( !(node == ViewportContainer)," and ", node != null)
+#	print ( !(node == ViewportContainer)," and ", node != null)
 	while !(node is Viewport) and node != null:
 		node = node.get_parent()
-		print ( !(node == ViewportContainer)," and ", node != null)
+#		print ( !(node == ViewportContainer)," and ", node != null)
 	if (node.name == "root"):
 		return null
 	else:

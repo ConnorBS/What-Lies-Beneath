@@ -1,0 +1,145 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Scenes/UI/Components/AuxiliaryBottomButtonMargin.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Themes/Options_Overlay.tres" type="Theme" id=2]
+[ext_resource path="res://Scripts/UI/Options.gd" type="Script" id=3]
+[ext_resource path="res://Assets/Fonts/DynamicFonts/Label_TitleFont_MainMenu.tres" type="DynamicFont" id=4]
+[ext_resource path="res://Assets/Audio/UI/SFXAudioTestVolumeLevel.wav" type="AudioStream" id=5]
+
+[node name="Options" type="CanvasLayer"]
+script = ExtResource( 3 )
+
+[node name="AudioMargin" type="MarginContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 100.0
+margin_top = 100.0
+margin_right = -200.0
+margin_bottom = -300.0
+theme = ExtResource( 2 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="AudioMargin"]
+margin_right = 724.0
+margin_bottom = 200.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="AudioPanel" type="Panel" parent="AudioMargin/VBoxContainer"]
+margin_right = 724.0
+margin_bottom = 200.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="AudioMargin/VBoxContainer/AudioPanel"]
+margin_left = 50.0
+margin_top = 10.0
+margin_right = 40.0
+margin_bottom = 40.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 10
+
+[node name="Audio" type="Label" parent="AudioMargin/VBoxContainer/AudioPanel/VBoxContainer"]
+margin_right = 542.0
+margin_bottom = 58.0
+custom_fonts/font = ExtResource( 4 )
+text = "Audio"
+
+[node name="SFXContainer" type="HBoxContainer" parent="AudioMargin/VBoxContainer/AudioPanel/VBoxContainer"]
+margin_top = 68.0
+margin_right = 542.0
+margin_bottom = 91.0
+custom_constants/separation = 50
+alignment = 2
+
+[node name="Spacer" type="Control" parent="AudioMargin/VBoxContainer/AudioPanel/VBoxContainer/SFXContainer"]
+margin_bottom = 23.0
+
+[node name="SFX" type="Label" parent="AudioMargin/VBoxContainer/AudioPanel/VBoxContainer/SFXContainer"]
+margin_left = 50.0
+margin_right = 192.0
+margin_bottom = 23.0
+size_flags_horizontal = 3
+text = "Sound Effects Volume:"
+align = 1
+
+[node name="SFXHSlider" type="HSlider" parent="AudioMargin/VBoxContainer/AudioPanel/VBoxContainer/SFXContainer"]
+unique_name_in_owner = true
+margin_left = 242.0
+margin_right = 542.0
+margin_bottom = 23.0
+rect_min_size = Vector2( 300, 0 )
+size_flags_vertical = 3
+max_value = 1.0
+step = 0.01
+
+[node name="MusicContainer" type="HBoxContainer" parent="AudioMargin/VBoxContainer/AudioPanel/VBoxContainer"]
+margin_top = 101.0
+margin_right = 542.0
+margin_bottom = 124.0
+custom_constants/separation = 50
+alignment = 2
+
+[node name="Spacer" type="Control" parent="AudioMargin/VBoxContainer/AudioPanel/VBoxContainer/MusicContainer"]
+margin_bottom = 23.0
+
+[node name="Music" type="Label" parent="AudioMargin/VBoxContainer/AudioPanel/VBoxContainer/MusicContainer"]
+margin_left = 50.0
+margin_right = 192.0
+margin_bottom = 23.0
+size_flags_horizontal = 3
+text = "Music Volume:"
+align = 1
+
+[node name="MusicHSlider" type="HSlider" parent="AudioMargin/VBoxContainer/AudioPanel/VBoxContainer/MusicContainer"]
+unique_name_in_owner = true
+margin_left = 242.0
+margin_right = 542.0
+margin_bottom = 23.0
+rect_min_size = Vector2( 300, 0 )
+size_flags_vertical = 3
+max_value = 1.0
+step = 0.01
+
+[node name="MasterContainer" type="HBoxContainer" parent="AudioMargin/VBoxContainer/AudioPanel/VBoxContainer"]
+margin_top = 134.0
+margin_right = 542.0
+margin_bottom = 157.0
+custom_constants/separation = 50
+alignment = 2
+
+[node name="Spacer" type="Control" parent="AudioMargin/VBoxContainer/AudioPanel/VBoxContainer/MasterContainer"]
+margin_bottom = 23.0
+
+[node name="Master" type="Label" parent="AudioMargin/VBoxContainer/AudioPanel/VBoxContainer/MasterContainer"]
+margin_left = 50.0
+margin_right = 192.0
+margin_bottom = 23.0
+size_flags_horizontal = 3
+text = "Master Volume:"
+align = 1
+
+[node name="MasterHSlider" type="HSlider" parent="AudioMargin/VBoxContainer/AudioPanel/VBoxContainer/MasterContainer"]
+unique_name_in_owner = true
+margin_left = 242.0
+margin_right = 542.0
+margin_bottom = 23.0
+rect_min_size = Vector2( 300, 0 )
+size_flags_vertical = 3
+max_value = 1.0
+step = 0.01
+
+[node name="BottomButtonMargin" parent="." instance=ExtResource( 1 )]
+Options = true
+
+[node name="OptionSFXAudioPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 5 )
+bus = "SoundEffect"
+
+[connection signal="drag_ended" from="AudioMargin/VBoxContainer/AudioPanel/VBoxContainer/SFXContainer/SFXHSlider" to="." method="_on_SFXHSlider_drag_ended"]
+[connection signal="drag_started" from="AudioMargin/VBoxContainer/AudioPanel/VBoxContainer/SFXContainer/SFXHSlider" to="." method="_on_SFXHSlider_drag_started"]
+[connection signal="value_changed" from="AudioMargin/VBoxContainer/AudioPanel/VBoxContainer/SFXContainer/SFXHSlider" to="." method="_on_SFXHSlider_value_changed"]
+[connection signal="value_changed" from="AudioMargin/VBoxContainer/AudioPanel/VBoxContainer/MusicContainer/MusicHSlider" to="." method="_on_MusicHSlider_value_changed"]
+[connection signal="value_changed" from="AudioMargin/VBoxContainer/AudioPanel/VBoxContainer/MasterContainer/MasterHSlider" to="." method="_on_MasterHSlider_value_changed"]
+[connection signal="Cancel" from="BottomButtonMargin" to="." method="_on_Cancel_pressed"]
+[connection signal="Save" from="BottomButtonMargin" to="." method="_on_Save_pressed"]
