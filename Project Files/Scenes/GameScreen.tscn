@@ -426,43 +426,6 @@ pause_mode = 1
 material = SubResource( 5 )
 color = Color( 0, 0.321569, 0, 0.513726 )
 
-[node name="SmokeShader2" type="ColorRect" parent="MainMenu"]
-modulate = Color( 1, 1, 1, 0.65098 )
-material = SubResource( 11 )
-anchor_left = 1.0
-anchor_right = 1.0
-margin_right = 1024.0
-margin_bottom = 600.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-color = Color( 0.337255, 0.337255, 0.337255, 1 )
-
-[node name="SmokeShader3" type="ColorRect" parent="MainMenu"]
-material = SubResource( 11 )
-anchor_top = 1.0
-anchor_bottom = 1.0
-margin_right = 1024.0
-margin_bottom = 600.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-color = Color( 0.337255, 0.337255, 0.337255, 1 )
-
-[node name="SmokeShader4" type="ColorRect" parent="MainMenu"]
-material = SubResource( 11 )
-anchor_top = -1.0
-anchor_right = 1.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-color = Color( 0.337255, 0.337255, 0.337255, 1 )
-
-[node name="SmokeShader5" type="ColorRect" parent="MainMenu"]
-material = SubResource( 11 )
-anchor_left = -1.0
-margin_bottom = 600.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-color = Color( 0.337255, 0.337255, 0.337255, 1 )
-
 [node name="Map" parent="." instance=ExtResource( 7 )]
 offset = Vector2( 2000, 0 )
 transform = Transform2D( 1, 0, 0, 1, 2000, 0 )
