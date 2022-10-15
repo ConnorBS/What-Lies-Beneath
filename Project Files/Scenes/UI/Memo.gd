@@ -18,16 +18,16 @@ func load_window():
 
 func _check_to_hide_previous_button()->void:
 	if PlayerInventory.is_this_the_first_page():
-		get_node("%PreviousPage").hide()
+		get_node("%PreviousJournalPage").hide()
 	else:
-		get_node("%PreviousPage").show()
+		get_node("%PreviousJournalPage").show()
 
 
 func _check_to_hide_next_button()->void:
 	if PlayerInventory.is_there_another_page():
-		get_node("%NextPage").show()
+		get_node("%NextJournalPage").show()
 	else:
-		get_node("%NextPage").hide()
+		get_node("%NextJournalPage").hide()
 
 
 func _on_PreviousPage_pressed():

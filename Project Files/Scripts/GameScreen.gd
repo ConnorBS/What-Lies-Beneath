@@ -72,11 +72,15 @@ func _tween_grow(topLeft:Vector2,bottomRight:Vector2)->void:
 func _get_input():
 	if Input.is_action_just_pressed("menu"):
 		if menu_visible:
-			_viewportNode.gui_disable_input = false
-			_tween_grow(Vector2.ZERO,_fullDimensions)
-			menu_visible = false
-			get_tree().paused = false
-			PlayerState.set_Player_Active(true)
+			
+			if _window_state == MENU_WINDOWS.Main:
+				_viewportNode.gui_disable_input = false
+				_tween_grow(Vector2.ZERO,_fullDimensions)
+				menu_visible = false
+				get_tree().paused = false
+				PlayerState.set_Player_Active(true)
+			else:
+				_update_window(MENU_WINDOWS.Main)
 		else:
 			_viewportNode.gui_disable_input = true
 			_tween_shrink(shrinkTopLeftCorner,shrinkBottomRightCorner)
