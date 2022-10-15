@@ -12,17 +12,17 @@ _global_script_classes=[ {
 "base": "Sprite",
 "class": "InteractableObjects",
 "language": "GDScript",
-"path": "res://Scripts/Classes/Interactable Object Class.gd"
+"path": "res://Scripts/Classes/InteractableObjectClass.gd"
 }, {
 "base": "Reference",
 "class": "Inventory",
 "language": "GDScript",
-"path": "res://Scripts/Classes/Item Classes.gd"
+"path": "res://Scripts/Classes/ItemClasses.gd"
 }, {
 "base": "CanvasLayer",
 "class": "MenuClass",
 "language": "GDScript",
-"path": "res://Scripts/Classes/Menu Class.gd"
+"path": "res://Scripts/Classes/MenuClass.gd"
 } ]
 _global_script_class_icons={
 "InteractableObjects": "",
@@ -45,9 +45,10 @@ default_bus_layout="res://audio_bus_layout.tres"
 
 [autoload]
 
-PlayerInventory="*res://Scripts/Global/Player Inventory.gd"
-PlayerState="*res://Scripts/Global/Player State.gd"
+PlayerInventory="*res://Scripts/Global/PlayerInventory.gd"
+PlayerState="*res://Scripts/Global/PlayerState.gd"
 Settings="*res://Scripts/Global/Settings.gd"
+InventoryLists="*res://Scripts/Global/InventoryLists.gd"
 
 [display]
 

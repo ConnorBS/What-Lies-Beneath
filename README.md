@@ -142,17 +142,17 @@ alt="IMAGE ALT TEXT HERE" width="240" height="180" border="10" /></a>
 - [x] Still Screenshot of the Game in the top left with colour overlay indicating health
 #### Map Placeholder
 #### Memo - Journal Pages
-- [ ] Left right over Journal Objects
+- [x] Left right over Journal Objects
 #### Important Objects
-- [ ] Shows Keys
-- [ ] Shows Map Fragments
+- [x] Shows Keys
+- [x] Shows Map Fragments
 #### Options
-- [ ] Music and Sound Controls
+- [x] Music and Sound Controls
 #### Global Player State
 - [x] Health
 - [ ] Equipped Item
 - [ ] Inventory
-- [ ] Important Inventory Items
+- [x] Important Inventory Items
 - [ ] Map Fragments
 - [ ] Location
 <p align="right">(<a href="#what-lies-beneath">back to top</a>)</p>

@@ -1,17 +1,23 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Scripts/UI/KeyItems.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/UI/Components/AuxiliaryBottomButtonMargin.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Themes/MainMenu_Overlay.tres" type="Theme" id=3]
-[ext_resource path="res://Assets/KeyItems/Blank-Keys.png" type="Texture" id=4]
+[ext_resource path="res://Assets/Fonts/DynamicFonts/RichText_Content_MainMenu_Bold.tres" type="DynamicFont" id=5]
+[ext_resource path="res://Assets/Fonts/DynamicFonts/RichText_TitleContent_MainMenu_Bold.tres" type="DynamicFont" id=6]
+[ext_resource path="res://Assets/Fonts/DynamicFonts/RichText_Content_MainMenu.tres" type="DynamicFont" id=7]
+[ext_resource path="res://Assets/Fonts/DynamicFonts/RichText_TitleContent_MainMenu.tres" type="DynamicFont" id=8]
 
 [node name="KeyItems" type="CanvasLayer"]
 unique_name_in_owner = true
 script = ExtResource( 1 )
+__meta__ = {
+"_edit_horizontal_guides_": [ 299.0, 318.0 ]
+}
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 anchor_right = 1.0
-anchor_bottom = 0.758
+anchor_bottom = 0.849
 margin_left = 35.0
 margin_right = -35.0
 margin_bottom = -10.0
@@ -19,7 +25,7 @@ theme = ExtResource( 3 )
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 margin_right = 954.0
-margin_bottom = 444.0
+margin_bottom = 499.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
@@ -32,83 +38,54 @@ text = "KeyItems"
 fit_content_height = true
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+margin_left = 72.0
 margin_top = 69.0
-margin_right = 954.0
-margin_bottom = 444.0
+margin_right = 881.0
+margin_bottom = 299.0
+size_flags_horizontal = 4
+custom_constants/separation = 19
+
+[node name="Panel" type="Panel" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+margin_right = 270.0
+margin_bottom = 230.0
+rect_min_size = Vector2( 270, 230 )
+size_flags_horizontal = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/Panel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
 size_flags_vertical = 3
 alignment = 1
 
-[node name="Panel" type="Panel" parent="MarginContainer/VBoxContainer/HBoxContainer"]
-margin_left = 112.0
-margin_right = 362.0
-margin_bottom = 375.0
-rect_min_size = Vector2( 250, 0 )
-size_flags_horizontal = 6
-
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/Panel"]
-margin_left = 4.0
-margin_right = 254.0
-margin_bottom = 406.0
-size_flags_vertical = 3
-
 [node name="Keys" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/Panel/VBoxContainer"]
-margin_right = 250.0
+margin_right = 270.0
 margin_bottom = 58.0
 size_flags_horizontal = 3
 text = "Keys"
 align = 1
 
-[node name="GridContainer" type="GridContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/Panel/VBoxContainer"]
-margin_left = 33.0
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/Panel/VBoxContainer"]
 margin_top = 62.0
-margin_right = 217.0
-margin_bottom = 316.0
+margin_right = 270.0
+margin_bottom = 230.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="KeyGrid" type="GridContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/Panel/VBoxContainer/ScrollContainer"]
+unique_name_in_owner = true
+margin_left = 135.0
+margin_right = 135.0
 size_flags_horizontal = 6
-columns = 2
-
-[node name="KeyItem1" type="TextureRect" parent="MarginContainer/VBoxContainer/HBoxContainer/Panel/VBoxContainer/GridContainer"]
-margin_right = 90.0
-margin_bottom = 82.0
-texture = ExtResource( 4 )
-
-[node name="KeyItem2" type="TextureRect" parent="MarginContainer/VBoxContainer/HBoxContainer/Panel/VBoxContainer/GridContainer"]
-margin_left = 94.0
-margin_right = 184.0
-margin_bottom = 82.0
-texture = ExtResource( 4 )
-
-[node name="KeyItem3" type="TextureRect" parent="MarginContainer/VBoxContainer/HBoxContainer/Panel/VBoxContainer/GridContainer"]
-margin_top = 86.0
-margin_right = 90.0
-margin_bottom = 168.0
-texture = ExtResource( 4 )
-
-[node name="KeyItem4" type="TextureRect" parent="MarginContainer/VBoxContainer/HBoxContainer/Panel/VBoxContainer/GridContainer"]
-margin_left = 94.0
-margin_top = 86.0
-margin_right = 184.0
-margin_bottom = 168.0
-texture = ExtResource( 4 )
-
-[node name="KeyItem5" type="TextureRect" parent="MarginContainer/VBoxContainer/HBoxContainer/Panel/VBoxContainer/GridContainer"]
-margin_top = 172.0
-margin_right = 90.0
-margin_bottom = 254.0
-texture = ExtResource( 4 )
-
-[node name="KeyItem6" type="TextureRect" parent="MarginContainer/VBoxContainer/HBoxContainer/Panel/VBoxContainer/GridContainer"]
-margin_left = 94.0
-margin_top = 172.0
-margin_right = 184.0
-margin_bottom = 254.0
-texture = ExtResource( 4 )
+size_flags_vertical = 0
+custom_constants/vseparation = 7
+columns = 3
 
 [node name="Panel2" type="Panel" parent="MarginContainer/VBoxContainer/HBoxContainer"]
-margin_left = 526.0
-margin_right = 906.0
-margin_bottom = 375.0
-rect_min_size = Vector2( 380, 0 )
-size_flags_horizontal = 6
+margin_left = 289.0
+margin_right = 809.0
+margin_bottom = 230.0
+rect_min_size = Vector2( 520, 0 )
+size_flags_horizontal = 2
 __meta__ = {
 "_editor_description_": ""
 }
@@ -118,97 +95,89 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 
 [node name="Keys" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/Panel2/VBoxContainer2"]
-margin_right = 380.0
+margin_right = 520.0
 margin_bottom = 58.0
 size_flags_horizontal = 3
 text = "Items"
 align = 1
 
-[node name="GridContainer" type="GridContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/Panel2/VBoxContainer2"]
-margin_left = 4.0
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/Panel2/VBoxContainer2"]
 margin_top = 62.0
-margin_right = 376.0
-margin_bottom = 316.0
+margin_right = 520.0
+margin_bottom = 230.0
+size_flags_vertical = 3
+
+[node name="ItemGrid" type="GridContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/Panel2/VBoxContainer2/ScrollContainer"]
+unique_name_in_owner = true
+margin_left = 260.0
+margin_right = 260.0
 size_flags_horizontal = 6
-size_flags_vertical = 2
-columns = 4
+size_flags_vertical = 0
+custom_constants/vseparation = 7
+columns = 6
+__meta__ = {
+"_editor_description_": ""
+}
 
-[node name="KeyItem1" type="TextureRect" parent="MarginContainer/VBoxContainer/HBoxContainer/Panel2/VBoxContainer2/GridContainer"]
-margin_right = 90.0
-margin_bottom = 82.0
-texture = ExtResource( 4 )
+[node name="ItemDescription" type="CenterContainer" parent="MarginContainer/VBoxContainer"]
+margin_top = 303.0
+margin_right = 954.0
+margin_bottom = 499.0
+size_flags_vertical = 3
 
-[node name="KeyItem2" type="TextureRect" parent="MarginContainer/VBoxContainer/HBoxContainer/Panel2/VBoxContainer2/GridContainer"]
-margin_left = 94.0
-margin_right = 184.0
-margin_bottom = 82.0
-texture = ExtResource( 4 )
+[node name="DescriptionPanel" type="Panel" parent="MarginContainer/VBoxContainer/ItemDescription"]
+margin_left = 127.0
+margin_top = 15.0
+margin_right = 827.0
+margin_bottom = 180.0
+rect_min_size = Vector2( 700, 165 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
-[node name="KeyItem3" type="TextureRect" parent="MarginContainer/VBoxContainer/HBoxContainer/Panel2/VBoxContainer2/GridContainer"]
-margin_left = 188.0
-margin_right = 278.0
-margin_bottom = 82.0
-texture = ExtResource( 4 )
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/ItemDescription/DescriptionPanel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 20.0
+margin_top = 20.0
+margin_right = -20.0
+margin_bottom = -20.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
-[node name="KeyItem4" type="TextureRect" parent="MarginContainer/VBoxContainer/HBoxContainer/Panel2/VBoxContainer2/GridContainer"]
-margin_left = 282.0
-margin_right = 372.0
-margin_bottom = 82.0
-texture = ExtResource( 4 )
+[node name="ItemName" type="RichTextLabel" parent="MarginContainer/VBoxContainer/ItemDescription/DescriptionPanel/VBoxContainer"]
+margin_right = 660.0
+margin_bottom = 35.0
+rect_min_size = Vector2( 0, 35 )
+custom_fonts/bold_font = ExtResource( 6 )
+custom_fonts/normal_font = ExtResource( 8 )
+bbcode_enabled = true
+bbcode_text = "[b]I[/b]tem Name"
+text = "Item Name"
+scroll_active = false
 
-[node name="KeyItem5" type="TextureRect" parent="MarginContainer/VBoxContainer/HBoxContainer/Panel2/VBoxContainer2/GridContainer"]
-margin_top = 86.0
-margin_right = 90.0
-margin_bottom = 168.0
-texture = ExtResource( 4 )
+[node name="CenterContainer" type="CenterContainer" parent="MarginContainer/VBoxContainer/ItemDescription/DescriptionPanel/VBoxContainer"]
+margin_top = 39.0
+margin_right = 660.0
+margin_bottom = 125.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
-[node name="KeyItem6" type="TextureRect" parent="MarginContainer/VBoxContainer/HBoxContainer/Panel2/VBoxContainer2/GridContainer"]
-margin_left = 94.0
-margin_top = 86.0
-margin_right = 184.0
-margin_bottom = 168.0
-texture = ExtResource( 4 )
-
-[node name="KeyItem7" type="TextureRect" parent="MarginContainer/VBoxContainer/HBoxContainer/Panel2/VBoxContainer2/GridContainer"]
-margin_left = 188.0
-margin_top = 86.0
-margin_right = 278.0
-margin_bottom = 168.0
-texture = ExtResource( 4 )
-
-[node name="KeyItem8" type="TextureRect" parent="MarginContainer/VBoxContainer/HBoxContainer/Panel2/VBoxContainer2/GridContainer"]
-margin_left = 282.0
-margin_top = 86.0
-margin_right = 372.0
-margin_bottom = 168.0
-texture = ExtResource( 4 )
-
-[node name="KeyItem9" type="TextureRect" parent="MarginContainer/VBoxContainer/HBoxContainer/Panel2/VBoxContainer2/GridContainer"]
-margin_top = 172.0
-margin_right = 90.0
-margin_bottom = 254.0
-texture = ExtResource( 4 )
-
-[node name="KeyItem10" type="TextureRect" parent="MarginContainer/VBoxContainer/HBoxContainer/Panel2/VBoxContainer2/GridContainer"]
-margin_left = 94.0
-margin_top = 172.0
-margin_right = 184.0
-margin_bottom = 254.0
-texture = ExtResource( 4 )
-
-[node name="KeyItem11" type="TextureRect" parent="MarginContainer/VBoxContainer/HBoxContainer/Panel2/VBoxContainer2/GridContainer"]
-margin_left = 188.0
-margin_top = 172.0
-margin_right = 278.0
-margin_bottom = 254.0
-texture = ExtResource( 4 )
-
-[node name="KeyItem12" type="TextureRect" parent="MarginContainer/VBoxContainer/HBoxContainer/Panel2/VBoxContainer2/GridContainer"]
-margin_left = 282.0
-margin_top = 172.0
-margin_right = 372.0
-margin_bottom = 254.0
-texture = ExtResource( 4 )
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer/ItemDescription/DescriptionPanel/VBoxContainer/CenterContainer"]
+margin_left = 30.0
+margin_top = 5.0
+margin_right = 630.0
+margin_bottom = 80.0
+grow_horizontal = 2
+grow_vertical = 2
+rect_min_size = Vector2( 600, 75 )
+size_flags_horizontal = 7
+size_flags_vertical = 3
+custom_fonts/bold_font = ExtResource( 5 )
+custom_fonts/normal_font = ExtResource( 7 )
+bbcode_enabled = true
+bbcode_text = "[b]L[/b]orem ipsum dolor sit amet. Quo quia dolorem vel amet velit sit odit dolores eos laudantium adipisci cum perspiciatis tenetur! Est laboriosam fuga et internos porro in molestiae nesciunt est aspernatur suscipit."
+text = "Lorem ipsum dolor sit amet. Quo quia dolorem vel amet velit sit odit dolores eos laudantium adipisci cum perspiciatis tenetur! Est laboriosam fuga et internos porro in molestiae nesciunt est aspernatur suscipit."
+scroll_active = false
 
 [node name="BottomButtonMargin" parent="." instance=ExtResource( 2 )]
 Continue = false

@@ -1,0 +1,17 @@
+OrderID,KeyItemName,KeyOrItem,PlayerHasItOnStart,Description,UnkownTextureLocation,CollectedTextureLocation
+1,Gas Station Key,Key,TRUE,"[b]I[/b]t's a old fashioned key... I woke up with it, but don't know where it goes. Touching it feels... calming for some reason. It has [color=yellow] GAS STATION [/color] etched on it.",res://Assets/KeyItems/UnkownKey1.png,res://Assets/KeyItems/Key1.png
+2,Key2,Key,FALSE,,res://Assets/KeyItems/UnkownKey2.png,res://Assets/KeyItems/Key2.png
+3,Key3,Key,FALSE,,res://Assets/KeyItems/UnkownKey3.png,res://Assets/KeyItems/Key3.png
+4,Key4,Key,FALSE,,res://Assets/KeyItems/UnkownKey4.png,res://Assets/KeyItems/Key4.png
+5,Key5,Key,FALSE,,res://Assets/KeyItems/UnkownKey5.png,res://Assets/KeyItems/Key5.png
+6,Key6,Key,FALSE,,res://Assets/KeyItems/UnkownKey6.png,res://Assets/KeyItems/Key6.png
+1,Journal,Item,TRUE,"[b]I[/b] can't remember ever being without my journal. Lately though, there are entries in it I don't remember writing... but it's in my handwriting...",res://Assets/KeyItems/Unknown_Journal.png,res://Assets/KeyItems/Journal.png
+2,Car Keys,Item,FALSE,[b]N[/b]ot much use when the car doesn't work... ,res://Assets/KeyItems/Unknown_CarKey.png,res://Assets/KeyItems/CarKey.png
+3,Placeholder,Item,FALSE,,res://Assets/KeyItems/Blank-Keys.png,
+4,Placeholder,Item,FALSE,,res://Assets/KeyItems/Blank-Keys.png,
+5,Placeholder,Item,FALSE,,res://Assets/KeyItems/Blank-Keys.png,
+6,Placeholder,Item,FALSE,,res://Assets/KeyItems/Blank-Keys.png,
+7,Placeholder,Item,FALSE,,res://Assets/KeyItems/Blank-Keys.png,
+8,Placeholder,Item,FALSE,,res://Assets/KeyItems/Blank-Keys.png,
+9,Placeholder,Item,FALSE,,res://Assets/KeyItems/Blank-Keys.png,
+10,Placeholder,Item,FALSE,,res://Assets/KeyItems/Blank-Keys.png,

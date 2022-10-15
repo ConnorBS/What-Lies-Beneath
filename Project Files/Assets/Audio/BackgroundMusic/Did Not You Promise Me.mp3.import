@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/Did Not You Promise Me.mp3-e4592c0d9151f78ccb22146992984805.mp3str"
+
+[deps]
+
+source_file="res://Assets/Audio/BackgroundMusic/Did Not You Promise Me.mp3"
+dest_files=[ "res://.import/Did Not You Promise Me.mp3-e4592c0d9151f78ccb22146992984805.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

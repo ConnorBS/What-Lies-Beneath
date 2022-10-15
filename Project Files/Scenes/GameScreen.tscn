@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=2]
+[gd_scene load_steps=27 format=2]
 
 [ext_resource path="res://Scenes/Levels/Gas Station/Outside Gas Station.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scripts/GameScreen.gd" type="Script" id=2]
@@ -17,6 +17,8 @@
 [ext_resource path="res://Assets/Animation/UI/MenuTransitions/ScenesOpen_Memo.tres" type="Animation" id=15]
 [ext_resource path="res://Assets/Animation/UI/MenuTransitions/ScenesOpen_KeyItems.tres" type="Animation" id=16]
 [ext_resource path="res://Assets/Animation/UI/MenuTransitions/ScenesClose_Memo.tres" type="Animation" id=17]
+[ext_resource path="res://Assets/Audio/UI/SELECT CLICK.wav" type="AudioStream" id=18]
+[ext_resource path="res://Assets/Audio/BackgroundMusic/Why did you lie to me.mp3" type="AudioStream" id=19]
 
 [sub_resource type="ShaderMaterial" id=11]
 shader = ExtResource( 5 )
@@ -463,6 +465,13 @@ anims/Open_Map = ExtResource( 12 )
 anims/Open_Memo = ExtResource( 15 )
 anims/Open_Options = ExtResource( 11 )
 anims/RESET = SubResource( 14 )
+
+[node name="MenuMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 19 )
+bus = "Music"
+
+[node name="MenuSFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 18 )
 
 [connection signal="KeyItems" from="MainMenu" to="." method="_on_MainMenu_KeyItems"]
 [connection signal="Map" from="MainMenu" to="." method="_on_MainMenu_Map"]

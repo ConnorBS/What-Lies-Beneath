@@ -30,6 +30,12 @@ bbcode_text = "[center][b]M[/b]ap[/center]"
 text = "Map"
 fit_content_height = true
 
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer"]
+margin_top = 69.0
+margin_right = 954.0
+margin_bottom = 127.0
+text = "Placeholder for the "
+
 [node name="BottomButtonMargin" parent="." instance=ExtResource( 2 )]
 Continue = false
 

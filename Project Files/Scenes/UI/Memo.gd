@@ -31,6 +31,7 @@ func _check_to_hide_next_button()->void:
 
 
 func _on_PreviousPage_pressed():
+	get_parent().click_success()
 	var newJournalPage = PlayerInventory.get_previous_journal_Pages()
 	if newJournalPage != null:
 		_update_journal_texture(newJournalPage.pageNumber)
@@ -40,6 +41,7 @@ func _on_PreviousPage_pressed():
 
 
 func _on_NextPage_pressed():
+	get_parent().click_success()
 	var newJournalPage = PlayerInventory.get_next_journal_Pages()
 	if newJournalPage != null:
 		_update_journal_texture(newJournalPage.pageNumber)

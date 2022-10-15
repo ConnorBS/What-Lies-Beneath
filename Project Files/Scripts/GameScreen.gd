@@ -12,6 +12,8 @@ onready var _gamePanelNode = $MainMenu/GameWindowPanel
 onready var _gameScreenResizeTween = $GameScreenResize
 onready var _healthOverlayNode = $MainMenu/GameWindowPanel/ViewportContainer/HealthOverlay
 onready var _fullDimensions = get_viewport().size
+onready var _menuMusicNode = $MenuMusic
+onready var _menuSFXNode = $MenuSFX
 
 ######## Editor Values ########
 export (Vector2) var shrinkTopLeftCorner = Vector2(37,69)
@@ -74,15 +76,17 @@ func _get_input():
 		if menu_visible:
 			
 			if _window_state == MENU_WINDOWS.Main:
+				_menuMusicNode.stop()
 				_viewportNode.gui_disable_input = false
 				_tween_grow(Vector2.ZERO,_fullDimensions)
 				menu_visible = false
 				get_tree().paused = false
 				PlayerState.set_Player_Active(true)
 			else:
-				_update_window(MENU_WINDOWS.Main)
+				_on_Back()
 		else:
 			_viewportNode.gui_disable_input = true
+			_menuMusicNode.play()
 			_tween_shrink(shrinkTopLeftCorner,shrinkBottomRightCorner)
 			menu_visible = true
 			get_tree().paused = true
@@ -116,38 +120,42 @@ func _update_window(new_window:int)->void:
 			_menuTransitionsNode.play("Close_KeyItems")
 		
 
-
-
-
 	_window_state = new_window
 	
 	pass
 
 
+func click_success():
+	_menuSFXNode.play()
 func _on_MainMenu_Map():
+	click_success()
 #	get_node("%Map").load_window()
 	_update_window(MENU_WINDOWS.Map)
 	pass # Replace with function body.
 
 
 func _on_Back():
+	click_success()
 	_update_window(MENU_WINDOWS.Main)
 	pass # Replace with function body.
 
 
 func _on_MainMenu_Options():
+	click_success()
 	get_node("%Options").load_window()
 	_update_window(MENU_WINDOWS.Options)
 	pass # Replace with function body.
 
 
 func _on_MainMenu_Memo():
+	click_success()
 	get_node("%Memo").load_window()
 	_update_window(MENU_WINDOWS.Memo)
 	pass # Replace with function body.
 
 
 func _on_MainMenu_KeyItems():
-#	get_node("%KeyItems").load_window()
+	click_success()
+	get_node("%KeyItems").load_window()
 	_update_window(MENU_WINDOWS.KeyItems)
 	pass # Replace with function body.
