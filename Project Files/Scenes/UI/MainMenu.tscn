@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://Themes/MainMenu_Bottom_Row_Buttons.theme" type="Theme" id=1]
 [ext_resource path="res://Assets/Sprites/Equipment/WWII Weapons/Mosin Nagant.png" type="Texture" id=2]
@@ -14,7 +14,9 @@
 [ext_resource path="res://Shaders/Smoke/Smoke.shader" type="Shader" id=12]
 [ext_resource path="res://Assets/Fonts/DynamicFonts/RichText_Content_MainMenu_Bold.tres" type="DynamicFont" id=13]
 [ext_resource path="res://Assets/Fonts/DynamicFonts/RichText_TitleContent_MainMenu_Bold.tres" type="DynamicFont" id=14]
+[ext_resource path="res://Assets/UI/Texture Buttons/Next-Inventory-Button.png" type="Texture" id=15]
 [ext_resource path="res://Scripts/UI/MainMenu.gd" type="Script" id=16]
+[ext_resource path="res://Assets/UI/Texture Buttons/Next-Inventory-Button-Pressed.png" type="Texture" id=17]
 
 [sub_resource type="ShaderMaterial" id=12]
 shader = ExtResource( 12 )
@@ -28,6 +30,14 @@ colors = PoolColorArray( 0, 0, 0, 0.941176, 0, 0, 0, 0, 0, 0, 0, 0.941176 )
 gradient = SubResource( 10 )
 fill_from = Vector2( 1, 0 )
 fill_to = Vector2( 0, 0 )
+
+[sub_resource type="StyleBoxFlat" id=13]
+bg_color = Color( 0, 0, 0, 0 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color( 0.772549, 0, 0, 1 )
 
 [node name="MainMenu" type="CanvasLayer"]
 script = ExtResource( 16 )
@@ -233,15 +243,16 @@ margin_bottom = 323.0
 rect_min_size = Vector2( 0, 125 )
 size_flags_horizontal = 3
 size_flags_vertical = 0
+custom_constants/separation = 62
 
 [node name="Container1" type="MarginContainer" parent="MarginContainer/VBoxContainer/ItemRow"]
-margin_right = 187.0
+margin_right = 141.0
 margin_bottom = 125.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="Item1" type="TextureRect" parent="MarginContainer/VBoxContainer/ItemRow/Container1"]
-margin_right = 187.0
+margin_right = 141.0
 margin_bottom = 125.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -250,7 +261,7 @@ expand = true
 stretch_mode = 6
 
 [node name="Label" type="Label" parent="MarginContainer/VBoxContainer/ItemRow/Container1"]
-margin_right = 187.0
+margin_right = 141.0
 margin_bottom = 125.0
 size_flags_vertical = 1
 text = "- 2 -"
@@ -258,8 +269,8 @@ align = 2
 valign = 2
 
 [node name="Container2" type="MarginContainer" parent="MarginContainer/VBoxContainer/ItemRow"]
-margin_left = 191.0
-margin_right = 379.0
+margin_left = 203.0
+margin_right = 344.0
 margin_bottom = 125.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -268,7 +279,7 @@ __meta__ = {
 }
 
 [node name="Item2" type="TextureRect" parent="MarginContainer/VBoxContainer/ItemRow/Container2"]
-margin_right = 188.0
+margin_right = 141.0
 margin_bottom = 125.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -277,7 +288,7 @@ expand = true
 stretch_mode = 6
 
 [node name="Label" type="Label" parent="MarginContainer/VBoxContainer/ItemRow/Container2"]
-margin_right = 188.0
+margin_right = 141.0
 margin_bottom = 125.0
 size_flags_vertical = 1
 text = "- 10 -"
@@ -285,8 +296,8 @@ align = 2
 valign = 2
 
 [node name="Container3" type="MarginContainer" parent="MarginContainer/VBoxContainer/ItemRow"]
-margin_left = 383.0
-margin_right = 570.0
+margin_left = 406.0
+margin_right = 547.0
 margin_bottom = 125.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -295,7 +306,7 @@ __meta__ = {
 }
 
 [node name="Item3" type="TextureRect" parent="MarginContainer/VBoxContainer/ItemRow/Container3"]
-margin_right = 187.0
+margin_right = 141.0
 margin_bottom = 125.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -304,7 +315,7 @@ expand = true
 stretch_mode = 6
 
 [node name="Label" type="Label" parent="MarginContainer/VBoxContainer/ItemRow/Container3"]
-margin_right = 187.0
+margin_right = 141.0
 margin_bottom = 125.0
 size_flags_vertical = 1
 text = "- 88 -"
@@ -312,8 +323,8 @@ align = 1
 valign = 2
 
 [node name="Container4" type="MarginContainer" parent="MarginContainer/VBoxContainer/ItemRow"]
-margin_left = 574.0
-margin_right = 762.0
+margin_left = 609.0
+margin_right = 750.0
 margin_bottom = 125.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -322,7 +333,7 @@ __meta__ = {
 }
 
 [node name="Item4" type="TextureRect" parent="MarginContainer/VBoxContainer/ItemRow/Container4"]
-margin_right = 188.0
+margin_right = 141.0
 margin_bottom = 125.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -331,7 +342,7 @@ expand = true
 stretch_mode = 6
 
 [node name="Label" type="Label" parent="MarginContainer/VBoxContainer/ItemRow/Container4"]
-margin_right = 188.0
+margin_right = 141.0
 margin_bottom = 125.0
 size_flags_vertical = 1
 text = "- 5-"
@@ -339,7 +350,7 @@ align = 2
 valign = 2
 
 [node name="Container5" type="MarginContainer" parent="MarginContainer/VBoxContainer/ItemRow"]
-margin_left = 766.0
+margin_left = 812.0
 margin_right = 954.0
 margin_bottom = 125.0
 size_flags_horizontal = 3
@@ -349,7 +360,7 @@ __meta__ = {
 }
 
 [node name="Item5" type="TextureRect" parent="MarginContainer/VBoxContainer/ItemRow/Container5"]
-margin_right = 188.0
+margin_right = 142.0
 margin_bottom = 125.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -358,7 +369,7 @@ expand = true
 stretch_mode = 6
 
 [node name="Label" type="Label" parent="MarginContainer/VBoxContainer/ItemRow/Container5"]
-margin_right = 188.0
+margin_right = 142.0
 margin_bottom = 125.0
 size_flags_vertical = 1
 text = "- 0 -"
@@ -479,7 +490,50 @@ __meta__ = {
 "_editor_description_": ""
 }
 
+[node name="ItemScrollButtonMarginContainer" type="MarginContainer" parent="."]
+anchor_left = 0.382
+anchor_top = 0.36
+anchor_right = 0.615
+anchor_bottom = 0.527
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ItemScrollButtonMarginContainer"]
+margin_right = 238.0
+margin_bottom = 100.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 1
+
+[node name="Previous" type="TextureButton" parent="ItemScrollButtonMarginContainer/HBoxContainer"]
+margin_top = 39.0
+margin_right = 38.0
+margin_bottom = 60.0
+size_flags_horizontal = 4
+size_flags_vertical = 6
+texture_normal = ExtResource( 15 )
+texture_pressed = ExtResource( 17 )
+flip_h = true
+
+[node name="Spacer" type="Panel" parent="ItemScrollButtonMarginContainer/HBoxContainer"]
+margin_left = 42.0
+margin_right = 196.0
+margin_bottom = 100.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_styles/panel = SubResource( 13 )
+
+[node name="Next" type="TextureButton" parent="ItemScrollButtonMarginContainer/HBoxContainer"]
+margin_left = 200.0
+margin_top = 39.0
+margin_right = 238.0
+margin_bottom = 60.0
+size_flags_horizontal = 4
+size_flags_vertical = 6
+texture_normal = ExtResource( 15 )
+texture_pressed = ExtResource( 17 )
+
 [connection signal="pressed" from="MarginContainer/VBoxContainer/BottomRow/Map" to="." method="_on_Map_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/BottomRow/Memo" to="." method="_on_Memo_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/BottomRow/KeyItems" to="." method="_on_KeyItems_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/BottomRow/Options" to="." method="_on_Options_pressed"]
+[connection signal="pressed" from="ItemScrollButtonMarginContainer/HBoxContainer/Previous" to="." method="_on_Item_Scroll_Previous_pressed"]
+[connection signal="pressed" from="ItemScrollButtonMarginContainer/HBoxContainer/Next" to="." method="_on_Item_Scroll_Next_pressed"]

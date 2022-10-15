@@ -472,6 +472,7 @@ bus = "Music"
 
 [node name="MenuSFX" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 18 )
+bus = "SoundEffect"
 
 [connection signal="KeyItems" from="MainMenu" to="." method="_on_MainMenu_KeyItems"]
 [connection signal="Map" from="MainMenu" to="." method="_on_MainMenu_Map"]
