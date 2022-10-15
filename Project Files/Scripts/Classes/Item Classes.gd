@@ -21,3 +21,8 @@ class MapFragments:
 	
 class Locations:
 	pass
+
+class JournalPage:
+	var pageName:String
+	var pageNumber:int
+	

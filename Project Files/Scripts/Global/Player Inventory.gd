@@ -12,6 +12,17 @@ const _key_items:Dictionary = {}
 const _map_fragments:Dictionary = {}
 const _locations:Dictionary = {}
 
+##Troubleshooting
+func _ready():
+	var journalPage = Inventory.JournalPage.new()
+	journalPage.pageNumber = 1
+	add_journal_Page(journalPage)
+	
+	journalPage = Inventory.JournalPage.new()
+	journalPage.pageNumber = 2
+	add_journal_Page(journalPage)
+
+	pass
 
 
 ###########################
@@ -112,3 +123,44 @@ func _get_key_of_item(item:Inventory,inventoryType:Dictionary = _inventory)->int
 ### Location Updates ###
 
 
+#### Memo Inventory ####
+const _journal_Pages:Array = [];
+var current_Page = 0
+
+func add_journal_Page(new_journal_page:Inventory.JournalPage):
+	if !_journal_Pages.has(new_journal_page):
+		_journal_Pages.append(new_journal_page)
+		set_current_to_recent_page()
+
+
+func set_current_to_recent_page():
+	current_Page = _journal_Pages.size()-1
+	return _journal_Pages[current_Page]
+
+
+func get_current_journal_Page():
+	if _journal_Pages.size() - 1 >= current_Page:
+		return _journal_Pages[current_Page]
+	return null
+
+func get_next_journal_Pages ():
+	if current_Page + 1 <= _journal_Pages.size():
+		current_Page += 1
+		return _journal_Pages[current_Page]
+	return null
+
+func get_previous_journal_Pages ():
+	if current_Page - 1 >= 0:
+		current_Page -= 1
+		return _journal_Pages[current_Page]
+	return null
+
+func is_there_another_page()->bool:
+	if current_Page == _journal_Pages.size() - 1:
+		return false
+	return true
+	
+func is_this_the_first_page()->bool:
+	if current_Page == 0:
+		return true
+	return false

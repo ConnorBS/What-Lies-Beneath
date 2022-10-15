@@ -138,7 +138,7 @@ func _on_MainMenu_Options():
 
 
 func _on_MainMenu_Memo():
-#	get_node("%Memo").load_window()
+	get_node("%Memo").load_window()
 	_update_window(MENU_WINDOWS.Memo)
 	pass # Replace with function body.
 
