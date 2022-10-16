@@ -14,6 +14,11 @@ const _locations:Dictionary = {}
 
 
 func _ready():
+	#############
+#	Load Items
+	#############
+	_load_base_KeyItems()
+	InventoryLists.load_Inventory_Types()
 	##Troubleshooting
 	var journalPage = Inventory.JournalPage.new()
 	journalPage.pageNumber = 1
@@ -22,8 +27,22 @@ func _ready():
 	journalPage = Inventory.JournalPage.new()
 	journalPage.pageNumber = 2
 	add_journal_Page(journalPage)
+	
+	var item = InventoryLists.get_item("Small Plant",1)
+	add_item(item)
+	item = InventoryLists.get_item("Medium Sized Plant",1)
+	add_item(item)
+	
+	item = InventoryLists.get_item("Large Sized Plant",1)
+	add_item(item)
+	
+	item = InventoryLists.get_item("Medium Sized Plant",1)
+	add_item(item)
+	item = InventoryLists.get_item("Pistol",1)
+	add_item(item)
+	item = InventoryLists.get_item("Shotgun",1)
+	add_item(item)
 	#################
-	_load_base_KeyItems()
 	pass
 
 
@@ -33,8 +52,8 @@ func _ready():
 
 ##### Add Items ######
 
-func add_item(item:Inventory):
-	if item == Inventory.Items:
+static func add_item(item):
+	if item.is_type("Inventory.Items"):
 		if item.stackable:
 			### Checks to see if it can add to the existing inventory
 			
@@ -62,14 +81,14 @@ func add_item(item:Inventory):
 			_add_item_to_inventory(item,_inventory)
 		else:
 			_add_item_to_inventory(item,_inventory)
-	elif item == Inventory.KeyItems:
+	elif item.is_type("Inventory.KeyItems"):
 			_add_item_to_inventory(item,_key_items)
-	elif item == Inventory.MapFragments:
+	elif item.is_type("Inventory.MapFragments"):
 			_add_item_to_inventory(item,_map_fragments)
-	elif item == Inventory.Locations:
+	elif item.is_type("Inventory.Locations"):
 			_add_item_to_inventory(item,_locations)
 	
-func _add_item_to_inventory(item:Inventory,inventoryType:Dictionary = _inventory):
+static func _add_item_to_inventory(item,inventoryType:Dictionary = _inventory):
 	if inventoryType.empty():
 		inventoryType[0] = item
 	else:
@@ -81,7 +100,7 @@ func _add_item_to_inventory(item:Inventory,inventoryType:Dictionary = _inventory
 		inventoryType[find_next_unique_key] = item
 
 #### Use Items ####
-func use_item(item:Inventory): ###Use 1x Item
+func use_item(item): ###Use 1x Item
 	if item == Inventory.Items:
 		if item.weapon == true:
 			_equipped_gun = item
@@ -99,7 +118,7 @@ func use_item(item:Inventory): ###Use 1x Item
 	elif item == Inventory.Locations:
 			_add_item_to_inventory(item,_locations)
 
-func _remove_item (item:Inventory,inventoryType:Dictionary = _inventory)->void:
+static func _remove_item (item,inventoryType:Dictionary = _inventory)->void:
 	var key_to_remove = _get_key_of_item(item,inventoryType)
 	if key_to_remove == -1:
 		push_warning("Trying to delete an item: "+item.name+" that doesn't exist in _inventory")
@@ -107,7 +126,7 @@ func _remove_item (item:Inventory,inventoryType:Dictionary = _inventory)->void:
 		inventoryType.erase(key_to_remove)
 
 #### Dictionary Searches ####
-func _get_player_inventory_list_of_matching_items_by_name(name_to_check:String)->Array:
+static func _get_player_inventory_list_of_matching_items_by_name(name_to_check:String)->Array:
 	var list_of_items = []
 	if !_inventory.empty():
 		for i in _inventory.keys():
@@ -115,12 +134,20 @@ func _get_player_inventory_list_of_matching_items_by_name(name_to_check:String)-
 				list_of_items.appoend(_inventory[i])
 	return list_of_items
 
-func _get_key_of_item(item:Inventory,inventoryType:Dictionary = _inventory)->int:
+static func _get_key_of_item(item,inventoryType:Dictionary = _inventory)->int:
 	if !inventoryType.empty():
 		for keyCheck in inventoryType.keys():
 			if item == inventoryType[keyCheck]:
 				return keyCheck
 	return -1 ## Indicates nothing was found
+
+static func get_list_of_inventory()->Array:
+	var listOfItems = []
+	var listOfKeys = _inventory.keys()
+	listOfKeys.sort()
+	for i in listOfKeys:
+		listOfItems.append(_inventory[i])
+	return listOfItems
 
 ### Location Updates ###
 
@@ -172,8 +199,6 @@ func is_this_the_first_page()->bool:
 #### Player KeyItems #####
 ###########################
 
-##### Add Items ######
-
 func _load_base_KeyItems()->void:
 	var baseKeys = InventoryLists.load_KeyItems()
 	_key_items["Key"] = baseKeys["Key"]
@@ -191,6 +216,6 @@ static func get_item_list()->Array:
 		keyList.append(_key_items["Item"][item])
 	return keyList
 
-func pickup_KeyItem(item:Inventory.KeyItems)->void:
+static func pickup_KeyItem(item:Inventory.KeyItems)->void:
 	_key_items[item.type][item.slot].unlocked = true
 	

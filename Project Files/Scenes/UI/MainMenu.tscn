@@ -1,12 +1,8 @@
-[gd_scene load_steps=22 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://Themes/MainMenu_Bottom_Row_Buttons.theme" type="Theme" id=1]
-[ext_resource path="res://Assets/Sprites/Equipment/WWII Weapons/Mosin Nagant.png" type="Texture" id=2]
-[ext_resource path="res://Assets/Sprites/Equipment/WWII Weapons/Type 99 LMG.png" type="Texture" id=3]
+[ext_resource path="res://Scenes/UI/Components/InventoryScrollContainer.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Assets/Sprites/Equipment/WWII Weapons/Colt M1911.png" type="Texture" id=4]
-[ext_resource path="res://Assets/Sprites/Equipment/WWII Weapons/Panzerschreck.png" type="Texture" id=5]
-[ext_resource path="res://Assets/Sprites/Equipment/WWII Weapons/Sten.png" type="Texture" id=6]
-[ext_resource path="res://Assets/Sprites/Equipment/WWII Weapons/Type 99 Arisaka.png" type="Texture" id=7]
 [ext_resource path="res://Themes/MainMenu_Command_Buttons.theme" type="Theme" id=8]
 [ext_resource path="res://Assets/Fonts/DynamicFonts/RichText_TitleContent_MainMenu.tres" type="DynamicFont" id=9]
 [ext_resource path="res://Assets/Fonts/DynamicFonts/RichText_Content_MainMenu.tres" type="DynamicFont" id=10]
@@ -245,136 +241,23 @@ size_flags_horizontal = 3
 size_flags_vertical = 0
 custom_constants/separation = 62
 
-[node name="Container1" type="MarginContainer" parent="MarginContainer/VBoxContainer/ItemRow"]
-margin_right = 141.0
-margin_bottom = 125.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
+[node name="InventoryScrollContainer1" parent="MarginContainer/VBoxContainer/ItemRow" instance=ExtResource( 2 )]
 
-[node name="Item1" type="TextureRect" parent="MarginContainer/VBoxContainer/ItemRow/Container1"]
-margin_right = 141.0
-margin_bottom = 125.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-texture = ExtResource( 7 )
-expand = true
-stretch_mode = 6
-
-[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/ItemRow/Container1"]
-margin_right = 141.0
-margin_bottom = 125.0
-size_flags_vertical = 1
-text = "- 2 -"
-align = 2
-valign = 2
-
-[node name="Container2" type="MarginContainer" parent="MarginContainer/VBoxContainer/ItemRow"]
+[node name="InventoryScrollContainer2" parent="MarginContainer/VBoxContainer/ItemRow" instance=ExtResource( 2 )]
 margin_left = 203.0
 margin_right = 344.0
-margin_bottom = 125.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-__meta__ = {
-"_editor_description_": ""
-}
 
-[node name="Item2" type="TextureRect" parent="MarginContainer/VBoxContainer/ItemRow/Container2"]
-margin_right = 141.0
-margin_bottom = 125.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-texture = ExtResource( 2 )
-expand = true
-stretch_mode = 6
-
-[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/ItemRow/Container2"]
-margin_right = 141.0
-margin_bottom = 125.0
-size_flags_vertical = 1
-text = "- 10 -"
-align = 2
-valign = 2
-
-[node name="Container3" type="MarginContainer" parent="MarginContainer/VBoxContainer/ItemRow"]
+[node name="InventoryScrollContainer3" parent="MarginContainer/VBoxContainer/ItemRow" instance=ExtResource( 2 )]
 margin_left = 406.0
 margin_right = 547.0
-margin_bottom = 125.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-__meta__ = {
-"_editor_description_": ""
-}
 
-[node name="Item3" type="TextureRect" parent="MarginContainer/VBoxContainer/ItemRow/Container3"]
-margin_right = 141.0
-margin_bottom = 125.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-texture = ExtResource( 3 )
-expand = true
-stretch_mode = 6
-
-[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/ItemRow/Container3"]
-margin_right = 141.0
-margin_bottom = 125.0
-size_flags_vertical = 1
-text = "- 88 -"
-align = 1
-valign = 2
-
-[node name="Container4" type="MarginContainer" parent="MarginContainer/VBoxContainer/ItemRow"]
+[node name="InventoryScrollContainer4" parent="MarginContainer/VBoxContainer/ItemRow" instance=ExtResource( 2 )]
 margin_left = 609.0
 margin_right = 750.0
-margin_bottom = 125.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-__meta__ = {
-"_editor_description_": ""
-}
 
-[node name="Item4" type="TextureRect" parent="MarginContainer/VBoxContainer/ItemRow/Container4"]
-margin_right = 141.0
-margin_bottom = 125.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-texture = ExtResource( 6 )
-expand = true
-stretch_mode = 6
-
-[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/ItemRow/Container4"]
-margin_right = 141.0
-margin_bottom = 125.0
-size_flags_vertical = 1
-text = "- 5-"
-align = 2
-valign = 2
-
-[node name="Container5" type="MarginContainer" parent="MarginContainer/VBoxContainer/ItemRow"]
+[node name="InventoryScrollContainer5" parent="MarginContainer/VBoxContainer/ItemRow" instance=ExtResource( 2 )]
 margin_left = 812.0
-margin_right = 954.0
-margin_bottom = 125.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-__meta__ = {
-"_editor_description_": ""
-}
-
-[node name="Item5" type="TextureRect" parent="MarginContainer/VBoxContainer/ItemRow/Container5"]
-margin_right = 142.0
-margin_bottom = 125.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-texture = ExtResource( 5 )
-expand = true
-stretch_mode = 6
-
-[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/ItemRow/Container5"]
-margin_right = 142.0
-margin_bottom = 125.0
-size_flags_vertical = 1
-text = "- 0 -"
-align = 2
-valign = 2
+margin_right = 953.0
 
 [node name="ItemDescription" type="CenterContainer" parent="MarginContainer/VBoxContainer"]
 margin_top = 333.0
@@ -419,7 +302,7 @@ margin_bottom = 125.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer/ItemDescription/DescriptionPanel/VBoxContainer/CenterContainer"]
+[node name="ItemDescriptionRichText" type="RichTextLabel" parent="MarginContainer/VBoxContainer/ItemDescription/DescriptionPanel/VBoxContainer/CenterContainer"]
 margin_left = 30.0
 margin_top = 5.0
 margin_right = 630.0

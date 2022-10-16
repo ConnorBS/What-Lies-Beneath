@@ -7,7 +7,7 @@ OrderID,KeyItemName,KeyOrItem,PlayerHasItOnStart,Description,UnkownTextureLocati
 6,Key6,Key,FALSE,,res://Assets/KeyItems/UnkownKey6.png,res://Assets/KeyItems/Key6.png
 1,Journal,Item,TRUE,"[b]I[/b] can't remember ever being without my journal. Lately though, there are entries in it I don't remember writing... but it's in my handwriting...",res://Assets/KeyItems/Unknown_Journal.png,res://Assets/KeyItems/Journal.png
 2,Car Keys,Item,FALSE,[b]N[/b]ot much use when the car doesn't work... ,res://Assets/KeyItems/Unknown_CarKey.png,res://Assets/KeyItems/CarKey.png
-3,Placeholder,Item,FALSE,,res://Assets/KeyItems/Blank-Keys.png,
+3,Crowbar,Item,FALSE,[b]G[/b]ordan Freeman would be proud!,res://Assets/KeyItems/Unkown_Crowbar.png,res://Assets/KeyItems/Crowbar.png
 4,Placeholder,Item,FALSE,,res://Assets/KeyItems/Blank-Keys.png,
 5,Placeholder,Item,FALSE,,res://Assets/KeyItems/Blank-Keys.png,
 6,Placeholder,Item,FALSE,,res://Assets/KeyItems/Blank-Keys.png,

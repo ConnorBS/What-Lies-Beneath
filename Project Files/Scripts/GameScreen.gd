@@ -85,6 +85,7 @@ func _get_input():
 			else:
 				_on_Back()
 		else:
+			get_node("%MainMenu").update_inventory_scroll()
 			_viewportNode.gui_disable_input = true
 			_menuMusicNode.play()
 			_tween_shrink(shrinkTopLeftCorner,shrinkBottomRightCorner)

@@ -389,6 +389,7 @@ texture = SubResource( 12 )
 expand = true
 
 [node name="MainMenu" parent="." instance=ExtResource( 4 )]
+unique_name_in_owner = true
 layer = 0
 
 [node name="GameWindowPanel" type="Panel" parent="MainMenu"]
