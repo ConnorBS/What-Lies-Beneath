@@ -28,20 +28,20 @@ func _ready():
 	journalPage.pageNumber = 2
 	add_journal_Page(journalPage)
 	
-	var item = InventoryLists.get_item("Small Plant",1)
-	add_item(item)
-	item = InventoryLists.get_item("Medium Sized Plant",1)
-	add_item(item)
+#	var item = InventoryLists.get_item("Small Plant",1)
+#	add_item(item)
+#	item = InventoryLists.get_item("Medium Sized Plant",1)
+#	add_item(item)
+##
+#	item = InventoryLists.get_item("Large Sized Plant",1)
+#	add_item(item)
 	
-	item = InventoryLists.get_item("Large Sized Plant",1)
-	add_item(item)
-	
-	item = InventoryLists.get_item("Medium Sized Plant",1)
-	add_item(item)
-	item = InventoryLists.get_item("Pistol",1)
-	add_item(item)
-	item = InventoryLists.get_item("Shotgun",1)
-	add_item(item)
+#	item = InventoryLists.get_item("Medium Sized Plant",1)
+#	add_item(item)
+#	item = InventoryLists.get_item("Pistol",1)
+#	add_item(item)
+#	item = InventoryLists.get_item("Shotgun",1)
+#	add_item(item)
 	#################
 	pass
 
@@ -108,9 +108,9 @@ func use_item(item): ###Use 1x Item
 		elif item.stackable:
 			item.quantity -= 1
 			if item.quantity <= 0:
-				_remove_item(item,_inventory)
+				remove_item(item,_inventory)
 		else:
-			_remove_item(item,_inventory)
+			remove_item(item,_inventory)
 	elif item == Inventory.KeyItems:
 			_add_item_to_inventory(item,_key_items)
 	elif item == Inventory.MapFragments:
@@ -118,7 +118,7 @@ func use_item(item): ###Use 1x Item
 	elif item == Inventory.Locations:
 			_add_item_to_inventory(item,_locations)
 
-static func _remove_item (item,inventoryType:Dictionary = _inventory)->void:
+static func remove_item (item,inventoryType:Dictionary = _inventory)->void:
 	var key_to_remove = _get_key_of_item(item,inventoryType)
 	if key_to_remove == -1:
 		push_warning("Trying to delete an item: "+item.name+" that doesn't exist in _inventory")
@@ -131,7 +131,7 @@ static func _get_player_inventory_list_of_matching_items_by_name(name_to_check:S
 	if !_inventory.empty():
 		for i in _inventory.keys():
 			if _inventory[i].name == name_to_check:
-				list_of_items.appoend(_inventory[i])
+				list_of_items.append(_inventory[i])
 	return list_of_items
 
 static func _get_key_of_item(item,inventoryType:Dictionary = _inventory)->int:

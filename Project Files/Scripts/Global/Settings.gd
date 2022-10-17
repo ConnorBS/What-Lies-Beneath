@@ -2,7 +2,7 @@ extends Node
 
 var _soundVolume = .55
 var _musicVolume = .75
-var _masterVolume = 1.0
+var _masterVolume = 0.0
 
 func _ready():
 	update_audio_bus_configurations()

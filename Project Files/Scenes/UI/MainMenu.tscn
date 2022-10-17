@@ -34,6 +34,8 @@ border_width_top = 1
 border_width_right = 1
 border_width_bottom = 1
 border_color = Color( 0.772549, 0, 0, 1 )
+expand_margin_top = 10.0
+expand_margin_bottom = 9.0
 
 [node name="MainMenu" type="CanvasLayer"]
 script = ExtResource( 16 )
@@ -414,6 +416,7 @@ size_flags_vertical = 6
 texture_normal = ExtResource( 15 )
 texture_pressed = ExtResource( 17 )
 
+[connection signal="pressed" from="MarginContainer/VBoxContainer/TopRow/Command/Panel/VBoxContainer/Remove" to="." method="_on_Remove_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/BottomRow/Map" to="." method="_on_Map_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/BottomRow/Memo" to="." method="_on_Memo_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/BottomRow/KeyItems" to="." method="_on_KeyItems_pressed"]
