@@ -6,7 +6,7 @@ enum GUNTYPES {NONE,PISTOL,SHOTGUN,RIFLE}
 onready var equipped_gun = GUNTYPES.PISTOL
 
 ###### Inventory ######
-var _equipped_gun
+var _equipped_gun:Inventory.Items
 const _inventory:Dictionary = {}
 const _key_items:Dictionary = {}
 const _map_fragments:Dictionary = {}
@@ -101,7 +101,7 @@ static func _add_item_to_inventory(item,inventoryType:Dictionary = _inventory):
 
 #### Use Items ####
 func use_item(item): ###Use 1x Item
-	if item == Inventory.Items:
+	if item.is_type("Inventory.Items"):
 		if item.weapon == true:
 			_equipped_gun = item
 			return
@@ -111,18 +111,28 @@ func use_item(item): ###Use 1x Item
 				remove_item(item,_inventory)
 		else:
 			remove_item(item,_inventory)
-	elif item == Inventory.KeyItems:
+	elif item.is_type("Inventory.KeyItems"):
 			_add_item_to_inventory(item,_key_items)
-	elif item == Inventory.MapFragments:
+	elif item.is_type("Inventory.MapFragments"):
 			_add_item_to_inventory(item,_map_fragments)
-	elif item == Inventory.Locations:
+	elif item.is_type("Inventory.Locations"):
 			_add_item_to_inventory(item,_locations)
 
+func equip(item:Inventory.Items):
+	var current_equipment = get_equiped_item()
+	if current_equipment != null:
+		add_item(current_equipment)
+	_equipped_gun = item
+	remove_item(_equipped_gun)
+
+func get_equiped_item()->Inventory.Items:
+	return _equipped_gun
 static func remove_item (item,inventoryType:Dictionary = _inventory)->void:
 	var key_to_remove = _get_key_of_item(item,inventoryType)
 	if key_to_remove == -1:
 		push_warning("Trying to delete an item: "+item.name+" that doesn't exist in _inventory")
 	else:
+		
 		inventoryType.erase(key_to_remove)
 
 #### Dictionary Searches ####

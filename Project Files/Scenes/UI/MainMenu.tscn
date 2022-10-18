@@ -1,8 +1,7 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Themes/MainMenu_Bottom_Row_Buttons.theme" type="Theme" id=1]
 [ext_resource path="res://Scenes/UI/Components/InventoryScrollContainer.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Assets/Sprites/Equipment/WWII Weapons/Colt M1911.png" type="Texture" id=4]
 [ext_resource path="res://Themes/MainMenu_Command_Buttons.theme" type="Theme" id=8]
 [ext_resource path="res://Assets/Fonts/DynamicFonts/RichText_TitleContent_MainMenu.tres" type="DynamicFont" id=9]
 [ext_resource path="res://Assets/Fonts/DynamicFonts/RichText_Content_MainMenu.tres" type="DynamicFont" id=10]
@@ -140,32 +139,14 @@ margin_bottom = 188.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/TopRow/Equipment/Panel"]
+[node name="InventoryScrollContainer" parent="MarginContainer/VBoxContainer/TopRow/Equipment/Panel" instance=ExtResource( 2 )]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 50.0
-margin_top = 10.0
-margin_right = -50.0
-margin_bottom = -10.0
-
-[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/TopRow/Equipment/Panel/MarginContainer"]
-margin_right = 201.0
-margin_bottom = 74.0
-size_flags_vertical = 5
-text = "- 2 - "
-align = 2
-valign = 2
-
-[node name="Equipment" type="TextureRect" parent="MarginContainer/VBoxContainer/TopRow/Equipment/Panel/MarginContainer"]
-margin_right = 201.0
-margin_bottom = 74.0
-grow_horizontal = 0
-grow_vertical = 0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-texture = ExtResource( 4 )
-expand = true
-stretch_mode = 6
+margin_right = -301.0
+margin_bottom = -94.0
+rect_min_size = Vector2( 301, 94 )
+size_flags_horizontal = 0
+size_flags_vertical = 0
 
 [node name="Command" type="VBoxContainer" parent="MarginContainer/VBoxContainer/TopRow"]
 margin_left = 652.0
@@ -210,20 +191,20 @@ focus_mode = 2
 text = "Use"
 underline = 2
 
-[node name="Reload" type="LinkButton" parent="MarginContainer/VBoxContainer/TopRow/Command/Panel/VBoxContainer"]
+[node name="Equip" type="LinkButton" parent="MarginContainer/VBoxContainer/TopRow/Command/Panel/VBoxContainer"]
 margin_top = 25.0
 margin_right = 282.0
 margin_bottom = 46.0
 focus_mode = 2
-text = "Reload"
+text = "Equip"
 underline = 2
 
-[node name="Equip" type="LinkButton" parent="MarginContainer/VBoxContainer/TopRow/Command/Panel/VBoxContainer"]
+[node name="Reload" type="LinkButton" parent="MarginContainer/VBoxContainer/TopRow/Command/Panel/VBoxContainer"]
 margin_top = 50.0
 margin_right = 282.0
 margin_bottom = 71.0
 focus_mode = 2
-text = "Equip"
+text = "Reload"
 underline = 2
 
 [node name="Remove" type="LinkButton" parent="MarginContainer/VBoxContainer/TopRow/Command/Panel/VBoxContainer"]
@@ -398,7 +379,7 @@ texture_normal = ExtResource( 15 )
 texture_pressed = ExtResource( 17 )
 flip_h = true
 
-[node name="Spacer" type="Panel" parent="ItemScrollButtonMarginContainer/HBoxContainer"]
+[node name="Selector" type="Panel" parent="ItemScrollButtonMarginContainer/HBoxContainer"]
 margin_left = 42.0
 margin_right = 196.0
 margin_bottom = 100.0
@@ -416,6 +397,9 @@ size_flags_vertical = 6
 texture_normal = ExtResource( 15 )
 texture_pressed = ExtResource( 17 )
 
+[connection signal="pressed" from="MarginContainer/VBoxContainer/TopRow/Command/Panel/VBoxContainer/Use" to="." method="_on_Use_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/TopRow/Command/Panel/VBoxContainer/Equip" to="." method="_on_Equip_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/TopRow/Command/Panel/VBoxContainer/Reload" to="." method="_on_Reload_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/TopRow/Command/Panel/VBoxContainer/Remove" to="." method="_on_Remove_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/BottomRow/Map" to="." method="_on_Map_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/BottomRow/Memo" to="." method="_on_Memo_pressed"]

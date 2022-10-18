@@ -6,7 +6,7 @@ extends Control
 
 ######## Nodes #########
 
-onready var _animationPlayerNode = $AnimationPlayer
+#onready var _animationPlayerNode = $AnimationPlayer
 onready var _viewportNode = $MainMenu/GameWindowPanel/ViewportContainer/Viewport
 onready var _gamePanelNode = $MainMenu/GameWindowPanel
 onready var _gameScreenResizeTween = $GameScreenResize
