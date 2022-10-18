@@ -52,7 +52,7 @@ func _ready():
 
 ##### Add Items ######
 
-static func add_item(item):
+func add_item(item):
 	if item.is_type("Inventory.Items"):
 		if item.stackable:
 			### Checks to see if it can add to the existing inventory
@@ -130,6 +130,11 @@ func equip(item:Inventory.Items):
 	_equipped_gun = item
 	remove_item(_equipped_gun)
 
+func unequip():
+	var item_to_unequip = _equipped_gun
+	_equipped_gun = null
+	add_item(item_to_unequip)
+	
 func get_equiped_item()->Inventory.Items:
 	return _equipped_gun
 static func remove_item (item,inventoryType:Dictionary = _inventory)->void:
@@ -142,7 +147,8 @@ static func remove_item (item,inventoryType:Dictionary = _inventory)->void:
 
 func reload_item(item:Inventory.Items):
 	var reload_to_item_in_inventory = _get_player_inventory_list_of_matching_items_by_name(item.reload_to,_inventory)
-	if  !reload_to_item_in_inventory.empty() or get_equiped_item().name == item.reload_to:
+	var item_in_equipment = get_equiped_item()
+	if  !reload_to_item_in_inventory.empty() or (item_in_equipment != null and get_equiped_item().name == item.reload_to):
 		var gun_to_reload:Array
 		var ammo_to_use:Array
 		if item.use == "Reload":
@@ -162,12 +168,15 @@ func reload_item(item:Inventory.Items):
 						
 	
 #### Dictionary Searches ####
-static func _get_player_inventory_list_of_matching_items_by_name(name_to_check:String,inventoryType:Dictionary = _inventory)->Array:
+func _get_player_inventory_list_of_matching_items_by_name(name_to_check:String,inventoryType:Dictionary = _inventory)->Array:
 	var list_of_items = []
 	if !inventoryType.empty():
 		for i in _inventory.keys():
 			if inventoryType[i].name == name_to_check:
 				list_of_items.append(inventoryType[i])
+	if _equipped_gun != null:
+		if _equipped_gun.name == name_to_check:
+			list_of_items.append(_equipped_gun)
 	return list_of_items
 
 static func _get_key_of_item(item,inventoryType:Dictionary = _inventory)->int:

@@ -8,17 +8,60 @@ signal Options
 onready var _itemRowNode = $MarginContainer/VBoxContainer/ItemRow
 
 onready var _itemScrollButtons = $ItemScrollButtonMarginContainer/HBoxContainer
+onready var _itemScrollSelectionWindowNode = $ItemScrollButtonMarginContainer/HBoxContainer/Selector
 
 onready var _itemNameLabel = $MarginContainer/VBoxContainer/ItemDescription/DescriptionPanel/VBoxContainer/ItemName
 onready var _itemDescriptionLabel = $MarginContainer/VBoxContainer/ItemDescription/DescriptionPanel/VBoxContainer/CenterContainer/ItemDescriptionRichText
 onready var _commandButtonContainerNode = $MarginContainer/VBoxContainer/TopRow/Command/Panel/VBoxContainer
 
 onready var _equipmentNode = $MarginContainer/VBoxContainer/TopRow/Equipment/Panel/InventoryScrollContainer
+#onready var 
+
 var item_hover_over = 0
 var item_selected:Inventory.Items
 var item_list:Array = []
 var _noInventoryNode:Label = null
 var _noEquipmentNode:Label = null
+
+var equipment_node_selected = false
+
+export (Color) var selected_color = Color(.77,0,0,1)
+export (Color) var non_selected_color = Color(1,1,1,1)
+
+func _ready():
+#	_equipmentNode.get_parent().grab_focus()
+#	
+##	select_equipment_node(false)
+	select_selector_node(true)
+func load_window():
+	update_inventory_scroll()
+#	_equipmentNode.get_parent().grab_focus()
+#	_itemScrollSelectionWindowNode.grab_focus()
+	
+func select_equipment_node(state=true):
+	equipment_node_selected = state
+	if state:
+		_equipmentNode.get_parent().self_modulate = selected_color
+		item_selected = _equipmentNode.item
+		update_text(item_selected)
+		update_commands(item_selected)
+		
+	else:
+		_equipmentNode.get_parent().self_modulate = non_selected_color
+		
+
+
+func select_selector_node(state=true):
+	if state:
+		_itemScrollSelectionWindowNode.self_modulate = selected_color
+		item_selected = _itemRowNode.get_child(2).item
+		update_text(item_selected)
+		update_commands(item_selected)
+	else:
+		_itemScrollSelectionWindowNode.self_modulate = non_selected_color
+
+	
+
 func _on_Map_pressed():
 	emit_signal("Map")
 	pass # Replace with function body.
@@ -49,10 +92,18 @@ func _on_Use_pressed():
 
 
 func _on_Equip_pressed():
-	item_selected.equip_item()
-	item_list = PlayerInventory.get_list_of_inventory()
-	update_Item_Scroll_position()
-	update_inventory_scroll()
+	if equipment_node_selected:
+		PlayerInventory.unequip()
+		item_list = PlayerInventory.get_list_of_inventory()
+		update_Item_Scroll_position()
+		update_inventory_scroll()
+		_itemScrollSelectionWindowNode.grab_focus()
+	else:
+		item_selected.equip_item()
+		item_list = PlayerInventory.get_list_of_inventory()
+		update_Item_Scroll_position()
+		update_inventory_scroll()
+		_equipmentNode.get_parent().grab_focus()
 	pass # Replace with function body.
 
 
@@ -65,11 +116,21 @@ func _on_Reload_pressed():
 	
 	
 func _on_Remove_pressed():
-	if !item_list.empty():
+	if equipment_node_selected:
+		PlayerInventory.unequip()
+		PlayerInventory.remove_item(item_selected)
+		item_list = PlayerInventory.get_list_of_inventory()
+		update_Item_Scroll_position()
+		update_inventory_scroll()
+		_itemScrollSelectionWindowNode.grab_focus()
+		
+#		update_Item_Scroll_position(-1)
+		
+	elif !item_list.empty():
 		PlayerInventory.remove_item(item_list[item_hover_over])
 		item_list = PlayerInventory.get_list_of_inventory()
 		update_Item_Scroll_position(-1)
-	
+
 	
 	
 func update_Item_Scroll_position(value = 0)->void:
@@ -132,7 +193,8 @@ func update_inventory_scroll()->void:
 			_itemRowNode.get_child(i).update_item(null)
 		else:
 			_itemRowNode.get_child(i).update_item(item_list[item_to_display[i]])
-	item_selected = _itemRowNode.get_child(2).item
+	if equipment_node_selected == false:
+		item_selected = _itemRowNode.get_child(2).item
 	update_text(item_selected)
 	update_commands(item_selected)
 
@@ -153,6 +215,11 @@ func update_commands(item_to_use:Inventory.Items)->void:
 		for i in _commandButtonContainerNode.get_child_count():
 			if commands_to_display[i]:
 				_commandButtonContainerNode.get_child(i).show()
+				if i == 1:
+					if equipment_node_selected:
+						_commandButtonContainerNode.get_child(i).text = "Unequip"
+					else:
+						_commandButtonContainerNode.get_child(i).text = "Equip"
 			else:
 				_commandButtonContainerNode.get_child(i).hide()
 			
@@ -245,6 +312,7 @@ func _no_equipment(state)->void:
 
 var pressed = false
 func _process(delta):
+#	print("command focus ",_commandButtonContainerNode.get_focus_owner())
 	if Input.is_key_pressed(KEY_1):
 		if pressed == false:
 			var item = InventoryLists.get_item("Small Plant",1)
@@ -295,4 +363,38 @@ func _process(delta):
 	else:
 		pressed = false
 	#################
+
+
+
+func _on_Equipment_Panel_focus_entered():
+	print(_itemScrollButtons.get_focus_owner())
+	if _itemScrollButtons.get_focus_owner() != null:
+		select_equipment_node(true)
+		select_selector_node(false)
+		print ("focus selected ", _equipmentNode.get_focus_owner()  )
+	pass # Replace with function body.
+
+
+#func _on_Equipment_Panel_focus_exited():
+#	print("equipment exit: ",_commandButtonContainerNode.get_focus_owner())
+#	if _commandButtonContainerNode5.get_focus_owner() == null:
+##	if _commandButtonContainerNode.get_focus_owner().get_parent() != $MarginContainer/VBoxContainer/TopRow/Command/Panel/VBoxContainer:
+#		select_equipment_node(false)
+#		select_selector_node(true)
+	pass # Replace with function body.
+
+
+func _on_Selector_focus_entered():
+	print("equipment exit: ",_commandButtonContainerNode.get_focus_owner())
+	if _itemScrollButtons.get_focus_owner() != null:
+#	if _commandButtonContainerNode.get_focus_owner().get_parent() != $MarginContainer/VBoxContainer/TopRow/Command/Panel/VBoxContainer:
+		select_equipment_node(false)
+		select_selector_node(true)
+
+#	pass # Replace with function body.
+#
+#
+#func _on_Selector_focus_exited():
+#	select_selector_node(false)
+#	pass # Replace with function body.
 

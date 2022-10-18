@@ -85,7 +85,7 @@ func _get_input():
 			else:
 				_on_Back()
 		else:
-			get_node("%MainMenu").update_inventory_scroll()
+			get_node("%MainMenu").load_window()
 			_viewportNode.gui_disable_input = true
 			_menuMusicNode.play()
 			_tween_shrink(shrinkTopLeftCorner,shrinkBottomRightCorner)
@@ -109,6 +109,7 @@ func _update_window(new_window:int)->void:
 		_menuTransitionsNode.play("Open_KeyItems")
 	
 	elif new_window == MENU_WINDOWS.Main:
+		get_node("%MainMenu").load_window()
 		if _window_state == MENU_WINDOWS.Options:
 			_menuTransitionsNode.play("Close_Options")
 		elif _window_state == MENU_WINDOWS.Map:
