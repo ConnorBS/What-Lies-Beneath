@@ -10,6 +10,7 @@ class Items:
 	var description
 	var quantity = 0
 	var max_quantity = 99
+	var reload_to = null
 	var weapon:bool = false
 	
 	func is_type(type:String):
@@ -38,6 +39,10 @@ class Items:
 	func equip_item():
 		if use == "Equip" and weapon == true:
 			PlayerInventory.equip(self)
+			
+	func reload_item():
+		if (use == "Reload" or use == "Equip") and reload_to != null:
+			PlayerInventory.reload_item(self)
 
 
 
@@ -51,8 +56,8 @@ class KeyItems:
 	var type:String = "Item" # or "Key"
 	
 	
-	func is_type(type:String):
-		return type == "Inventory.KeyItems"
+	func is_type(type_to_check:String):
+		return type_to_check == "Inventory.KeyItems"
 	
 
 class MapFragments:

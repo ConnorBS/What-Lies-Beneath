@@ -57,8 +57,9 @@ func _on_Equip_pressed():
 
 
 func _on_Reload_pressed():
-	
-	
+	item_selected.reload_item()
+	item_list = PlayerInventory.get_list_of_inventory()
+	update_Item_Scroll_position()
 	update_inventory_scroll()
 	pass # Replace with function body.
 	

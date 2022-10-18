@@ -77,8 +77,14 @@ static func add_item(item):
 						existing_item.quantity = existing_item.max_quantity
 				###Program to continue if there is still more of that item, after topping up all other items
 				item.quantity = count_to_add
+				if item.weapon:
+					var ammo_box = InventoryLists.get_item(item.reload_to)
+					ammo_box.quantity = item.quantity
+					add_item(ammo_box)
+				else:
+					_add_item_to_inventory(item,_inventory)
+			else:
 				_add_item_to_inventory(item,_inventory)
-			_add_item_to_inventory(item,_inventory)
 		else:
 			_add_item_to_inventory(item,_inventory)
 	elif item.is_type("Inventory.KeyItems"):
@@ -100,12 +106,11 @@ static func _add_item_to_inventory(item,inventoryType:Dictionary = _inventory):
 		inventoryType[find_next_unique_key] = item
 
 #### Use Items ####
+
+###Not Used
 func use_item(item): ###Use 1x Item
 	if item.is_type("Inventory.Items"):
-		if item.weapon == true:
-			_equipped_gun = item
-			return
-		elif item.stackable:
+		if item.stackable:
 			item.quantity -= 1
 			if item.quantity <= 0:
 				remove_item(item,_inventory)
@@ -135,13 +140,34 @@ static func remove_item (item,inventoryType:Dictionary = _inventory)->void:
 		
 		inventoryType.erase(key_to_remove)
 
+func reload_item(item:Inventory.Items):
+	var reload_to_item_in_inventory = _get_player_inventory_list_of_matching_items_by_name(item.reload_to,_inventory)
+	if  !reload_to_item_in_inventory.empty() or get_equiped_item().name == item.reload_to:
+		var gun_to_reload:Array
+		var ammo_to_use:Array
+		if item.use == "Reload":
+			gun_to_reload = (reload_to_item_in_inventory if !reload_to_item_in_inventory.empty() else [get_equiped_item()])
+			ammo_to_use = _get_player_inventory_list_of_matching_items_by_name(item.name,_inventory)
+		else:
+			gun_to_reload =  _get_player_inventory_list_of_matching_items_by_name(item.name,_inventory)
+			ammo_to_use = (reload_to_item_in_inventory if !reload_to_item_in_inventory.empty() else get_equiped_item())
+		for gun_reloading in gun_to_reload:
+			if gun_reloading.max_quantity - gun_reloading.quantity > 0:
+				while gun_reloading.quantity < gun_reloading.max_quantity and !ammo_to_use.empty():
+					gun_reloading.quantity += 1
+					ammo_to_use[0].quantity -= 1
+					if ammo_to_use[0].quantity <= 0:
+						remove_item(ammo_to_use.pop_front(),_inventory)
+						
+						
+	
 #### Dictionary Searches ####
-static func _get_player_inventory_list_of_matching_items_by_name(name_to_check:String)->Array:
+static func _get_player_inventory_list_of_matching_items_by_name(name_to_check:String,inventoryType:Dictionary = _inventory)->Array:
 	var list_of_items = []
-	if !_inventory.empty():
+	if !inventoryType.empty():
 		for i in _inventory.keys():
-			if _inventory[i].name == name_to_check:
-				list_of_items.append(_inventory[i])
+			if inventoryType[i].name == name_to_check:
+				list_of_items.append(inventoryType[i])
 	return list_of_items
 
 static func _get_key_of_item(item,inventoryType:Dictionary = _inventory)->int:
@@ -158,6 +184,7 @@ static func get_list_of_inventory()->Array:
 	for i in listOfKeys:
 		listOfItems.append(_inventory[i])
 	return listOfItems
+
 
 ### Location Updates ###
 
