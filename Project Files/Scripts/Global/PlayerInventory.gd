@@ -9,7 +9,7 @@ onready var equipped_gun = GUNTYPES.PISTOL
 var _equipped_gun:Inventory.Items
 const _inventory:Dictionary = {}
 const _key_items:Dictionary = {}
-const _map_fragments:Dictionary = {}
+const _map_fragments:Array = []
 const _locations:Dictionary = {}
 
 
@@ -19,7 +19,11 @@ func _ready():
 	#############
 	_load_base_KeyItems()
 	InventoryLists.load_Inventory_Types()
-	##Troubleshooting
+	
+	
+	###################
+	##Troubleshooting##
+	###################
 	var journalPage = Inventory.JournalPage.new()
 	journalPage.pageNumber = 1
 	add_journal_Page(journalPage)
@@ -28,21 +32,7 @@ func _ready():
 	journalPage.pageNumber = 2
 	add_journal_Page(journalPage)
 	
-#	var item = InventoryLists.get_item("Small Plant",1)
-#	add_item(item)
-#	item = InventoryLists.get_item("Medium Sized Plant",1)
-#	add_item(item)
-##
-#	item = InventoryLists.get_item("Large Sized Plant",1)
-#	add_item(item)
 	
-#	item = InventoryLists.get_item("Medium Sized Plant",1)
-#	add_item(item)
-#	item = InventoryLists.get_item("Pistol",1)
-#	add_item(item)
-#	item = InventoryLists.get_item("Shotgun",1)
-#	add_item(item)
-	#################
 	pass
 
 
@@ -137,6 +127,8 @@ func unequip():
 	
 func get_equiped_item()->Inventory.Items:
 	return _equipped_gun
+	
+	
 static func remove_item (item,inventoryType:Dictionary = _inventory)->void:
 	var key_to_remove = _get_key_of_item(item,inventoryType)
 	if key_to_remove == -1:
@@ -195,10 +187,10 @@ static func get_list_of_inventory()->Array:
 	return listOfItems
 
 
-### Location Updates ###
+###########################
+##### Memo Inventory #####
+###########################
 
-
-#### Memo Inventory ####
 const _journal_Pages:Array = [];
 var current_Page = 0
 
@@ -265,3 +257,11 @@ static func get_item_list()->Array:
 static func pickup_KeyItem(item:Inventory.KeyItems)->void:
 	_key_items[item.type][item.slot].unlocked = true
 	
+
+###########################
+#### Player KeyItems #####
+###########################
+
+func add_MapFragment(map_fragment):
+	if _map_fragments.has(map_fragment):
+		_map_fragments.append(map_fragment)

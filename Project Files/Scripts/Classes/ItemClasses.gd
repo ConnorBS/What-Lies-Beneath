@@ -61,7 +61,7 @@ class KeyItems:
 	
 
 class MapFragments:
-	
+	var name:String
 	
 	func is_type(type:String):
 		return type == "Inventory.MapFragments"
