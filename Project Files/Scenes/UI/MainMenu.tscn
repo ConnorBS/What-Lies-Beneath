@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Themes/MainMenu_Bottom_Row_Buttons.theme" type="Theme" id=1]
 [ext_resource path="res://Scenes/UI/Components/InventoryScrollContainer.tscn" type="PackedScene" id=2]
@@ -6,16 +6,11 @@
 [ext_resource path="res://Assets/Fonts/DynamicFonts/RichText_TitleContent_MainMenu.tres" type="DynamicFont" id=9]
 [ext_resource path="res://Assets/Fonts/DynamicFonts/RichText_Content_MainMenu.tres" type="DynamicFont" id=10]
 [ext_resource path="res://Themes/MainMenu_Overlay.tres" type="Theme" id=11]
-[ext_resource path="res://Shaders/Smoke/Smoke.shader" type="Shader" id=12]
 [ext_resource path="res://Assets/Fonts/DynamicFonts/RichText_Content_MainMenu_Bold.tres" type="DynamicFont" id=13]
 [ext_resource path="res://Assets/Fonts/DynamicFonts/RichText_TitleContent_MainMenu_Bold.tres" type="DynamicFont" id=14]
 [ext_resource path="res://Assets/UI/Texture Buttons/Next-Inventory-Button.png" type="Texture" id=15]
 [ext_resource path="res://Scripts/UI/MainMenu.gd" type="Script" id=16]
 [ext_resource path="res://Assets/UI/Texture Buttons/Next-Inventory-Button-Pressed.png" type="Texture" id=17]
-
-[sub_resource type="ShaderMaterial" id=12]
-shader = ExtResource( 12 )
-shader_param/OCTAVES = 4
 
 [sub_resource type="Gradient" id=10]
 offsets = PoolRealArray( 0, 0.531008, 1 )
@@ -37,15 +32,6 @@ expand_margin_bottom = 9.0
 
 [node name="MainMenu" type="CanvasLayer"]
 script = ExtResource( 16 )
-
-[node name="SmokeShader" type="ColorRect" parent="."]
-visible = false
-material = SubResource( 12 )
-margin_right = 1024.0
-margin_bottom = 600.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-color = Color( 0.337255, 0.337255, 0.337255, 1 )
 
 [node name="TopColourBar" type="ColorRect" parent="."]
 anchor_right = 1.0

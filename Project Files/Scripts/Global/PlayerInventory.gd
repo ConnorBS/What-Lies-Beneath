@@ -79,8 +79,6 @@ func add_item(item):
 			_add_item_to_inventory(item,_inventory)
 	elif item.is_type("Inventory.KeyItems"):
 			_add_item_to_inventory(item,_key_items)
-	elif item.is_type("Inventory.MapFragments"):
-			_add_item_to_inventory(item,_map_fragments)
 	elif item.is_type("Inventory.Locations"):
 			_add_item_to_inventory(item,_locations)
 	
@@ -108,8 +106,6 @@ func use_item(item): ###Use 1x Item
 			remove_item(item,_inventory)
 	elif item.is_type("Inventory.KeyItems"):
 			_add_item_to_inventory(item,_key_items)
-	elif item.is_type("Inventory.MapFragments"):
-			_add_item_to_inventory(item,_map_fragments)
 	elif item.is_type("Inventory.Locations"):
 			_add_item_to_inventory(item,_locations)
 
