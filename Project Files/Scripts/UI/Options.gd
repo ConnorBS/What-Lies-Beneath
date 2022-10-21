@@ -33,6 +33,12 @@ func _set_audio_sliders():
 	
 	
 	
+
+
+###############################################
+###########  Button Presses  ##################
+###############################################
+
 func _on_Save_pressed():
 	emit_signal("Back")
 	pass # Replace with function body.
@@ -45,8 +51,6 @@ func _on_Cancel_pressed():
 	emit_signal("Back")
 	
 	pass # Replace with function body.
-
-
 
 
 
@@ -71,6 +75,6 @@ func _on_SFXHSlider_drag_started():
 	pass # Replace with function body.
 
 
-func _on_SFXHSlider_drag_ended(value_changed):
+func _on_SFXHSlider_drag_ended(_value_changed):
 	_sfxAudioPlayerNode.stop()
 	pass # Replace with function body.

@@ -109,7 +109,7 @@ func use_item(item): ###Use 1x Item
 	elif item.is_type("Inventory.Locations"):
 			_add_item_to_inventory(item,_locations)
 
-func equip(item:Inventory.Items):
+func equip(item):
 	var current_equipment = get_equiped_item()
 	if current_equipment != null:
 		add_item(current_equipment)
@@ -131,9 +131,9 @@ static func remove_item (item,inventoryType:Dictionary = _inventory)->void:
 		push_warning("Trying to delete an item: "+item.name+" that doesn't exist in _inventory")
 	else:
 		
-		inventoryType.erase(key_to_remove)
+		var _item_deleted = inventoryType.erase(key_to_remove)
 
-func reload_item(item:Inventory.Items):
+func reload_item(item):
 	var reload_to_item_in_inventory = _get_player_inventory_list_of_matching_items_by_name(item.reload_to,_inventory)
 	var item_in_equipment = get_equiped_item()
 	if  !reload_to_item_in_inventory.empty() or (item_in_equipment != null and get_equiped_item().name == item.reload_to):

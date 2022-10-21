@@ -2,12 +2,7 @@ extends MenuClass
 
 var pageAssetLocation = "res://Assets/JournalEntries/Page"
 
-func _on_BottomButtonMargin_Back():
-	emit_signal("Back")
 
-
-func _on_BottomButtonMargin_Cancel():
-	pass # Replace with function body.
 
 func load_window():
 	var newJournalPage = PlayerInventory.get_current_journal_Page()
@@ -15,6 +10,20 @@ func load_window():
 	_check_to_hide_previous_button()
 	_check_to_hide_next_button()
 
+func _update_journal_texture(page_number:int)->void:
+	get_node("%JournalPage").texture = load("res://Assets/JournalEntries/Page"+str(page_number)+".png")
+
+
+###############################################
+###########  Button Presses  ##################
+###############################################
+
+func _on_BottomButtonMargin_Back():
+	emit_signal("Back")
+
+
+func _on_BottomButtonMargin_Cancel():
+	pass # Replace with function body.
 
 func _check_to_hide_previous_button()->void:
 	if PlayerInventory.is_this_the_first_page():
@@ -48,6 +57,3 @@ func _on_NextPage_pressed():
 		_check_to_hide_previous_button()
 		_check_to_hide_next_button()
 
-
-func _update_journal_texture(page_number:int)->void:
-	get_node("%JournalPage").texture = load("res://Assets/JournalEntries/Page"+str(page_number)+".png")

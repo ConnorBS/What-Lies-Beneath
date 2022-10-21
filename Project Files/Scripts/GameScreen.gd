@@ -44,6 +44,9 @@ func _ready():
 	_fill_screen_with_game()
 	pass # Replace with function body.
 
+#############################################
+######## Game Window Transtiontions #########
+#############################################
 func _fill_screen_with_game():
 	_gamePanelNode.margin_bottom = _fullDimensions.y
 	_gamePanelNode.margin_right = _fullDimensions.x
@@ -69,8 +72,11 @@ func _tween_grow(topLeft:Vector2,bottomRight:Vector2)->void:
 
 	_gameScreenResizeTween.start()
 	pass
-	
-	
+
+##########################
+##### Player Inputs ######
+##########################
+
 func _get_input():
 	if Input.is_action_just_pressed("menu"):
 		if menu_visible:
@@ -96,8 +102,12 @@ func _get_input():
 func _process(_delta):
 	_get_input()
 
+###########################################
+########### Menu Transitions ##############
+###########################################
 
 
+###Buttons call these functions to triger transitions
 func _update_window(new_window:int)->void:
 	if new_window == MENU_WINDOWS.Map:
 		_menuTransitionsNode.play("Open_Map")
@@ -127,8 +137,16 @@ func _update_window(new_window:int)->void:
 	pass
 
 
+#############################
+######## Audio Cues #########
+#############################
 func click_success():
 	_menuSFXNode.play()
+	
+
+#############################
+###### Button Presses #######
+#############################
 func _on_MainMenu_Map():
 	click_success()
 #	get_node("%Map").load_window()

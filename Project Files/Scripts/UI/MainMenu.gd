@@ -28,39 +28,81 @@ var equipment_node_selected = false
 export (Color) var selected_color = Color(.77,0,0,1)
 export (Color) var non_selected_color = Color(1,1,1,1)
 
+###############################################
+###############TroubleShooting#################
+################To Be Deleted##################
+###############################################
+
+var pressed = false
+func _process(_delta):
+	if Input.is_key_pressed(KEY_1):
+		if pressed == false:
+			var item = InventoryLists.get_item("Small Plant",1)
+			PlayerInventory.add_item(item)
+			update_inventory_scroll()
+			pressed = true
+	elif Input.is_key_pressed(KEY_2): 
+		if pressed == false:
+			var item = InventoryLists.get_item("Medium Sized Plant",1)
+			PlayerInventory.add_item(item)
+			update_inventory_scroll()
+			pressed = true
+	elif Input.is_key_pressed(KEY_3):
+		if pressed == false:
+			var item = InventoryLists.get_item("Large Sized Plant",1)
+			PlayerInventory.add_item(item)
+			update_inventory_scroll()
+			pressed = true
+	elif Input.is_key_pressed(KEY_4):
+		if pressed == false:
+			var item = InventoryLists.get_item("Pistol",1)
+			PlayerInventory.add_item(item)
+			update_inventory_scroll()
+			pressed = true
+	elif Input.is_key_pressed(KEY_5):
+		if pressed == false:
+			var item = InventoryLists.get_item("Shotgun",1)
+			PlayerInventory.add_item(item)
+			update_inventory_scroll()
+			pressed = true
+	elif Input.is_key_pressed(KEY_6):
+		if pressed == false:
+			var item = InventoryLists.get_item("Small Bullets",12)
+			PlayerInventory.add_item(item)
+			update_inventory_scroll()
+			pressed = true
+	elif Input.is_key_pressed(KEY_7):
+		if pressed == false:
+			var item = InventoryLists.get_item("Shotgun Shells",4)
+			PlayerInventory.add_item(item)
+			update_inventory_scroll()
+			pressed = true
+			
+			
+		
+
+
+	else:
+		pressed = false
+
+
+###############################################
+###########End of TroubleShooting##############
+###############################################
+
+
+
+
 func _ready():
-#	_equipmentNode.get_parent().grab_focus()
-#	
-##	select_equipment_node(false)
 	select_selector_node(true)
+	
+## called when menu comes into view
 func load_window():
 	update_inventory_scroll()
-#	_equipmentNode.get_parent().grab_focus()
-#	_itemScrollSelectionWindowNode.grab_focus()
-	
-func select_equipment_node(state=true):
-	equipment_node_selected = state
-	if state:
-		_equipmentNode.get_parent().self_modulate = selected_color
-		item_selected = _equipmentNode.item
-		update_text(item_selected)
-		update_commands(item_selected)
-		
-	else:
-		_equipmentNode.get_parent().self_modulate = non_selected_color
-		
 
-
-func select_selector_node(state=true):
-	if state:
-		_itemScrollSelectionWindowNode.self_modulate = selected_color
-		item_selected = _itemRowNode.get_child(2).item
-		update_text(item_selected)
-		update_commands(item_selected)
-	else:
-		_itemScrollSelectionWindowNode.self_modulate = non_selected_color
-
-	
+###############################################
+########### Button Presses ####################
+###############################################
 
 func _on_Map_pressed():
 	emit_signal("Map")
@@ -131,8 +173,10 @@ func _on_Remove_pressed():
 		item_list = PlayerInventory.get_list_of_inventory()
 		update_Item_Scroll_position(-1)
 
-	
-	
+
+###############################################
+########### Update Menu Screen ################
+###############################################
 func update_Item_Scroll_position(value = 0)->void:
 	item_hover_over += value
 	if value > 0:
@@ -171,7 +215,6 @@ func _on_Item_Scroll_Next_pressed():
 func update_inventory_scroll()->void:
 	update_equiped_item()
 	item_list = PlayerInventory.get_list_of_inventory()
-	var count = 0
 	_clear_inventory()
 	if item_list.size() == 0:
 		_no_inventory(true)
@@ -183,7 +226,6 @@ func update_inventory_scroll()->void:
 		
 		_no_inventory(false)
 		_disable_buttons(true)
-#		_itemRowNode.get_child(2).update_item(item_list[0])
 	else:
 		_no_inventory(false)
 		_disable_buttons(false)
@@ -230,11 +272,9 @@ func _find_Items_to_display(center_Loc)->Array:
 	if item_list_size > center_Loc:
 		items_to_display.append(center_Loc)
 		var rightSide = center_Loc + 1
-		var did_it_cycle = false
 		for i in range (0,2,1):
 			if rightSide >= item_list_size:
 				rightSide = 0
-				did_it_cycle = true
 			if !items_to_display.has(rightSide):
 				if (item_list_size == 3 and i == 1):
 					items_to_display.append(null)
@@ -261,6 +301,7 @@ func _find_Items_to_display(center_Loc)->Array:
 			leftSide -= 1
 	else: return [null,null,null,null,null]
 	return items_to_display
+
 func _clear_inventory()->void:
 	for i in _itemRowNode.get_child_count()-1:
 		_itemRowNode.get_child(i).update_item(null)
@@ -272,6 +313,7 @@ func update_equiped_item()->void:
 	else:
 		_no_equipment(false)
 	pass
+
 func _no_inventory(state)->void:
 	if state and _noInventoryNode == null:
 		for node in _itemRowNode.get_children():
@@ -307,65 +349,10 @@ func _no_equipment(state)->void:
 		_equipmentNode.show()
 		_noEquipmentNode = null
 
-###############################################
-###############TroubleShooting################
 
-var pressed = false
-func _process(delta):
-#	print("command focus ",_commandButtonContainerNode.get_focus_owner())
-	if Input.is_key_pressed(KEY_1):
-		if pressed == false:
-			var item = InventoryLists.get_item("Small Plant",1)
-			PlayerInventory.add_item(item)
-			update_inventory_scroll()
-			pressed = true
-	elif Input.is_key_pressed(KEY_2): 
-		if pressed == false:
-			var item = InventoryLists.get_item("Medium Sized Plant",1)
-			PlayerInventory.add_item(item)
-			update_inventory_scroll()
-			pressed = true
-	elif Input.is_key_pressed(KEY_3):
-		if pressed == false:
-			var item = InventoryLists.get_item("Large Sized Plant",1)
-			PlayerInventory.add_item(item)
-			update_inventory_scroll()
-			pressed = true
-	elif Input.is_key_pressed(KEY_4):
-		if pressed == false:
-			var item = InventoryLists.get_item("Pistol",1)
-			PlayerInventory.add_item(item)
-			update_inventory_scroll()
-			pressed = true
-	elif Input.is_key_pressed(KEY_5):
-		if pressed == false:
-			var item = InventoryLists.get_item("Shotgun",1)
-			PlayerInventory.add_item(item)
-			update_inventory_scroll()
-			pressed = true
-	elif Input.is_key_pressed(KEY_6):
-		if pressed == false:
-			var item = InventoryLists.get_item("Small Bullets",12)
-			PlayerInventory.add_item(item)
-			update_inventory_scroll()
-			pressed = true
-	elif Input.is_key_pressed(KEY_7):
-		if pressed == false:
-			var item = InventoryLists.get_item("Shotgun Shells",4)
-			PlayerInventory.add_item(item)
-			update_inventory_scroll()
-			pressed = true
-			
-			
-		
-
-
-	else:
-		pressed = false
-	#################
-
-
-
+#############################
+###### Focus Changes ########
+#############################
 func _on_Equipment_Panel_focus_entered():
 	print(_itemScrollButtons.get_focus_owner())
 	if _itemScrollButtons.get_focus_owner() != null:
@@ -375,26 +362,34 @@ func _on_Equipment_Panel_focus_entered():
 	pass # Replace with function body.
 
 
-#func _on_Equipment_Panel_focus_exited():
-#	print("equipment exit: ",_commandButtonContainerNode.get_focus_owner())
-#	if _commandButtonContainerNode5.get_focus_owner() == null:
-##	if _commandButtonContainerNode.get_focus_owner().get_parent() != $MarginContainer/VBoxContainer/TopRow/Command/Panel/VBoxContainer:
-#		select_equipment_node(false)
-#		select_selector_node(true)
-	pass # Replace with function body.
-
 
 func _on_Selector_focus_entered():
 	print("equipment exit: ",_commandButtonContainerNode.get_focus_owner())
 	if _itemScrollButtons.get_focus_owner() != null:
-#	if _commandButtonContainerNode.get_focus_owner().get_parent() != $MarginContainer/VBoxContainer/TopRow/Command/Panel/VBoxContainer:
 		select_equipment_node(false)
 		select_selector_node(true)
 
-#	pass # Replace with function body.
-#
-#
-#func _on_Selector_focus_exited():
-#	select_selector_node(false)
-#	pass # Replace with function body.
 
+
+
+func select_equipment_node(state=true):
+	equipment_node_selected = state
+	if state:
+		_equipmentNode.get_parent().self_modulate = selected_color
+		item_selected = _equipmentNode.item
+		update_text(item_selected)
+		update_commands(item_selected)
+		
+	else:
+		_equipmentNode.get_parent().self_modulate = non_selected_color
+		
+
+
+func select_selector_node(state=true):
+	if state:
+		_itemScrollSelectionWindowNode.self_modulate = selected_color
+		item_selected = _itemRowNode.get_child(2).item
+		update_text(item_selected)
+		update_commands(item_selected)
+	else:
+		_itemScrollSelectionWindowNode.self_modulate = non_selected_color
