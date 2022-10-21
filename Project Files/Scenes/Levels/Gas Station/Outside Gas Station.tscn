@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=2]
+[gd_scene load_steps=37 format=2]
 
 [ext_resource path="res://Assets/Levels/Gas Station/Gas-Station_GasPumps_Front.png" type="Texture" id=1]
 [ext_resource path="res://Assets/Levels/Gas Station/Gas-Station_Pillar2.png" type="Texture" id=2]
@@ -28,6 +28,7 @@
 [ext_resource path="res://Scripts/Object/FallDownPoint.gd" type="Script" id=26]
 [ext_resource path="res://Scenes/Object/ExitZone.tscn" type="PackedScene" id=27]
 [ext_resource path="res://Scenes/SpawnPoint1.tscn" type="PackedScene" id=28]
+[ext_resource path="res://Assets/Audio/BackgroundMusic/Unseen Town.wav" type="AudioStream" id=29]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 1182.5, 73.5 )
@@ -58,7 +59,7 @@ shader_param/tile_factor_2 = 0.3
 shader_param/noise_texture_2 = ExtResource( 18 )
 shader_param/gradient_texture = SubResource( 11 )
 
-[node name="Outside Gas Station" type="Node"]
+[node name="Outside Gas Station" type="Node" groups=["Level"]]
 script = ExtResource( 16 )
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
@@ -242,6 +243,8 @@ shape = SubResource( 2 )
 position = Vector2( 1046, 291 )
 
 [node name="GameCamera" parent="Floor1/ActorsAndObjects/Player" instance=ExtResource( 14 )]
+pause_mode = 2
+offset = Vector2( 0, -50 )
 
 [node name="Interact_News" parent="Floor1/ActorsAndObjects" instance=ExtResource( 15 )]
 modulate = Color( 1, 1, 1, 0.564706 )
@@ -448,3 +451,8 @@ material = SubResource( 4 )
 texture = ExtResource( 18 )
 expand = true
 stretch_mode = 2
+
+[node name="BackgroundMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 29 )
+autoplay = true
+bus = "Music"

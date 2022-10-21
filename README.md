@@ -137,24 +137,24 @@ Download Version 3.5 from Godot Download files [Here](https://godotengine.org/do
 <a href="http://www.youtube.com/watch?feature=player_embedded&v=lP6XaMMV9pU
 " target="_blank"><img src="http://img.youtube.com/vi/lP6XaMMV9pU/0.jpg" 
 alt="IMAGE ALT TEXT HERE" width="240" height="180" border="10" /></a>
-- [ ] Options to: Use, Reload, Equip, Remove
-- [ ] Gun Equipment Slot
-- [ ] Still Screenshot of the Game in the top left with colour overlay indicating health
+- [x] Options to: Use, Reload, Equip, Remove
+- [x] Gun Equipment Slot
+- [x] Still Screenshot of the Game in the top left with colour overlay indicating health
 #### Map Placeholder
 #### Memo - Journal Pages
-- [ ] Left right over Journal Objects
+- [x] Left right over Journal Objects
 #### Important Objects
-- [ ] Shows Keys
-- [ ] Shows Map Fragments
+- [x] Shows Keys
+- [x] Shows Map Fragments
 #### Options
-- [ ] Music and Sound Controls
+- [x] Music and Sound Controls
 #### Global Player State
-- [ ] Health
-- [ ] Equipped Item
-- [ ] Inventory
-- [ ] Important Inventory Items
-- [ ] Map Fragments
-- [ ] Location
+- [x] Health
+- [x] Equipped Item
+- [x] Inventory
+- [x] Important Inventory Items
+- [x] Map Fragments
+- [x] Location
 <p align="right">(<a href="#what-lies-beneath">back to top</a>)</p>
 
 ### Dialogue Milestone

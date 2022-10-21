@@ -1,0 +1,102 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://Scenes/UI/MainMenu.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Shaders/Smoke/Smoke.shader" type="Shader" id=10]
+[ext_resource path="res://Scripts/UI/MenuScene.gd" type="Script" id=17]
+
+[sub_resource type="ShaderMaterial" id=6]
+shader = ExtResource( 10 )
+shader_param/OCTAVES = 4
+
+[sub_resource type="Gradient" id=14]
+offsets = PoolRealArray( 0, 0.531008, 1 )
+colors = PoolColorArray( 0, 0, 0, 0.941176, 0, 0, 0, 0, 0, 0, 0, 0.941176 )
+
+[sub_resource type="GradientTexture2D" id=11]
+gradient = SubResource( 14 )
+fill_from = Vector2( 1, 0 )
+fill_to = Vector2( 0, 0 )
+
+[sub_resource type="Animation" id=12]
+resource_name = "Open_Map"
+tracks/0/type = "value"
+tracks/0/path = NodePath("MainMenu:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 2000, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Map:rect_position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( -2000, 0 ), Vector2( 0, 0 ) ]
+}
+
+[sub_resource type="Animation" id=13]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("MainMenu:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Map:rect_position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( -2000, 0 ) ]
+}
+
+[node name="MenuScene" type="CanvasLayer"]
+script = ExtResource( 17 )
+
+[node name="SmokeShader" type="ColorRect" parent="."]
+material = SubResource( 6 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.337255, 0.337255, 0.337255, 1 )
+
+[node name="BackgroundGradient" type="TextureRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = SubResource( 11 )
+expand = true
+
+[node name="MainMenu" parent="." instance=ExtResource( 1 )]
+margin_right = 4096.0
+margin_bottom = 2400.0
+
+[node name="Map" type="Control" parent="."]
+margin_left = -2000.0
+margin_right = -1960.0
+margin_bottom = 40.0
+
+[node name="MenuTransition" type="AnimationPlayer" parent="."]
+anims/Open_Map = SubResource( 12 )
+anims/RESET = SubResource( 13 )
+
+[connection signal="Map" from="MainMenu" to="." method="_on_MainMenu_Map"]

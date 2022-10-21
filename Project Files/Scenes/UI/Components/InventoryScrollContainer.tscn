@@ -1,0 +1,24 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Scripts/UI/Components/InventoryScrollContainer.gd" type="Script" id=2]
+
+[node name="InventoryScrollContainer" type="MarginContainer"]
+margin_right = 141.0
+margin_bottom = 125.0
+rect_min_size = Vector2( 141, 125 )
+script = ExtResource( 2 )
+
+[node name="ItemTexture" type="TextureRect" parent="."]
+margin_right = 141.0
+margin_bottom = 125.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+expand = true
+stretch_mode = 6
+
+[node name="Label" type="Label" parent="."]
+margin_right = 141.0
+margin_bottom = 125.0
+size_flags_vertical = 1
+align = 2
+valign = 2

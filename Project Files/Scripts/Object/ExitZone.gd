@@ -21,6 +21,20 @@ func _ready():
 func _on_Exit1_body_entered(body):
 	if body.is_in_group("Player"):
 		PlayerState.Spawn_Point = PointToLoad
-#		var LoadingLevel = SceneToLoad.instance()
-		var _newScene = get_tree().change_scene(SceneToLoad)
+		var parent = get_parent()
+		while parent != null:
+			if parent.is_in_group("Level"):
+				
+				var LoadingLevel = load(SceneToLoad).instance()
+				var removingLevel = parent
+				var viewPort = parent.get_parent()
+				viewPort.remove_child(removingLevel)
+				removingLevel.call_deferred("free")
+				viewPort.add_child(LoadingLevel)
+				parent = null
+			elif parent == get_tree():
+				push_warning("Tried to find scene to change, no parents reporting as \"Level\" group")
+				parent = null
+			else:
+				parent = parent.get_parent()
 	pass # Replace with function body.

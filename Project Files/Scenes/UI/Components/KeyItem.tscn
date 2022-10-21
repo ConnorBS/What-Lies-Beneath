@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Scripts/UI/Components/KeyItemSlot.gd" type="Script" id=1]
+[ext_resource path="res://Assets/KeyItems/Blank-Keys.png" type="Texture" id=2]
+
+[node name="KeyItem" type="TextureRect"]
+margin_right = 75.0
+margin_bottom = 75.0
+rect_min_size = Vector2( 75, 75 )
+texture = ExtResource( 2 )
+expand = true
+stretch_mode = 6
+script = ExtResource( 1 )

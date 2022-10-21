@@ -1,0 +1,406 @@
+[gd_scene load_steps=15 format=2]
+
+[ext_resource path="res://Themes/MainMenu_Bottom_Row_Buttons.theme" type="Theme" id=1]
+[ext_resource path="res://Scenes/UI/Components/InventoryScrollContainer.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Themes/MainMenu_Command_Buttons.theme" type="Theme" id=8]
+[ext_resource path="res://Assets/Fonts/DynamicFonts/RichText_TitleContent_MainMenu.tres" type="DynamicFont" id=9]
+[ext_resource path="res://Assets/Fonts/DynamicFonts/RichText_Content_MainMenu.tres" type="DynamicFont" id=10]
+[ext_resource path="res://Themes/MainMenu_Overlay.tres" type="Theme" id=11]
+[ext_resource path="res://Assets/Fonts/DynamicFonts/RichText_Content_MainMenu_Bold.tres" type="DynamicFont" id=13]
+[ext_resource path="res://Assets/Fonts/DynamicFonts/RichText_TitleContent_MainMenu_Bold.tres" type="DynamicFont" id=14]
+[ext_resource path="res://Assets/UI/Texture Buttons/Next-Inventory-Button.png" type="Texture" id=15]
+[ext_resource path="res://Scripts/UI/MainMenu.gd" type="Script" id=16]
+[ext_resource path="res://Assets/UI/Texture Buttons/Next-Inventory-Button-Pressed.png" type="Texture" id=17]
+
+[sub_resource type="Gradient" id=10]
+offsets = PoolRealArray( 0, 0.531008, 1 )
+colors = PoolColorArray( 0, 0, 0, 0.941176, 0, 0, 0, 0, 0, 0, 0, 0.941176 )
+
+[sub_resource type="GradientTexture2D" id=11]
+gradient = SubResource( 10 )
+fill_from = Vector2( 1, 0 )
+fill_to = Vector2( 0, 0 )
+
+[sub_resource type="StyleBoxFlat" id=13]
+bg_color = Color( 0, 0, 0, 0 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+expand_margin_top = 10.0
+expand_margin_bottom = 9.0
+
+[node name="MainMenu" type="CanvasLayer"]
+script = ExtResource( 16 )
+
+[node name="TopColourBar" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 0.101
+color = Color( 0, 0, 0, 1 )
+
+[node name="MiddleColourBar" type="ColorRect" parent="."]
+anchor_top = 0.345
+anchor_right = 1.0
+anchor_bottom = 0.54
+color = Color( 0, 0, 0, 0.611765 )
+
+[node name="BottomColourBar" type="ColorRect" parent="."]
+anchor_top = 0.87
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0, 0, 1 )
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 35.0
+margin_right = -35.0
+margin_bottom = -10.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource( 11 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+margin_right = 954.0
+margin_bottom = 590.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 10
+
+[node name="TopRow" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+margin_right = 954.0
+margin_bottom = 188.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 25
+
+[node name="Status" type="VBoxContainer" parent="MarginContainer/VBoxContainer/TopRow"]
+margin_right = 301.0
+margin_bottom = 188.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 10
+
+[node name="StatusLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer/TopRow/Status"]
+margin_right = 301.0
+margin_bottom = 60.0
+grow_vertical = 2
+rect_min_size = Vector2( 0, 60 )
+rect_pivot_offset = Vector2( 0, 25 )
+size_flags_horizontal = 3
+bbcode_enabled = true
+bbcode_text = "[center][b]S[/b]tatus[/center]"
+text = "Status"
+scroll_active = false
+
+[node name="Panel" type="Panel" parent="MarginContainer/VBoxContainer/TopRow/Status"]
+margin_top = 70.0
+margin_right = 301.0
+margin_bottom = 188.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Equipment" type="VBoxContainer" parent="MarginContainer/VBoxContainer/TopRow"]
+margin_left = 326.0
+margin_right = 627.0
+margin_bottom = 188.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 22
+
+[node name="EquipmentLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer/TopRow/Equipment"]
+margin_right = 301.0
+margin_bottom = 72.0
+rect_min_size = Vector2( 0, 72 )
+bbcode_enabled = true
+bbcode_text = "[center][b]E[/b]quipment[/center]"
+text = "Equipment"
+scroll_active = false
+
+[node name="Panel" type="Panel" parent="MarginContainer/VBoxContainer/TopRow/Equipment"]
+margin_top = 94.0
+margin_right = 301.0
+margin_bottom = 188.0
+focus_mode = 1
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="InventoryScrollContainer" parent="MarginContainer/VBoxContainer/TopRow/Equipment/Panel" instance=ExtResource( 2 )]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = -301.0
+margin_bottom = -94.0
+rect_min_size = Vector2( 301, 94 )
+mouse_filter = 1
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="Command" type="VBoxContainer" parent="MarginContainer/VBoxContainer/TopRow"]
+margin_left = 652.0
+margin_right = 954.0
+margin_bottom = 188.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 10
+
+[node name="CommandLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer/TopRow/Command"]
+margin_right = 302.0
+margin_bottom = 60.0
+rect_min_size = Vector2( 0, 60 )
+bbcode_enabled = true
+bbcode_text = "[center][b]C[/b]ommands[/center]"
+text = "Commands"
+scroll_active = false
+
+[node name="Panel" type="Panel" parent="MarginContainer/VBoxContainer/TopRow/Command"]
+margin_top = 70.0
+margin_right = 302.0
+margin_bottom = 188.0
+mouse_filter = 1
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/TopRow/Command/Panel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 10.0
+margin_top = 10.0
+margin_right = -10.0
+margin_bottom = -10.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme = ExtResource( 8 )
+
+[node name="Use" type="LinkButton" parent="MarginContainer/VBoxContainer/TopRow/Command/Panel/VBoxContainer"]
+margin_right = 282.0
+margin_bottom = 21.0
+focus_mode = 2
+text = "Use"
+underline = 2
+
+[node name="Equip" type="LinkButton" parent="MarginContainer/VBoxContainer/TopRow/Command/Panel/VBoxContainer"]
+margin_top = 25.0
+margin_right = 282.0
+margin_bottom = 46.0
+focus_mode = 2
+text = "Equip"
+underline = 2
+
+[node name="Reload" type="LinkButton" parent="MarginContainer/VBoxContainer/TopRow/Command/Panel/VBoxContainer"]
+margin_top = 50.0
+margin_right = 282.0
+margin_bottom = 71.0
+focus_mode = 2
+text = "Reload"
+underline = 2
+
+[node name="Remove" type="LinkButton" parent="MarginContainer/VBoxContainer/TopRow/Command/Panel/VBoxContainer"]
+margin_top = 75.0
+margin_right = 282.0
+margin_bottom = 96.0
+focus_mode = 2
+text = "Remove"
+underline = 2
+
+[node name="ItemRow" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+margin_top = 198.0
+margin_right = 954.0
+margin_bottom = 323.0
+rect_min_size = Vector2( 0, 125 )
+size_flags_horizontal = 3
+size_flags_vertical = 0
+custom_constants/separation = 62
+
+[node name="InventoryScrollContainer1" parent="MarginContainer/VBoxContainer/ItemRow" instance=ExtResource( 2 )]
+
+[node name="InventoryScrollContainer2" parent="MarginContainer/VBoxContainer/ItemRow" instance=ExtResource( 2 )]
+margin_left = 203.0
+margin_right = 344.0
+
+[node name="InventoryScrollContainer3" parent="MarginContainer/VBoxContainer/ItemRow" instance=ExtResource( 2 )]
+margin_left = 406.0
+margin_right = 547.0
+
+[node name="InventoryScrollContainer4" parent="MarginContainer/VBoxContainer/ItemRow" instance=ExtResource( 2 )]
+margin_left = 609.0
+margin_right = 750.0
+
+[node name="InventoryScrollContainer5" parent="MarginContainer/VBoxContainer/ItemRow" instance=ExtResource( 2 )]
+margin_left = 812.0
+margin_right = 953.0
+
+[node name="ItemDescription" type="CenterContainer" parent="MarginContainer/VBoxContainer"]
+margin_top = 333.0
+margin_right = 954.0
+margin_bottom = 522.0
+size_flags_vertical = 3
+
+[node name="DescriptionPanel" type="Panel" parent="MarginContainer/VBoxContainer/ItemDescription"]
+margin_left = 127.0
+margin_top = 12.0
+margin_right = 827.0
+margin_bottom = 177.0
+rect_min_size = Vector2( 700, 165 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/ItemDescription/DescriptionPanel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 20.0
+margin_top = 20.0
+margin_right = -20.0
+margin_bottom = -20.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ItemName" type="RichTextLabel" parent="MarginContainer/VBoxContainer/ItemDescription/DescriptionPanel/VBoxContainer"]
+margin_right = 660.0
+margin_bottom = 35.0
+rect_min_size = Vector2( 0, 35 )
+custom_fonts/bold_font = ExtResource( 14 )
+custom_fonts/normal_font = ExtResource( 9 )
+bbcode_enabled = true
+bbcode_text = "[b]I[/b]tem Name"
+text = "Item Name"
+scroll_active = false
+
+[node name="CenterContainer" type="CenterContainer" parent="MarginContainer/VBoxContainer/ItemDescription/DescriptionPanel/VBoxContainer"]
+margin_top = 39.0
+margin_right = 660.0
+margin_bottom = 125.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ItemDescriptionRichText" type="RichTextLabel" parent="MarginContainer/VBoxContainer/ItemDescription/DescriptionPanel/VBoxContainer/CenterContainer"]
+margin_left = 30.0
+margin_top = 5.0
+margin_right = 630.0
+margin_bottom = 80.0
+grow_horizontal = 2
+grow_vertical = 2
+rect_min_size = Vector2( 600, 75 )
+size_flags_horizontal = 7
+size_flags_vertical = 3
+custom_fonts/bold_font = ExtResource( 13 )
+custom_fonts/normal_font = ExtResource( 10 )
+bbcode_enabled = true
+bbcode_text = "[b]L[/b]orem ipsum dolor sit amet. Quo quia dolorem vel amet velit sit odit dolores eos laudantium adipisci cum perspiciatis tenetur! Est laboriosam fuga et internos porro in molestiae nesciunt est aspernatur suscipit."
+text = "Lorem ipsum dolor sit amet. Quo quia dolorem vel amet velit sit odit dolores eos laudantium adipisci cum perspiciatis tenetur! Est laboriosam fuga et internos porro in molestiae nesciunt est aspernatur suscipit."
+scroll_active = false
+
+[node name="BottomRow" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+margin_top = 532.0
+margin_right = 954.0
+margin_bottom = 590.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+theme = ExtResource( 1 )
+custom_constants/separation = 150
+alignment = 1
+
+[node name="Map" type="LinkButton" parent="MarginContainer/VBoxContainer/BottomRow"]
+margin_left = 21.0
+margin_right = 95.0
+margin_bottom = 58.0
+focus_mode = 2
+text = "Map"
+underline = 2
+
+[node name="Memo" type="LinkButton" parent="MarginContainer/VBoxContainer/BottomRow"]
+margin_left = 245.0
+margin_right = 350.0
+margin_bottom = 58.0
+focus_mode = 2
+text = "Memo"
+underline = 2
+
+[node name="KeyItems" type="LinkButton" parent="MarginContainer/VBoxContainer/BottomRow"]
+margin_left = 500.0
+margin_right = 657.0
+margin_bottom = 58.0
+focus_mode = 2
+text = "Key Items"
+underline = 2
+
+[node name="Options" type="LinkButton" parent="MarginContainer/VBoxContainer/BottomRow"]
+margin_left = 807.0
+margin_right = 933.0
+margin_bottom = 58.0
+focus_mode = 2
+text = "Options"
+underline = 2
+
+[node name="MiddleWeaponOverlay" type="TextureRect" parent="."]
+anchor_top = 0.345
+anchor_right = 1.0
+anchor_bottom = 0.54
+mouse_filter = 0
+texture = SubResource( 11 )
+expand = true
+__meta__ = {
+"_editor_description_": ""
+}
+
+[node name="ItemScrollButtonMarginContainer" type="MarginContainer" parent="."]
+anchor_left = 0.382
+anchor_top = 0.36
+anchor_right = 0.615
+anchor_bottom = 0.527
+focus_mode = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ItemScrollButtonMarginContainer"]
+margin_right = 238.0
+margin_bottom = 100.0
+focus_mode = 1
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 1
+
+[node name="Previous" type="TextureButton" parent="ItemScrollButtonMarginContainer/HBoxContainer"]
+margin_top = 39.0
+margin_right = 38.0
+margin_bottom = 60.0
+mouse_filter = 1
+size_flags_horizontal = 4
+size_flags_vertical = 6
+texture_normal = ExtResource( 15 )
+texture_pressed = ExtResource( 17 )
+flip_h = true
+
+[node name="Selector" type="Panel" parent="ItemScrollButtonMarginContainer/HBoxContainer"]
+margin_left = 42.0
+margin_right = 196.0
+margin_bottom = 100.0
+focus_mode = 1
+mouse_filter = 1
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_styles/panel = SubResource( 13 )
+
+[node name="Next" type="TextureButton" parent="ItemScrollButtonMarginContainer/HBoxContainer"]
+margin_left = 200.0
+margin_top = 39.0
+margin_right = 238.0
+margin_bottom = 60.0
+mouse_filter = 1
+size_flags_horizontal = 4
+size_flags_vertical = 6
+texture_normal = ExtResource( 15 )
+texture_pressed = ExtResource( 17 )
+
+[connection signal="focus_entered" from="MarginContainer/VBoxContainer/TopRow/Equipment/Panel" to="." method="_on_Equipment_Panel_focus_entered"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/TopRow/Command/Panel/VBoxContainer/Use" to="." method="_on_Use_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/TopRow/Command/Panel/VBoxContainer/Equip" to="." method="_on_Equip_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/TopRow/Command/Panel/VBoxContainer/Reload" to="." method="_on_Reload_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/TopRow/Command/Panel/VBoxContainer/Remove" to="." method="_on_Remove_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/BottomRow/Map" to="." method="_on_Map_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/BottomRow/Memo" to="." method="_on_Memo_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/BottomRow/KeyItems" to="." method="_on_KeyItems_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/BottomRow/Options" to="." method="_on_Options_pressed"]
+[connection signal="focus_entered" from="ItemScrollButtonMarginContainer/HBoxContainer/Previous" to="." method="_on_Selector_focus_entered"]
+[connection signal="pressed" from="ItemScrollButtonMarginContainer/HBoxContainer/Previous" to="." method="_on_Item_Scroll_Previous_pressed"]
+[connection signal="focus_entered" from="ItemScrollButtonMarginContainer/HBoxContainer/Selector" to="." method="_on_Selector_focus_entered"]
+[connection signal="focus_entered" from="ItemScrollButtonMarginContainer/HBoxContainer/Next" to="." method="_on_Selector_focus_entered"]
+[connection signal="pressed" from="ItemScrollButtonMarginContainer/HBoxContainer/Next" to="." method="_on_Item_Scroll_Next_pressed"]

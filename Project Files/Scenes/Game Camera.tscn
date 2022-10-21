@@ -5,8 +5,13 @@
 
 [sub_resource type="ShaderMaterial" id=1]
 shader = ExtResource( 2 )
-shader_param/color = Vector3( 0.35, 0.48, 0.95 )
-shader_param/OCTAVES = 4
+shader_param/tint = Color( 0, 0, 0, 0 )
+shader_param/scroll_direction_1 = Vector2( 0.7, -0.7 )
+shader_param/time_scale_1 = 0.012
+shader_param/tile_factor_1 = 0.6
+shader_param/scroll_direction_2 = Vector2( 0.75, 0.25 )
+shader_param/time_scale_2 = 0.005
+shader_param/tile_factor_2 = 0.3
 
 [node name="GameCamera" type="Camera2D"]
 current = true
