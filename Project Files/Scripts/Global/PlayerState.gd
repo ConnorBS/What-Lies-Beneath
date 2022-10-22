@@ -5,7 +5,7 @@ extends Node
 ###########################
 var _Player_ACTIVE = false
 var Spawn_Point = 1
-
+var _player_name:String = "Ethan"
 const doors_unlocked = {}
 const list_of_places_visited = []
 ###### Health ######
@@ -13,6 +13,8 @@ var _Max_Health = 100
 var _Current_Health:int
 
 
+func get_player_name()->String:
+	return _player_name
 
 ###########################
 ###### Player Active ######

@@ -49,6 +49,7 @@ PlayerInventory="*res://Scripts/Global/PlayerInventory.gd"
 PlayerState="*res://Scripts/Global/PlayerState.gd"
 Settings="*res://Scripts/Global/Settings.gd"
 InventoryLists="*res://Scripts/Global/InventoryLists.gd"
+DialogManager="*res://Scripts/Global/DialogManager.gd"
 
 [display]
 

@@ -1,5 +1,27 @@
 extends Node
 
+var text_speed = 0.5;
+var auto_speed = 0.5;
+var auto_state = false;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#################################################################
+############# Audio Controls and Variables ######################
+#################################################################
 var _soundVolume = .55
 var _voiceVolume = .55
 var _musicVolume = .55
