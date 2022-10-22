@@ -479,6 +479,8 @@ bus = "Music"
 stream = ExtResource( 18 )
 bus = "SoundEffect"
 
+[node name="Voice" type="AudioStreamPlayer" parent="."]
+
 [connection signal="KeyItems" from="MainMenu" to="." method="_on_MainMenu_KeyItems"]
 [connection signal="Map" from="MainMenu" to="." method="_on_MainMenu_Map"]
 [connection signal="Memo" from="MainMenu" to="." method="_on_MainMenu_Memo"]

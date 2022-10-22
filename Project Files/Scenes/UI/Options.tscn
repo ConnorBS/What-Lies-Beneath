@@ -15,18 +15,18 @@ anchor_bottom = 1.0
 margin_left = 100.0
 margin_top = 100.0
 margin_right = -200.0
-margin_bottom = -300.0
+margin_bottom = -275.0
 theme = ExtResource( 2 )
 
 [node name="VBoxContainer" type="VBoxContainer" parent="AudioMargin"]
 margin_right = 724.0
-margin_bottom = 200.0
+margin_bottom = 225.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="AudioPanel" type="Panel" parent="AudioMargin/VBoxContainer"]
 margin_right = 724.0
-margin_bottom = 200.0
+margin_bottom = 225.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
@@ -40,90 +40,118 @@ size_flags_vertical = 3
 custom_constants/separation = 10
 
 [node name="Audio" type="Label" parent="AudioMargin/VBoxContainer/AudioPanel/VBoxContainer"]
-margin_right = 542.0
+margin_right = 569.0
 margin_bottom = 58.0
 custom_fonts/font = ExtResource( 4 )
 text = "Audio"
 
 [node name="SFXContainer" type="HBoxContainer" parent="AudioMargin/VBoxContainer/AudioPanel/VBoxContainer"]
 margin_top = 68.0
-margin_right = 542.0
-margin_bottom = 91.0
+margin_right = 569.0
+margin_bottom = 94.0
 custom_constants/separation = 50
 alignment = 2
 
 [node name="Spacer" type="Control" parent="AudioMargin/VBoxContainer/AudioPanel/VBoxContainer/SFXContainer"]
-margin_bottom = 23.0
+margin_bottom = 26.0
 
 [node name="SFX" type="Label" parent="AudioMargin/VBoxContainer/AudioPanel/VBoxContainer/SFXContainer"]
 margin_left = 50.0
-margin_right = 192.0
-margin_bottom = 23.0
+margin_right = 219.0
+margin_bottom = 26.0
 size_flags_horizontal = 3
 text = "Sound Effects Volume:"
 align = 1
 
 [node name="SFXHSlider" type="HSlider" parent="AudioMargin/VBoxContainer/AudioPanel/VBoxContainer/SFXContainer"]
 unique_name_in_owner = true
-margin_left = 242.0
-margin_right = 542.0
-margin_bottom = 23.0
+margin_left = 269.0
+margin_right = 569.0
+margin_bottom = 26.0
+rect_min_size = Vector2( 300, 0 )
+size_flags_vertical = 3
+max_value = 1.0
+step = 0.01
+
+[node name="VoiceContainer" type="HBoxContainer" parent="AudioMargin/VBoxContainer/AudioPanel/VBoxContainer"]
+margin_top = 104.0
+margin_right = 569.0
+margin_bottom = 130.0
+custom_constants/separation = 50
+alignment = 2
+
+[node name="Spacer" type="Control" parent="AudioMargin/VBoxContainer/AudioPanel/VBoxContainer/VoiceContainer"]
+margin_bottom = 26.0
+
+[node name="Voice" type="Label" parent="AudioMargin/VBoxContainer/AudioPanel/VBoxContainer/VoiceContainer"]
+margin_left = 50.0
+margin_right = 219.0
+margin_bottom = 26.0
+size_flags_horizontal = 3
+text = "Voice Volume:"
+align = 1
+
+[node name="VoiceHSlider" type="HSlider" parent="AudioMargin/VBoxContainer/AudioPanel/VBoxContainer/VoiceContainer"]
+unique_name_in_owner = true
+margin_left = 269.0
+margin_right = 569.0
+margin_bottom = 26.0
 rect_min_size = Vector2( 300, 0 )
 size_flags_vertical = 3
 max_value = 1.0
 step = 0.01
 
 [node name="MusicContainer" type="HBoxContainer" parent="AudioMargin/VBoxContainer/AudioPanel/VBoxContainer"]
-margin_top = 101.0
-margin_right = 542.0
-margin_bottom = 124.0
+margin_top = 140.0
+margin_right = 569.0
+margin_bottom = 166.0
 custom_constants/separation = 50
 alignment = 2
 
 [node name="Spacer" type="Control" parent="AudioMargin/VBoxContainer/AudioPanel/VBoxContainer/MusicContainer"]
-margin_bottom = 23.0
+margin_bottom = 26.0
 
 [node name="Music" type="Label" parent="AudioMargin/VBoxContainer/AudioPanel/VBoxContainer/MusicContainer"]
 margin_left = 50.0
-margin_right = 192.0
-margin_bottom = 23.0
+margin_right = 219.0
+margin_bottom = 26.0
 size_flags_horizontal = 3
 text = "Music Volume:"
 align = 1
 
 [node name="MusicHSlider" type="HSlider" parent="AudioMargin/VBoxContainer/AudioPanel/VBoxContainer/MusicContainer"]
 unique_name_in_owner = true
-margin_left = 242.0
-margin_right = 542.0
-margin_bottom = 23.0
+margin_left = 269.0
+margin_right = 569.0
+margin_bottom = 26.0
 rect_min_size = Vector2( 300, 0 )
 size_flags_vertical = 3
 max_value = 1.0
 step = 0.01
 
 [node name="MasterContainer" type="HBoxContainer" parent="AudioMargin/VBoxContainer/AudioPanel/VBoxContainer"]
-margin_top = 134.0
-margin_right = 542.0
-margin_bottom = 157.0
+margin_top = 176.0
+margin_right = 569.0
+margin_bottom = 202.0
 custom_constants/separation = 50
 alignment = 2
 
 [node name="Spacer" type="Control" parent="AudioMargin/VBoxContainer/AudioPanel/VBoxContainer/MasterContainer"]
-margin_bottom = 23.0
+margin_bottom = 26.0
 
 [node name="Master" type="Label" parent="AudioMargin/VBoxContainer/AudioPanel/VBoxContainer/MasterContainer"]
 margin_left = 50.0
-margin_right = 192.0
-margin_bottom = 23.0
+margin_right = 219.0
+margin_bottom = 26.0
 size_flags_horizontal = 3
 text = "Master Volume:"
 align = 1
 
 [node name="MasterHSlider" type="HSlider" parent="AudioMargin/VBoxContainer/AudioPanel/VBoxContainer/MasterContainer"]
 unique_name_in_owner = true
-margin_left = 242.0
-margin_right = 542.0
-margin_bottom = 23.0
+margin_left = 269.0
+margin_right = 569.0
+margin_bottom = 26.0
 rect_min_size = Vector2( 300, 0 )
 size_flags_vertical = 3
 max_value = 1.0
@@ -139,6 +167,9 @@ bus = "SoundEffect"
 [connection signal="drag_ended" from="AudioMargin/VBoxContainer/AudioPanel/VBoxContainer/SFXContainer/SFXHSlider" to="." method="_on_SFXHSlider_drag_ended"]
 [connection signal="drag_started" from="AudioMargin/VBoxContainer/AudioPanel/VBoxContainer/SFXContainer/SFXHSlider" to="." method="_on_SFXHSlider_drag_started"]
 [connection signal="value_changed" from="AudioMargin/VBoxContainer/AudioPanel/VBoxContainer/SFXContainer/SFXHSlider" to="." method="_on_SFXHSlider_value_changed"]
+[connection signal="drag_ended" from="AudioMargin/VBoxContainer/AudioPanel/VBoxContainer/VoiceContainer/VoiceHSlider" to="." method="_on_VoiceHSlider_drag_ended"]
+[connection signal="drag_started" from="AudioMargin/VBoxContainer/AudioPanel/VBoxContainer/VoiceContainer/VoiceHSlider" to="." method="_on_VoiceHSlider_drag_started"]
+[connection signal="value_changed" from="AudioMargin/VBoxContainer/AudioPanel/VBoxContainer/VoiceContainer/VoiceHSlider" to="." method="_on_VoiceHSlider_value_changed"]
 [connection signal="value_changed" from="AudioMargin/VBoxContainer/AudioPanel/VBoxContainer/MusicContainer/MusicHSlider" to="." method="_on_MusicHSlider_value_changed"]
 [connection signal="value_changed" from="AudioMargin/VBoxContainer/AudioPanel/VBoxContainer/MasterContainer/MasterHSlider" to="." method="_on_MasterHSlider_value_changed"]
 [connection signal="Cancel" from="BottomButtonMargin" to="." method="_on_Cancel_pressed"]

@@ -26,9 +26,9 @@ margin_left = 213.0
 margin_top = 33.0
 margin_right = 286.0
 margin_bottom = 91.0
-focus_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 4
+enabled_focus_mode = 0
 text = "Back"
 underline = 2
 
@@ -37,9 +37,9 @@ margin_left = 683.0
 margin_top = 33.0
 margin_right = 825.0
 margin_bottom = 91.0
-focus_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 4
+enabled_focus_mode = 0
 text = "Continue"
 underline = 2
 

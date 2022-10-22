@@ -142,7 +142,10 @@ func _update_window(new_window:int)->void:
 #############################
 func click_success():
 	_menuSFXNode.play()
-	
+
+func play_voice(voice_file):
+	$Voice.stream = voice_file
+	$Voice.play()
 
 #############################
 ###### Button Presses #######
