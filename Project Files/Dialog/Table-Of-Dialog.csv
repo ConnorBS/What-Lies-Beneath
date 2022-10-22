@@ -1,0 +1,4 @@
+Level,Trigger,Address
+GasStation, Entrance, res://Dialog/GasStation/GasStationEntrance.txt
+GasStation,Register,
+GasStation,BloodyMarks,

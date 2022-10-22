@@ -25,7 +25,7 @@ var auto_state = false;
 var _soundVolume = .55
 var _voiceVolume = .55
 var _musicVolume = .55
-var _masterVolume = .75
+var _masterVolume = .0
 
 func _ready():
 	update_audio_bus_configurations()
