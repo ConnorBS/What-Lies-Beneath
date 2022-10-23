@@ -25,6 +25,7 @@ var push_box_state = false
 var climb_box_state = false
 var side_of_box = BOX_SIDE.NONE
 var infront_of_interactable_object = false
+var _interact_object
 var falling = false
 var flipped = false
 
@@ -215,7 +216,11 @@ func _process(_delta):
 		
 	else:
 		PlayerState.set_Player_Active(false)
-	
+		
+#	if interact_state == true:
+#		if Input.any_ke
+#			change_animation("Idle")
+#			interact_state = false
 	######################################
 	###########Aiming Gun#################
 	######################################
@@ -290,6 +295,7 @@ func _get_input()->Vector2:
 				return velocity
 			else:
 				change_animation("Kneeling_Down")
+				interactable_object.get_parent().trigger_dialog()
 				####Could hold out from saying interact State to be triggered by dialog/cutscene time
 				interact_state = true
 				return velocity

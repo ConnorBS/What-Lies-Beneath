@@ -124,3 +124,20 @@ func _process(_delta):
 	update_zoom()
 	old_pos = player_node.position
 	pass
+
+#########################################
+######   Dialog   #######################
+#########################################
+
+
+onready var _dialog_window_scene = preload("res://Scenes/UI/DialogWindow.tscn")
+var _current_dialog_window
+
+
+
+func _on_Interact_News_dialogWindow(trigger_name:String):
+	var dialog_window = _dialog_window_scene.instance()
+	dialog_window.load_window(level_node.level_name,trigger_name)
+	get_child(0).add_child(dialog_window)
+	
+	pass # Replace with function body.

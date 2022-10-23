@@ -76,6 +76,12 @@ class Locations:
 class JournalPage:
 	var pageName:String
 	var pageNumber:int
+	var audioFile:String
 	
+	func is_audio_present()->bool:
+		if audioFile == "":return false
+		elif File.new().file_exists(audioFile):return true
+		return false
+		
 	func is_type(type:String):
 		return type == "Inventory.JournalPage"

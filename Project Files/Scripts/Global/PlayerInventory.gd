@@ -26,6 +26,7 @@ func _ready():
 	###################
 	var journalPage = Inventory.JournalPage.new()
 	journalPage.pageNumber = 1
+	journalPage.audioFile = "res://Dialog/Journal Pages/Journal Page1.wav"
 	add_journal_Page(journalPage)
 	
 	journalPage = Inventory.JournalPage.new()

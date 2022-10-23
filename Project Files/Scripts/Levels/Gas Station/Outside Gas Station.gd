@@ -4,7 +4,12 @@ var level_width = 2022
 var level_height = 360
 var current_floor 
 export (Dictionary) var entrance_locations = {0:Vector2(200,200)}
+export (String) var level_name = "Outside Gas Station"
 onready var playerNode = find_node("Player")
+
+onready var _dialog_window_scene = preload("res://Scenes/UI/DialogWindow.tscn")
+var _current_dialog_window
+
 
 func _ready():
 	
@@ -53,3 +58,11 @@ func set_player_pos(spawPointNumber:int)->void:
 	spawnNode.get_parent().add_child(playerNode)
 	playerNode.update_floor_collision(int(spawnNode.get_parent().get_parent().name[5]))
 	
+
+
+func _on_Interact_News_dialogWindow(trigger_name:String):
+	var dialog_window = _dialog_window_scene.instance()
+	dialog_window.load_window(level_name,trigger_name)
+	get_parent().get_parent().add_child(dialog_window)
+	
+	pass # Replace with function body.

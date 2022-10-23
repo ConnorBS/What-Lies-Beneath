@@ -6,12 +6,14 @@ var pageAssetLocation = "res://Assets/JournalEntries/Page"
 
 func load_window():
 	var newJournalPage = PlayerInventory.get_current_journal_Page()
-	_update_journal_texture(newJournalPage.pageNumber)
+	_update_journal(newJournalPage)
 	_check_to_hide_previous_button()
 	_check_to_hide_next_button()
 
-func _update_journal_texture(page_number:int)->void:
-	get_node("%JournalPage").texture = load("res://Assets/JournalEntries/Page"+str(page_number)+".png")
+func _update_journal(page_item:Inventory.JournalPage)->void:
+	get_node("%JournalPage").texture = load("res://Assets/JournalEntries/Page"+str(page_item.pageNumber)+".png")
+	if page_item.is_audio_present():
+		get_parent().play_voice(page_item.audioFile)
 
 
 ###############################################
@@ -43,7 +45,7 @@ func _on_PreviousPage_pressed():
 	get_parent().click_success()
 	var newJournalPage = PlayerInventory.get_previous_journal_Pages()
 	if newJournalPage != null:
-		_update_journal_texture(newJournalPage.pageNumber)
+		_update_journal(newJournalPage)
 		_check_to_hide_previous_button()
 		_check_to_hide_next_button()
 		
@@ -53,7 +55,7 @@ func _on_NextPage_pressed():
 	get_parent().click_success()
 	var newJournalPage = PlayerInventory.get_next_journal_Pages()
 	if newJournalPage != null:
-		_update_journal_texture(newJournalPage.pageNumber)
+		_update_journal(newJournalPage)
 		_check_to_hide_previous_button()
 		_check_to_hide_next_button()
 

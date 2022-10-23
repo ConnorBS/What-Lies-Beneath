@@ -7,7 +7,6 @@
 [ext_resource path="res://Assets/UI/Texture Buttons/Next-Memo-Button.png" type="Texture" id=5]
 [ext_resource path="res://Assets/UI/Texture Buttons/Next-Memo-Button-Pressed.png" type="Texture" id=6]
 
-
 [node name="Memo" type="CanvasLayer"]
 unique_name_in_owner = true
 script = ExtResource( 1 )

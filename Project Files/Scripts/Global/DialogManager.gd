@@ -23,7 +23,7 @@ func load_dialog_directory()->Dictionary:
 				if csv[0] != "":
 					var path = csv[2]
 					if path == "":
-						path = "res://Dialog/"+csv[0]+"/"+csv[0]+csv[1]+".txt"
+						path = "res://Dialog/"+csv[0]+"/"+csv[0]+" "+csv[1]+".txt"
 					var directory = Directory.new()
 					if !directory.file_exists(path):
 						push_error("Unable to find Dialog Directory in Table-Of-Dialog.csv "+csv[0]+csv[1])

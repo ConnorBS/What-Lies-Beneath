@@ -90,7 +90,7 @@ func _get_input():
 				PlayerState.set_Player_Active(true)
 			else:
 				_on_Back()
-		else:
+		elif  PlayerState.get_Player_Active():
 			get_node("%MainMenu").load_window()
 			_viewportNode.gui_disable_input = true
 			_menuMusicNode.play()
@@ -144,7 +144,7 @@ func click_success():
 	_menuSFXNode.play()
 
 func play_voice(voice_file):
-	$Voice.stream = voice_file
+	$Voice.stream = load(voice_file)
 	$Voice.play()
 
 #############################

@@ -494,7 +494,6 @@ collide_with_areas = true
 stream = ExtResource( 16 )
 volume_db = -12.0
 pitch_scale = 0.6
-bus = "SFX"
 
 [node name="Light2D" type="Light2D" parent="."]
 position = Vector2( -1, -31 )

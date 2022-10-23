@@ -1,0 +1,23 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/Journal Page1.wav-ead85b8f9d87776d5b9ed57d45faa874.sample"
+
+[deps]
+
+source_file="res://Dialog/Journal Pages/Journal Page1.wav"
+dest_files=[ "res://.import/Journal Page1.wav-ead85b8f9d87776d5b9ed57d45faa874.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

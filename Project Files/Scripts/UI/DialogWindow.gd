@@ -1,25 +1,13 @@
-extends Control
+extends CanvasLayer
 
 #Text speed determines the speed of the text written. 0 = instant
 
-
-onready var playerPortrait = $PlayerPortrait
-onready var speakerPortrait = $SpeakerPortrait
 onready var conversationWindow = $DialogWindow/DialogTexture/Conversation
 onready var conversationSpeaker = $DialogWindow/Speaker/SpeakerNameTexture/SpeakerName
 onready var Dialog = $DialogWindow
 onready var NextButton = $NextButton
 onready var ConfirmationWindow = $ConfirmationWindow
 onready var AutoTimer = $AutoTimer
-onready var BackgroundNode = $Background
-onready var backgrounds = {
-	"AlleyWay" : "res://Backgrounds/AlleyWay.png",
-	"Mall" : "res://Backgrounds/Mall.png",
-	"Park" : "res://Backgrounds/Park.png",
-	"Neighbourhood" : "res://Backgrounds/Park.png",
-		
-}
-
 onready var sceneToLoad = 0
 var playerName 
 
@@ -50,12 +38,11 @@ var text_speed;
 var auto_speed;
 var auto_state;
 
-signal playerAnimation
-signal speakerAnimation
-
 var activeSection = true ## if path in text file doesn't match up, will skip through lines
 
 var changingScene = false;
+
+var dialogFile
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	print (int("a"))
@@ -70,8 +57,8 @@ func _ready():
 
 #	Dialog.update_Auto(auto_state);
 	button_positions = Dialog.button_hitboxes();
-	var dialogFile = DialogManager.dialog_to_load()
-	##Troubelshooting
+#	var dialogFile = DialogManager.dialog_to_load()
+#	##Troubelshooting
 	load_dialogs(dialogFile)
 	update_dialog(speakerNameContent[playerPosition],dialogContent[playerPosition]);
 	
@@ -80,14 +67,23 @@ func _ready():
 	auto_state = Settings.auto_state;
 	Dialog.update_Auto(auto_state);
 	
+	PlayerState.set_Player_Active(false)
+	
+func load_window(level_name:String,trigger_name:String):
+	dialogFile =DialogManager.get_dialog(level_name,trigger_name)
+#	update_dialog(speakerNameContent[playerPosition],dialogContent[playerPosition]);
 	
 func convertTextVariables (string) -> String:
-	if string == "Name":
+	if string == "PC":
 		return playerName
 #	elif string == "Background":
 #		return PlayerGameSave.playerBackground
 	return ""
-	
+
+func update_if_player(name):
+	if name == "PC":
+		return playerName
+	else: name
 func parse_square_brackets(dialogText,lineNumber):
 	var countSlashes =0
 	var areThereCharactersOutsideSquareBracket = false;
@@ -229,8 +225,6 @@ func load_dialogs(file_location):
 		var found_split = false;
 		var charcount = line.length()
 		
-		var genderString = "";
-		var inGenderString = false;
 		if line != "":
 			for i in charcount:
 				var character = line.left(1);
@@ -264,9 +258,9 @@ func load_dialogs(file_location):
 						dialog = line;
 #					print ("found split = ", dialog)
 					break;
-			dialog = parse_square_brackets(dialog,lineCount-1); ##parsing the speach, if there is no name, then processes square brackted
+			dialog = parse_square_brackets(dialog,lineCount-1); ##parsing the speach, if there is no name, then processes square brackte
 			print ("name of speaker = ", nameofSpeaker);
-			speakerNameContent.append(nameofSpeaker)
+			speakerNameContent.append(update_if_player(nameofSpeaker))
 #			if dialog != "" and dialog != null:
 #				dialogContent.append(dialog.replace("\\n", "\n\n"))
 #				dialogCount += 1;
@@ -365,18 +359,21 @@ func update_dialog(speaker,conversation):
 # var a = 2
 # var b = "text"
 func newPath (pathWay):
-	DialogManager.newDialog(pathWay)
+	if pathWay == "END":
+		change_to_next_scene()
+	else:
+		DialogManager.newDialog(pathWay)
 
 func _process(delta):
 	if gameState == regular:
-		if Input.is_action_just_pressed("ui_touch"):
-			if !is_a_button(get_global_mouse_position()):
-				if currentlyAnimating:
-					Dialog.done_Writing()
-				elif waitingForSelection:
-					pass
-				else:
-					play_next_dialog();
+		if Input.is_action_just_pressed("ui_accept"):
+#			if !is_a_button(get_global_mouse_position()):
+			if currentlyAnimating:
+				Dialog.done_Writing()
+			elif waitingForSelection:
+				pass
+			else:
+				play_next_dialog();
 		elif !currentlyAnimating and auto_state and AutoTimer.time_left == 0 and autoJustTurnedOn:
 			AutoTimer.start();
 			autoJustTurnedOn = false;
@@ -442,7 +439,8 @@ func pause(state):
 
 func change_to_next_scene():
 	print ("change scene function here")
-	save_settings()
+	PlayerState.set_Player_Active(true)
+	self.queue_free()
 	pass
 
 func save_state():

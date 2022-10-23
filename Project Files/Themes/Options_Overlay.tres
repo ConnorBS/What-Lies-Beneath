@@ -1,8 +1,7 @@
-[gd_resource type="Theme" load_steps=9 format=2]
+[gd_resource type="Theme" load_steps=8 format=2]
 
 [ext_resource path="res://Assets/Fonts/DynamicFonts/Label_TitleFont_MainMenu.tres" type="DynamicFont" id=1]
 [ext_resource path="res://Assets/Fonts/DynamicFonts/Label_TitleFont_MainMenu_Bold.tres" type="DynamicFont" id=2]
-[ext_resource path="res://Assets/Fonts/DynamicFonts/LinkButton_Fonts_MainMenu.tres" type="DynamicFont" id=3]
 [ext_resource path="res://Assets/Fonts/DynamicFonts/RichText_Content_MainMenu.tres" type="DynamicFont" id=4]
 
 [sub_resource type="Image" id=9]
@@ -37,7 +36,7 @@ expand_margin_top = 1.0
 expand_margin_bottom = 1.0
 
 [sub_resource type="StyleBoxFlat" id=8]
-bg_color = Color( 0, 0, 0, 0.745098 )
+bg_color = Color( 0, 0, 0, 1 )
 border_width_left = 1
 border_width_top = 1
 border_width_right = 1
@@ -51,7 +50,7 @@ LinkButton/colors/font_color_focus = Color( 0.94, 0.94, 0.94, 1 )
 LinkButton/colors/font_color_hover = Color( 0.94, 0.94, 0.94, 1 )
 LinkButton/colors/font_color_pressed = Color( 1, 1, 1, 1 )
 LinkButton/constants/underline_spacing = 2
-LinkButton/fonts/font = ExtResource( 3 )
+LinkButton/fonts/font = ExtResource( 2 )
 LinkButton/styles/focus = SubResource( 4 )
 Panel/styles/panel = SubResource( 8 )
 RichTextLabel/fonts/bold_font = ExtResource( 2 )

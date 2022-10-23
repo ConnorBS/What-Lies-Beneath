@@ -240,7 +240,7 @@ shape = SubResource( 2 )
 [node name="ActorsAndObjects" type="YSort" parent="Floor1"]
 
 [node name="Player" parent="Floor1/ActorsAndObjects" instance=ExtResource( 13 )]
-position = Vector2( 1046, 291 )
+position = Vector2( 778, 298 )
 
 [node name="GameCamera" parent="Floor1/ActorsAndObjects/Player" instance=ExtResource( 14 )]
 pause_mode = 2
@@ -248,6 +248,13 @@ offset = Vector2( 0, -50 )
 
 [node name="Interact_News" parent="Floor1/ActorsAndObjects" instance=ExtResource( 15 )]
 modulate = Color( 1, 1, 1, 0.564706 )
+texture = ExtResource( 12 )
+spriteToLoad = ExtResource( 12 )
+dialogTrigger = "Newspaper"
+
+[node name="Interact_News2" parent="Floor1/ActorsAndObjects" instance=ExtResource( 15 )]
+modulate = Color( 1, 1, 1, 0.564706 )
+position = Vector2( 677, 302 )
 texture = ExtResource( 12 )
 spriteToLoad = ExtResource( 12 )
 
@@ -353,7 +360,7 @@ __meta__ = {
 position = Vector2( 1421, 359 )
 
 [node name="SpawnPoint1" parent="Floor1/ActorsAndObjects" instance=ExtResource( 28 )]
-position = Vector2( 100, 302 )
+position = Vector2( 767, 286 )
 
 [node name="SpawnPoint2" type="Position2D" parent="Floor1/ActorsAndObjects"]
 position = Vector2( 1977, 307 )
@@ -456,3 +463,6 @@ stretch_mode = 2
 stream = ExtResource( 29 )
 autoplay = true
 bus = "Music"
+
+[connection signal="dialogWindow" from="Floor1/ActorsAndObjects/Interact_News" to="." method="_on_Interact_News_dialogWindow"]
+[connection signal="dialogWindow" from="Floor1/ActorsAndObjects/Interact_News2" to="." method="_on_Interact_News_dialogWindow"]
