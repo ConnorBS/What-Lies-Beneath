@@ -43,6 +43,8 @@ var activeSection = true ## if path in text file doesn't match up, will skip thr
 var changingScene = false;
 
 var dialogFile
+
+signal dialogClosed
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	print (int("a"))
@@ -440,6 +442,7 @@ func pause(state):
 func change_to_next_scene():
 	print ("change scene function here")
 	PlayerState.set_Player_Active(true)
+	emit_signal("dialogClosed")
 	self.queue_free()
 	pass
 
@@ -469,3 +472,5 @@ func _on_DialogWindow_choiceMade(choice):
 
 func _on_VisualNovelWindow_playerAnimation():
 	pass # Replace with function body.
+
+

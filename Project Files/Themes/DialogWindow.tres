@@ -1,9 +1,8 @@
-[gd_resource type="Theme" load_steps=9 format=2]
+[gd_resource type="Theme" load_steps=8 format=2]
 
-[ext_resource path="res://Assets/Fonts/DynamicFonts/Label_TitleFont_MainMenu.tres" type="DynamicFont" id=1]
+[ext_resource path="res://Assets/Fonts/DynamicFonts/Dialog_Window_Content.tres" type="DynamicFont" id=1]
 [ext_resource path="res://Assets/Fonts/DynamicFonts/LinkButton_Fonts_MainMenu.tres" type="DynamicFont" id=2]
-[ext_resource path="res://Assets/Fonts/DynamicFonts/Label_TitleFont_MainMenu_Bold.tres" type="DynamicFont" id=3]
-[ext_resource path="res://Assets/Fonts/DynamicFonts/RichText_Content_MainMenu.tres" type="DynamicFont" id=4]
+[ext_resource path="res://Assets/Fonts/DynamicFonts/Dialog_Window_Name.tres" type="DynamicFont" id=3]
 
 [sub_resource type="Image" id=7]
 data = {
@@ -45,7 +44,7 @@ border_width_bottom = 1
 border_color = Color( 1, 1, 1, 1 )
 
 [resource]
-Label/fonts/font = ExtResource( 4 )
+Label/fonts/font = ExtResource( 3 )
 LinkButton/colors/font_color = Color( 0.88, 0.88, 0.88, 1 )
 LinkButton/colors/font_color_focus = Color( 0.94, 0.94, 0.94, 1 )
 LinkButton/colors/font_color_hover = Color( 0.94, 0.94, 0.94, 1 )
@@ -54,7 +53,7 @@ LinkButton/constants/underline_spacing = 2
 LinkButton/fonts/font = ExtResource( 2 )
 LinkButton/styles/focus = SubResource( 4 )
 Panel/styles/panel = SubResource( 6 )
-RichTextLabel/fonts/bold_font = ExtResource( 3 )
+RichTextLabel/fonts/bold_font = null
 RichTextLabel/fonts/bold_italics_font = null
 RichTextLabel/fonts/italics_font = null
 RichTextLabel/fonts/mono_font = null

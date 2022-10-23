@@ -15,7 +15,7 @@
 [ext_resource path="res://Assets/Animation/Player/Aiming_Pistol.tres" type="Animation" id=13]
 [ext_resource path="res://Assets/Animation/Player/Lowering_Pistol.tres" type="Animation" id=14]
 [ext_resource path="res://Assets/Animation/Player/Raising_Pistol.tres" type="Animation" id=15]
-[ext_resource path="res://Assets/Audio/Player/FootStep_Running_Gravel.wav" type="AudioStream" id=16]
+[ext_resource path="res://Assets/Audio/Player/FootStep_Gravel_Walking.wav" type="AudioStream" id=16]
 [ext_resource path="res://Assets/Sprites/Player/Light.png" type="Texture" id=17]
 [ext_resource path="res://Assets/UI/Button Images/Tab.png" type="Texture" id=18]
 [ext_resource path="res://Assets/Fonts/crumbled-pixels/crumbled-pixels.regular.ttf" type="DynamicFontData" id=19]
@@ -337,7 +337,7 @@ states/Walking/node = SubResource( 10 )
 states/Walking/position = Vector2( 489, 15 )
 transitions = [ "Idle", "Pulling_Out_Pistol", SubResource( 11 ), "Walk_With_Pistol", "Putting_In_Pistol", SubResource( 12 ), "Running", "Kneeling_Down", SubResource( 13 ), "Walking", "Kneeling_Down", SubResource( 14 ), "Walking", "Pulling_Out_Pistol", SubResource( 15 ), "Pulling_Out_Pistol", "Walk_With_Pistol", SubResource( 16 ), "Kneeling_Down", "Kneeling_Up", SubResource( 17 ), "Kneeling_Up", "Idle", SubResource( 18 ), "Putting_In_Pistol", "Idle", SubResource( 19 ), "Kneeling_Up", "Walking", SubResource( 20 ), "Walking", "Running", SubResource( 21 ), "Running", "Walking", SubResource( 22 ), "Idle", "Walking", SubResource( 23 ), "Walking", "Idle", SubResource( 24 ), "Pulling_Out_Pistol", "Idle_Pistol", SubResource( 28 ), "Walk_With_Pistol", "Idle_Pistol", SubResource( 29 ), "Idle_Pistol", "Walk_With_Pistol", SubResource( 30 ), "Idle_Pistol", "Putting_In_Pistol", SubResource( 31 ), "Idle_Pistol", "Kneeling_Down", SubResource( 32 ), "Kneeling_Up", "Idle_Pistol", SubResource( 33 ), "Walk_With_Pistol", "Raising_Pistol", SubResource( 38 ), "Idle_Pistol", "Raising_Pistol", SubResource( 39 ), "Raising_Pistol", "Aiming_Pistol", SubResource( 40 ), "Lowering_Pistol", "Walk_With_Pistol", SubResource( 41 ), "Aiming_Pistol", "Lowering_Pistol", SubResource( 42 ), "Lowering_Pistol", "Idle_Pistol", SubResource( 43 ), "Climbing_Idle", "Climbing_Down", SubResource( 52 ), "Climbing_Idle", "Climbing_Up", SubResource( 53 ), "Climbing_Up", "Climbing_Down", SubResource( 54 ), "Climbing_Down", "Climbing_Up", SubResource( 55 ), "Climbing_Down", "Climbing_Idle", SubResource( 56 ), "Climbing_Up", "Climbing_Idle", SubResource( 57 ), "Idle", "Standing_To_Climbing_Down", SubResource( 65 ), "Idle", "Standing_To_Climbing_Up", SubResource( 66 ), "Standing_To_Climbing_Up", "Climbing_Up", SubResource( 67 ), "Standing_To_Climbing_Down", "Climbing_Down", SubResource( 68 ), "Climbing_Down", "Climbing_Down_To_Standing", SubResource( 69 ), "Climbing_Up", "Climbing_Up_To_Standing", SubResource( 70 ), "Climbing_Down_To_Standing", "Idle", SubResource( 71 ), "Climbing_Up_To_Standing", "Idle", SubResource( 72 ), "Idle", "Standing_To_Pushing", SubResource( 82 ), "Pushing_To_Standing", "Idle", SubResource( 83 ), "Standing_To_Pushing", "Pushing_Box", SubResource( 84 ), "Pushing_Box", "Pushing_Idle", SubResource( 85 ), "Pushing_Idle", "Pulling_Box", SubResource( 86 ), "Pulling_Box", "Pushing_Idle", SubResource( 87 ), "Pushing_Idle", "Pushing_Box", SubResource( 88 ), "Pulling_Box", "Pushing_To_Standing", SubResource( 89 ), "Idle", "Climbing_Up_Box", SubResource( 90 ), "Idle", "Climbing_Down_Box", SubResource( 91 ), "Climbing_Down_Box", "Idle", SubResource( 92 ), "Climbing_Up_Box", "Idle", SubResource( 93 ), "Idle", "Standing_To_Falling", SubResource( 97 ), "Standing_To_Falling", "Falling", SubResource( 98 ), "Falling", "Landing", SubResource( 99 ), "Landing", "Kneeling_Up", SubResource( 100 ), "Pushing_Idle", "Climbing_Up_Box", SubResource( 101 ), "Pushing_Idle", "Idle", SubResource( 102 ) ]
 start_node = "Idle"
-graph_offset = Vector2( -481.557, 28.2838 )
+graph_offset = Vector2( -226.437, -0.616183 )
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=26]
 
@@ -368,6 +368,7 @@ texture = ExtResource( 8 )
 offset = Vector2( 0, -30 )
 hframes = 4
 vframes = 7
+frame = 23
 
 [node name="PlayerHitBox" type="Area2D" parent="." groups=["Player"]]
 position = Vector2( 0, -34 )
@@ -388,6 +389,7 @@ position = Vector2( -1, 25 )
 shape = SubResource( 45 )
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
+pause_mode = 2
 tree_root = SubResource( 25 )
 anim_player = NodePath("AnimationPlayer")
 active = true

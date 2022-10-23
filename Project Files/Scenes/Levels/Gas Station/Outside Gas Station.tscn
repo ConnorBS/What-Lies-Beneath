@@ -60,6 +60,7 @@ shader_param/noise_texture_2 = ExtResource( 18 )
 shader_param/gradient_texture = SubResource( 11 )
 
 [node name="Outside Gas Station" type="Node" groups=["Level"]]
+pause_mode = 1
 script = ExtResource( 16 )
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
@@ -240,6 +241,7 @@ shape = SubResource( 2 )
 [node name="ActorsAndObjects" type="YSort" parent="Floor1"]
 
 [node name="Player" parent="Floor1/ActorsAndObjects" instance=ExtResource( 13 )]
+pause_mode = 1
 position = Vector2( 778, 298 )
 
 [node name="GameCamera" parent="Floor1/ActorsAndObjects/Player" instance=ExtResource( 14 )]
@@ -252,11 +254,11 @@ texture = ExtResource( 12 )
 spriteToLoad = ExtResource( 12 )
 dialogTrigger = "Newspaper"
 
-[node name="Interact_News2" parent="Floor1/ActorsAndObjects" instance=ExtResource( 15 )]
+[node name="GasStationDoor" parent="Floor1/ActorsAndObjects" instance=ExtResource( 15 )]
 modulate = Color( 1, 1, 1, 0.564706 )
-position = Vector2( 677, 302 )
+position = Vector2( 762, 244 )
 texture = ExtResource( 12 )
-spriteToLoad = ExtResource( 12 )
+scene_to_change_location = "res://Scenes/Levels/Gas Station/Inside Gas Station.tscn"
 
 [node name="GasBuildingFront" type="Sprite" parent="Floor1/ActorsAndObjects"]
 modulate = Color( 1, 1, 1, 0.564706 )
@@ -360,10 +362,13 @@ __meta__ = {
 position = Vector2( 1421, 359 )
 
 [node name="SpawnPoint1" parent="Floor1/ActorsAndObjects" instance=ExtResource( 28 )]
-position = Vector2( 767, 286 )
+position = Vector2( 836, 313 )
 
 [node name="SpawnPoint2" type="Position2D" parent="Floor1/ActorsAndObjects"]
 position = Vector2( 1977, 307 )
+
+[node name="SpawnPoint3" type="Position2D" parent="Floor1/ActorsAndObjects"]
+position = Vector2( 775, 253 )
 
 [node name="Floor2" type="Node2D" parent="."]
 
@@ -464,5 +469,4 @@ stream = ExtResource( 29 )
 autoplay = true
 bus = "Music"
 
-[connection signal="dialogWindow" from="Floor1/ActorsAndObjects/Interact_News" to="." method="_on_Interact_News_dialogWindow"]
-[connection signal="dialogWindow" from="Floor1/ActorsAndObjects/Interact_News2" to="." method="_on_Interact_News_dialogWindow"]
+[connection signal="dialogWindow" from="Floor1/ActorsAndObjects/Interact_News" to="." method="_on_open_dialogWindow"]

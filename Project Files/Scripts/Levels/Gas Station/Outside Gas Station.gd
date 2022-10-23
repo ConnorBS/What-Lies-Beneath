@@ -1,7 +1,7 @@
 extends Node
 
-var level_width = 2022
-var level_height = 360
+export (int) var level_width = 2022
+export (int) var level_height = 360
 var current_floor 
 export (Dictionary) var entrance_locations = {0:Vector2(200,200)}
 export (String) var level_name = "Outside Gas Station"
@@ -60,9 +60,28 @@ func set_player_pos(spawPointNumber:int)->void:
 	
 
 
-func _on_Interact_News_dialogWindow(trigger_name:String):
+func _on_open_dialogWindow(trigger_name:String):
 	var dialog_window = _dialog_window_scene.instance()
 	dialog_window.load_window(level_name,trigger_name)
 	get_parent().get_parent().add_child(dialog_window)
+	dialog_window.connect("dialogClosed",self,"_on_close_dialogWindow")
+	get_tree().paused = true
+	pass # Replace with function body.
+
+func _on_close_dialogWindow():
+	get_tree().paused = false
+
+func change_level(SceneToLoad,PointToLoad):
+	var LoadingLevel = load(SceneToLoad).instance()
+	var removingLevel = self
+	var viewPort = find_parent("Viewport")
+	viewPort.remove_child(removingLevel)
 	
+	removingLevel.call_deferred("free")
+	viewPort.add_child(LoadingLevel)
+	
+#	removingLevel.free()
+
+func _on_GasStationDoor_changeScene(SceneToLoad,PointToLoad):
+	change_level(SceneToLoad,PointToLoad)
 	pass # Replace with function body.

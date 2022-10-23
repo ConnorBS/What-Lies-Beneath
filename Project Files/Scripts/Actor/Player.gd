@@ -245,7 +245,8 @@ func _input(event):
 
 func _get_input()->Vector2:
 	var velocity = Vector2.ZERO
-	
+	if !PlayerState.get_Player_Active():
+		return velocity
 	##############################################
 	##############GUN Logic#######################
 	##############################################
@@ -291,11 +292,17 @@ func _get_input()->Vector2:
 					return push_box(true,interactable_object)
 			elif interact_state:
 				change_animation("Kneeling_Up")
+				$AnimationTree.pause_mode = Node.PAUSE_MODE_INHERIT
 				interact_state = false
 				return velocity
 			else:
 				change_animation("Kneeling_Down")
+				$AnimationTree.pause_mode = Node.PAUSE_MODE_PROCESS
+				if interactable_object.get_parent().is_there_a_scene_change():
+					interactable_object.get_parent().change_scene_level()
+					return velocity
 				interactable_object.get_parent().trigger_dialog()
+				PlayerState.set_Player_Active(false)
 				####Could hold out from saying interact State to be triggered by dialog/cutscene time
 				interact_state = true
 				return velocity

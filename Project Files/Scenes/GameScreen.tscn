@@ -414,6 +414,7 @@ stretch = true
 
 [node name="Viewport" type="Viewport" parent="MainMenu/GameWindowPanel/ViewportContainer"]
 size = Vector2( 1024, 600 )
+handle_input_locally = false
 hdr = false
 disable_3d = true
 usage = 0
