@@ -48,6 +48,10 @@ enabled_focus_mode = 0
 text = "Next"
 underline = 1
 
+[node name="Voice" type="AudioStreamPlayer" parent="."]
+pause_mode = 2
+bus = "Voice"
+
 [connection signal="dialogClosed" from="." to="." method="_on_DialogWindow_dialogClosed"]
 [connection signal="AutoPlay" from="DialogWindow" to="." method="_on_DialogWindow_AutoPlay"]
 [connection signal="Settings" from="DialogWindow" to="." method="_on_DialogWindow_Settings"]

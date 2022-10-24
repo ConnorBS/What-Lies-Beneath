@@ -43,14 +43,11 @@ var activeSection = true ## if path in text file doesn't match up, will skip thr
 var changingScene = false;
 
 var dialogFile
+var audioFile
 
 signal dialogClosed
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	print (int("a"))
-	print (int("b"))
-	print (int("A"))
-	print (int("B"))
 	text_speed = Settings.text_speed;
 	auto_speed = Settings.auto_speed;
 	auto_state = Settings.auto_state;
@@ -73,7 +70,25 @@ func _ready():
 	
 func load_window(level_name:String,trigger_name:String):
 	dialogFile =DialogManager.get_dialog(level_name,trigger_name)
+	audioFile = next_audio_file(dialogFile)
 #	update_dialog(speakerNameContent[playerPosition],dialogContent[playerPosition]);
+
+func next_audio_file(exisiting_file=dialogFile):
+	if exisiting_file != null or exisiting_file != "":
+		var new_audio = exisiting_file.left(exisiting_file.length()-4)+str(playerPosition+1)+".wav"
+		if does_audio_exist(new_audio):
+			return new_audio
+	return null
+	
+	
+func does_audio_exist(new_audio)->bool:
+	var file_check = File.new()
+	if file_check.file_exists(new_audio):
+		return true
+	else:
+		push_warning("No Audio found for dialog: "+new_audio)
+		return false
+		
 	
 func convertTextVariables (string) -> String:
 	if string == "PC":
@@ -91,7 +106,7 @@ func parse_square_brackets(dialogText,lineNumber):
 	var areThereCharactersOutsideSquareBracket = false;
 	var numbered_choice = false;
 	var contentSquareBracketString = "";
-	var finalString = ""
+	var finalString:String = ""
 	var insideBracket = false;
 	var skipDialog = false;
 	var choices = [] ## determined by [number] and text
@@ -100,8 +115,17 @@ func parse_square_brackets(dialogText,lineNumber):
 	var newScript = false ## determined by [/****/]
 	var variableText = ""
 	var variableState = false;
+	var quoteMark = false
+	var BBCode = false
 	for i in dialogText:
 		var character = dialogText.left(1);
+		if character =="\"":
+			if BBCode:
+				BBCode = false
+				quoteMark = false
+				#### call to ignore character
+				character = ""
+			quoteMark = true
 		if character == "{":
 			variableState = true
 		elif character == "}":
@@ -118,11 +142,20 @@ func parse_square_brackets(dialogText,lineNumber):
 		elif variableState:
 			variableText += character
 		elif character == "[":
-			insideBracket = true;
-			if numbered_choice == true and choiceString != "":
-				choices.append(choiceString)
-				choiceString = ""
+			if quoteMark == true:
+				BBCode = true
+				finalString = finalString.left(finalString.length()-1)
+				finalString += character
+				print (finalString)
+			else:
+				insideBracket = true;
+				if numbered_choice == true and choiceString != "":
+					choices.append(choiceString)
+					choiceString = ""
 		elif character == "]":
+			if BBCode:
+				finalString += character
+			
 			if !newScript:
 				if countSlashes == 0: ### choice
 					if int(contentSquareBracketString) != 0:
@@ -153,6 +186,9 @@ func parse_square_brackets(dialogText,lineNumber):
 			else:
 				lineDataDict[lineNumber].append(choiceNumbers);
 				choiceNumbers.empty();
+		
+		elif BBCode:
+			finalString += character
 		else:
 			if numbered_choice:
 				choiceString += character
@@ -160,8 +196,10 @@ func parse_square_brackets(dialogText,lineNumber):
 				pass
 				
 			else:
+				
 				finalString += character;
 				areThereCharactersOutsideSquareBracket = true;
+			
 		if dialogText.left(2) != null:
 			dialogText = dialogText.right(1)
 	
@@ -250,7 +288,7 @@ func load_dialogs(file_location):
 #							else:
 #								contentString += line.left(2);
 #								line = line.right(2)
-						print (character)
+#						print (character)
 					else:
 						dialog=contentString+character;
 #						print ("character null = ", dialog)
@@ -261,7 +299,7 @@ func load_dialogs(file_location):
 #					print ("found split = ", dialog)
 					break;
 			dialog = parse_square_brackets(dialog,lineCount-1); ##parsing the speach, if there is no name, then processes square brackte
-			print ("name of speaker = ", nameofSpeaker);
+#			print ("name of speaker = ", nameofSpeaker);
 			speakerNameContent.append(update_if_player(nameofSpeaker))
 #			if dialog != "" and dialog != null:
 #				dialogContent.append(dialog.replace("\\n", "\n\n"))
@@ -338,10 +376,25 @@ func play_next_dialog():
 	else:
 		update_dialog(speakerNameContent[playerPosition],dialogContent[playerPosition])
 		pass
+	
+	audioFile = next_audio_file(audioFile)
+	
+	print(audioFile)
+	if audioFile != null:
+		$Voice.stream = load(audioFile)
+		$Voice.play()
+
 #update to animation states at later dates
 func update_dialog(speaker,conversation):
-	print ("update dialoge speaker " + speaker)
+#	print ("update dialoge speaker " + speaker)
 	NextButton.hide();
+	
+	audioFile = next_audio_file()
+	
+	print(audioFile)
+	if audioFile != null:
+		$Voice.stream = load(audioFile)
+		$Voice.play()
 	
 	if !lineDataDict.has(playerPosition):
 		conversationWindow.show(); #calling show each time just incase states change elsewere.	

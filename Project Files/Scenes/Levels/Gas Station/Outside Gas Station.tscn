@@ -465,6 +465,7 @@ expand = true
 stretch_mode = 2
 
 [node name="BackgroundMusic" type="AudioStreamPlayer" parent="."]
+pause_mode = 2
 stream = ExtResource( 29 )
 autoplay = true
 bus = "Music"

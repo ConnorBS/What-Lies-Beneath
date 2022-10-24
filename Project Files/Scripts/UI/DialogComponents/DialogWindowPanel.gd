@@ -63,7 +63,7 @@ func skip_animation():
 func new_Dialog (speaker,conversation,speed):
 	Conversation.visible_characters = 0;
 	SpeakerName.text = speaker;
-	Conversation.text = conversation;
+	Conversation.bbcode_text = conversation;
 	conversationCharacterCount = conversation.length();
 	if speed <= 0:
 		Conversation.visible_characters = -1;

@@ -422,10 +422,8 @@ render_target_update_mode = 3
 audio_listener_enable_2d = true
 
 [node name="Outside Gas Station" parent="MainMenu/GameWindowPanel/ViewportContainer/Viewport" instance=ExtResource( 1 )]
-pause_mode = 1
 
 [node name="HealthOverlay" parent="MainMenu/GameWindowPanel/ViewportContainer" instance=ExtResource( 3 )]
-visible = false
 material = SubResource( 5 )
 color = Color( 0, 0.321569, 0, 0.513726 )
 
@@ -472,14 +470,17 @@ anims/Open_Options = ExtResource( 11 )
 anims/RESET = SubResource( 14 )
 
 [node name="MenuMusic" type="AudioStreamPlayer" parent="."]
+pause_mode = 2
 stream = ExtResource( 19 )
 bus = "Music"
 
 [node name="MenuSFX" type="AudioStreamPlayer" parent="."]
+pause_mode = 2
 stream = ExtResource( 18 )
 bus = "SoundEffect"
 
 [node name="Voice" type="AudioStreamPlayer" parent="."]
+pause_mode = 2
 
 [connection signal="KeyItems" from="MainMenu" to="." method="_on_MainMenu_KeyItems"]
 [connection signal="Map" from="MainMenu" to="." method="_on_MainMenu_Map"]

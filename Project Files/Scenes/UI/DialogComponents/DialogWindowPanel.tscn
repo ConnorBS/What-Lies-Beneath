@@ -25,10 +25,11 @@ anchor_left = 0.05
 anchor_top = 0.22
 anchor_right = 0.95
 anchor_bottom = 0.78
-text = "Hello, 
-is anyone there?
-
-Where am I?"
+margin_left = -0.440002
+margin_top = -0.0519981
+margin_right = -0.440002
+margin_bottom = -0.052002
+bbcode_enabled = true
 scroll_active = false
 
 [node name="DialogBox" type="MarginContainer" parent="."]
