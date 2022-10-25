@@ -419,16 +419,17 @@ func newPath (pathWay):
 	else:
 		DialogManager.newDialog(pathWay)
 
-func _process(delta):
+func _input(event):
 	if gameState == regular:
-		if Input.is_action_just_pressed("ui_accept"):
-#			if !is_a_button(get_global_mouse_position()):
-			if currentlyAnimating:
-				Dialog.done_Writing()
-			elif waitingForSelection:
-				pass
-			else:
-				play_next_dialog();
+		if event == InputEventKey or event == InputEventMouseButton:
+			if event.pressed:
+	#			if !is_a_button(get_global_mouse_position()):
+				if currentlyAnimating:
+					Dialog.done_Writing()
+				elif waitingForSelection:
+					pass
+				else:
+					play_next_dialog();
 		elif !currentlyAnimating and auto_state and AutoTimer.time_left == 0 and autoJustTurnedOn:
 			AutoTimer.start();
 			autoJustTurnedOn = false;
@@ -466,6 +467,7 @@ func _on_DialogWindow_writingFinished():
 
 func _on_AutoTimer_timeout():
 	play_next_dialog();
+
 
 func _on_NextButton_pressed():
 	play_next_dialog();
