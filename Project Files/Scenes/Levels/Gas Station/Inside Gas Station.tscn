@@ -55,6 +55,7 @@ __meta__ = {
 }
 
 [node name="Background" type="TextureRect" parent="Floor1"]
+visible = false
 margin_right = 2022.0
 margin_bottom = 360.0
 texture = ExtResource( 6 )
@@ -99,6 +100,15 @@ position = Vector2( 1091, 259 )
 
 [node name="ActorsAndObjects" type="YSort" parent="Floor1"]
 
+[node name="Bloody Marks" parent="Floor1/ActorsAndObjects" instance=ExtResource( 15 )]
+position = Vector2( 623, 172 )
+dialogTrigger = "Bloody Marks"
+
+[node name="Register" parent="Floor1/ActorsAndObjects" instance=ExtResource( 15 )]
+position = Vector2( 523, 138 )
+dialogTrigger = "Register"
+scale_of_interactable_box = Vector2( 1, 2 )
+
 [node name="Player" parent="Floor1/ActorsAndObjects" instance=ExtResource( 13 )]
 pause_mode = 1
 position = Vector2( 41, 179 )
@@ -126,3 +136,6 @@ stretch_mode = 2
 stream = ExtResource( 29 )
 autoplay = true
 bus = "Music"
+
+[connection signal="dialogWindow" from="Floor1/ActorsAndObjects/Bloody Marks" to="." method="_on_open_dialogWindow"]
+[connection signal="dialogWindow" from="Floor1/ActorsAndObjects/Register" to="." method="_on_open_dialogWindow"]

@@ -1,0 +1,5 @@
+[Inside Gas Station,Bloody Marks 1]
+PC: Nothing is inside
+[Inside Gas Station,Bloody Marks 2]
+PC: I can smell the money for somereason and it makes me sick
+[\END\]

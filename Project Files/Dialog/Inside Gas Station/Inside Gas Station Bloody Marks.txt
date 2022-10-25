@@ -1,0 +1,8 @@
+PC: Bloody Marks are left on the wall [1] Leave it alone [2] Taste it to see if it's blood
+[1]
+Let's leave it alone...
+Something feels off
+[2]
+It tastes metalic...
+Ugh, I don't feel so good
+[\END\]
