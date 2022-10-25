@@ -70,6 +70,7 @@ func _on_open_dialogWindow(trigger_name:String):
 
 func _on_close_dialogWindow():
 	get_tree().paused = false
+	playerNode.dialog_closed()
 
 func change_level(SceneToLoad,PointToLoad):
 	var LoadingLevel = load(SceneToLoad).instance()

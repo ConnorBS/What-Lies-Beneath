@@ -66,4 +66,35 @@ func update_door_unlocked(location,door_num):
 	else:
 		doors_unlocked[location] = {door_num:true}
 	
-	 
+
+#################################################################
+########## Dialog                       Branch ##################
+#################################################################
+
+const _dialog_tree ={}
+enum DIALOG{LEVEL,TRIGGER,EXPERIENCED,CHOICES}
+
+func update_dialog(dialogLevel,dialogTrigger,experienced:bool,choices:Array = []):
+	if !_dialog_tree.keys().has(dialogLevel):
+		_dialog_tree[dialogLevel] = {dialogTrigger:{DIALOG.EXPERIENCED :experienced,DIALOG.CHOICES: choices}}
+	else:
+		_dialog_tree[dialogLevel][dialogTrigger][DIALOG.EXPERIENCED] = experienced
+		_dialog_tree[dialogLevel][dialogTrigger][DIALOG.CHOICES] =  choices
+		
+func get_choices(dialogLevel,dialogTrigger)->Array:
+	if does_dialog_exist(dialogLevel,dialogTrigger):
+			return _dialog_tree[dialogLevel][dialogTrigger][DIALOG.CHOICES]
+	return []
+
+
+func was_dialog_playerd(dialogLevel,dialogTrigger)->bool:
+	if does_dialog_exist(dialogLevel,dialogTrigger):
+		return _dialog_tree[dialogLevel][dialogTrigger][DIALOG.EXPERIENCED]
+	return false
+
+func does_dialog_exist(dialogLevel,dialogTrigger)->bool:
+	if _dialog_tree.keys().has(dialogLevel):
+		if _dialog_tree[dialogLevel].keys().has(dialogTrigger):
+			return true
+	return false
+	

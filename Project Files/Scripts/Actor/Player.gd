@@ -741,3 +741,12 @@ func landing():
 	falling = false
 	change_animation("Idle")
 	change_collision_and_mask(self,current_floor-1,true)
+	
+	
+##################################
+##########Dialog##################
+##################################
+	
+func dialog_closed():
+	if state_machine.get_current_node() == "Kneeling_Down":
+		change_animation("Idle")

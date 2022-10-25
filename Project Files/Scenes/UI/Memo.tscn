@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Scripts/UI/Memo.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/UI/Components/AuxiliaryBottomButtonMargin.tscn" type="PackedScene" id=2]
@@ -6,6 +6,8 @@
 [ext_resource path="res://Assets/JournalEntries/Page1.png" type="Texture" id=4]
 [ext_resource path="res://Assets/UI/Texture Buttons/Next-Memo-Button.png" type="Texture" id=5]
 [ext_resource path="res://Assets/UI/Texture Buttons/Next-Memo-Button-Pressed.png" type="Texture" id=6]
+[ext_resource path="res://Assets/UI/Texture Buttons/Play-Button-Pressed.png" type="Texture" id=7]
+[ext_resource path="res://Assets/UI/Texture Buttons/Play-Button.png" type="Texture" id=8]
 
 [node name="Memo" type="CanvasLayer"]
 unique_name_in_owner = true
@@ -100,6 +102,15 @@ stretch_mode = 3
 [node name="BottomButtonMargin" parent="." instance=ExtResource( 2 )]
 Continue = false
 
+[node name="PlayButton" type="TextureButton" parent="."]
+margin_left = 883.0
+margin_top = 24.0
+margin_right = 983.0
+margin_bottom = 124.0
+texture_normal = ExtResource( 8 )
+texture_pressed = ExtResource( 7 )
+
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/PreviousMarginContainer/PreviousJournalPage" to="." method="_on_PreviousPage_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/NextMarginContainer/NextJournalPage" to="." method="_on_NextPage_pressed"]
 [connection signal="Back" from="BottomButtonMargin" to="." method="_on_BottomButtonMargin_Back"]
+[connection signal="pressed" from="PlayButton" to="." method="_on_TextureButton_pressed"]

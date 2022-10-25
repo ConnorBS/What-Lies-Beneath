@@ -23,6 +23,8 @@ enum {regular, pause, choice, passing, loading}
 var gameState = regular   ## Helps determine if it's regular mode, the game is paused, or a choice is given
 var previousState = regular ##Lets it toggle back to it's previous state
 
+var dialog_level_name
+var dialog_trigger_name
 
 var button_positions = [];
 
@@ -71,6 +73,8 @@ func _ready():
 func load_window(level_name:String,trigger_name:String):
 	dialogFile =DialogManager.get_dialog(level_name,trigger_name)
 	audioFile = next_audio_file(dialogFile)
+	dialog_level_name = level_name
+	dialog_trigger_name = trigger_name
 #	update_dialog(speakerNameContent[playerPosition],dialogContent[playerPosition]);
 
 func next_audio_file(exisiting_file=dialogFile):
@@ -421,7 +425,7 @@ func newPath (pathWay):
 
 func _input(event):
 	if gameState == regular:
-		if event == InputEventKey or event == InputEventMouseButton:
+		if event is InputEventKey or event is InputEventMouseButton:
 			if event.pressed:
 	#			if !is_a_button(get_global_mouse_position()):
 				if currentlyAnimating:
@@ -493,10 +497,13 @@ func pause(state):
 	gameState=state;
 	Dialog.pause(gameState);
 
-
+func _process(delta):
+	pass
+	
 func change_to_next_scene():
 	print ("change scene function here")
 	PlayerState.set_Player_Active(true)
+	PlayerState.update_dialog(dialog_level_name,dialog_trigger_name,true,playerChoices)
 	emit_signal("dialogClosed")
 	self.queue_free()
 	pass
@@ -527,5 +534,3 @@ func _on_DialogWindow_choiceMade(choice):
 
 func _on_VisualNovelWindow_playerAnimation():
 	pass # Replace with function body.
-
-

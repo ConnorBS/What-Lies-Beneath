@@ -12,8 +12,8 @@ func load_window():
 
 func _update_journal(page_item:Inventory.JournalPage)->void:
 	get_node("%JournalPage").texture = load("res://Assets/JournalEntries/Page"+str(page_item.pageNumber)+".png")
-	if page_item.is_audio_present():
-		get_parent().play_voice(page_item.audioFile)
+	if page_item.is_audio_present(): $PlayButton.show()
+	else: $PlayButton.hide()
 
 
 ###############################################
@@ -59,3 +59,10 @@ func _on_NextPage_pressed():
 		_check_to_hide_previous_button()
 		_check_to_hide_next_button()
 
+
+
+func _on_TextureButton_pressed():
+	var journalPage = PlayerInventory.get_current_journal_Page()
+	if journalPage.is_audio_present():
+		get_parent().play_voice(journalPage.audioFile)
+	pass # Replace with function body.

@@ -2,13 +2,14 @@
 
 [ext_resource path="res://Scenes/UI/DialogComponents/DialogWindowPanel.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Themes/MainMenu_Bottom_Row_Buttons.theme" type="Theme" id=2]
-[ext_resource path="res://Assets/UI/Texture Buttons/Next-Memo-Button.png" type="Texture" id=3]
+[ext_resource path="res://Assets/UI/Texture Buttons/Dialog-Next-Button.png" type="Texture" id=3]
 [ext_resource path="res://Scripts/UI/DialogWindow.gd" type="Script" id=4]
-[ext_resource path="res://Assets/UI/Texture Buttons/Next-Memo-Button-Pressed.png" type="Texture" id=5]
+[ext_resource path="res://Assets/UI/Texture Buttons/Dialog-Next-Button-Pressed.png" type="Texture" id=5]
 [ext_resource path="res://Scenes/UI/DialogComponents/ConfirmationWindow.tscn" type="PackedScene" id=7]
 
 [node name="DialogWindow" type="CanvasLayer"]
 pause_mode = 2
+layer = 2
 script = ExtResource( 4 )
 
 [node name="DialogWindow" parent="." instance=ExtResource( 1 )]
@@ -39,15 +40,17 @@ anchor_right = 0.796
 anchor_bottom = 0.703
 margin_left = -42.816
 margin_top = 116.0
-margin_right = -5.10406
-margin_bottom = 164.2
+margin_right = 7.18402
+margin_bottom = 166.0
 rect_min_size = Vector2( 50, 50 )
 focus_mode = 0
 theme = ExtResource( 2 )
+toggle_mode = true
 shortcut_in_tooltip = false
 enabled_focus_mode = 0
 texture_normal = ExtResource( 3 )
 texture_pressed = ExtResource( 5 )
+texture_hover = ExtResource( 5 )
 expand = true
 stretch_mode = 5
 
