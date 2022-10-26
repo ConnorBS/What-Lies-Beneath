@@ -11,6 +11,11 @@ export (int) var spawn_point = 1
 export (Texture) var spriteToLoad:Texture
 export (String) var dialogTrigger:String
 
+export (bool) var one_time_trigger = false
+export (String) var overhead_text= ""
+export (AudioStream) var voice_over = null
+var trigger_count:int = 0
+
 signal dialogWindow
 
 static func change_collision_and_mask(node,floor_update:int,state:bool):
@@ -48,3 +53,21 @@ func change_scene_level():
 			else:
 				parent = parent.get_parent()
 	
+func has_overhead_text()->bool:
+	return overhead_text != ""
+	
+func overhead_text():
+	if one_time_trigger:
+		if trigger_count <= 0:
+			if overhead_text != "":
+				trigger_count += 1
+				return overhead_text
+			return ""
+		return ""
+	else:
+		if overhead_text != "":
+			return overhead_text
+		return ""
+
+func overhead_voice_over() -> AudioStream:
+	return voice_over

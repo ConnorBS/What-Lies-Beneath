@@ -154,9 +154,9 @@ func deleteArrayOfChoices(arrayOfNodes):
 	for i in arrayOfNodes.size():
 		arrayOfNodes[i].queue_free()
 
-func _process(delta):
+func _input(event):
 	if gameState == choice:
-		if Input.is_action_just_pressed("ui_touch"):
+		if Input.is_action_just_pressed("ui_accept") or event is InputEventMouseButton:
 			if currentSelection != 0:
 				selected_Choice()
 	pass

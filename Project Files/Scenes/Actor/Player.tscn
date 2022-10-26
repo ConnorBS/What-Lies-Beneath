@@ -1,4 +1,4 @@
-[gd_scene load_steps=134 format=2]
+[gd_scene load_steps=133 format=2]
 
 [ext_resource path="res://Assets/Animation/Player/Putting_In_Pistol.tres" type="Animation" id=1]
 [ext_resource path="res://Assets/Animation/Player/Walking.tres" type="Animation" id=2]
@@ -18,7 +18,7 @@
 [ext_resource path="res://Assets/Audio/Player/FootStep_Gravel_Walking.wav" type="AudioStream" id=16]
 [ext_resource path="res://Assets/Sprites/Player/Light.png" type="Texture" id=17]
 [ext_resource path="res://Assets/UI/Button Images/Tab.png" type="Texture" id=18]
-[ext_resource path="res://Assets/Fonts/crumbled-pixels/crumbled-pixels.regular.ttf" type="DynamicFontData" id=19]
+[ext_resource path="res://Assets/Fonts/DynamicFonts/Player_Ingame_Text.tres" type="DynamicFont" id=19]
 [ext_resource path="res://Assets/Animation/Player/Climbing_Down_To_Standing.tres" type="Animation" id=20]
 [ext_resource path="res://Assets/Animation/Player/Climbing_Up_To_Standing.tres" type="Animation" id=21]
 [ext_resource path="res://Assets/Animation/Player/Climbing_Down.tres" type="Animation" id=22]
@@ -344,10 +344,6 @@ graph_offset = Vector2( -226.437, -0.616183 )
 [sub_resource type="RectangleShape2D" id=34]
 extents = Vector2( 10, 3.75 )
 
-[sub_resource type="DynamicFont" id=44]
-size = 23
-font_data = ExtResource( 19 )
-
 [sub_resource type="RectangleShape2D" id=46]
 extents = Vector2( 10, 3 )
 
@@ -368,7 +364,6 @@ texture = ExtResource( 8 )
 offset = Vector2( 0, -30 )
 hframes = 4
 vframes = 7
-frame = 23
 
 [node name="PlayerHitBox" type="Area2D" parent="." groups=["Player"]]
 position = Vector2( 0, -34 )
@@ -480,7 +475,7 @@ stretch_mode = 6
 margin_left = 24.0
 margin_right = 79.0
 margin_bottom = 19.0
-custom_fonts/font = SubResource( 44 )
+custom_fonts/font = ExtResource( 19 )
 text = "Interact"
 align = 1
 valign = 1
@@ -530,6 +525,36 @@ monitorable = false
 position = Vector2( -1, 22 )
 shape = SubResource( 46 )
 
+[node name="OverheadText" type="Label" parent="."]
+margin_left = -84.0
+margin_top = -79.0
+margin_right = 85.0
+margin_bottom = -60.0
+grow_horizontal = 2
+grow_vertical = 2
+rect_scale = Vector2( 0.5, 0.5 )
+rect_pivot_offset = Vector2( 84, 10 )
+size_flags_horizontal = 6
+size_flags_vertical = 2
+custom_fonts/font = ExtResource( 19 )
+align = 1
+valign = 1
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="TextDelay" type="Timer" parent="OverheadText"]
+wait_time = 0.09
+one_shot = true
+
+[node name="FadeOut" type="Tween" parent="OverheadText"]
+
+[node name="Voice" type="AudioStreamPlayer2D" parent="."]
+position = Vector2( -19, -23 )
+scale = Vector2( 0.5, 0.5 )
+bus = "Voice"
+
 [node name="Stamina" type="ProgressBar" parent="."]
 visible = false
 margin_left = 15.0
@@ -550,5 +575,7 @@ script = ExtResource( 27 )
 [connection signal="area_exited" from="ClimbingInterations/ClimbingHitBoxTop" to="." method="_on_ClimbingHitBoxTop_area_exited"]
 [connection signal="area_entered" from="ClimbingInterations/ClimbingHitBoxBottom" to="." method="_on_ClimbingHitBoxBottom_area_entered"]
 [connection signal="area_exited" from="ClimbingInterations/ClimbingHitBoxBottom" to="." method="_on_ClimbingHitBoxBottom_area_exited"]
+[connection signal="timeout" from="OverheadText/TextDelay" to="." method="_on_TextDelay_timeout"]
+[connection signal="tween_completed" from="OverheadText/FadeOut" to="." method="_on_FadeOut_tween_completed"]
 [connection signal="out_of_stamina" from="Stamina" to="." method="_on_Stamina_out_of_stamina"]
 [connection signal="stamina_filled" from="Stamina" to="." method="_on_Stamina_stamina_filled"]

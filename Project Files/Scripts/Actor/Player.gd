@@ -535,6 +535,7 @@ func _on_InteractableHitBox_area_entered(area):
 				side_of_box = BOX_SIDE.LEFT
 			elif area.is_in_group("Box:Right"):
 				side_of_box = BOX_SIDE.RIGHT
+		check_for_dialog(area.get_parent())
 	
 	if area.is_in_group("Fall"):
 		falling_trigger(area,true)
@@ -746,7 +747,47 @@ func landing():
 ##################################
 ##########Dialog##################
 ##################################
+var overhead_text:String
+var playing_text:bool = false
+onready var _overhead_text_node = $OverheadText
+onready var _overhead_text_timer_node = $OverheadText/TextDelay
+onready var _overhead_text_fade_out_node = $OverheadText/FadeOut
+onready var _voice_node = $Voice
+
+func check_for_dialog(interact_object):
+	if interact_object.has_overhead_text():
+		play_overhead(interact_object.overhead_text())
+		var audioFile = interact_object.overhead_voice_over()
+		if audioFile != null:
+			_voice_node.stream = audioFile
+			_voice_node.play()
+	
 	
 func dialog_closed():
 	if state_machine.get_current_node() == "Kneeling_Down":
 		change_animation("Idle")
+		
+func play_overhead(new_string:String = overhead_text):
+	if overhead_text != new_string and !playing_text:
+		overhead_text = new_string
+		playing_text = true
+	if overhead_text == new_string and playing_text:
+		if overhead_text != "" and overhead_text != null:
+			_overhead_text_node.text += overhead_text[0]
+			overhead_text.erase(0,1)
+		if overhead_text != "":
+			_overhead_text_timer_node.start()
+		else:
+			_overhead_text_fade_out_node.interpolate_property(_overhead_text_node,"self_modulate",Color(1,1,1,1.0),Color(1,1,1,0.0),3)
+			_overhead_text_fade_out_node.start()
+	 
+func _on_TextDelay_timeout():
+	play_overhead()
+	pass # Replace with function body.
+
+
+func _on_FadeOut_tween_completed(object, key):
+	_overhead_text_node.text = ""
+	_overhead_text_node.self_modulate.a = 1.0
+	playing_text = false
+	pass # Replace with function body.
