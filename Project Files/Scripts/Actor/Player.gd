@@ -766,6 +766,7 @@ func check_for_dialog(interact_object):
 func dialog_closed():
 	if state_machine.get_current_node() == "Kneeling_Down":
 		change_animation("Idle")
+	interact_state = false
 		
 func play_overhead(new_string:String = overhead_text):
 	if overhead_text != new_string and !playing_text:

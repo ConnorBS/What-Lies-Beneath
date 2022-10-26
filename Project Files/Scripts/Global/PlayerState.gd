@@ -71,11 +71,14 @@ func update_door_unlocked(location,door_num):
 ########## Dialog                       Branch ##################
 #################################################################
 
-const _dialog_tree ={}
+const _dialog_tree = {}
+const _dialog_choices = {}
 enum DIALOG{LEVEL,TRIGGER,EXPERIENCED,CHOICES}
 
 func update_dialog(dialogLevel,dialogTrigger,experienced:bool,choices:Array = []):
 	if !_dialog_tree.keys().has(dialogLevel):
+		_dialog_tree[dialogLevel] = {dialogTrigger:{DIALOG.EXPERIENCED :experienced,DIALOG.CHOICES: choices}}
+	elif !_dialog_tree[dialogLevel].keys().has(dialogTrigger):
 		_dialog_tree[dialogLevel] = {dialogTrigger:{DIALOG.EXPERIENCED :experienced,DIALOG.CHOICES: choices}}
 	else:
 		_dialog_tree[dialogLevel][dialogTrigger][DIALOG.EXPERIENCED] = experienced
@@ -97,4 +100,5 @@ func does_dialog_exist(dialogLevel,dialogTrigger)->bool:
 		if _dialog_tree[dialogLevel].keys().has(dialogTrigger):
 			return true
 	return false
-	
+
+

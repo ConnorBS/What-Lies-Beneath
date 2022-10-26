@@ -63,8 +63,8 @@ func set_player_pos(spawPointNumber:int)->void:
 func _on_open_dialogWindow(trigger_name:String):
 	var dialog_window = _dialog_window_scene.instance()
 	dialog_window.load_window(level_name,trigger_name)
-	get_parent().get_parent().add_child(dialog_window)
 	dialog_window.connect("dialogClosed",self,"_on_close_dialogWindow")
+	get_parent().get_parent().add_child(dialog_window)
 	get_tree().paused = true
 	pass # Replace with function body.
 

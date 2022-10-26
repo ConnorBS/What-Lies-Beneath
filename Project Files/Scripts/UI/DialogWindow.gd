@@ -47,6 +47,8 @@ var changingScene = false;
 var dialogFile
 var audioFile
 
+var choice_unlocked = false
+
 signal dialogClosed
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -78,7 +80,7 @@ func load_window(level_name:String,trigger_name:String):
 #	update_dialog(speakerNameContent[playerPosition],dialogContent[playerPosition]);
 
 func next_audio_file(exisiting_file=dialogFile):
-	if exisiting_file != null or exisiting_file != "":
+	if exisiting_file != null and exisiting_file != "":
 		var new_audio = exisiting_file.left(exisiting_file.length()-4)+str(playerPosition+1)+".wav"
 		if does_audio_exist(new_audio):
 			return new_audio
@@ -102,9 +104,11 @@ func convertTextVariables (string) -> String:
 	return ""
 
 func update_if_player(name):
-	if name == "PC":
+	if name == null:
+		return ""
+	elif name == "PC":
 		return playerName
-	else: name
+	else: return name
 func parse_square_brackets(dialogText,lineNumber):
 	var countSlashes =0
 	var areThereCharactersOutsideSquareBracket = false;
@@ -121,6 +125,9 @@ func parse_square_brackets(dialogText,lineNumber):
 	var variableState = false;
 	var quoteMark = false
 	var BBCode = false
+	var check_choices = false
+	var check_choices_array = []
+	var choice_matched = false
 	for i in dialogText:
 		var character = dialogText.left(1);
 		if character =="\"":
@@ -162,7 +169,17 @@ func parse_square_brackets(dialogText,lineNumber):
 			
 			if !newScript:
 				if countSlashes == 0: ### choice
-					if int(contentSquareBracketString) != 0:
+					if check_choices:
+						check_choices_array.append(contentSquareBracketString)
+						contentSquareBracketString = ""
+						if check_choices_array.size() == 4:
+							var saved_choices = PlayerState.get_choices(check_choices_array[0],check_choices_array[1])
+							if !saved_choices.empty():
+								if int(check_choices_array[3]) == saved_choices[int(check_choices_array[2])]:
+									choice_matched = true
+
+						else: push_warning("check_choices_array expected 4 values")
+					elif int(contentSquareBracketString) != 0:
 						numbered_choice = true;
 						choiceNumbers.append(int(contentSquareBracketString))
 						choiceString += contentSquareBracketString + ". "
@@ -180,7 +197,10 @@ func parse_square_brackets(dialogText,lineNumber):
 			contentSquareBracketString += character;
 		elif insideBracket and character == "\\":
 			newScript = true;
-			
+		elif insideBracket and character == ",":
+			check_choices = true
+			check_choices_array.append(contentSquareBracketString)
+			contentSquareBracketString = ""
 		elif insideBracket:
 			contentSquareBracketString += character;
 		elif numbered_choice and character == "&" and areThereCharactersOutsideSquareBracket == false:
@@ -222,9 +242,24 @@ func parse_square_brackets(dialogText,lineNumber):
 		lineDataDict[lineNumber]=choiceNumbers
 	elif areThereCharactersOutsideSquareBracket:
 		return finalString;
-	elif contentSquareBracketString == "Resume":
+	elif contentSquareBracketString == "RESUME":
 		dataTypesPerLine[lineNumber] = "pathCheck"
-		lineDataDict[lineNumber] = "Resume"
+		lineDataDict[lineNumber] = "RESUME"
+	
+	elif contentSquareBracketString == "ELSE":
+		dataTypesPerLine[lineNumber] = "choiceCheck"
+		if !choice_unlocked:
+			lineDataDict[lineNumber] = "Unlocked"
+		else:
+			lineDataDict[lineNumber] = "Locked"
+		choice_unlocked = false
+	elif choice_matched:
+		dataTypesPerLine[lineNumber] = "choiceCheck"
+		lineDataDict[lineNumber] = "Unlocked"
+		choice_unlocked = true
+	elif !choice_matched:
+		dataTypesPerLine[lineNumber] = "choiceCheck"
+		lineDataDict[lineNumber] = "Locked"
 		
 	return "Error reading Square Brackets"
 	
@@ -331,7 +366,9 @@ func checkActiveDialog(position):
 		elif dataTypesPerLine[position] == "loadNewScript":
 			previousState = gameState
 			gameState = loading
-			pass
+		elif dataTypesPerLine[position] == "choiceCheck":
+			previousState = gameState
+			gameState = regular
 func checkPath (position):
 	var matching = false;
 	if dataTypesPerLine.has(position):
@@ -339,7 +376,7 @@ func checkPath (position):
 			var arrayCheck = lineDataDict[position]
 			
 			if arrayCheck is String:
-				if arrayCheck == "Resume":
+				if arrayCheck == "RESUME":
 					matching = true
 				
 			elif arrayCheck[0] is Array:
@@ -407,12 +444,23 @@ func update_dialog(speaker,conversation):
 		currentlyAnimating = true;
 		Dialog.new_Dialog(speaker,conversation,text_speed)
 	
-	else:
-		previousState = gameState
-		gameState = choice
-		Dialog.new_Choices(speaker,lineDataDict[playerPosition])
-		lineDataDict.erase(playerPosition)
-	
+	elif dataTypesPerLine.has(playerPosition):
+		if dataTypesPerLine[playerPosition] == "choiceToMake":
+			previousState = gameState
+			gameState = choice
+			Dialog.new_Choices(speaker,lineDataDict[playerPosition])
+			lineDataDict.erase(playerPosition)
+		elif dataTypesPerLine[playerPosition] == "choiceCheck":
+			if lineDataDict[playerPosition] == "Unlocked":
+				previousState = gameState
+				gameState = regular
+				play_next_dialog()
+				lineDataDict.erase(playerPosition)
+			elif lineDataDict[playerPosition] == "Locked":
+				previousState = gameState
+				gameState = passing
+				play_next_dialog()
+			
 	
 # Declare member variables here. Examples:
 # var a = 2
@@ -422,6 +470,9 @@ func newPath (pathWay):
 		change_to_next_scene()
 	else:
 		DialogManager.newDialog(pathWay)
+
+#func check_choice(choice_dict,value_to_check):
+#	choice_dict
 
 func _input(event):
 	if gameState == regular:
@@ -528,6 +579,7 @@ func _on_DialogWindow_choiceMade(choice):
 	previousState = gameState
 	gameState = regular
 	playerChoices.append(choice)
+	PlayerState.update_dialog(dialog_level_name,dialog_trigger_name,true,playerChoices)
 	play_next_dialog()
 	pass # Replace with function body.
 
