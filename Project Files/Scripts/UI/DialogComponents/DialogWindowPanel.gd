@@ -9,15 +9,7 @@ onready var choiceOptionBox = $ChoiceBoxes
 
 onready var textChoiceBoxes = preload("res://Scenes/UI/DialogComponents/TextChoices.tscn").instance()
 
-signal Settings;
-signal AutoPlay;
-signal Skip;
-
 var conversationCharacterCount = 0
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
-
 var speedCoefficient = .01
 
 signal writingFinished;
@@ -25,14 +17,8 @@ enum {regular, pause, choice}
 var gameState = regular
 var previousState = regular
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	##debug
-#	var testingArray = ["Cats Option 1","asdfefwefwefwefwefw efwef wef wef we fwe fw owpefe etwpgnewrg vewprjgpwer gpirw bpirw gbprw grwntgwr bh rwptb rwpjt brwjbnrwp pwrej pweti gwpt piwe ewp eqruingvwr  verqpijv ewpriv e[wroubgweprg pewri eqrphb eqrpiv epwhr vepivb vpi veqpibv e vpeirhwv ewrpv eqrpv eqriveprivbc vefveqrubeqrpv eqrpiuvberphv fdfpb e fw efw efw ef wef we fwe fwe fwef wef wef we fwef wfee d","Testing 3","MUAHAAHAHAAHAHAAHAAHAHAHA"]
-#	new_Choices(testingArray)
-	pass # Replace with function body.
 
-func pause(state):
+func pause_dialog(state):
 	previousState = gameState
 	gameState = state;
 	if gameState == pause:
@@ -41,25 +27,10 @@ func pause(state):
 	else:
 		TextDelayTimer.start();
 
-func button_hitboxes():
-	var array_of_hitboxes = []
-	for i in Buttons.get_child_count():
-		var buttonNode = Buttons.get_child(i);
-		var startPos = buttonNode.get_global_position()
-		var offset = buttonNode.get_rect();
-		
-#		var offset = Vector2(rect.-rect[3],rect[4]-rect[2])
-#		var pos = Buttons.get_child(i).get_pos()
-#		array_of_hitboxes.append([pos.x,pos.y,offset.x,offset.y])
-		array_of_hitboxes.append([startPos.x,startPos.y,startPos.x+offset.size.x,startPos.y+offset.size.y])
-
-	return array_of_hitboxes;
-		
-	
-
 func skip_animation():
 	done_Writing();
-	
+
+
 func new_Dialog (speaker,conversation,speed):
 	Conversation.visible_characters = 0;
 	SpeakerName.text = speaker;
@@ -71,9 +42,8 @@ func new_Dialog (speaker,conversation,speed):
 	else:
 		TextDelayTimer.wait_time = speed*speedCoefficient
 		TextDelayTimer.start()
-	pass
 
-			
+
 func next_letter ():
 	Conversation.visible_characters += 1
 	var visibleCharacters = Conversation.visible_characters;
@@ -87,32 +57,10 @@ func done_Writing(timerStarted = true):
 		Conversation.visible_characters = -1;
 	emit_signal("writingFinished");
 	
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
-func update_Auto(state):
-	AutoPlay.pressed = state;
-		
 
 func _on_TextDelayTimer_timeout():
 	next_letter()
-	pass # Replace with function body.
 
-
-func _on_Settings_pressed():
-	emit_signal("Settings")
-	pass # Replace with function body.
-
-
-func _on_AutoPlay_pressed():
-	emit_signal("AutoPlay")
-	print("autoplay Pressed")
-	pass # Replace with function body.
-
-
-func _on_SkipButton_pressed():
-	emit_signal("Skip")
-	pass # Replace with function body.
 
 ############################################
 ########Choices#############################

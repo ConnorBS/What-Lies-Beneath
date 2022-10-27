@@ -87,10 +87,3 @@ func _on_VoiceHSlider_value_changed(value):
 	Settings.update_voice(value)
 	pass # Replace with function body.
 
-
-func _on_VoiceHSlider_drag_ended(value_changed):
-	pass # Replace with function body.
-
-
-func _on_VoiceHSlider_drag_started():
-	pass # Replace with function body.

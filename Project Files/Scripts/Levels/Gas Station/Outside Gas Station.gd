@@ -10,6 +10,7 @@ onready var playerNode = find_node("Player")
 onready var _dialog_window_scene = preload("res://Scenes/UI/DialogWindow.tscn")
 var _current_dialog_window
 
+signal change_scene
 
 func _ready():
 	
@@ -74,15 +75,6 @@ func _on_close_dialogWindow():
 
 func change_level(SceneToLoad,PointToLoad):
 	var LoadingLevel = load(SceneToLoad).instance()
-	var removingLevel = self
-	var viewPort = find_parent("Viewport")
-	viewPort.remove_child(removingLevel)
 	
-	removingLevel.call_deferred("free")
-	viewPort.add_child(LoadingLevel)
-	
-#	removingLevel.free()
-
-func _on_GasStationDoor_changeScene(SceneToLoad,PointToLoad):
-	change_level(SceneToLoad,PointToLoad)
-	pass # Replace with function body.
+	PlayerState.Spawn_Point = PointToLoad
+	emit_signal("change_scene",self,LoadingLevel)

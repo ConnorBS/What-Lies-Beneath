@@ -80,8 +80,10 @@ texture = ExtResource( 9 )
 stretch_mode = 2
 
 [node name="FlatBackground" type="TextureRect" parent="."]
-margin_right = 40.0
-margin_bottom = 40.0
+margin_left = -2.0
+margin_top = 7.0
+margin_right = 2020.0
+margin_bottom = 367.0
 texture = ExtResource( 21 )
 
 [node name="Floor1" type="Node2D" parent="."]
@@ -365,13 +367,13 @@ __meta__ = {
 position = Vector2( 1421, 359 )
 
 [node name="SpawnPoint1" parent="Floor1/ActorsAndObjects" instance=ExtResource( 28 )]
-position = Vector2( 836, 313 )
+position = Vector2( 36, 301 )
 
 [node name="SpawnPoint2" type="Position2D" parent="Floor1/ActorsAndObjects"]
-position = Vector2( 1977, 307 )
+position = Vector2( 1986, 300 )
 
 [node name="SpawnPoint3" type="Position2D" parent="Floor1/ActorsAndObjects"]
-position = Vector2( 775, 253 )
+position = Vector2( 770, 272 )
 
 [node name="Floor2" type="Node2D" parent="."]
 

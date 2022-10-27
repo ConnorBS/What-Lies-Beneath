@@ -16,7 +16,7 @@ func load_dialog_directory()->Dictionary:
 	var file = File.new()
 	file.open(_table_of_dialog_location, file.READ_WRITE)
 	if file.get_error() == 0:
-		var headers = file.get_csv_line () ###removes the top line
+		var _headers = file.get_csv_line () ###removes the top line
 		while !file.eof_reached():
 			var csv = file.get_csv_line ()
 			if !csv.empty():
@@ -26,7 +26,7 @@ func load_dialog_directory()->Dictionary:
 						path = "res://Dialog/"+csv[0]+"/"+csv[0]+" "+csv[1]+".txt"
 					var directory = Directory.new()
 					if !directory.file_exists(path):
-						push_error("Unable to find Dialog Directory in Table-Of-Dialog.csv "+csv[0]+csv[1])
+						push_error("Unable to find Dialog Directory in Table-Of-Dialog.csv "+csv[0]+" "+csv[1])
 					var file_check = File.new()
 					if !file_check.file_exists(path):
 						push_error("Unable to find Dialog File in Table-Of-Dialog.csv - "+path)

@@ -55,6 +55,8 @@ var falling_start_position = Vector2.ZERO
 var falling_end_position = Vector2.ZERO
 var falling_vector = Vector2.ZERO
 
+var action_set_player_active_as_false = false
+
 var gun_selected = PlayerInventory.equipped_gun
 var interactable_object = null
 
@@ -191,6 +193,7 @@ func _process(_delta):
 
 	if falling:
 		PlayerState.set_Player_Active(false)
+		action_set_player_active_as_false = true
 		if global_position.y > falling_end_position.y:
 			landing()
 		else:
@@ -199,9 +202,12 @@ func _process(_delta):
 	#####Input Check if Animation allows it########
 	###############################################
 	elif check_if_current_animation_allows_movement() == true and !climb_box_state:
-		PlayerState.set_Player_Active(true)
+		if action_set_player_active_as_false:
+			PlayerState.set_Player_Active(true)
+			action_set_player_active_as_false = false
 		var vector = _get_input()
-		var _velocity = move_and_slide(vector)
+		if vector != Vector2.ZERO:
+			var _velocity = move_and_slide(vector)
 	elif !climb_box_positions.empty():
 		var _velocity = move_and_slide(climb_box(climb_box_positions))
 		if climb_box_positions.empty():
@@ -216,6 +222,7 @@ func _process(_delta):
 		
 	else:
 		PlayerState.set_Player_Active(false)
+		action_set_player_active_as_false = true
 		
 #	if interact_state == true:
 #		if Input.any_ke
@@ -756,7 +763,7 @@ onready var _voice_node = $Voice
 
 func check_for_dialog(interact_object):
 	if interact_object.has_overhead_text():
-		play_overhead(interact_object.overhead_text())
+		play_overhead(interact_object.get_overhead_text())
 		var audioFile = interact_object.overhead_voice_over()
 		if audioFile != null:
 			_voice_node.stream = audioFile
@@ -787,7 +794,7 @@ func _on_TextDelay_timeout():
 	pass # Replace with function body.
 
 
-func _on_FadeOut_tween_completed(object, key):
+func _on_FadeOut_tween_completed(_object,_key):
 	_overhead_text_node.text = ""
 	_overhead_text_node.self_modulate.a = 1.0
 	playing_text = false

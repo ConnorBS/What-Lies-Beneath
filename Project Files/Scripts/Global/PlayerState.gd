@@ -3,8 +3,8 @@ extends Node
 ###########################
 ######## Variables ########
 ###########################
-var _Player_ACTIVE = false
-var Spawn_Point = 1
+var _Player_ACTIVE = true
+var Spawn_Point = 3
 var _player_name:String = "Ethan"
 const doors_unlocked = {}
 const list_of_places_visited = []

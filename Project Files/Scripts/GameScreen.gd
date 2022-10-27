@@ -11,6 +11,7 @@ onready var _viewportNode = $MainMenu/GameWindowPanel/ViewportContainer/Viewport
 onready var _gamePanelNode = $MainMenu/GameWindowPanel
 onready var _gameScreenResizeTween = $GameScreenResize
 onready var _healthOverlayNode = $MainMenu/GameWindowPanel/ViewportContainer/HealthOverlay
+onready var _levelTranslationNode= $LevelTransition
 onready var _fullDimensions = get_viewport().size
 onready var _menuMusicNode = $MenuMusic
 onready var _menuSFXNode = $MenuSFX
@@ -182,3 +183,29 @@ func _on_MainMenu_KeyItems():
 	get_node("%KeyItems").load_window()
 	_update_window(MENU_WINDOWS.KeyItems)
 	pass # Replace with function body.
+
+##########################################
+##############Change Scene################
+##########################################
+var node_current:Node = null
+var node_to_change:Node = null
+
+func _on_change_scene(node:Node,new_node:Node):
+	_levelTranslationNode.play("SmokeTransitionUP")
+	node_current = node
+	node_to_change = new_node
+	PlayerState.set_Player_Active(false)
+
+func _on_LevelTransition_animation_finished(anim_name):
+	if anim_name == "SmokeTransitionUP":
+		var parent_node = node_current.get_parent()
+		node_current.queue_free()
+		node_to_change.connect("change_scene",self,"_on_change_scene")
+		parent_node.add_child(node_to_change)
+		parent_node.move_child(node_to_change,0)
+		
+		_levelTranslationNode.play("SmokeTransitionDown")
+	if anim_name == "SmokeTransitionDown":
+		PlayerState.set_Player_Active(true)
+	pass # Replace with function body.
+

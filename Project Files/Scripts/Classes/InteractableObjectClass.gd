@@ -56,7 +56,7 @@ func change_scene_level():
 func has_overhead_text()->bool:
 	return overhead_text != ""
 	
-func overhead_text():
+func get_overhead_text():
 	if one_time_trigger:
 		if trigger_count <= 0:
 			if overhead_text != "":

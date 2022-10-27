@@ -2,12 +2,11 @@ extends CanvasLayer
 
 #Text speed determines the speed of the text written. 0 = instant
 
-onready var conversationWindow = $DialogWindow/DialogTexture/Conversation
-onready var conversationSpeaker = $DialogWindow/Speaker/SpeakerNameTexture/SpeakerName
-onready var Dialog = $DialogWindow
+onready var conversationWindow = $DialogWindowPanel/DialogTexture/Conversation
+onready var conversationSpeaker = $DialogWindowPanel/Speaker/SpeakerNameTexture/SpeakerName
+onready var Dialog = $DialogWindowPanel
 onready var NextButton = $NextButton
-onready var ConfirmationWindow = $ConfirmationWindow
-onready var AutoTimer = $AutoTimer
+
 onready var sceneToLoad = 0
 var playerName 
 
@@ -18,7 +17,7 @@ var dialogCount = 0
 var currentlyAnimating = false;
 var waitingForSelection = false;
 
-var autoJustTurnedOn = false;
+
 enum {regular, pause, choice, passing, loading}
 var gameState = regular   ## Helps determine if it's regular mode, the game is paused, or a choice is given
 var previousState = regular ##Lets it toggle back to it's previous state
@@ -37,8 +36,6 @@ var lineDataDict = {}
 var dataTypesPerLine = {}
  
 var text_speed;
-var auto_speed;
-var auto_state;
 
 var activeSection = true ## if path in text file doesn't match up, will skip through lines
 
@@ -53,22 +50,13 @@ signal dialogClosed
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	text_speed = Settings.text_speed;
-	auto_speed = Settings.auto_speed;
-	auto_state = Settings.auto_state;
 
 	playerName = PlayerState.get_player_name();
-
-#	Dialog.update_Auto(auto_state);
-	button_positions = Dialog.button_hitboxes();
-#	var dialogFile = DialogManager.dialog_to_load()
-#	##Troubelshooting
+	
 	load_dialogs(dialogFile)
 	update_dialog(speakerNameContent[playerPosition],dialogContent[playerPosition]);
 	
 	text_speed = Settings.text_speed;
-	auto_speed = Settings.auto_speed;
-	auto_state = Settings.auto_state;
-	Dialog.update_Auto(auto_state);
 	
 	PlayerState.set_Player_Active(false)
 	
@@ -77,7 +65,6 @@ func load_window(level_name:String,trigger_name:String):
 	audioFile = next_audio_file(dialogFile)
 	dialog_level_name = level_name
 	dialog_trigger_name = trigger_name
-#	update_dialog(speakerNameContent[playerPosition],dialogContent[playerPosition]);
 
 func next_audio_file(exisiting_file=dialogFile):
 	if exisiting_file != null and exisiting_file != "":
@@ -116,7 +103,7 @@ func parse_square_brackets(dialogText,lineNumber):
 	var contentSquareBracketString = "";
 	var finalString:String = ""
 	var insideBracket = false;
-	var skipDialog = false;
+	var _skipDialog = false;
 	var choices = [] ## determined by [number] and text
 	var choiceNumbers = []
 	var choiceString = ""
@@ -299,7 +286,6 @@ func load_dialogs(file_location):
 	while not d.eof_reached():
 		var line = d.get_line();
 		lineCount += 1;
-		var troubleshootingline = line;
 		var contentString = "";
 		var found_split = false;
 		var charcount = line.length()
@@ -420,19 +406,16 @@ func play_next_dialog():
 	
 	audioFile = next_audio_file(audioFile)
 	
-	print(audioFile)
 	if audioFile != null:
 		$Voice.stream = load(audioFile)
 		$Voice.play()
 
 #update to animation states at later dates
 func update_dialog(speaker,conversation):
-#	print ("update dialoge speaker " + speaker)
 	NextButton.hide();
 	
 	audioFile = next_audio_file()
 	
-	print(audioFile)
 	if audioFile != null:
 		$Voice.stream = load(audioFile)
 		$Voice.play()
@@ -462,49 +445,29 @@ func update_dialog(speaker,conversation):
 				play_next_dialog()
 			
 	
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
 func newPath (pathWay):
 	if pathWay == "END":
 		change_to_next_scene()
 	else:
 		DialogManager.newDialog(pathWay)
 
-#func check_choice(choice_dict,value_to_check):
-#	choice_dict
 
 func _input(event):
 	if gameState == regular:
 		if event is InputEventKey or event is InputEventMouseButton:
 			if event.pressed:
-	#			if !is_a_button(get_global_mouse_position()):
 				if currentlyAnimating:
 					Dialog.done_Writing()
 				elif waitingForSelection:
 					pass
 				else:
 					play_next_dialog();
-		elif !currentlyAnimating and auto_state and AutoTimer.time_left == 0 and autoJustTurnedOn:
-			AutoTimer.start();
-			autoJustTurnedOn = false;
 		
-		
-## button_positions is pulled from Dialog Screen, and is global position with:
-## x start, y start, x end, y end.
-func is_a_button(position):
-	for i in button_positions.size():
-		if button_positions[i][0] <= position.x and button_positions[i][2] >= position.x:
-			if button_positions[i][1] <= position.y and button_positions[i][3] >= position.y:
-				return true;
-	return false
 	
 func save_settings():
 #	ConfigManager.text_speed = text_speed;
-#	ConfigManager.auto_speed = auto_speed;
-#	ConfigManager.auto_state = auto_state;
-#	ConfigManager.update_files();
 	pass
+
 ###Post Next Button as we are ready to move on
 func next_button_ready():
 	NextButton.show()
@@ -512,44 +475,22 @@ func next_button_ready():
 
 func _on_DialogWindow_writingFinished():
 	currentlyAnimating = false;
-	if auto_state:
-		AutoTimer.wait_time = auto_speed*.05
-		AutoTimer.start();
-	else:
-		next_button_ready()
+	next_button_ready()
 	pass # Replace with function body.
-
-
-func _on_AutoTimer_timeout():
-	play_next_dialog();
 
 
 func _on_NextButton_pressed():
 	play_next_dialog();
 	pass # Replace with function body.
 
-func _on_DialogWindow_AutoPlay():
-	auto_state = !auto_state;
-	autoJustTurnedOn=true
-	pass # Replace with function body.
 
 
-func _on_DialogWindow_Settings():
-	pass # Replace with function body.
 
-
-func _on_DialogWindow_Skip():
-	ConfirmationWindow.show();
-	pause(pause);
-	pass # Replace with function body.
-
-func pause(state):
+func pause_dialog(state):
 	previousState = gameState
 	gameState=state;
-	Dialog.pause(gameState);
+	Dialog.pause_dialog(gameState);
 
-func _process(delta):
-	pass
 	
 func change_to_next_scene():
 	print ("change scene function here")
@@ -564,16 +505,6 @@ func save_state():
 #	PlayerGameSave.saveGame()
 	pass
 
-func _on_ConfirmationWindow_confirmation(confirmation):
-	if confirmation:
-		change_to_next_scene();
-	else:
-		ConfirmationWindow.hide();
-		pause(previousState)
-
-	pass # Replace with function body.
-
-
 
 func _on_DialogWindow_choiceMade(choice):
 	previousState = gameState
@@ -583,6 +514,3 @@ func _on_DialogWindow_choiceMade(choice):
 	play_next_dialog()
 	pass # Replace with function body.
 
-
-func _on_VisualNovelWindow_playerAnimation():
-	pass # Replace with function body.

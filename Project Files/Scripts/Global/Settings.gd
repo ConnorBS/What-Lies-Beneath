@@ -1,8 +1,6 @@
 extends Node
 
 var text_speed = 0.5;
-var auto_speed = 0.5;
-var auto_state = false;
 
 
 
