@@ -6,4 +6,7 @@ Something feels off
 [2]
 It tastes metalic...
 Ugh, I don't feel so good
+[1] Option 1 [2] Option 2 [3] Option 3
+[RESUME]
+PC: End conversation
 [\END\]

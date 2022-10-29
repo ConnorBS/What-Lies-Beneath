@@ -79,7 +79,7 @@ func update_dialog(dialogLevel,dialogTrigger,experienced:bool,choices:Array = []
 	if !_dialog_tree.keys().has(dialogLevel):
 		_dialog_tree[dialogLevel] = {dialogTrigger:{DIALOG.EXPERIENCED :experienced,DIALOG.CHOICES: choices}}
 	elif !_dialog_tree[dialogLevel].keys().has(dialogTrigger):
-		_dialog_tree[dialogLevel] = {dialogTrigger:{DIALOG.EXPERIENCED :experienced,DIALOG.CHOICES: choices}}
+		_dialog_tree[dialogLevel][dialogTrigger] ={ DIALOG.EXPERIENCED :experienced,DIALOG.CHOICES: choices}
 	else:
 		_dialog_tree[dialogLevel][dialogTrigger][DIALOG.EXPERIENCED] = experienced
 		_dialog_tree[dialogLevel][dialogTrigger][DIALOG.CHOICES] =  choices
