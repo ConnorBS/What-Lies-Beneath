@@ -3,8 +3,9 @@ extends Control
 onready var Conversation = $DialogTexture/Conversation
 onready var SpeakerName = $Speaker/SpeakerNameTexture/SpeakerName
 onready var TextDelayTimer = $TextDelayTimer
-onready var AutoPlay = $ButtonBar/Buttons/AutoPlay
-onready var Buttons = $ButtonBar/Buttons
+onready var _investigationNode = $InvestigationMarginContainer
+#onready var AutoPlay = $ButtonBar/Buttons/AutoPlay
+#onready var Buttons = $ButtonBar/Buttons
 onready var choiceOptionBox = $ChoiceBoxes
 
 onready var textChoiceBoxes = preload("res://Scenes/UI/DialogComponents/TextChoices.tscn").instance()
@@ -13,6 +14,7 @@ var conversationCharacterCount = 0
 var speedCoefficient = .01
 
 signal writingFinished;
+signal investigate
 enum {regular, pause, choice}
 var gameState = regular
 var previousState = regular
@@ -112,4 +114,11 @@ func _input(event):
 func _on_Choice_choiceHighlighted(highlightedSelection):
 	currentSelection = highlightedSelection
 	print (currentSelection)
+	pass # Replace with function body.
+
+func show_investigation():
+	_investigationNode.show()
+
+func _on_Investigate_pressed():
+	emit_signal("investigate")
 	pass # Replace with function body.

@@ -43,6 +43,9 @@ var changingScene = false;
 
 var dialogFile
 var audioFile
+var pictureFile
+
+var currently_investigating = false
 
 var choice_unlocked = false
 
@@ -58,11 +61,15 @@ func _ready():
 	
 	text_speed = Settings.text_speed;
 	
+	if pictureFile != null:
+		Dialog.show_investigation()
+		
 	PlayerState.set_Player_Active(false)
 	
 func load_window(level_name:String,trigger_name:String):
 	dialogFile =DialogManager.get_dialog(level_name,trigger_name)
 	audioFile = next_audio_file(dialogFile)
+	pictureFile = next_picture_file(dialogFile)
 	dialog_level_name = level_name
 	dialog_trigger_name = trigger_name
 
@@ -80,6 +87,23 @@ func does_audio_exist(new_audio)->bool:
 		return true
 	else:
 		push_warning("No Audio found for dialog: "+new_audio)
+		return false
+		
+		
+func next_picture_file(exisiting_file=dialogFile):
+	if exisiting_file != null and exisiting_file != "":
+		var new_texture = exisiting_file.left(exisiting_file.length()-4)+str(playerPosition+1)+".png"
+		if does_audio_exist(new_texture):
+			return new_texture
+	return null
+	
+	
+func does_texture_exist(new_texture)->bool:
+	var file_check = File.new()
+	if file_check.file_exists(new_texture):
+		return true
+	else:
+		push_warning("No Texture found for dialog: "+new_texture)
 		return false
 		
 	
@@ -170,6 +194,9 @@ func parse_square_brackets(dialogText,lineNumber):
 									else:
 										choice_matched = false
 										break
+								else:
+									choice_matched = false
+									break
 
 						else: push_warning("check_choices_array expected 4 values")
 					elif int(contentSquareBracketString) != 0:
@@ -410,21 +437,29 @@ func play_next_dialog():
 		update_dialog(speakerNameContent[playerPosition],dialogContent[playerPosition])
 		pass
 	
-	audioFile = next_audio_file(audioFile)
+	audioFile = next_audio_file()
+	pictureFile = next_picture_file()
 	
 	if audioFile != null:
 		$Voice.stream = load(audioFile)
 		$Voice.play()
+	if pictureFile != null:
+		$InvestigationItem.texture = load(pictureFile)
+		Dialog.show_investigation()
 
 #update to animation states at later dates
 func update_dialog(speaker,conversation):
 	NextButton.hide();
 	
 	audioFile = next_audio_file()
+	pictureFile = next_picture_file()
 	
 	if audioFile != null:
 		$Voice.stream = load(audioFile)
 		$Voice.play()
+	if pictureFile != null:
+		$InvestigationItem.texture = load(pictureFile)
+		Dialog.show_investigation()
 	
 	if !lineDataDict.has(playerPosition):
 		conversationWindow.show(); #calling show each time just incase states change elsewere.	
@@ -459,8 +494,15 @@ func newPath (pathWay):
 
 
 func _input(event):
-	if gameState == regular:
+	
+	if currently_investigating:
 		if event is InputEventKey or event is InputEventMouseButton:
+			if event.pressed:
+				Dialog.show()
+				$NextButton.show()
+				currently_investigating = false
+	elif gameState == regular:
+		if event is InputEventKey:# or event is InputEventMouseButton:
 			if event.pressed:
 				if currentlyAnimating:
 					Dialog.done_Writing()
@@ -520,3 +562,10 @@ func _on_DialogWindow_choiceMade(choice):
 	play_next_dialog()
 	pass # Replace with function body.
 
+
+
+func _on_DialogWindowPanel_investigate():
+	Dialog.hide()
+	$NextButton.hide()
+	currently_investigating = true
+	pass # Replace with function body.

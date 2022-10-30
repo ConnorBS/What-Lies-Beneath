@@ -1,10 +1,14 @@
-[gd_resource type="Theme" load_steps=8 format=2]
+[gd_resource type="Theme" load_steps=9 format=2]
 
 [ext_resource path="res://Assets/Fonts/DynamicFonts/Dialog_Window_Content.tres" type="DynamicFont" id=1]
-[ext_resource path="res://Assets/Fonts/DynamicFonts/LinkButton_Fonts_MainMenu.tres" type="DynamicFont" id=2]
+[ext_resource path="res://Assets/Fonts/Humane_Jenson/1543Humane_Jenson.TTF" type="DynamicFontData" id=2]
 [ext_resource path="res://Assets/Fonts/DynamicFonts/Dialog_Window_Name.tres" type="DynamicFont" id=3]
 
-[sub_resource type="Image" id=7]
+[sub_resource type="DynamicFont" id=7]
+size = 20
+font_data = ExtResource( 2 )
+
+[sub_resource type="Image" id=8]
 data = {
 "data": PoolByteArray( 71, 140, 191, 14, 71, 140, 191, 57, 71, 140, 191, 104, 71, 140, 191, 122, 71, 140, 191, 123, 71, 140, 191, 123, 71, 140, 191, 123, 71, 140, 191, 123, 71, 140, 191, 122, 71, 140, 191, 104, 71, 140, 191, 57, 71, 140, 191, 14, 71, 140, 191, 58, 71, 140, 191, 116, 71, 140, 191, 16, 71, 140, 191, 8, 71, 140, 191, 8, 71, 140, 191, 8, 71, 140, 191, 8, 71, 140, 191, 8, 71, 140, 191, 8, 71, 140, 191, 16, 71, 140, 191, 116, 71, 140, 191, 58, 71, 140, 191, 105, 71, 140, 191, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 71, 140, 191, 15, 71, 140, 191, 105, 71, 140, 191, 123, 71, 140, 191, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 71, 140, 191, 6, 71, 140, 191, 123, 71, 140, 191, 123, 71, 140, 191, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 71, 140, 191, 8, 71, 140, 191, 123, 71, 140, 191, 123, 71, 140, 191, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 71, 140, 191, 8, 71, 140, 191, 123, 71, 140, 191, 123, 71, 140, 191, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 71, 140, 191, 8, 71, 140, 191, 123, 71, 140, 191, 123, 71, 140, 191, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 71, 140, 191, 8, 71, 140, 191, 123, 71, 140, 191, 123, 71, 140, 191, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 71, 140, 191, 6, 71, 140, 191, 123, 71, 140, 191, 105, 71, 140, 191, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 71, 140, 191, 14, 71, 140, 191, 105, 71, 140, 191, 58, 71, 140, 191, 117, 71, 140, 191, 15, 71, 140, 191, 8, 71, 140, 191, 8, 71, 140, 191, 8, 71, 140, 191, 8, 71, 140, 191, 8, 71, 140, 191, 8, 71, 140, 191, 17, 71, 140, 191, 116, 71, 140, 191, 58, 71, 140, 191, 14, 71, 140, 191, 58, 71, 140, 191, 104, 71, 140, 191, 122, 71, 140, 191, 123, 71, 140, 191, 123, 71, 140, 191, 123, 71, 140, 191, 123, 71, 140, 191, 122, 71, 140, 191, 104, 71, 140, 191, 57, 71, 140, 191, 14 ),
 "format": "RGBA8",
@@ -16,7 +20,7 @@ data = {
 [sub_resource type="ImageTexture" id=3]
 flags = 4
 flags = 4
-image = SubResource( 7 )
+image = SubResource( 8 )
 size = Vector2( 12, 12 )
 
 [sub_resource type="StyleBoxTexture" id=4]
@@ -46,11 +50,11 @@ border_color = Color( 1, 1, 1, 1 )
 [resource]
 Label/fonts/font = ExtResource( 3 )
 LinkButton/colors/font_color = Color( 0.88, 0.88, 0.88, 1 )
-LinkButton/colors/font_color_focus = Color( 0.94, 0.94, 0.94, 1 )
-LinkButton/colors/font_color_hover = Color( 0.94, 0.94, 0.94, 1 )
-LinkButton/colors/font_color_pressed = Color( 1, 1, 1, 1 )
+LinkButton/colors/font_color_focus = Color( 0.592157, 0, 0, 1 )
+LinkButton/colors/font_color_hover = Color( 0.592157, 0, 0, 1 )
+LinkButton/colors/font_color_pressed = Color( 0.337255, 0, 0, 1 )
 LinkButton/constants/underline_spacing = 2
-LinkButton/fonts/font = ExtResource( 2 )
+LinkButton/fonts/font = SubResource( 7 )
 LinkButton/styles/focus = SubResource( 4 )
 Panel/styles/panel = SubResource( 6 )
 RichTextLabel/fonts/bold_font = null

@@ -158,10 +158,10 @@ alt="IMAGE ALT TEXT HERE" width="240" height="180" border="10" /></a>
 <p align="right">(<a href="#what-lies-beneath">back to top</a>)</p>
 
 ### Dialogue Milestone
-- [ ] Dialog with Branching Options 
+- [x] Dialog with Branching Options 
 - [x] Interact-able Objects With Dialog Boxes
 - [x] Interact-able Objects With Text Above Player
-- [ ] Save Dialog Choice
+- [x] Save Dialog Choice
 <p align="right">(<a href="#what-lies-beneath">back to top</a>)</p>
 
 ### Map System Milestone 

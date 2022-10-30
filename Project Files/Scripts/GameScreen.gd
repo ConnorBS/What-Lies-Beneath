@@ -84,7 +84,7 @@ func _get_input():
 			
 			if _window_state == MENU_WINDOWS.Main:
 				_menuMusicNode.stop()
-				_viewportNode.gui_disable_input = false
+				_viewportNode.gui_disable_input = true
 				_tween_grow(Vector2.ZERO,_fullDimensions)
 				menu_visible = false
 				get_tree().paused = false
@@ -200,7 +200,7 @@ func _on_LevelTransition_animation_finished(anim_name):
 	if anim_name == "SmokeTransitionUP":
 		var parent_node = node_current.get_parent()
 		node_current.queue_free()
-		node_to_change.connect("change_scene",self,"_on_change_scene")
+		var _ignore_value = node_to_change.connect("change_scene",self,"_on_change_scene")
 		parent_node.add_child(node_to_change)
 		parent_node.move_child(node_to_change,0)
 		

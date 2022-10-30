@@ -11,6 +11,17 @@ pause_mode = 2
 layer = 2
 script = ExtResource( 4 )
 
+[node name="InvestigationItem" type="TextureRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 50.0
+margin_top = 50.0
+margin_right = -50.0
+margin_bottom = -50.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch_mode = 6
+
 [node name="DialogWindowPanel" parent="." instance=ExtResource( 1 )]
 pause_mode = 2
 anchor_left = 0.2
@@ -49,6 +60,7 @@ bus = "Voice"
 
 [connection signal="dialogClosed" from="." to="." method="_on_DialogWindow_dialogClosed"]
 [connection signal="choiceMade" from="DialogWindowPanel" to="." method="_on_DialogWindow_choiceMade"]
+[connection signal="investigate" from="DialogWindowPanel" to="." method="_on_DialogWindowPanel_investigate"]
 [connection signal="writingFinished" from="DialogWindowPanel" to="." method="_on_DialogWindow_writingFinished"]
 [connection signal="timeout" from="AutoTimer" to="." method="_on_AutoTimer_timeout"]
 [connection signal="pressed" from="NextButton" to="." method="_on_NextButton_pressed"]

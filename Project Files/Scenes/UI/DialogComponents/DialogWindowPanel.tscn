@@ -57,6 +57,35 @@ text = "Player"
 align = 1
 valign = 1
 
+[node name="InvestigationMarginContainer" type="MarginContainer" parent="."]
+visible = false
+anchor_left = 0.759
+anchor_top = 0.076
+anchor_right = 1.0
+anchor_bottom = 0.225
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="InvestigationPanel" type="Panel" parent="InvestigationMarginContainer"]
+margin_right = 246.0
+margin_bottom = 89.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="CenterContainer" type="CenterContainer" parent="InvestigationMarginContainer/InvestigationPanel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Investigate" type="LinkButton" parent="InvestigationMarginContainer/InvestigationPanel/CenterContainer"]
+margin_left = 85.0
+margin_top = 30.0
+margin_right = 160.0
+margin_bottom = 58.0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+text = "Investigate"
+underline = 2
+
 [node name="TextDelayTimer" type="Timer" parent="."]
 
 [node name="ChoiceBoxes" type="VBoxContainer" parent="."]
@@ -69,4 +98,5 @@ margin_top = -15.8
 margin_right = 4.03992
 margin_bottom = 29.0
 
+[connection signal="pressed" from="InvestigationMarginContainer/InvestigationPanel/CenterContainer/Investigate" to="." method="_on_Investigate_pressed"]
 [connection signal="timeout" from="TextDelayTimer" to="." method="_on_TextDelayTimer_timeout"]
