@@ -159,11 +159,17 @@ func parse_square_brackets(dialogText,lineNumber):
 					if check_choices:
 						check_choices_array.append(contentSquareBracketString)
 						contentSquareBracketString = ""
-						if check_choices_array.size() == 4:
-							var saved_choices = PlayerState.get_choices(check_choices_array[0],check_choices_array[1])
-							if !saved_choices.empty():
-								if int(check_choices_array[3]) == saved_choices[int(check_choices_array[2])]:
-									choice_matched = true
+						if check_choices_array.size()%4 == 0:
+							for count in (check_choices_array.size()/4):
+								print (count)
+								
+								var saved_choices = PlayerState.get_choices(check_choices_array[0+(count*4)],check_choices_array[1+(count*4)])
+								if !saved_choices.empty():
+									if int(check_choices_array[3+(count*4)]) == saved_choices[int(check_choices_array[2+(count*4)])]:
+										choice_matched = true
+									else:
+										choice_matched = false
+										break
 
 						else: push_warning("check_choices_array expected 4 values")
 					elif int(contentSquareBracketString) != 0:
