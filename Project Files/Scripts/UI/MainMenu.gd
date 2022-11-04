@@ -354,17 +354,17 @@ func _no_equipment(state)->void:
 ###### Focus Changes ########
 #############################
 func _on_Equipment_Panel_focus_entered():
-	print(_itemScrollButtons.get_focus_owner())
+#	print(_itemScrollButtons.get_focus_owner())
 	if _itemScrollButtons.get_focus_owner() != null:
 		select_equipment_node(true)
 		select_selector_node(false)
-		print ("focus selected ", _equipmentNode.get_focus_owner()  )
+#		print ("focus selected ", _equipmentNode.get_focus_owner()  )
 	pass # Replace with function body.
 
 
 
 func _on_Selector_focus_entered():
-	print("equipment exit: ",_commandButtonContainerNode.get_focus_owner())
+#	print("equipment exit: ",_commandButtonContainerNode.get_focus_owner())
 	if _itemScrollButtons.get_focus_owner() != null:
 		select_equipment_node(false)
 		select_selector_node(true)

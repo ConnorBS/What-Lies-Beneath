@@ -6,7 +6,7 @@ extends MenuClass
 ###############################################
 
 func _on_BottomButtonMargin_Back():
-	print ("Map")
+#	print ("Map")
 	emit_signal("Back")
 
 

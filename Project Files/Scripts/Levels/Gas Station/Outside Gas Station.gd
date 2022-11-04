@@ -26,7 +26,7 @@ func move_to_floor(new_floor,node_to_move):
 	find_node(make_floor_name(new_floor)).find_node("ActorsAndObjects").add_child(node_to_move)
 	enable_floor(new_floor)
 	current_floor = new_floor
-	print (current_floor)
+#	print (current_floor)
 
 
 #####Disable Backgrounds to avoid unintential overwriting

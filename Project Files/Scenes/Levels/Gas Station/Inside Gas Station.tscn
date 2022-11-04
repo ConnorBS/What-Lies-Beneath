@@ -102,11 +102,12 @@ position = Vector2( 1091, 259 )
 
 [node name="Bloody Marks" parent="Floor1/ActorsAndObjects" instance=ExtResource( 15 )]
 position = Vector2( 623, 172 )
-dialogTrigger = "Bloody Marks"
+dialog_trigger = "Bloody Marks"
+overhead_text = "What happened here?"
 
 [node name="Register" parent="Floor1/ActorsAndObjects" instance=ExtResource( 15 )]
 position = Vector2( 523, 138 )
-dialogTrigger = "Register"
+dialog_trigger = "Register"
 scale_of_interactable_box = Vector2( 1, 2 )
 
 [node name="Player" parent="Floor1/ActorsAndObjects" instance=ExtResource( 13 )]

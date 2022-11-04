@@ -28,7 +28,7 @@ var infront_of_interactable_object = false
 var _interact_object
 var falling = false
 var flipped = false
-
+var dialog_state = false
 ###############################
 
 var previous_animation:String = ""
@@ -310,6 +310,8 @@ func _get_input()->Vector2:
 					return velocity
 				interactable_object.get_parent().trigger_dialog()
 				PlayerState.set_Player_Active(false)
+				_on_InteractableHitBox_area_exited(interactable_object)
+				dialog_state = true
 				####Could hold out from saying interact State to be triggered by dialog/cutscene time
 				interact_state = true
 				return velocity
@@ -536,7 +538,7 @@ func update_interaction(in_range:bool,area)->void:
 
 func _on_InteractableHitBox_area_entered(area):
 	if area.is_in_group("Interact"):
-		if !climbing and !climb_box_state:
+		if !climbing and !climb_box_state and !dialog_state:
 			update_interaction(true,area)
 			if area.is_in_group("Box:Left"):
 				side_of_box = BOX_SIDE.LEFT
@@ -773,6 +775,7 @@ func check_for_dialog(interact_object):
 func dialog_closed():
 	if state_machine.get_current_node() == "Kneeling_Down":
 		change_animation("Idle")
+		dialog_state = false
 	interact_state = false
 		
 func play_overhead(new_string:String = overhead_text):

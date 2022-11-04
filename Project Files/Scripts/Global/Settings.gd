@@ -80,4 +80,4 @@ func update_audio_bus_configurations():
 	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Voice"),linear2db(_voiceVolume));
 	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Music"),linear2db(_musicVolume));
 	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Master"),linear2db(_masterVolume));
-	print("Sound: ", _soundVolume, " || Music: ", _musicVolume, " || Master: ",_masterVolume)
+#	print("Sound: ", _soundVolume, " || Music: ", _musicVolume, " || Master: ",_masterVolume)

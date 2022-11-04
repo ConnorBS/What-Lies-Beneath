@@ -9,12 +9,14 @@ export (String) var scene_to_change_location
 export (int) var spawn_point = 1
 
 export (Texture) var spriteToLoad:Texture
-export (String) var dialogTrigger:String
+export (String) var dialog_trigger:String
+export (bool) var dialog_one_time_trigger = false
+var dialog_trigger_count:int = 0
 
-export (bool) var one_time_trigger = false
+export (bool) var overhead_one_time_trigger = false
 export (String) var overhead_text= ""
-export (AudioStream) var voice_over = null
-var trigger_count:int = 0
+export (AudioStream) var overhead_voice_over = null
+var overhead_trigger_count:int = 0
 
 signal dialogWindow
 
@@ -34,11 +36,21 @@ func is_there_a_scene_change():
 	return scene_to_change_location != ""
 	
 func trigger_dialog():
-	if dialogTrigger == "" or dialogTrigger == null:
+	if dialog_trigger == "" or dialog_trigger == null:
 		return
 	else:
-		emit_signal("dialogWindow",dialogTrigger)
-
+		if dialog_one_time_trigger == false or dialog_trigger_count == 0:
+			dialog_trigger_count += 1
+			emit_signal("dialogWindow",dialog_trigger)
+			if dialog_one_time_trigger:
+				$Area2D.monitoring = false
+				$Area2D.monitorable = false
+				$Particles2D.emitting = false
+				$Area2D.queue_free()
+				$Particles2D.queue_free()
+		else: 
+			return
+	
 func change_scene_level():
 	if is_there_a_scene_change():
 		PlayerState.Spawn_Point = spawn_point
@@ -57,10 +69,10 @@ func has_overhead_text()->bool:
 	return overhead_text != ""
 	
 func get_overhead_text():
-	if one_time_trigger:
-		if trigger_count <= 0:
+	if overhead_one_time_trigger:
+		if overhead_trigger_count <= 0:
 			if overhead_text != "":
-				trigger_count += 1
+				overhead_trigger_count += 1
 				return overhead_text
 			return ""
 		return ""
@@ -70,4 +82,4 @@ func get_overhead_text():
 		return ""
 
 func overhead_voice_over() -> AudioStream:
-	return voice_over
+	return overhead_voice_over

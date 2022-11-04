@@ -71,7 +71,7 @@ func snap_position()->Vector2:
 func _on_LeftInteraction_area_entered(area):
 	if area.is_in_group("Player"):
 		player_location = LEFT
-		print ("LEFT")
+#		print ("LEFT")
 
 
 func _on_LeftInteraction_area_exited(area):
@@ -82,7 +82,7 @@ func _on_LeftInteraction_area_exited(area):
 func _on_RightInteraction_area_entered(area):
 	if area.is_in_group("Player"):
 		player_location = RIGHT
-		print ("Right")
+#		print ("Right")
 
 
 func _on_RightInteraction_area_exited(area):

@@ -44,7 +44,7 @@ func heal(value:int)->void:
 	_Current_Health += value
 	if _check_for_death():
 		_Current_Health = 0
-		print ("Dead")
+#		print ("Dead")
 	elif _Current_Health > _Max_Health:
 		_Current_Health = _Max_Health
 	

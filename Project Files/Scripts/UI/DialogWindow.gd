@@ -168,7 +168,7 @@ func parse_square_brackets(dialogText,lineNumber):
 				BBCode = true
 				finalString = finalString.left(finalString.length()-1)
 				finalString += character
-				print (finalString)
+#				print (finalString)
 			else:
 				insideBracket = true;
 				if numbered_choice == true and choiceString != "":
@@ -185,7 +185,7 @@ func parse_square_brackets(dialogText,lineNumber):
 						contentSquareBracketString = ""
 						if check_choices_array.size()%4 == 0:
 							for count in (check_choices_array.size()/4):
-								print (count)
+#								print (count)
 								
 								var saved_choices = PlayerState.get_choices(check_choices_array[0+(count*4)],check_choices_array[1+(count*4)])
 								if !saved_choices.empty():
@@ -208,8 +208,8 @@ func parse_square_brackets(dialogText,lineNumber):
 	#					choiceNumbers.append(int(contentSquareBracketString))
 	#					choiceString += contentSquareBracketString + ". "
 	#					contentSquareBracketString=""
-					else:
-						print("Unable to determine value in []")
+#					else:
+#						print("Unable to determine value in []")
 				
 			insideBracket = false
 		elif insideBracket and character == "/":
@@ -425,7 +425,7 @@ func play_next_dialog():
 	playerPosition += 1;
 	save_state();
 	checkActiveDialog(playerPosition)
-	print ("Player Position = ",playerPosition)
+#	print ("Player Position = ",playerPosition)
 	if checkPath(playerPosition):
 		play_next_dialog()
 	elif gameState == passing:
@@ -541,7 +541,7 @@ func pause_dialog(state):
 
 	
 func change_to_next_scene():
-	print ("change scene function here")
+#	print ("change scene function here")
 	PlayerState.set_Player_Active(true)
 	PlayerState.update_dialog(dialog_level_name,dialog_trigger_name,true,playerChoices)
 	emit_signal("dialogClosed")

@@ -1,6 +1,6 @@
 [Inside Gas Station,Bloody Marks,0,1]
 PC: It's open and nothing is inside.
-[Inside Gas Station,Bloody Marks,0,2,Inside Gas Station,Bloody Marks,1,3]
+[Inside Gas Station,Bloody Marks,0,2]
 PC: I can smell the money for some reason and it makes me sick.
 [ELSE]
 PC: The drawer is locked.
