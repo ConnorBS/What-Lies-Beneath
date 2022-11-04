@@ -35,7 +35,11 @@ func skip_animation():
 
 func new_Dialog (speaker,conversation,speed):
 	Conversation.visible_characters = 0;
-	SpeakerName.text = speaker;
+	if speaker != "":
+		$Speaker.show()
+		SpeakerName.text = speaker;
+	else:
+		$Speaker.hide()
 	Conversation.bbcode_text = conversation;
 	conversationCharacterCount = conversation.length();
 	if speed <= 0:
@@ -80,7 +84,12 @@ func new_Choices (speaker,choiceArray):
 	gameState = choice
 	Conversation.hide()
 	Conversation.text = ""
-	SpeakerName.text = speaker;
+	
+	if speaker != "":
+		$Speaker.show()
+		SpeakerName.text = speaker;
+	else:
+		$Speaker.hide()
 	if choiceArray != null:
 		for i in choiceArray.size():
 			var newOption = textChoiceBoxes.duplicate()
@@ -118,7 +127,12 @@ func _on_Choice_choiceHighlighted(highlightedSelection):
 
 func show_investigation():
 	_investigationNode.show()
+	
 
-func _on_Investigate_pressed():
-	emit_signal("investigate")
+func _on_Investigate_pressed(button_pressed):
+	if button_pressed:
+		emit_signal("investigate")
 	pass # Replace with function body.
+
+func reset_button():
+	find_node("Investigate").pressed = false

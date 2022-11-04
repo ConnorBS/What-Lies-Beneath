@@ -37,6 +37,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 
 [node name="Speaker" type="MarginContainer" parent="."]
+visible = false
 anchor_right = 0.321
 anchor_bottom = 0.132
 margin_right = -0.0928192
@@ -83,6 +84,8 @@ margin_right = 160.0
 margin_bottom = 58.0
 size_flags_horizontal = 2
 size_flags_vertical = 2
+toggle_mode = true
+action_mode = 0
 text = "Investigate"
 underline = 2
 
@@ -90,13 +93,13 @@ underline = 2
 
 [node name="ChoiceBoxes" type="VBoxContainer" parent="."]
 anchor_left = 0.05
-anchor_top = 0.276
+anchor_top = 0.436
 anchor_right = 0.95
 anchor_bottom = 0.95
 margin_left = 0.159996
-margin_top = -15.8
+margin_top = -23.64
 margin_right = 4.03992
-margin_bottom = 29.0
+margin_bottom = 21.16
 
-[connection signal="pressed" from="InvestigationMarginContainer/InvestigationPanel/CenterContainer/Investigate" to="." method="_on_Investigate_pressed"]
+[connection signal="toggled" from="InvestigationMarginContainer/InvestigationPanel/CenterContainer/Investigate" to="." method="_on_Investigate_pressed"]
 [connection signal="timeout" from="TextDelayTimer" to="." method="_on_TextDelayTimer_timeout"]

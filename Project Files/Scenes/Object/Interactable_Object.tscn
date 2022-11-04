@@ -28,6 +28,11 @@ position = Vector2( 837, 256 )
 offset = Vector2( 10, -13 )
 script = ExtResource( 1 )
 floor_placement = 1
+dialog_trigger = ""
+dialog_one_time_trigger = false
+overhead_one_time_trigger = false
+overhead_text = ""
+overhead_voice_over = null
 
 [node name="Area2D" type="Area2D" parent="." groups=["Interact"]]
 collision_layer = 1024

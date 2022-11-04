@@ -1,5 +1,4 @@
-Level,Trigger,Address
-Inside Gas Station,Entrance, res://Dialog/Inside Gas Station/Inside Gas Station Entrance.txt
+Level,Trigger,Address(Optional)
 Inside Gas Station,Register,
 Inside Gas Station,Bloody Marks,
-Outside Gas Station,Newspaper,
+Outside Gas Station,Newspaper,res://Dialog/Outside Gas Station/Outside Gas Station Newspaper.txt

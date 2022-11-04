@@ -246,6 +246,11 @@ func parse_square_brackets(dialogText,lineNumber):
 			
 		if dialogText.left(2) != null:
 			dialogText = dialogText.right(1)
+			
+		#reset quote mark
+		if quoteMark and character != "\"":
+			if BBCode == false:
+				quoteMark = false
 	
 	if newScript:
 		dataTypesPerLine[lineNumber] = "loadNewScript"
@@ -434,7 +439,10 @@ func play_next_dialog():
 		save_settings()
 		newPath(lineDataDict[playerPosition])
 	else:
-		update_dialog(speakerNameContent[playerPosition],dialogContent[playerPosition])
+		if dialogContent.size() <= playerPosition or speakerNameContent.size() <= playerPosition:
+			newPath("END")
+		else:
+			update_dialog(speakerNameContent[playerPosition],dialogContent[playerPosition])
 		pass
 	
 	audioFile = next_audio_file()
@@ -499,6 +507,7 @@ func _input(event):
 		if event is InputEventKey or event is InputEventMouseButton:
 			if event.pressed:
 				Dialog.show()
+				Dialog.reset_button()
 				$NextButton.show()
 				currently_investigating = false
 	elif gameState == regular:

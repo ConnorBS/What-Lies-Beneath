@@ -5,6 +5,8 @@ export (int) var level_height = 360
 var current_floor 
 export (Dictionary) var entrance_locations = {0:Vector2(200,200)}
 export (String) var level_name = "Outside Gas Station"
+export (AudioStream) var background_music
+
 onready var playerNode = find_node("Player")
 
 onready var _dialog_window_scene = preload("res://Scenes/UI/DialogWindow.tscn")
@@ -17,6 +19,7 @@ func _ready():
 	set_player_pos(PlayerState.Spawn_Point)
 	$FogShader.rect_size = Vector2(level_width,level_height)
 	current_floor = playerNode.current_floor
+	get_tree().get_root().get_node("GameScreen").update_backgroundMusic(background_music)
 	pass
 
 func move_to_floor(new_floor,node_to_move):

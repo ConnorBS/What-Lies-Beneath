@@ -89,6 +89,7 @@ func _get_input():
 				menu_visible = false
 				get_tree().paused = false
 				PlayerState.set_Player_Active(true)
+				play_background_music()
 			else:
 				_on_Back()
 		elif  PlayerState.get_Player_Active():
@@ -99,6 +100,7 @@ func _get_input():
 			menu_visible = true
 			get_tree().paused = true
 			PlayerState.set_Player_Active(false)
+			play_menu_music()
 
 func _process(_delta):
 	_get_input()
@@ -148,6 +150,17 @@ func play_voice(voice_file):
 	$Voice.stream = load(voice_file)
 	$Voice.play()
 
+func update_backgroundMusic(musicFile):
+	$BackgroundMusic.stream = musicFile
+	$BackgroundMusic.play()
+	play_background_music()
+	
+func play_menu_music():
+	$MenuMusic.stream_paused = false
+	$BackgroundMusic.stream_paused = true
+func play_background_music():
+	$MenuMusic.stream_paused = true
+	$BackgroundMusic.stream_paused = false
 #############################
 ###### Button Presses #######
 #############################

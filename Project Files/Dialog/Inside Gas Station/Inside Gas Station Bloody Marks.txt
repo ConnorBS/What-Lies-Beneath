@@ -1,9 +1,9 @@
-PC: Bloody Marks are left on the wall 
-[1] Leave it alone [2] Taste it to see if it's blood
+PC: Bloody Marks are left on the wall \n test
+: [1] Leave it alone [2] Taste it to see if it's blood
 [1]
-Let's leave it alone...
-Something feels off
+PC: Let's leave it alone...
 [2]
-It tastes metalic...
+PC: It tastes metalic...
 Ugh, I don't feel so good
-[\END\]
+[RESUME]
+I think I need to get out of here

@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=2]
+[gd_scene load_steps=37 format=2]
 
 [ext_resource path="res://Assets/Levels/Gas Station/Gas-Station_GasPumps_Front.png" type="Texture" id=1]
 [ext_resource path="res://Assets/Levels/Gas Station/Gas-Station_Pillar2.png" type="Texture" id=2]
@@ -29,7 +29,6 @@
 [ext_resource path="res://Scenes/Object/ExitZone.tscn" type="PackedScene" id=27]
 [ext_resource path="res://Scenes/SpawnPoint1.tscn" type="PackedScene" id=28]
 [ext_resource path="res://Assets/Audio/BackgroundMusic/Unseen Town.wav" type="AudioStream" id=29]
-[ext_resource path="res://Dialog/Overhead/Outside Gas Station NewspaperStand.wav" type="AudioStream" id=30]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 1182.5, 73.5 )
@@ -63,6 +62,7 @@ shader_param/gradient_texture = SubResource( 11 )
 [node name="Outside Gas Station" type="Node" groups=["Level"]]
 pause_mode = 1
 script = ExtResource( 16 )
+background_music = ExtResource( 29 )
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 
@@ -80,8 +80,6 @@ texture = ExtResource( 9 )
 stretch_mode = 2
 
 [node name="FlatBackground" type="TextureRect" parent="."]
-margin_left = -2.0
-margin_top = 7.0
 margin_right = 2020.0
 margin_bottom = 367.0
 texture = ExtResource( 21 )
@@ -258,7 +256,6 @@ spriteToLoad = ExtResource( 12 )
 dialog_trigger = "Newspaper"
 dialog_one_time_trigger = true
 overhead_text = "It's a Newspaper Stand"
-overhead_voice_over = ExtResource( 30 )
 
 [node name="GasStationDoor" parent="Floor1/ActorsAndObjects" instance=ExtResource( 15 )]
 modulate = Color( 1, 1, 1, 0.564706 )
@@ -379,10 +376,8 @@ position = Vector2( 770, 272 )
 
 [node name="Background" type="TextureRect" parent="Floor2"]
 visible = false
-margin_left = 541.0
-margin_top = 94.0
-margin_right = 2563.0
-margin_bottom = 454.0
+margin_right = 2022.0
+margin_bottom = 360.0
 texture = ExtResource( 10 )
 __meta__ = {
 "_editor_description_": ""
@@ -468,11 +463,5 @@ material = SubResource( 4 )
 texture = ExtResource( 18 )
 expand = true
 stretch_mode = 2
-
-[node name="BackgroundMusic" type="AudioStreamPlayer" parent="."]
-pause_mode = 2
-stream = ExtResource( 29 )
-autoplay = true
-bus = "Music"
 
 [connection signal="dialogWindow" from="Floor1/ActorsAndObjects/Interact_News" to="." method="_on_open_dialogWindow"]

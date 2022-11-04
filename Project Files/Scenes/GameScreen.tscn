@@ -590,6 +590,11 @@ pause_mode = 2
 stream = ExtResource( 19 )
 bus = "Music"
 
+[node name="BackgroundMusic" type="AudioStreamPlayer" parent="."]
+pause_mode = 2
+autoplay = true
+bus = "Music"
+
 [node name="MenuSFX" type="AudioStreamPlayer" parent="."]
 pause_mode = 2
 stream = ExtResource( 18 )

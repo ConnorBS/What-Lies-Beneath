@@ -1,5 +1,6 @@
 [gd_scene load_steps=17 format=2]
 
+[ext_resource path="res://Assets/Audio/BackgroundMusic/Why did you lie to me.mp3" type="AudioStream" id=1]
 [ext_resource path="res://Assets/Levels/Inside Gas Station/GasStationInside.png" type="Texture" id=6]
 [ext_resource path="res://Scenes/Actor/Player.tscn" type="PackedScene" id=13]
 [ext_resource path="res://Scenes/Game Camera.tscn" type="PackedScene" id=14]
@@ -9,7 +10,6 @@
 [ext_resource path="res://Shaders/Fog/noise2.tres" type="Texture" id=18]
 [ext_resource path="res://Scenes/Object/Interactable_Ladder.tscn" type="PackedScene" id=19]
 [ext_resource path="res://Scenes/SpawnPoint1.tscn" type="PackedScene" id=28]
-[ext_resource path="res://Assets/Audio/BackgroundMusic/Unseen Town.wav" type="AudioStream" id=29]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 1182.5, 73.5 )
@@ -43,6 +43,7 @@ script = ExtResource( 16 )
 level_width = 673
 level_height = 216
 level_name = "Inside Gas Station"
+background_music = ExtResource( 1 )
 
 [node name="FlatBackground" type="TextureRect" parent="."]
 margin_right = 40.0
@@ -132,11 +133,6 @@ material = SubResource( 4 )
 texture = ExtResource( 18 )
 expand = true
 stretch_mode = 2
-
-[node name="BackgroundMusic" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 29 )
-autoplay = true
-bus = "Music"
 
 [connection signal="dialogWindow" from="Floor1/ActorsAndObjects/Bloody Marks" to="." method="_on_open_dialogWindow"]
 [connection signal="dialogWindow" from="Floor1/ActorsAndObjects/Register" to="." method="_on_open_dialogWindow"]
