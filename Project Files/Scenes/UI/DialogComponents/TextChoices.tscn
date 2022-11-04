@@ -8,7 +8,6 @@ bg_color = Color( 1, 0, 0, 1 )
 [node name="Choice" type="RichTextLabel"]
 margin_right = 644.0
 margin_bottom = 30.0
-custom_colors/selection_color = Color( 0, 0, 0, 1 )
 custom_styles/focus = SubResource( 1 )
 text = "1. Testing 123
 "

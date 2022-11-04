@@ -54,6 +54,8 @@ stretch_mode = 5
 pause_mode = 2
 bus = "Voice"
 
+[node name="InvestigationTween" type="Tween" parent="."]
+
 [connection signal="dialogClosed" from="." to="." method="_on_DialogWindow_dialogClosed"]
 [connection signal="choiceMade" from="DialogWindowPanel" to="." method="_on_DialogWindow_choiceMade"]
 [connection signal="investigate" from="DialogWindowPanel" to="." method="_on_DialogWindowPanel_investigate"]

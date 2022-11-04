@@ -307,7 +307,10 @@ func _get_input()->Vector2:
 				$AnimationTree.pause_mode = Node.PAUSE_MODE_PROCESS
 				if interactable_object.get_parent().is_there_a_scene_change():
 					interactable_object.get_parent().change_scene_level()
+					change_animation("Walking")
 					return velocity
+				else:
+					change_animation("Kneeling_Down")
 				interactable_object.get_parent().trigger_dialog()
 				PlayerState.set_Player_Active(false)
 				_on_InteractableHitBox_area_exited(interactable_object)

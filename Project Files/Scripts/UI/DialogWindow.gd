@@ -6,7 +6,7 @@ onready var conversationWindow = $DialogWindowPanel/DialogTexture/Conversation
 onready var conversationSpeaker = $DialogWindowPanel/Speaker/SpeakerNameTexture/SpeakerName
 onready var Dialog = $DialogWindowPanel
 onready var NextButton = $NextButton
-
+onready var _dialog_tween = $InvestigationTween
 onready var sceneToLoad = 0
 var playerName 
 
@@ -506,9 +506,8 @@ func _input(event):
 	if currently_investigating:
 		if event is InputEventKey or event is InputEventMouseButton:
 			if event.pressed:
-				Dialog.show()
+				show_Dialog(true)
 				Dialog.reset_button()
-				$NextButton.show()
 				currently_investigating = false
 	elif gameState == regular:
 		if event is InputEventKey:# or event is InputEventMouseButton:
@@ -519,7 +518,15 @@ func _input(event):
 					pass
 				else:
 					play_next_dialog();
+func show_Dialog(state):
+	if state:
+		_dialog_tween.interpolate_property(Dialog,"modulate",Dialog.modulate,Color(1,1,1,1),.25)
+		_dialog_tween.interpolate_property($NextButton,"modulate",$NextButton.modulate,Color(1,1,1,1),.25)
 		
+	else:
+		_dialog_tween.interpolate_property(Dialog,"modulate",Dialog.modulate,Color(1,1,1,0),.25)
+		_dialog_tween.interpolate_property($NextButton,"modulate",$NextButton.modulate,Color(1,1,1,0),.25)
+	_dialog_tween.start()
 	
 func save_settings():
 #	ConfigManager.text_speed = text_speed;
@@ -574,7 +581,6 @@ func _on_DialogWindow_choiceMade(choice):
 
 
 func _on_DialogWindowPanel_investigate():
-	Dialog.hide()
-	$NextButton.hide()
+	show_Dialog(false)
 	currently_investigating = true
 	pass # Replace with function body.

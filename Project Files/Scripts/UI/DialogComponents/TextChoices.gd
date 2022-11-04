@@ -17,7 +17,7 @@ func _ready():
 
 
 func _on_Choice_mouse_entered():
-	self.modulate = Color(.5,.5,.5,1)
+	self.modulate = Color.darkred
 	emit_signal("choiceHighlighted",choice)
 	pass # Replace with function body.
 
