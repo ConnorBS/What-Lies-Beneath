@@ -49,6 +49,7 @@ margin_bottom = 490.0
 
 [node name="Viewport" type="Viewport" parent="MarginContainer/VBoxContainer/ViewportContainer"]
 size = Vector2( 954, 421 )
+transparent_bg = true
 handle_input_locally = false
 render_target_update_mode = 3
 gui_disable_input = true

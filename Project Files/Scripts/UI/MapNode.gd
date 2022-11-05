@@ -65,13 +65,13 @@ func load_images(border_image_to_load,backing_image_to_load)->void:
 	$MapBorder.texture = border_image_to_load
 	$MapBacking.texture = backing_image_to_load
 
-func _process(delta):
+func _process(_delta):
 	if Engine.editor_hint:
 		load_images(border_image,backing_image)
 		display_map()
 
 
-func _on_Tween_tween_completed(object, key):
+func _on_Tween_tween_completed(_object, _key):
 	if _animating_node:
 		if $MapBacking.self_modulate == _highlight_colour:
 			_remove_highlight_item()
