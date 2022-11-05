@@ -87,6 +87,13 @@ func tween_in_investigation():
 	_dialog_tween.interpolate_property($InvestigationItem,"self_modulate",Color(1,1,1,0),Color(1,1,1,1),.8)
 	_dialog_tween.start()
 	$InvestigationItem.show()
+	gameState = pause
+
+func tween_out_investigation():
+	_dialog_tween.interpolate_property($InvestigationItem,"self_modulate",Color(1,1,1,1),Color(1,1,1,0),.8)
+	_dialog_tween.start()
+	gameState = pause
+
 func does_audio_exist(new_audio)->bool:
 	var file_check = File.new()
 	if file_check.file_exists(new_audio):
@@ -458,7 +465,11 @@ func play_next_dialog():
 		$Voice.stream = load(audioFile)
 		$Voice.play()
 	if pictureFile != null:
-		$InvestigationItem.texture = load(pictureFile)
+		if $InvestigationItem.texture == null:
+			$InvestigationItem.texture = load(pictureFile)
+			tween_in_investigation()
+		else:
+			tween_out_investigation()
 		Dialog.show_investigation()
 
 #update to animation states at later dates
@@ -472,7 +483,11 @@ func update_dialog(speaker,conversation):
 		$Voice.stream = load(audioFile)
 		$Voice.play()
 	if pictureFile != null:
-		$InvestigationItem.texture = load(pictureFile)
+		if $InvestigationItem.texture == null:
+			$InvestigationItem.texture = load(pictureFile)
+			tween_in_investigation()
+		else:
+			tween_out_investigation()
 		Dialog.show_investigation()
 	
 	if !lineDataDict.has(playerPosition):
@@ -601,5 +616,11 @@ func _on_InvestigationTween_tween_completed(object, key):
 	if end_scene:
 		if object.self_modulate == Color(1,1,1,0):
 			self.queue_free()
-	
+	else:
+		if object == $InvestigationItem and object.self_modulate == Color(1,1,1,0):
+			$InvestigationItem.texture = load(pictureFile)
+			tween_in_investigation()
+		
+		elif object == $InvestigationItem and object.self_modulate == Color(1,1,1,1):
+			gameState = regular
 	pass # Replace with function body.
