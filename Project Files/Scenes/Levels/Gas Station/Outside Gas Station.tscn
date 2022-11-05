@@ -15,7 +15,7 @@
 [ext_resource path="res://Scenes/Actor/Player.tscn" type="PackedScene" id=13]
 [ext_resource path="res://Scenes/Game Camera.tscn" type="PackedScene" id=14]
 [ext_resource path="res://Scenes/Object/Interactable_Object.tscn" type="PackedScene" id=15]
-[ext_resource path="res://Scripts/Levels/Gas Station/Outside Gas Station.gd" type="Script" id=16]
+[ext_resource path="res://Scripts/Levels/Basic_Level_Script.gd" type="Script" id=16]
 [ext_resource path="res://Shaders/Fog/fog.shader" type="Shader" id=17]
 [ext_resource path="res://Shaders/Fog/noise2.tres" type="Texture" id=18]
 [ext_resource path="res://Scenes/Object/Interactable_Ladder.tscn" type="PackedScene" id=19]
@@ -256,11 +256,15 @@ spriteToLoad = ExtResource( 12 )
 dialog_trigger = "Newspaper"
 dialog_one_time_trigger = true
 overhead_text = "It's a Newspaper Stand"
+inventory_items_to_add = [ [ "Pistol", 2 ] ]
+key_item_to_add = "Gas Station Key"
+map_pieces_to_unlock = "City"
 
 [node name="GasStationDoor" parent="Floor1/ActorsAndObjects" instance=ExtResource( 15 )]
 modulate = Color( 1, 1, 1, 0.564706 )
 position = Vector2( 762, 244 )
 scene_to_change_location = "res://Scenes/Levels/Gas Station/Inside Gas Station.tscn"
+key_item_to_add = ""
 
 [node name="GasBuildingFront" type="Sprite" parent="Floor1/ActorsAndObjects"]
 modulate = Color( 1, 1, 1, 0.564706 )

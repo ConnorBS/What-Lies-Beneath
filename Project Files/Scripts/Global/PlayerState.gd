@@ -5,6 +5,7 @@ extends Node
 ###########################
 var _Player_ACTIVE = true
 var Spawn_Point = 3
+var _current_level
 var _player_name:String = "Ethan"
 const doors_unlocked = {}
 const list_of_places_visited = []
@@ -56,6 +57,13 @@ func _check_for_death()->bool:
 #######################
 ###### Location #######
 #######################
+func set_current_level (new_level):
+	_current_level = new_level
+	update_locations_visited(new_level)
+	
+func get_current_level ():
+	return _current_level
+	
 func update_locations_visited(loc_name):
 	if !list_of_places_visited.has(loc_name):
 		list_of_places_visited.append(loc_name)
@@ -66,7 +74,8 @@ func update_door_unlocked(location,door_num):
 	else:
 		doors_unlocked[location] = {door_num:true}
 	
-
+func has_location_been_visited(location)->bool:
+	return list_of_places_visited.has(location)
 #################################################################
 ########## Dialog                       Branch ##################
 #################################################################

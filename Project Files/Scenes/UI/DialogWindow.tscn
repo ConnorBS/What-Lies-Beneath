@@ -12,6 +12,7 @@ layer = 2
 script = ExtResource( 4 )
 
 [node name="InvestigationItem" type="TextureRect" parent="."]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 50.0
@@ -61,3 +62,4 @@ bus = "Voice"
 [connection signal="investigate" from="DialogWindowPanel" to="." method="_on_DialogWindowPanel_investigate"]
 [connection signal="writingFinished" from="DialogWindowPanel" to="." method="_on_DialogWindow_writingFinished"]
 [connection signal="pressed" from="NextButton" to="." method="_on_NextButton_pressed"]
+[connection signal="tween_completed" from="InvestigationTween" to="." method="_on_InvestigationTween_tween_completed"]

@@ -20,6 +20,7 @@ func _ready():
 	$FogShader.rect_size = Vector2(level_width,level_height)
 	current_floor = playerNode.current_floor
 	get_tree().get_root().get_node("GameScreen").update_backgroundMusic(background_music)
+	PlayerState.set_current_level(level_name)
 	pass
 
 func move_to_floor(new_floor,node_to_move):

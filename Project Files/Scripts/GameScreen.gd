@@ -166,7 +166,7 @@ func play_background_music():
 #############################
 func _on_MainMenu_Map():
 	click_success()
-#	get_node("%Map").load_window()
+	get_node("%Map").load_window()
 	_update_window(MENU_WINDOWS.Map)
 	pass # Replace with function body.
 

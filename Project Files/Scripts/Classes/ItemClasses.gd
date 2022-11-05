@@ -1,3 +1,4 @@
+extends Resource
 class_name Inventory
 
 class Items:
@@ -62,7 +63,9 @@ class KeyItems:
 
 class MapFragments:
 	var name:String
-	
+	var maps_unlocked:Array = []
+	var collected:bool = false
+	var type:String = "MapFragment"
 	func is_type(type:String):
 		return type == "Inventory.MapFragments"
 

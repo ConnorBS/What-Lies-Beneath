@@ -1,5 +1,5 @@
 OrderID,KeyItemName,KeyOrItem,PlayerHasItOnStart,Description,UnkownTextureLocation,CollectedTextureLocation
-1,Gas Station Key,Key,TRUE,"[b]I[/b]t's a old fashioned key... I woke up with it, but don't know where it goes. Touching it feels... calming for some reason. It has [color=yellow] GAS STATION [/color] etched on it.",res://Assets/KeyItems/UnkownKey1.png,res://Assets/KeyItems/Key1.png
+1,Gas Station Key,Key,FALSE,"[b]I[/b]t's a old fashioned key... I woke up with it, but don't know where it goes. Touching it feels... calming for some reason. It has [color=yellow] GAS STATION [/color] etched on it.",res://Assets/KeyItems/UnkownKey1.png,res://Assets/KeyItems/Key1.png
 2,Key2,Key,FALSE,,res://Assets/KeyItems/UnkownKey2.png,res://Assets/KeyItems/Key2.png
 3,Key3,Key,FALSE,,res://Assets/KeyItems/UnkownKey3.png,res://Assets/KeyItems/Key3.png
 4,Key4,Key,FALSE,,res://Assets/KeyItems/UnkownKey4.png,res://Assets/KeyItems/Key4.png

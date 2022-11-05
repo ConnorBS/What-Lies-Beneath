@@ -5,11 +5,12 @@
 [ext_resource path="res://Scenes/Actor/Player.tscn" type="PackedScene" id=13]
 [ext_resource path="res://Scenes/Game Camera.tscn" type="PackedScene" id=14]
 [ext_resource path="res://Scenes/Object/Interactable_Object.tscn" type="PackedScene" id=15]
-[ext_resource path="res://Scripts/Levels/Gas Station/Outside Gas Station.gd" type="Script" id=16]
+[ext_resource path="res://Scripts/Levels/Basic_Level_Script.gd" type="Script" id=16]
 [ext_resource path="res://Shaders/Fog/fog.shader" type="Shader" id=17]
 [ext_resource path="res://Shaders/Fog/noise2.tres" type="Texture" id=18]
 [ext_resource path="res://Scenes/Object/Interactable_Ladder.tscn" type="PackedScene" id=19]
 [ext_resource path="res://Scenes/SpawnPoint1.tscn" type="PackedScene" id=28]
+
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 1182.5, 73.5 )

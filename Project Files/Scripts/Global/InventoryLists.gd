@@ -1,11 +1,15 @@
 extends Node
 
 const KeyItems = {"Key":{},"Item":{}}
+const MapFragments = {}
 const Types = {}
 var KeyItemsListCSV = "res://Scripts/Global/KeyItemsCSV.csv"
 var InventoryTypeListCSV = "res://Scripts/Global/InventoryTypes.csv"
+var MapFragmentListCSV = "res://Scripts/Global/MapFragments.csv"
 
-
+###################################
+######## Key Items ################
+###################################
 func load_KeyItems()->Dictionary:
 	var file = File.new()
 	file.open(KeyItemsListCSV, file.READ)
@@ -30,8 +34,20 @@ func load_KeyItems()->Dictionary:
 	return KeyItems
 
 
+func get_KeyItem(name_of_KeyItem):
+	if name_of_KeyItem != null:
+		for id in KeyItems["Key"]:
+			if KeyItems["Key"][id].name == name_of_KeyItem:
+				return KeyItems["Key"][id]
+		for id in KeyItems["Item"]:
+			if KeyItems["Item"][id].name == name_of_KeyItem:
+				return KeyItems["Item"][id]
+	return null
 
 
+###################################
+######## Inventory Items ##########
+###################################
 func load_Inventory_Types ()->Dictionary:
 	var file = File.new()
 	file.open(InventoryTypeListCSV, file.READ)
@@ -78,3 +94,29 @@ static func get_item(name_to_pull,item_quantity = 1)->Inventory.Items:
 	if item != null:
 		item.quantity = item_quantity
 	return item
+
+###################################
+######## Map Fragments ############
+###################################
+func load_MapFragemnts()->Dictionary:
+	var file = File.new()
+	file.open(MapFragmentListCSV, file.READ)
+	if file.get_error() == 0:
+		file.get_csv_line() ###removes the top line
+		while !file.eof_reached():
+			var csv = file.get_csv_line ()
+			if !csv.empty():
+				if csv[0] != "":
+					var new_map = Inventory.MapFragments.new()
+					for i in csv.size():
+						if i == 0:
+							new_map.name = csv[i]
+						elif csv[i] != null and csv[i] != "":
+							new_map.maps_unlocked.append(csv[i])
+					
+					
+					if MapFragments.keys().has(new_map.name):
+						push_warning("InventoryLists.load_MapFragemnts() has overwritten a MapFragments Dictionary Value")
+					MapFragments[new_map.name] = new_map
+	file.close()
+	return MapFragments

@@ -9,7 +9,7 @@ onready var equipped_gun = GUNTYPES.PISTOL
 var _equipped_gun:Inventory.Items
 const _inventory:Dictionary = {}
 const _key_items:Dictionary = {}
-const _map_fragments:Array = []
+const _map_fragments:Dictionary = {}
 const _locations:Dictionary = {}
 
 
@@ -19,7 +19,7 @@ func _ready():
 	#############
 	_load_base_KeyItems()
 	InventoryLists.load_Inventory_Types()
-	
+	_load_base_MapFragments()
 	
 	###################
 	##Troubleshooting##
@@ -258,7 +258,20 @@ static func pickup_KeyItem(item:Inventory.KeyItems)->void:
 ###########################
 #### Player KeyItems #####
 ###########################
+func _load_base_MapFragments() -> void:
+	var base_map_fragments = InventoryLists.load_MapFragemnts()
+	for map_names in base_map_fragments.keys():
+		_map_fragments[map_names] = base_map_fragments[map_names]
+		
+func collect_MapFragment(map_fragment:String):
+	if _map_fragments.keys().has(map_fragment):
+		_map_fragments[map_fragment].collected = true
 
-func add_MapFragment(map_fragment):
-	if _map_fragments.has(map_fragment):
-		_map_fragments.append(map_fragment)
+
+func has_map(level) -> bool:
+	for map_name in _map_fragments.keys():
+		if _map_fragments[map_name].collected:
+			for map in _map_fragments[map_name].maps_unlocked:
+				if map == level:
+					return true
+	return false
