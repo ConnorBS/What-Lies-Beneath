@@ -27,6 +27,7 @@ func load_window():
 	else:
 		hide_map()
 	
+	
 func display_map():
 	self.show()
 	$MapBacking.self_modulate = Color.black

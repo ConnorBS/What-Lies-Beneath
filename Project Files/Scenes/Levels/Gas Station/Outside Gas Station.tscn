@@ -264,7 +264,6 @@ map_pieces_to_unlock = "City"
 modulate = Color( 1, 1, 1, 0.564706 )
 position = Vector2( 762, 244 )
 scene_to_change_location = "res://Scenes/Levels/Gas Station/Inside Gas Station.tscn"
-key_item_to_add = ""
 
 [node name="GasBuildingFront" type="Sprite" parent="Floor1/ActorsAndObjects"]
 modulate = Color( 1, 1, 1, 0.564706 )

@@ -45,10 +45,13 @@ func make_map_item(new_map_fragment_name):
 	return new_map_fragment_name
 
 func pickup_items():
-	for item in _inventory_item_pickups:
-		PlayerInventory.add_item(item)
-	PlayerInventory.pickup_KeyItem(_key_item_pickup)
-	PlayerInventory.collect_MapFragment(_map_item_pickup)
+	if !_inventory_item_pickups.empty():
+		for item in _inventory_item_pickups:
+			PlayerInventory.add_item(item)
+	if _key_item_pickup != null:
+		PlayerInventory.pickup_KeyItem(_key_item_pickup)
+	if _map_item_pickup != null and _map_item_pickup != "":
+		PlayerInventory.collect_MapFragment(_map_item_pickup)
 	
 func _process(_delta):
 	if Engine.editor_hint:
