@@ -48,7 +48,7 @@ var pictureFile
 var currently_investigating = false
 
 var choice_unlocked = false
-
+var end_scene = false
 signal dialogClosed
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -65,6 +65,8 @@ func _ready():
 		Dialog.show_investigation()
 		
 	PlayerState.set_Player_Active(false)
+	if $InvestigationItem.texture != null:
+		tween_in_investigation()
 	
 func load_window(level_name:String,trigger_name:String):
 	dialogFile =DialogManager.get_dialog(level_name,trigger_name)
@@ -80,7 +82,11 @@ func next_audio_file(exisiting_file=dialogFile):
 			return new_audio
 	return null
 	
-	
+func tween_in_investigation():
+	$InvestigationItem.self_modulate = Color(1,1,1,0)
+	_dialog_tween.interpolate_property($InvestigationItem,"self_modulate",Color(1,1,1,0),Color(1,1,1,1),.8)
+	_dialog_tween.start()
+	$InvestigationItem.show()
 func does_audio_exist(new_audio)->bool:
 	var file_check = File.new()
 	if file_check.file_exists(new_audio):
@@ -502,22 +508,22 @@ func newPath (pathWay):
 
 
 func _input(event):
-	
-	if currently_investigating:
-		if event is InputEventKey or event is InputEventMouseButton:
-			if event.pressed:
-				show_Dialog(true)
-				Dialog.reset_button()
-				currently_investigating = false
-	elif gameState == regular:
-		if event is InputEventKey:# or event is InputEventMouseButton:
-			if event.pressed:
-				if currentlyAnimating:
-					Dialog.done_Writing()
-				elif waitingForSelection:
-					pass
-				else:
-					play_next_dialog();
+	if end_scene != true:
+		if currently_investigating:
+			if event is InputEventKey or event is InputEventMouseButton:
+				if event.pressed:
+					show_Dialog(true)
+					Dialog.reset_button()
+					currently_investigating = false
+		elif gameState == regular:
+			if event is InputEventKey:# or event is InputEventMouseButton:
+				if event.pressed:
+					if currentlyAnimating:
+						Dialog.done_Writing()
+					elif waitingForSelection:
+						pass
+					else:
+						play_next_dialog();
 func show_Dialog(state):
 	if state:
 		_dialog_tween.interpolate_property(Dialog,"modulate",Dialog.modulate,Color(1,1,1,1),.25)
@@ -561,7 +567,11 @@ func change_to_next_scene():
 	PlayerState.set_Player_Active(true)
 	PlayerState.update_dialog(dialog_level_name,dialog_trigger_name,true,playerChoices)
 	emit_signal("dialogClosed")
-	self.queue_free()
+	_dialog_tween.interpolate_property($InvestigationItem,"self_modulate", Color(1,1,1,1), Color(1,1,1,0),0.8)
+	_dialog_tween.interpolate_property(Dialog,"modulate", Color(1,1,1,1), Color(1,1,1,0),0.8)
+	_dialog_tween.interpolate_property(NextButton,"modulate", Color(1,1,1,1), Color(1,1,1,0),0.8)
+	_dialog_tween.start()
+	end_scene = true
 	pass
 
 func save_state():
@@ -583,4 +593,13 @@ func _on_DialogWindow_choiceMade(choice):
 func _on_DialogWindowPanel_investigate():
 	show_Dialog(false)
 	currently_investigating = true
+	pass # Replace with function body.
+
+
+func _on_InvestigationTween_tween_completed(object, key):
+	print(object, key)
+	if end_scene:
+		if object.self_modulate == Color(1,1,1,0):
+			self.queue_free()
+	
 	pass # Replace with function body.
