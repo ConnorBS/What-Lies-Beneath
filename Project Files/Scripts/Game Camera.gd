@@ -141,3 +141,35 @@ func _on_Interact_News_dialogWindow(trigger_name:String):
 	get_child(0).add_child(dialog_window)
 	
 	pass # Replace with function body.
+
+##############################################
+############ Level Name Title ################
+##############################################
+
+onready var _level_name_label = $LevelName
+onready var _level_name_tween = $LevelName/LevelNameTween
+onready var _hold_timer = $LevelName/HoldTimer
+func _tween_in_level_name():
+	_level_name_tween.interpolate_property(_level_name_label,"self_modulate",Color(1,1,1,0),Color(1,1,1,1),2)
+	_level_name_tween.start()
+	pass
+func _tween_out_level_name():
+	_level_name_tween.interpolate_property(_level_name_label,"self_modulate",Color(1,1,1,1),Color(1,1,1,0),1.5)
+	_level_name_tween.start()
+	pass
+	
+func enter_scene(level_name):
+	if PlayerInventory.has_map(level_name):
+		_level_name_label.text = level_name
+	else:
+		_level_name_label.text = "???"
+	_tween_in_level_name()
+
+func _on_LevelNameTween_tween_completed(object, key):
+	if object.self_modulate == Color(1,1,1,1):
+		_hold_timer.start()
+	pass # Replace with function body.
+
+
+func _on_HoldTimer_timeout():
+	_tween_out_level_name()

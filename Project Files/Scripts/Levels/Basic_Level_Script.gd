@@ -8,6 +8,7 @@ export (String) var level_name = "Outside Gas Station"
 export (AudioStream) var background_music
 
 onready var playerNode = find_node("Player")
+onready var _camera_node = playerNode.find_node("GameCamera")
 
 onready var _dialog_window_scene = preload("res://Scenes/UI/DialogWindow.tscn")
 var _current_dialog_window
@@ -21,6 +22,7 @@ func _ready():
 	current_floor = playerNode.current_floor
 	get_tree().get_root().get_node("GameScreen").update_backgroundMusic(background_music)
 	PlayerState.set_current_level(level_name)
+	_camera_node.enter_scene(level_name)
 	pass
 
 func move_to_floor(new_floor,node_to_move):
