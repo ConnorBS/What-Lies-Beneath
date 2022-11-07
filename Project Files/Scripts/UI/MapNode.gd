@@ -1,5 +1,5 @@
 extends Control
-#tool
+tool
 
 export (String) var map_name
 export (Texture) var border_image
@@ -8,9 +8,11 @@ export (Texture) var backing_image
 var  _animating_node = false
 var _highlight_colour = Color.dimgray
 var _animation_time = 1.2
+var _fully_completed_colour = Color.darkgreen
 
+var _completed_map_node = false
 
-
+onready var _timer_animation_node = $Tween/Timer
 func _ready():
 	load_images(border_image,backing_image)
 	pass
@@ -26,8 +28,23 @@ func load_window():
 		unexplored_map()
 	else:
 		hide_map()
+#	troubleshooting()
+func troubleshooting():
+	var value =  int(self.name.right(1))
+	if value == 5 or value == 6:
+		display_map()
+	elif value >= 4:
+		unexplored_map()
+	else:
+		display_map()
+		fully_completed_map()
 	
-	
+func fully_completed_map():
+#	self.modulate = _fully_completed_colour
+	_completed_map_node = true
+	_highlight_colour = Color.gray
+	$MapBacking.self_modulate = _highlight_colour
+	$MapBacking.modulate = _fully_completed_colour
 func display_map():
 	self.show()
 	$MapBacking.self_modulate = Color.black
@@ -35,7 +52,7 @@ func display_map():
 	
 func unexplored_map():
 	self.show()
-	$MapBacking.self_modulate = Color.darkred
+	$MapBacking.self_modulate = Color.webmaroon
 	$MapBorder.self_modulate = Color.webgray
 
 func hide_map():
@@ -68,15 +85,20 @@ func load_images(border_image_to_load,backing_image_to_load)->void:
 func _process(_delta):
 	if Engine.editor_hint:
 		load_images(border_image,backing_image)
-		display_map()
+#		troubleshooting()
 
 
 func _on_Tween_tween_completed(_object, _key):
 	if _animating_node:
 		if $MapBacking.self_modulate == _highlight_colour:
-			_remove_highlight_item()
+			_timer_animation_node.start()
 		else:
 			_highlight_item()
 	else:
 		_remove_highlight_item()
+	pass # Replace with function body.
+
+
+func _on_Timer_timeout():
+	_remove_highlight_item()
 	pass # Replace with function body.
