@@ -303,11 +303,11 @@ func _get_input()->Vector2:
 				interact_state = false
 				return velocity
 			else:
-				change_animation("Kneeling_Down")
+#				change_animation("Kneeling_Down")
 				$AnimationTree.pause_mode = Node.PAUSE_MODE_PROCESS
 				if interactable_object.get_parent().is_there_a_scene_change():
 					interactable_object.get_parent().change_scene_level()
-					change_animation("Walking")
+					change_animation("Idle")
 					return velocity
 				else:
 					change_animation("Kneeling_Down")

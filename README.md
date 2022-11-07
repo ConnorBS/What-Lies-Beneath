@@ -167,8 +167,8 @@ alt="IMAGE ALT TEXT HERE" width="240" height="180" border="10" /></a>
 ### Map System Milestone 
 #### Collecting Map Fragments
 #### Metroid Style Map
-- [ ] Track if you have been in the space
-- [ ] Track if the door is locked (show by X)
+- [x] Track if you have been in the space
+- [x] Track if the door is locked (show by X)
 <p align="right">(<a href="#what-lies-beneath">back to top</a>)</p>
 
 ### Combat Milestone
@@ -180,7 +180,7 @@ alt="IMAGE ALT TEXT HERE" width="240" height="180" border="10" /></a>
 - [ ] HP Recovery (Syringe)
 - [ ] Game Restart 
 #### Player Inventory
-- [ ] Check Equipped Item ( Gun)
+- [ ] Check Equipped Item (Gun)
 - [ ] Provide Damage on Check
 <p align="right">(<a href="#what-lies-beneath">back to top</a>)</p>
 

@@ -253,7 +253,15 @@ static func get_item_list()->Array:
 
 static func pickup_KeyItem(item:Inventory.KeyItems)->void:
 	_key_items[item.type][item.slot].unlocked = true
-	
+
+static func has_KeyItem(item_name)->bool:
+	for key in get_key_list():
+		if key.name == item_name:
+			return key.unlocked
+	for item in get_item_list():
+		if item.name == item_name:
+			return item.unlocked
+	return false
 
 ###########################
 #### Player KeyItems #####

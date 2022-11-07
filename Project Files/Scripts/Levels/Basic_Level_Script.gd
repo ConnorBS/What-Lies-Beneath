@@ -13,6 +13,7 @@ onready var _camera_node = playerNode.find_node("GameCamera")
 onready var _dialog_window_scene = preload("res://Scenes/UI/DialogWindow.tscn")
 var _current_dialog_window
 
+var _dialog_queue = []
 signal change_scene
 
 func _ready():
@@ -68,19 +69,38 @@ func set_player_pos(spawPointNumber:int)->void:
 
 
 func _on_open_dialogWindow(trigger_name:String):
+#	playerNode.change_animation("Walking")
 	var dialog_window = _dialog_window_scene.instance()
 	dialog_window.load_window(level_name,trigger_name)
 	dialog_window.connect("dialogClosed",self,"_on_close_dialogWindow")
 	get_parent().get_parent().add_child(dialog_window)
 	get_tree().paused = true
+	_current_dialog_window = dialog_window
 	pass # Replace with function body.
 
+func _on_open_dialogWindow_system_message(array_of_text:Array):
+	var dialog_window = _dialog_window_scene.instance()
+	dialog_window.load_system_window(array_of_text)
+	dialog_window.connect("dialogClosed",self,"_on_close_dialogWindow")
+	if _current_dialog_window == null:
+		get_parent().get_parent().add_child(dialog_window)
+		_current_dialog_window = dialog_window
+		get_tree().paused = true
+	else:
+		_dialog_queue.append(dialog_window)
+	
 func _on_close_dialogWindow():
-	get_tree().paused = false
-	playerNode.dialog_closed()
+	if _dialog_queue.empty():
+		get_tree().paused = false
+		playerNode.dialog_closed()
+		_current_dialog_window =null
+	else:
+		_current_dialog_window.queue_free()
+		_current_dialog_window = _dialog_queue.pop_front()
+		get_parent().get_parent().add_child(_current_dialog_window)
 
 func change_level(SceneToLoad,PointToLoad):
 	var LoadingLevel = load(SceneToLoad).instance()
-	
+	playerNode.change_animation("Walking")
 	PlayerState.Spawn_Point = PointToLoad
 	emit_signal("change_scene",self,LoadingLevel)

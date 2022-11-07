@@ -55,8 +55,8 @@ func _ready():
 	text_speed = Settings.text_speed;
 
 	playerName = PlayerState.get_player_name();
-	
-	load_dialogs(dialogFile)
+	if dialogFile != null:
+		load_dialogs(dialogFile)
 	update_dialog(speakerNameContent[playerPosition],dialogContent[playerPosition]);
 	
 	text_speed = Settings.text_speed;
@@ -74,6 +74,31 @@ func load_window(level_name:String,trigger_name:String):
 	pictureFile = next_picture_file(dialogFile)
 	dialog_level_name = level_name
 	dialog_trigger_name = trigger_name
+
+func load_system_window(array_of_text):
+	var text_to_add:String
+	var count = 1
+	var max_lines = 2
+	
+	for text in array_of_text:
+		if count > 1:
+			text_to_add +="\n"+text
+		else:
+			 text_to_add = text
+		count += 1
+		if count > max_lines:
+			count = 1
+			dialogContent.append(text_to_add)
+			speakerNameContent.append("")
+			text_to_add = ""
+	if text_to_add != "":
+		dialogContent.append(text_to_add)
+		speakerNameContent.append("")
+		
+			
+			
+		
+	
 
 func next_audio_file(exisiting_file=dialogFile):
 	if exisiting_file != null and exisiting_file != "":

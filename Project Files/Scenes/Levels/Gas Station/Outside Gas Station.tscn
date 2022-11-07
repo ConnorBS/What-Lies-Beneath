@@ -263,6 +263,8 @@ map_pieces_to_unlock = "City"
 [node name="GasStationDoor" parent="Floor1/ActorsAndObjects" instance=ExtResource( 15 )]
 modulate = Color( 1, 1, 1, 0.564706 )
 position = Vector2( 762, 244 )
+object_name = "Gas Station Door"
+key_needed = "Gas Station Key"
 scene_to_change_location = "res://Scenes/Levels/Gas Station/Inside Gas Station.tscn"
 
 [node name="GasBuildingFront" type="Sprite" parent="Floor1/ActorsAndObjects"]
@@ -466,5 +468,3 @@ material = SubResource( 4 )
 texture = ExtResource( 18 )
 expand = true
 stretch_mode = 2
-
-[connection signal="dialogWindow" from="Floor1/ActorsAndObjects/Interact_News" to="." method="_on_open_dialogWindow"]

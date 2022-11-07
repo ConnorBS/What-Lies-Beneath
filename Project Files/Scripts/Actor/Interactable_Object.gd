@@ -45,14 +45,22 @@ func make_map_item(new_map_fragment_name):
 	return new_map_fragment_name
 
 func pickup_items():
+	var text_array = ["You Found:"]
+	
 	if !_inventory_item_pickups.empty():
 		for item in _inventory_item_pickups:
 			PlayerInventory.add_item(item)
+			text_array.append(str(item.quantity) +"x "+item.name)
 	if _key_item_pickup != null:
 		PlayerInventory.pickup_KeyItem(_key_item_pickup)
+		text_array.append("The "+_key_item_pickup.name)
 	if _map_item_pickup != null and _map_item_pickup != "":
 		PlayerInventory.collect_MapFragment(_map_item_pickup)
-	
+		text_array.append("The "+_map_item_pickup+ " map fragment")
+		
+		
+	if text_array.size() > 1:
+		_find_level_node()._on_open_dialogWindow_system_message(text_array)
 func _process(_delta):
 	if Engine.editor_hint:
 		$Area2D/CollisionShape2D.scale = scale_of_interactable_box
@@ -63,7 +71,7 @@ func trigger_dialog():
 	else:
 		if dialog_one_time_trigger == false or dialog_trigger_count == 0:
 			dialog_trigger_count += 1
-			emit_signal("dialogWindow",dialog_trigger)
+			_find_level_node()._on_open_dialogWindow(dialog_trigger)
 			if dialog_one_time_trigger:
 				$Area2D.monitoring = false
 				$Area2D.monitorable = false
