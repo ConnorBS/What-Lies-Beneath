@@ -28,7 +28,7 @@ func load_window():
 		unexplored_map()
 	else:
 		hide_map()
-#	troubleshooting()
+	troubleshooting()
 func troubleshooting():
 	var value =  int(self.name.right(1))
 	if value == 5 or value == 6:
@@ -47,13 +47,14 @@ func fully_completed_map():
 	$MapBacking.modulate = _fully_completed_colour
 func display_map():
 	self.show()
+	$MapBacking.modulate = Color.white
 	$MapBacking.self_modulate = Color.black
 	$MapBorder.self_modulate = Color.white
-	
 func unexplored_map():
 	self.show()
-	$MapBacking.self_modulate = Color.webmaroon
-	$MapBorder.self_modulate = Color.webgray
+	$MapBacking.modulate = Color.white
+	$MapBacking.self_modulate = Color.red
+	self.modulate = Color.webgray
 
 func hide_map():
 	self.hide()

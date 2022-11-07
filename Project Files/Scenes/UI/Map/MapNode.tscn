@@ -13,7 +13,8 @@ border_image = ExtResource( 2 )
 backing_image = ExtResource( 3 )
 
 [node name="MapBacking" type="TextureRect" parent="."]
-self_modulate = Color( 0, 0, 0, 1 )
+modulate = Color( 0, 0.392157, 0, 1 )
+self_modulate = Color( 0.745098, 0.745098, 0.745098, 1 )
 margin_right = 1024.0
 margin_bottom = 600.0
 texture = ExtResource( 3 )
