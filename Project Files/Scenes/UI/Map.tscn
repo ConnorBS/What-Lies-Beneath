@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Themes/MainMenu_Overlay.tres" type="Theme" id=1]
 [ext_resource path="res://Scenes/UI/Components/AuxiliaryBottomButtonMargin.tscn" type="PackedScene" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://Assets/Maps/MapBorder6.png" type="Texture" id=8]
 [ext_resource path="res://Assets/Maps/MapBacking5.png" type="Texture" id=9]
 [ext_resource path="res://Assets/Maps/MapBorder2.png" type="Texture" id=10]
+[ext_resource path="res://Assets/Maps/MapLegend.png" type="Texture" id=11]
 [ext_resource path="res://Assets/Maps/MapBorder4.png" type="Texture" id=12]
 [ext_resource path="res://Assets/Maps/MapBorder3.png" type="Texture" id=13]
 [ext_resource path="res://Assets/Maps/MapBacking6.png" type="Texture" id=14]
@@ -94,5 +95,18 @@ layer = 20
 
 [node name="BottomButtonMargin" parent="ButtonCanvas" instance=ExtResource( 2 )]
 Continue = false
+
+[node name="MapLegend" type="TextureRect" parent="."]
+anchor_left = 0.569
+anchor_top = 0.088
+anchor_right = 1.0
+anchor_bottom = 0.427
+margin_left = -9.72998
+margin_top = -0.629997
+margin_right = -1.57007
+margin_bottom = 0.169983
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture = ExtResource( 11 )
 
 [connection signal="Back" from="ButtonCanvas/BottomButtonMargin" to="." method="_on_BottomButtonMargin_Back"]

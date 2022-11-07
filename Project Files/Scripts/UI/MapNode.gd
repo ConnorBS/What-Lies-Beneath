@@ -28,7 +28,7 @@ func load_window():
 		unexplored_map()
 	else:
 		hide_map()
-	troubleshooting()
+#	troubleshooting()
 func troubleshooting():
 	var value =  int(self.name.right(1))
 	if value == 5 or value == 6:
