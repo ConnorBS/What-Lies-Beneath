@@ -18,6 +18,11 @@ func _process(_delta):
 	
 func load_window():
 	load_all_maps()
+	var level_name =  PlayerState.get_current_level()
+	if PlayerInventory.has_map(level_name):
+		$MarginContainer/VBoxContainer/RichTextLabel.bbcode_text = "[center][b]"+level_name.left(1)+"[\/b]"+level_name.right(1)+"[\/center]"
+	else:
+		$MarginContainer/VBoxContainer/RichTextLabel.bbcode_text = "[center]???"
 
 func load_all_maps():
 	for map_node in _map_manager.get_children():

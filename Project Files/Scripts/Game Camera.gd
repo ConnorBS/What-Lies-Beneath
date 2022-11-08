@@ -145,16 +145,17 @@ func _on_Interact_News_dialogWindow(trigger_name:String):
 ##############################################
 ############ Level Name Title ################
 ##############################################
+onready var  _black_box_node = $BlackBox
+onready var _level_name_label = $BlackBox/LevelName
+onready var _level_name_tween = $BlackBox/LevelName/LevelNameTween
+onready var _hold_timer = $BlackBox/LevelName/HoldTimer
 
-onready var _level_name_label = $LevelName
-onready var _level_name_tween = $LevelName/LevelNameTween
-onready var _hold_timer = $LevelName/HoldTimer
 func _tween_in_level_name():
-	_level_name_tween.interpolate_property(_level_name_label,"self_modulate",Color(1,1,1,0),Color(1,1,1,1),2)
+	_level_name_tween.interpolate_property(_black_box_node,"modulate",Color(1,1,1,0),Color(1,1,1,1),2)
 	_level_name_tween.start()
 	pass
 func _tween_out_level_name():
-	_level_name_tween.interpolate_property(_level_name_label,"self_modulate",Color(1,1,1,1),Color(1,1,1,0),1.5)
+	_level_name_tween.interpolate_property(_black_box_node,"modulate",Color(1,1,1,1),Color(1,1,1,0),1.5)
 	_level_name_tween.start()
 	pass
 	
@@ -166,7 +167,7 @@ func enter_scene(level_name):
 	_tween_in_level_name()
 
 func _on_LevelNameTween_tween_completed(object, key):
-	if object.self_modulate == Color(1,1,1,1):
+	if object.modulate == Color(1,1,1,1):
 		_hold_timer.start()
 	pass # Replace with function body.
 
