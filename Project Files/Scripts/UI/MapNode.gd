@@ -18,12 +18,15 @@ func _ready():
 	pass
 
 func load_window():
+	reset_map()
 	if PlayerState.has_location_been_visited(map_name):
 		display_map()
+		if PlayerState.check_all_item_pickups_in_level(map_name) == true:
+			fully_completed_map()
 		if PlayerState.get_current_level() == map_name:
 			current_map(true)
-		else:
-			current_map(false)
+#		else:
+#			current_map(false)
 	elif PlayerInventory.has_map(map_name):
 		unexplored_map()
 	else:
@@ -56,6 +59,15 @@ func unexplored_map():
 	$MapBacking.self_modulate = Color.red
 	self.modulate = Color.webgray
 
+func reset_map():
+	$Tween/Timer.stop()
+	$Tween.stop_all()
+	$MapBorder.self_modulate = Color.white
+	$MapBacking.self_modulate = Color.white
+	$MapBacking.modulate = Color.white
+	self.modulate = Color.white
+	hide_map()
+
 func hide_map():
 	self.hide()
 
@@ -63,10 +75,10 @@ func current_map(state):
 	_animating_node = state
 	if _animating_node == true:
 		_highlight_item()
-	else:
-		$Tween.stop_all()
-		$MapBacking.self_modulate = Color.black
-		$MapBorder.self_modulate = Color.white
+#	else:
+#		$Tween.stop_all()
+#		$MapBacking.self_modulate = Color.black
+#		$MapBorder.self_modulate = Color.white
 		
 	pass
 
@@ -89,7 +101,23 @@ func _process(_delta):
 #		troubleshooting()
 
 
-func _on_Tween_tween_completed(_object, _key):
+#func _on_Tween_tween_completed(_object, _key):
+#	if _animating_node:
+#		if $MapBacking.self_modulate == _highlight_colour:
+#			_timer_animation_node.start()
+#		else:
+#			_highlight_item()
+#	else:
+#		_remove_highlight_item()
+#	pass # Replace with function body.
+
+
+func _on_Timer_timeout():
+	_remove_highlight_item()
+	pass # Replace with function body.
+
+
+func _on_Tween_tween_all_completed():
 	if _animating_node:
 		if $MapBacking.self_modulate == _highlight_colour:
 			_timer_animation_node.start()
@@ -98,8 +126,4 @@ func _on_Tween_tween_completed(_object, _key):
 	else:
 		_remove_highlight_item()
 	pass # Replace with function body.
-
-
-func _on_Timer_timeout():
-	_remove_highlight_item()
 	pass # Replace with function body.

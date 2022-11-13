@@ -8,6 +8,7 @@ var Spawn_Point = 3
 var _current_level
 var _player_name:String = "Ethan"
 const doors_unlocked = {}
+const item_pickups = {}
 const list_of_places_visited = []
 ###### Health ######
 var _Max_Health = 100
@@ -111,3 +112,32 @@ func does_dialog_exist(dialogLevel,dialogTrigger)->bool:
 	return false
 
 
+#################################################################
+##########           Item Pickups              ##################
+#################################################################
+
+#item_pickups
+static func save_item_pickup (level_name:String,object_name:String,save_data:Dictionary) -> void:
+	if !item_pickups.empty():
+		if item_pickups.has(level_name):
+			item_pickups[level_name][object_name] = save_data
+		else:
+			item_pickups[level_name] ={object_name:save_data}
+	else:
+		item_pickups[level_name] ={object_name:save_data}
+static func load_item_pickup (level_name:String,object_name:String) -> Dictionary:
+	var save_data:Dictionary = {}
+	if !item_pickups.empty():
+		if item_pickups.has(level_name):
+			if item_pickups[level_name].has(object_name):
+				for type in item_pickups[level_name][object_name].keys():
+					save_data[type] = item_pickups[level_name][object_name][type]
+	return save_data
+	
+static func check_all_item_pickups_in_level(level_name) -> bool:
+	if item_pickups.has(level_name):
+		for object_name in item_pickups[level_name].keys():
+			if item_pickups[level_name][object_name]["collected"] == false:
+				return false
+	
+	return true

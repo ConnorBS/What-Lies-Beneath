@@ -104,3 +104,13 @@ func change_level(SceneToLoad,PointToLoad):
 	playerNode.change_animation("Walking")
 	PlayerState.Spawn_Point = PointToLoad
 	emit_signal("change_scene",self,LoadingLevel)
+	
+################################################
+######### Object Pickup  #######################
+################################################
+
+func save_pickup_state_of_object_in_level(name_of_object,save_data) ->void:
+	PlayerState.save_item_pickup(level_name,name_of_object,save_data)
+
+func load_pickup_state_of_object_in_level (name_of_object) -> Dictionary:
+	return PlayerState.load_item_pickup(level_name,name_of_object)

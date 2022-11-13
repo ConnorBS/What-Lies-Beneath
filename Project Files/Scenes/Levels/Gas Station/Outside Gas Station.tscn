@@ -252,6 +252,7 @@ offset = Vector2( 0, -50 )
 [node name="Interact_News" parent="Floor1/ActorsAndObjects" instance=ExtResource( 15 )]
 modulate = Color( 1, 1, 1, 0.564706 )
 texture = ExtResource( 12 )
+object_name = "NewsStand"
 spriteToLoad = ExtResource( 12 )
 dialog_trigger = "Newspaper"
 dialog_one_time_trigger = true

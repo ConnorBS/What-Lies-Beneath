@@ -11,6 +11,7 @@ export (int) var spawn_point = 1
 
 export (Texture) var spriteToLoad:Texture
 
+var _collected = false
 
 static func change_collision_and_mask(node,floor_update:int,state:bool):
 	node.set_collision_layer_bit(floor_update,state)
@@ -42,6 +43,8 @@ func change_scene_level():
 	
 	elif is_there_a_scene_change():
 		
+		_collected = true
+		save_pickup_state()
 		PlayerState.Spawn_Point = spawn_point
 		_find_level_node().change_level(scene_to_change_location,spawn_point)
 
@@ -58,3 +61,10 @@ func _find_level_node() -> Node:
 	return parent
 func has_overhead_text():
 	return false
+
+
+func load_pickup_state():
+	pass
+
+func save_pickup_state():
+	pass
