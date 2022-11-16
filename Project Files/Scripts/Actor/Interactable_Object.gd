@@ -54,6 +54,10 @@ func load_pickup_state():
 		if !load_data.empty():
 			_collected = load_data["collected"]
 			overhead_trigger_count = load_data["overhead_trigger_count"]
+			dialog_trigger_count = load_data["dialog_trigger_count"]
+			
+			if dialog_one_time_trigger and dialog_trigger_count > 0 :
+				remove_interaction()
 		else: ### If it's not in the save file, it should be, so adds current state into memory
 			save_pickup_state()
 
@@ -61,7 +65,8 @@ func save_pickup_state():
 	if object_name != "" and scene_to_change_location == "":
 		var save_data = {
 			"collected":_collected,
-			"overhead_trigger_count":overhead_trigger_count
+			"overhead_trigger_count":overhead_trigger_count,
+			"dialog_trigger_count":dialog_trigger_count
 			}
 		
 		_find_level_node().save_pickup_state_of_object_in_level(object_name,save_data)
@@ -98,16 +103,19 @@ func trigger_dialog():
 			dialog_trigger_count += 1
 			_find_level_node()._on_open_dialogWindow(dialog_trigger)
 			if dialog_one_time_trigger:
-				$Area2D.monitoring = false
-				$Area2D.monitorable = false
-				$Particles2D.emitting = false
-				$Area2D.queue_free()
-				$Particles2D.queue_free()
+				remove_interaction()
 		else: 
 			pass
 	if _collected == false:
 		pickup_items()
 
+func remove_interaction():
+	$Area2D.monitoring = false
+	$Area2D.monitorable = false
+	$Particles2D.emitting = false
+	$Area2D.queue_free()
+	$Particles2D.queue_free()
+	
 func has_overhead_text()->bool:
 	return overhead_text != ""
 	

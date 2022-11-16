@@ -93,6 +93,8 @@ func _get_input():
 			else:
 				_on_Back()
 		elif  PlayerState.get_Player_Active():
+			if _viewportNode.get_child(0) != null:
+				_viewportNode.get_child(0) .clear_dialog()
 			get_node("%MainMenu").load_window()
 			_viewportNode.gui_disable_input = true
 			_menuMusicNode.play()
@@ -200,7 +202,7 @@ func _on_MainMenu_KeyItems():
 ##########################################
 ##############Change Scene################
 ##########################################
-var node_current:Node = null
+onready var node_current:Node = null
 var node_to_change:Node = null
 
 func _on_change_scene(node:Node,new_node:Node):

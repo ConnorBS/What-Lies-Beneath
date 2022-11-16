@@ -89,15 +89,25 @@ func _on_open_dialogWindow_system_message(array_of_text:Array):
 	else:
 		_dialog_queue.append(dialog_window)
 	
-func _on_close_dialogWindow():
-	if _dialog_queue.empty():
+func _on_close_dialogWindow(clear_node = false):
+	if clear_node:
+		_current_dialog_window =null
+	
+	elif _dialog_queue.empty():
 		get_tree().paused = false
 		playerNode.dialog_closed()
-		_current_dialog_window =null
+#		_current_dialog_window =null
 	else:
 		_current_dialog_window.queue_free()
 		_current_dialog_window = _dialog_queue.pop_front()
 		get_parent().get_parent().add_child(_current_dialog_window)
+
+func clear_dialog():
+	if _current_dialog_window != null:
+		_current_dialog_window.queue_free()
+		_current_dialog_window = null
+		
+	
 
 func change_level(SceneToLoad,PointToLoad):
 	var LoadingLevel = load(SceneToLoad).instance()

@@ -640,6 +640,7 @@ func _on_InvestigationTween_tween_completed(object, key):
 	print(object, key)
 	if end_scene:
 		if object.self_modulate == Color(1,1,1,0):
+			emit_signal("dialogClosed",true)
 			self.queue_free()
 	else:
 		if object == $InvestigationItem and object.self_modulate == Color(1,1,1,0):
