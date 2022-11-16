@@ -25,34 +25,24 @@ func load_window():
 			fully_completed_map()
 		if PlayerState.get_current_level() == map_name:
 			current_map(true)
-#		else:
-#			current_map(false)
 	elif PlayerInventory.has_map(map_name):
 		unexplored_map()
 	else:
 		hide_map()
-#	troubleshooting()
-func troubleshooting():
-	var value =  int(self.name.right(1))
-	if value == 5 or value == 6:
-		display_map()
-	elif value >= 4:
-		unexplored_map()
-	else:
-		display_map()
-		fully_completed_map()
-	
+
 func fully_completed_map():
 #	self.modulate = _fully_completed_colour
 	_completed_map_node = true
 	_highlight_colour = Color.gray
 	$MapBacking.self_modulate = _highlight_colour
 	$MapBacking.modulate = _fully_completed_colour
+
 func display_map():
 	self.show()
 	$MapBacking.modulate = Color.white
 	$MapBacking.self_modulate = Color.black
 	$MapBorder.self_modulate = Color.white
+
 func unexplored_map():
 	self.show()
 	$MapBacking.modulate = Color.white
@@ -75,11 +65,6 @@ func current_map(state):
 	_animating_node = state
 	if _animating_node == true:
 		_highlight_item()
-#	else:
-#		$Tween.stop_all()
-#		$MapBacking.self_modulate = Color.black
-#		$MapBorder.self_modulate = Color.white
-		
 	pass
 
 func _highlight_item():

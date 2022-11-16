@@ -66,8 +66,8 @@ class MapFragments:
 	var maps_unlocked:Array = []
 	var collected:bool = false
 	var type:String = "MapFragment"
-	func is_type(type:String):
-		return type == "Inventory.MapFragments"
+	func is_type(type_to_check:String):
+		return type_to_check == "Inventory.MapFragments"
 
 	
 class Locations:

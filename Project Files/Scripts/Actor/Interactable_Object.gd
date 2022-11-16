@@ -35,6 +35,9 @@ func _ready():
 	load_pickup_state()
 	#####
 
+#################################
+########     Items     ##########
+#################################
 func make_inventory_items(inventory_list) -> Array:
 	var new_inventory_list = []
 	if inventory_list != null or !inventory_list.empty():
@@ -48,6 +51,28 @@ func make_key_item(new_key_item_name):
 func make_map_item(new_map_fragment_name):
 	return new_map_fragment_name
 
+func pickup_items():
+	var text_array = ["You Found:"]
+	
+	if !_inventory_item_pickups.empty():
+		for item in _inventory_item_pickups:
+			PlayerInventory.add_item(item)
+			text_array.append(str(item.quantity) +"x "+item.name)
+	if _key_item_pickup != null:
+		PlayerInventory.pickup_KeyItem(_key_item_pickup)
+		text_array.append("The "+_key_item_pickup.name)
+	if _map_item_pickup != null and _map_item_pickup != "":
+		PlayerInventory.collect_MapFragment(_map_item_pickup)
+		text_array.append("The "+_map_item_pickup+ " map fragment")
+		
+	_collected = true
+	save_pickup_state()
+	
+	if text_array.size() > 1:
+		_find_level_node()._on_open_dialogWindow_system_message(text_array)
+#################################
+#########  Save/Load  ###########
+#################################
 func load_pickup_state():
 	if object_name != "" and scene_to_change_location == "":
 		var load_data = _find_level_node().load_pickup_state_of_object_in_level(object_name)
@@ -72,29 +97,13 @@ func save_pickup_state():
 		_find_level_node().save_pickup_state_of_object_in_level(object_name,save_data)
 		
 
-func pickup_items():
-	var text_array = ["You Found:"]
-	
-	if !_inventory_item_pickups.empty():
-		for item in _inventory_item_pickups:
-			PlayerInventory.add_item(item)
-			text_array.append(str(item.quantity) +"x "+item.name)
-	if _key_item_pickup != null:
-		PlayerInventory.pickup_KeyItem(_key_item_pickup)
-		text_array.append("The "+_key_item_pickup.name)
-	if _map_item_pickup != null and _map_item_pickup != "":
-		PlayerInventory.collect_MapFragment(_map_item_pickup)
-		text_array.append("The "+_map_item_pickup+ " map fragment")
-		
-	_collected = true
-	save_pickup_state()
-	
-	if text_array.size() > 1:
-		_find_level_node()._on_open_dialogWindow_system_message(text_array)
 func _process(_delta):
 	if Engine.editor_hint:
 		$Area2D/CollisionShape2D.scale = scale_of_interactable_box
 
+#################################
+######### Dialog Text ###########
+#################################
 func trigger_dialog():
 	if dialog_trigger == "" or dialog_trigger == null:
 		pass
@@ -115,7 +124,12 @@ func remove_interaction():
 	$Particles2D.emitting = false
 	$Area2D.queue_free()
 	$Particles2D.queue_free()
-	
+
+
+#################################
+######## Overhead Text ##########
+#################################
+
 func has_overhead_text()->bool:
 	return overhead_text != ""
 	
@@ -136,5 +150,5 @@ func _increase_overhead_trigger_count(num = 1):
 	overhead_trigger_count += num
 	save_pickup_state()
 	
-func overhead_voice_over() -> AudioStream:
+func get_overhead_voice_over() -> AudioStream:
 	return overhead_voice_over

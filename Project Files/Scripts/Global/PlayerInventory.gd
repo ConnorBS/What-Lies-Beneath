@@ -264,7 +264,7 @@ static func has_KeyItem(item_name)->bool:
 	return false
 
 ###########################
-#### Player KeyItems #####
+####   Player Maps    #####
 ###########################
 func _load_base_MapFragments() -> void:
 	var base_map_fragments = InventoryLists.load_MapFragemnts()

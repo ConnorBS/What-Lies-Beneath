@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://Themes/MainMenu_Overlay.tres" type="Theme" id=1]
 [ext_resource path="res://Scenes/UI/Components/AuxiliaryBottomButtonMargin.tscn" type="PackedScene" id=2]
@@ -15,7 +15,6 @@
 [ext_resource path="res://Assets/Maps/MapBorder3.png" type="Texture" id=13]
 [ext_resource path="res://Assets/Maps/MapBacking6.png" type="Texture" id=14]
 [ext_resource path="res://Assets/Maps/MapBacking3.png" type="Texture" id=15]
-[ext_resource path="res://Scripts/UI/Map/MapManger.gd" type="Script" id=16]
 
 [node name="Map" type="CanvasLayer"]
 unique_name_in_owner = true
@@ -63,7 +62,6 @@ current = true
 margin_right = 40.0
 margin_bottom = 40.0
 mouse_filter = 1
-script = ExtResource( 16 )
 
 [node name="Map1" parent="MarginContainer/VBoxContainer/ViewportContainer/Viewport/MapManager" instance=ExtResource( 4 )]
 map_name = "Outside Gas Station"

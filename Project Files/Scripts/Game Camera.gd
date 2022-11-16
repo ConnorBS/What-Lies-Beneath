@@ -166,7 +166,7 @@ func enter_scene(level_name):
 		_level_name_label.text = "???"
 	_tween_in_level_name()
 
-func _on_LevelNameTween_tween_completed(object, key):
+func _on_LevelNameTween_tween_completed(object, _key):
 	if object.modulate == Color(1,1,1,1):
 		_hold_timer.start()
 	pass # Replace with function body.

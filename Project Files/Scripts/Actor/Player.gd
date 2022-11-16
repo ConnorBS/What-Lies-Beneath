@@ -769,7 +769,7 @@ onready var _voice_node = $Voice
 func check_for_dialog(interact_object):
 	if interact_object.has_overhead_text():
 		play_overhead(interact_object.get_overhead_text())
-		var audioFile = interact_object.overhead_voice_over()
+		var audioFile = interact_object.get_overhead_voice_over()
 		if audioFile != null:
 			_voice_node.stream = audioFile
 			_voice_node.play()

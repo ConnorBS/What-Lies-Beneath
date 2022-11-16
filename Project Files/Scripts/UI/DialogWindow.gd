@@ -76,7 +76,7 @@ func load_window(level_name:String,trigger_name:String):
 	dialog_trigger_name = trigger_name
 
 func load_system_window(array_of_text):
-	var text_to_add:String
+	var text_to_add:String = ""
 	var count = 1
 	var max_lines = 2
 	
