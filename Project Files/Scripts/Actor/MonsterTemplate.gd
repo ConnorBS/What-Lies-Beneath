@@ -8,6 +8,7 @@ onready var target_mouse_reticle = preload("res://Assets/UI/Mouse Cursors/Target
 
 onready var stamina = $Stamina
 var has_stamina = true
+export (int) var health = 10
 export (int) var run_speed = 160
 export (int) var walk_speed = 80
 export (int) var fall_speed = 160
@@ -75,8 +76,8 @@ func change_animation(animationToChangeTo:String)->void:
 		state_machine.travel(animationToChangeTo)
 		#print (animationToChangeTo)
 		if animationToChangeTo == "Idle":
+			
 				pass
-				
 func change_mouse(mouse_cursor)->void:
 	if mouse_cursor == null:
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
@@ -159,13 +160,6 @@ func check_if_current_animation_is_falling()->bool:
 		return true
 	return false
 
-func check_if_current_animation_is_shooting()->bool:
-	var animation_playing = state_machine.get_current_node()
-	if animation_playing == "Shooting_Pistol":
-		change_animation("Aiming_Pistol")
-		return true
-	return false
-
 func update_previous_animation():
 	if state_machine.get_current_node() != previous_animation:
 		previous_animation = state_machine.get_current_node()
@@ -183,248 +177,248 @@ func enable_ground_checker(prev_animation):
 	
 
 	
-func _process(_delta):
-	###############################################
-	#########Logic After Animation Change##########
-	###############################################
-	if check_if_animation_has_changed():
-		check_if_current_animation_is_shooting()
-		enable_ground_checker(previous_animation)
-		$CenterContainer/animationPlaceholder.hide()
-		$CenterContainer/animationPlaceholder.text = "Animation\nPlace Holder\n"
-	if state_machine.get_current_node() == "Climbing_Up_Box":
-		change_animation("Idle")
-	###############################################
-	################ Falling Logic#################
-	###############################################
-
-	if falling:
-		PlayerState.set_Player_Active(false)
-		action_set_player_active_as_false = true
-		if global_position.y > falling_end_position.y:
-			landing()
-		else:
-			var _velocity = move_and_slide(falling_vector)
-	###############################################
-	#####Input Check if Animation allows it########
-	###############################################
-	elif check_if_current_animation_allows_movement() == true and !climb_box_state:
-		if action_set_player_active_as_false:
-			PlayerState.set_Player_Active(true)
-			action_set_player_active_as_false = false
-		var vector = _get_input()
-		if vector != Vector2.ZERO:
-			var _velocity = move_and_slide(vector)
-	elif !climb_box_positions.empty():
-		var _velocity = move_and_slide(climb_box(climb_box_positions))
-		if climb_box_positions.empty():
-			stand_on_box()
-	######################################
-	####Moves Sprite while Climbing#######
-	######################################
-	elif check_if_current_animation_transition_climbing():
-		var vector = snap_to_ladder(interactable_object)
-		vector.y = move_sprite_while_climbing().y
-		var _velocity = move_and_slide(vector)
-		
-	else:
-		PlayerState.set_Player_Active(false)
-		action_set_player_active_as_false = true
-		
+#func _process(_delta):
+#	###############################################
+#	#########Logic After Animation Change##########
+#	###############################################
+#	if check_if_animation_has_changed():
+#
+#		enable_ground_checker(previous_animation)
+#		$CenterContainer/animationPlaceholder.hide()
+#		$CenterContainer/animationPlaceholder.text = "Animation\nPlace Holder\n"
+#	if state_machine.get_current_node() == "Climbing_Up_Box":
+#		change_animation("Idle")
+#	###############################################
+#	################ Falling Logic#################
+#	###############################################
+#
+#	if falling:
+#		PlayerState.set_Player_Active(false)
+#		action_set_player_active_as_false = true
+#		if global_position.y > falling_end_position.y:
+#			landing()
+#		else:
+#			var _velocity = move_and_slide(falling_vector)
+#	###############################################
+#	#####Input Check if Animation allows it########
+#	###############################################
+#	elif check_if_current_animation_allows_movement() == true and !climb_box_state:
+#		if action_set_player_active_as_false:
+#			PlayerState.set_Player_Active(true)
+#			action_set_player_active_as_false = false
+#		var vector = _get_input()
+#		if vector != Vector2.ZERO:
+#			var _velocity = move_and_slide(vector)
+#	elif !climb_box_positions.empty():
+#		var _velocity = move_and_slide(climb_box(climb_box_positions))
+#		if climb_box_positions.empty():
+#			stand_on_box()
+#	######################################
+#	####Moves Sprite while Climbing#######
+#	######################################
+#	elif check_if_current_animation_transition_climbing():
+#		var vector = snap_to_ladder(interactable_object)
+#		vector.y = move_sprite_while_climbing().y
+#		var _velocity = move_and_slide(vector)
+#
+#	else:
+#		PlayerState.set_Player_Active(false)
+#		action_set_player_active_as_false = true
+#
+##	if interact_state == true:
+##		if Input.any_ke
+##			change_animation("Idle")
+##			interact_state = false
+#	######################################
+#	###########Aiming Gun#################
+#	######################################
+#	if aim_state:
+#		aiming_gun()
+#	######################################
+#	update_previous_animation()
+#func _draw():
+#	if aim_state:
+#		###Removed Laser Pointer Visual
+#		aiming_gun()
+#
+#
+#
+#### Checking to break Interact State ("Kneeling_Down")
+#func _input(event):
 #	if interact_state == true:
-#		if Input.any_ke
+#		if ((event is InputEventKey) or (event is InputEventJoypadButton)) and event.pressed:
 #			change_animation("Idle")
 #			interact_state = false
-	######################################
-	###########Aiming Gun#################
-	######################################
-	if aim_state:
-		aiming_gun()
-	######################################
-	update_previous_animation()
-func _draw():
-	if aim_state:
-		###Removed Laser Pointer Visual
-		aiming_gun()
+#
 
-
-
-### Checking to break Interact State ("Kneeling_Down")
-func _input(event):
-	if interact_state == true:
-		if ((event is InputEventKey) or (event is InputEventJoypadButton)) and event.pressed:
-			change_animation("Idle")
-			interact_state = false
-	
-
-func _get_input()->Vector2:
-	var velocity = Vector2.ZERO
-	if !PlayerState.get_Player_Active():
-		return velocity
-	##############################################
-	##############GUN Logic#######################
-	##############################################
-	if Input.is_action_just_pressed("use_weapon"):
-		#state_machine.travel(attacks[randi() % 2])
-		return velocity
-	if gun_out_state:
-		if aim_state:
-			if Input.is_action_just_released("aim"):
-				change_animation("Idle_Pistol")
-				aim_state = false
-				change_mouse(null)
-				clear_aiming()
-				return velocity
-			else:
-				return velocity
-		elif Input.is_action_just_pressed("aim"):
-			change_animation("Aiming_Pistol")
-			change_mouse(target_mouse_reticle)
-			aim_state = true
-	#############################################
-	##############Interactions###################
-	#############################################
-	if infront_of_interactable_object:
-		if Input.is_action_just_pressed("interact"):
-			gun_out_state =false
-			###############################
-			##########Climbing#############
-			###############################
-			if interactable_object.is_in_group("Ladder"):
-				if climbing:
-					climbing_state (false)
-				else:
-					climbing_state (true)
-				return velocity
-			##############################
-			######Interactable Object#####
-			##############################
-			if interactable_object.is_in_group("Box"):
-				if push_box_state:
-					return push_box(false,interactable_object)
-				else:
-					return push_box(true,interactable_object)
-			elif interact_state:
-				change_animation("Kneeling_Up")
-				$AnimationTree.pause_mode = Node.PAUSE_MODE_INHERIT
-				interact_state = false
-				return velocity
-			else:
-#				change_animation("Kneeling_Down")
-				$AnimationTree.pause_mode = Node.PAUSE_MODE_PROCESS
-				if interactable_object.get_parent().is_there_a_scene_change():
-					interactable_object.get_parent().change_scene_level()
-					change_animation("Idle")
-					return velocity
-				else:
-					change_animation("Kneeling_Down")
-				interactable_object.get_parent().trigger_dialog()
-				PlayerState.set_Player_Active(false)
-				_on_InteractableHitBox_area_exited(interactable_object)
-				dialog_state = true
-				####Could hold out from saying interact State to be triggered by dialog/cutscene time
-				interact_state = true
-				return velocity
-	
-	##############################################
-	#############Pull Out Weapon##################
-	##############################################
-	if Input.is_action_just_pressed("equip_gun"):
-		if gun_out_state:
-			if check_equipped_gun() == PlayerInventory.GUNTYPES.PISTOL:
-				change_animation("Idle")
-				gun_out_state = false
-				return velocity
-		else:
-			if check_equipped_gun() == PlayerInventory.GUNTYPES.PISTOL:
-				change_animation("Idle_Pistol")
-				gun_out_state = true
-				return velocity
-
-	##############################################
-	###############Sprint Logic###################
-	##############################################
-	if Input.is_action_just_pressed("toggle_sprint"):
-		sprint_state = !sprint_state
-	if Input.is_action_pressed("sprint"):
-		sprint_state = true
-	elif Input.is_action_just_released("sprint"):
-		sprint_state = false
-	
-	##############################################
-	#############Movement Logic###################
-	##############################################
-	if Input.is_action_pressed("move_right") and !climbing:
-		velocity.x += 1
-		if !push_box_state:
-			flip_sprite(false)
-	if Input.is_action_pressed("move_left") and !climbing:
-		velocity.x -= 1
-		if !push_box_state:
-			flip_sprite(true)
-	if Input.is_action_pressed("move_up"):
-		velocity.y -= 1
-		#####Climbs Box####
-		if push_box_state:
-			trigger_climb_on_box()
-			
-			return climb_box(interactable_object.get_parent().player_climb())
-	if Input.is_action_pressed("move_down") and !push_box_state:
-		velocity.y += 1
-		
-	##############################################
-	###################Climbing ##################
-	##############################################
-	if climbing:
-		if check_if_current_climbing_animation() == true:
-			if velocity.y < 0 :
-				change_animation("Climbing_Up")
-			elif velocity.y > 0 :
-				change_animation("Climbing_Down")
-			else:
-				change_animation("Climbing_Idle")
-		return velocity * climb_speed
-	
-	##############################################
-	################## Pushing ###################
-	##############################################
-	elif push_box_state:		
-		if velocity.x < 0 :
-			if flipped:
-				change_animation("Pushing_Box")
-			else:
-				change_animation("Pulling_Box")
-		elif velocity.x > 0 :
-			if flipped:
-				change_animation("Pulling_Box")
-			else:
-				change_animation("Pushing_Box")
-		else:
-			change_animation("Pushing_Idle")
-		return (velocity * push_box_speed) + snap_to_box(interactable_object.get_parent().snap_position())
-		
-	else:
-		if (sprint_state == true) and (gun_out_state == false) and has_stamina:
-			velocity = velocity.normalized() * run_speed
-			if velocity.length() != 0:
-				stamina.use()
-				change_animation("Running")
-		else:
-			velocity = velocity.normalized() * walk_speed
-			if velocity.length() != 0:
-				if gun_out_state:
-					if check_equipped_gun() == PlayerInventory.GUNTYPES.PISTOL:
-						change_animation("Walk_With_Pistol")
-				else:
-					change_animation("Walking")
-		
-		if velocity.length() == 0:
-			if gun_out_state:
-				if check_equipped_gun() == PlayerInventory.GUNTYPES.PISTOL:
-					change_animation("Idle_Pistol")
-			elif interact_state == false:
-				change_animation("Idle")
-	return velocity
+#func _get_input()->Vector2:
+#	var velocity = Vector2.ZERO
+#	if !PlayerState.get_Player_Active():
+#		return velocity
+#	##############################################
+#	##############GUN Logic#######################
+#	##############################################
+#	if Input.is_action_just_pressed("use_weapon"):
+#		#state_machine.travel(attacks[randi() % 2])
+#		return velocity
+#	if gun_out_state:
+#		if aim_state:
+#			if Input.is_action_just_released("aim"):
+#				change_animation("Idle_Pistol")
+#				aim_state = false
+#				change_mouse(null)
+#				clear_aiming()
+#				return velocity
+#			else:
+#				return velocity
+#		elif Input.is_action_just_pressed("aim"):
+#			change_animation("Aiming_Pistol")
+#			change_mouse(target_mouse_reticle)
+#			aim_state = true
+#	#############################################
+#	##############Interactions###################
+#	#############################################
+#	if infront_of_interactable_object:
+#		if Input.is_action_just_pressed("interact"):
+#			gun_out_state =false
+#			###############################
+#			##########Climbing#############
+#			###############################
+#			if interactable_object.is_in_group("Ladder"):
+#				if climbing:
+#					climbing_state (false)
+#				else:
+#					climbing_state (true)
+#				return velocity
+#			##############################
+#			######Interactable Object#####
+#			##############################
+#			if interactable_object.is_in_group("Box"):
+#				if push_box_state:
+#					return push_box(false,interactable_object)
+#				else:
+#					return push_box(true,interactable_object)
+#			elif interact_state:
+#				change_animation("Kneeling_Up")
+#				$AnimationTree.pause_mode = Node.PAUSE_MODE_INHERIT
+#				interact_state = false
+#				return velocity
+#			else:
+##				change_animation("Kneeling_Down")
+#				$AnimationTree.pause_mode = Node.PAUSE_MODE_PROCESS
+#				if interactable_object.get_parent().is_there_a_scene_change():
+#					interactable_object.get_parent().change_scene_level()
+#					change_animation("Idle")
+#					return velocity
+#				else:
+#					change_animation("Kneeling_Down")
+#				interactable_object.get_parent().trigger_dialog()
+#				PlayerState.set_Player_Active(false)
+#				_on_InteractableHitBox_area_exited(interactable_object)
+#				dialog_state = true
+#				####Could hold out from saying interact State to be triggered by dialog/cutscene time
+#				interact_state = true
+#				return velocity
+#
+#	##############################################
+#	#############Pull Out Weapon##################
+#	##############################################
+#	if Input.is_action_just_pressed("equip_gun"):
+#		if gun_out_state:
+#			if check_equipped_gun() == PlayerInventory.GUNTYPES.PISTOL:
+#				change_animation("Idle")
+#				gun_out_state = false
+#				return velocity
+#		else:
+#			if check_equipped_gun() == PlayerInventory.GUNTYPES.PISTOL:
+#				change_animation("Idle_Pistol")
+#				gun_out_state = true
+#				return velocity
+#
+#	##############################################
+#	###############Sprint Logic###################
+#	##############################################
+#	if Input.is_action_just_pressed("toggle_sprint"):
+#		sprint_state = !sprint_state
+#	if Input.is_action_pressed("sprint"):
+#		sprint_state = true
+#	elif Input.is_action_just_released("sprint"):
+#		sprint_state = false
+#
+#	##############################################
+#	#############Movement Logic###################
+#	##############################################
+#	if Input.is_action_pressed("move_right") and !climbing:
+#		velocity.x += 1
+#		if !push_box_state:
+#			flip_sprite(false)
+#	if Input.is_action_pressed("move_left") and !climbing:
+#		velocity.x -= 1
+#		if !push_box_state:
+#			flip_sprite(true)
+#	if Input.is_action_pressed("move_up"):
+#		velocity.y -= 1
+#		#####Climbs Box####
+#		if push_box_state:
+#			trigger_climb_on_box()
+#
+#			return climb_box(interactable_object.get_parent().player_climb())
+#	if Input.is_action_pressed("move_down") and !push_box_state:
+#		velocity.y += 1
+#
+#	##############################################
+#	###################Climbing ##################
+#	##############################################
+#	if climbing:
+#		if check_if_current_climbing_animation() == true:
+#			if velocity.y < 0 :
+#				change_animation("Climbing_Up")
+#			elif velocity.y > 0 :
+#				change_animation("Climbing_Down")
+#			else:
+#				change_animation("Climbing_Idle")
+#		return velocity * climb_speed
+#
+#	##############################################
+#	################## Pushing ###################
+#	##############################################
+#	elif push_box_state:		
+#		if velocity.x < 0 :
+#			if flipped:
+#				change_animation("Pushing_Box")
+#			else:
+#				change_animation("Pulling_Box")
+#		elif velocity.x > 0 :
+#			if flipped:
+#				change_animation("Pulling_Box")
+#			else:
+#				change_animation("Pushing_Box")
+#		else:
+#			change_animation("Pushing_Idle")
+#		return (velocity * push_box_speed) + snap_to_box(interactable_object.get_parent().snap_position())
+#
+#	else:
+#		if (sprint_state == true) and (gun_out_state == false) and has_stamina:
+#			velocity = velocity.normalized() * run_speed
+#			if velocity.length() != 0:
+#				stamina.use()
+#				change_animation("Running")
+#		else:
+#			velocity = velocity.normalized() * walk_speed
+#			if velocity.length() != 0:
+#				if gun_out_state:
+#					if check_equipped_gun() == PlayerInventory.GUNTYPES.PISTOL:
+#						change_animation("Walk_With_Pistol")
+#				else:
+#					change_animation("Walking")
+#
+#		if velocity.length() == 0:
+#			if gun_out_state:
+#				if check_equipped_gun() == PlayerInventory.GUNTYPES.PISTOL:
+#					change_animation("Idle_Pistol")
+#			elif interact_state == false:
+#				change_animation("Idle")
+#	return velocity
 
 func flip_sprite(state:bool)->void:
 	if flipped != state:
