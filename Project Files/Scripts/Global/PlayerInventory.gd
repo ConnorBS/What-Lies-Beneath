@@ -3,7 +3,7 @@ extends Node
 
 enum GUNTYPES {NONE,PISTOL,SHOTGUN,RIFLE}
 
-onready var equipped_gun = GUNTYPES.PISTOL
+onready var equipped_gun = GUNTYPES.NONE
 
 ###### Inventory ######
 var _equipped_gun:Inventory.Items
@@ -12,6 +12,7 @@ const _key_items:Dictionary = {}
 const _map_fragments:Dictionary = {}
 const _locations:Dictionary = {}
 
+var _weapon_table = {"Pistol":GUNTYPES.PISTOL,"Shotgun":GUNTYPES.SHOTGUN}
 
 func _ready():
 	#############
@@ -36,7 +37,21 @@ func _ready():
 	
 	pass
 
+func use_gun() -> bool:
+	if _equipped_gun != null:
+		return _equipped_gun.use_item()
+	return false
 
+func get_gun_damage() -> int:
+	if _equipped_gun != null:
+		return _equipped_gun.value
+	return 0
+
+func gun_has_ammo_loaded() -> bool:
+	if _equipped_gun != null:
+		return _equipped_gun.quantity > 0
+	return false
+	
 ###########################
 #### Player Inventory #####
 ###########################
@@ -115,11 +130,13 @@ func equip(item):
 	if current_equipment != null:
 		add_item(current_equipment)
 	_equipped_gun = item
+	equipped_gun =_weapon_table[_equipped_gun.name]
 	remove_item(_equipped_gun)
 
 func unequip():
 	var item_to_unequip = _equipped_gun
 	_equipped_gun = null
+	equipped_gun = GUNTYPES.NONE
 	add_item(item_to_unequip)
 	
 func get_equiped_item()->Inventory.Items:

@@ -1,7 +1,9 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://Scripts/Actor/MonsterTemplate.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Sprites/Monsters/CuddleBuddy/CuddleBuddy.png" type="Texture" id=2]
+[ext_resource path="res://Assets/Animation/Monster/CuddleBuddy/Idle.tres" type="Animation" id=3]
+[ext_resource path="res://Assets/Animation/Monster/CuddleBuddy/Death.tres" type="Animation" id=4]
 [ext_resource path="res://Assets/Audio/Player/FootStep_Gravel_Walking.wav" type="AudioStream" id=16]
 [ext_resource path="res://Assets/Sprites/Player/Light.png" type="Texture" id=17]
 [ext_resource path="res://Assets/UI/Button Images/Tab.png" type="Texture" id=18]
@@ -18,19 +20,27 @@ extents = Vector2( 13, 9 )
 [sub_resource type="RectangleShape2D" id=45]
 extents = Vector2( 10, 9 )
 
+[sub_resource type="AnimationNodeAnimation" id=79]
+animation = "Death"
+
 [sub_resource type="AnimationNodeAnimation" id=76]
 animation = "Idle"
 
+[sub_resource type="AnimationNodeStateMachineTransition" id=80]
+
 [sub_resource type="AnimationNodeStateMachine" id=77]
+states/Death/node = SubResource( 79 )
+states/Death/position = Vector2( 580, 102 )
 states/Idle/node = SubResource( 76 )
 states/Idle/position = Vector2( 414, 100 )
+transitions = [ "Idle", "Death", SubResource( 80 ) ]
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=26]
 
 [sub_resource type="Animation" id=78]
-resource_name = "Idle"
+length = 0.001
 tracks/0/type = "value"
-tracks/0/path = NodePath("../Sprite:frame")
+tracks/0/path = NodePath("../Sprite:scale")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -38,20 +48,8 @@ tracks/0/enabled = true
 tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ 0 ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("../CenterContainer/animationPlaceholder:visible")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ true ]
+"update": 0,
+"values": [ Vector2( 0.471014, 0.471014 ) ]
 }
 
 [sub_resource type="RectangleShape2D" id=34]
@@ -66,7 +64,7 @@ bg_color = Color( 0, 0.324219, 0, 1 )
 [sub_resource type="StyleBoxFlat" id=74]
 bg_color = Color( 0.6, 0.6, 0.6, 0 )
 
-[node name="Monster" type="KinematicBody2D" groups=["Player"]]
+[node name="Monster" type="KinematicBody2D" groups=["Monster"]]
 light_mask = 3
 position = Vector2( 0, 1 )
 script = ExtResource( 1 )
@@ -78,23 +76,23 @@ texture = ExtResource( 2 )
 
 [node name="MonsterHitBox" type="Area2D" parent="." groups=["Player"]]
 position = Vector2( 0, -34 )
-collision_layer = 256
-collision_mask = 256
+collision_layer = 65536
+collision_mask = 65536
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="MonsterHitBox"]
 position = Vector2( 0, 8 )
 shape = SubResource( 2 )
 
-[node name="MonsterCriticalHitBox" type="Area2D" parent="." groups=["Player"]]
+[node name="MonsterCriticalHitBox" type="Area2D" parent="." groups=["CriticalHit", "Monster"]]
 position = Vector2( 0, -34 )
-collision_layer = 256
-collision_mask = 256
+collision_layer = 65536
+collision_mask = 65536
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="MonsterCriticalHitBox"]
 position = Vector2( 3, -14 )
 shape = SubResource( 75 )
 
-[node name="InteractableHitBox" type="Area2D" parent="." groups=["Player"]]
+[node name="InteractableHitBox" type="Area2D" parent="." groups=["Monster"]]
 position = Vector2( 1, -34 )
 collision_layer = 1024
 collision_mask = 1024
@@ -107,10 +105,13 @@ shape = SubResource( 45 )
 pause_mode = 2
 tree_root = SubResource( 77 )
 anim_player = NodePath("AnimationPlayer")
+active = true
 parameters/playback = SubResource( 26 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="AnimationTree"]
-anims/Idle = SubResource( 78 )
+anims/Death = ExtResource( 4 )
+anims/Idle = ExtResource( 3 )
+anims/RESET = SubResource( 78 )
 
 [node name="GroundPosition" type="CollisionShape2D" parent="."]
 position = Vector2( 0, -4.25 )
@@ -185,6 +186,7 @@ __meta__ = {
 }
 
 [node name="ClimbingInterations" type="Node2D" parent="."]
+visible = false
 
 [node name="ClimbingHitBoxTop" type="Area2D" parent="ClimbingInterations"]
 position = Vector2( 1, -27 )

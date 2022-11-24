@@ -29,12 +29,17 @@ class Items:
 		return {COMMANDS.USE : false, COMMANDS.EQUIP : false, COMMANDS.RELOAD : false, COMMANDS.REMOVE : false}
 	
 	func use_item()->bool:
-		var will_be_deleted = false
 		if use == "Heal":
 			PlayerState.heal(value)
 			PlayerInventory.remove_item(self)
-			will_be_deleted = true
-		return will_be_deleted
+			return true
+		if weapon == true:
+			if quantity > 0:
+				quantity -= 1
+				return true
+			
+		return false
+			
 		
 		
 	func equip_item():

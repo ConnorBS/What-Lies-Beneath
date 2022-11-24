@@ -496,7 +496,7 @@ valign = 1
 position = Vector2( 30, -50 )
 enabled = true
 cast_to = Vector2( 200, 0 )
-collision_mask = 32768
+collision_mask = 98304
 collide_with_areas = true
 
 [node name="SFX" type="AudioStreamPlayer2D" parent="."]

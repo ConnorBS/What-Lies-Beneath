@@ -68,6 +68,7 @@ func _ready():
 
 func check_equipped_gun() -> int:
 	gun_selected = PlayerInventory.equipped_gun
+#	print (gun_selected)
 	return gun_selected
 	
 func change_animation(animationToChangeTo:String)->void:
@@ -264,23 +265,40 @@ func _get_input()->Vector2:
 	##############################################
 	##############GUN Logic#######################
 	##############################################
-	if Input.is_action_just_pressed("use_weapon"):
-		#state_machine.travel(attacks[randi() % 2])
-		return velocity
+#	if Input.is_action_just_pressed("use_weapon"):
+#		#state_machine.travel(attacks[randi() % 2])
+#		return velocity
 	if gun_out_state:
 		if aim_state:
 			if Input.is_action_just_released("aim"):
-				change_animation("Idle_Pistol")
-				aim_state = false
-				change_mouse(null)
-				clear_aiming()
-				return velocity
+				if check_equipped_gun() == PlayerInventory.GUNTYPES.PISTOL:
+					change_animation("Idle_Pistol")
+					aim_state = false
+					change_mouse(null)
+					clear_aiming()
+					return velocity
+			elif Input.is_action_just_pressed("use_weapon"):
+				if check_equipped_gun() == PlayerInventory.GUNTYPES.PISTOL:
+					if PlayerInventory.gun_has_ammo_loaded():
+						change_animation("Shooting_Pistol")
+						PlayerInventory.use_gun()
+#						print(bullet_ray.get_collider())
+						var collisionNode = bullet_ray.get_collider()
+						if collisionNode != null:
+							var damage_multiplier = 1
+							if collisionNode.is_in_group("CriticalHit"):
+								damage_multiplier = 2
+							collisionNode = collisionNode.get_parent()
+							if collisionNode.is_in_group("Monster"):
+								 collisionNode.receive_damage(PlayerInventory.get_gun_damage()*damage_multiplier)
+					return velocity
 			else:
 				return velocity
 		elif Input.is_action_just_pressed("aim"):
-			change_animation("Aiming_Pistol")
-			change_mouse(target_mouse_reticle)
-			aim_state = true
+			if PlayerInventory.equipped_gun == PlayerInventory.GUNTYPES.PISTOL:
+				change_animation("Aiming_Pistol")
+				change_mouse(target_mouse_reticle)
+				aim_state = true
 	#############################################
 	##############Interactions###################
 	#############################################
@@ -329,12 +347,11 @@ func _get_input()->Vector2:
 	##############################################
 	#############Pull Out Weapon##################
 	##############################################
-	if Input.is_action_just_pressed("equip_gun"):
+	if Input.is_action_just_pressed("equip_gun") or check_equipped_gun() == PlayerInventory.GUNTYPES.NONE:
 		if gun_out_state:
-			if check_equipped_gun() == PlayerInventory.GUNTYPES.PISTOL:
-				change_animation("Idle")
-				gun_out_state = false
-				return velocity
+			change_animation("Idle")
+			gun_out_state = false
+			return velocity
 		else:
 			if check_equipped_gun() == PlayerInventory.GUNTYPES.PISTOL:
 				change_animation("Idle_Pistol")
