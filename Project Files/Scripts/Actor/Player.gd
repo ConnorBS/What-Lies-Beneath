@@ -6,6 +6,10 @@ onready var interact_pop_up_message = $InteractPopUp
 onready var bullet_ray = $Bullet
 onready var target_mouse_reticle = preload("res://Assets/UI/Mouse Cursors/Target.png")
 
+onready var _empty_gun_noise = {
+	PlayerInventory.GUNTYPES.PISTOL:"res://Assets/Audio/Weapons/Pistol_Fire.wav",
+	PlayerInventory.GUNTYPES.SHOTGUN:"res://Assets/Audio/Weapons/Pistol_Empty.wav",
+}
 onready var stamina = $Stamina
 var has_stamina = true
 export (int) var run_speed = 160
@@ -58,6 +62,7 @@ var falling_vector = Vector2.ZERO
 var action_set_player_active_as_false = false
 
 var gun_selected = PlayerInventory.equipped_gun
+var gun_name:String = ""
 var interactable_object = null
 
 # Called when the node enters the scene tree for the first time.
@@ -68,6 +73,7 @@ func _ready():
 
 func check_equipped_gun() -> int:
 	gun_selected = PlayerInventory.equipped_gun
+	gun_name = PlayerInventory.get_weapon_type(gun_selected)
 #	print (gun_selected)
 	return gun_selected
 	
@@ -92,13 +98,13 @@ func check_if_current_animation_allows_movement() -> bool:
 		return false
 	elif animation_playing == "Kneeling_Up":
 		return false
-	elif animation_playing == "Pulling_Out_Pistol":
+	elif animation_playing == "Pulling_Out_" + gun_name:
 		return false
-	elif animation_playing == "Putting_In_Pistol":
+	elif animation_playing == "Putting_In_" + gun_name:
 		return false
-	elif animation_playing == "Raising_Pistol":
+	elif animation_playing == "Raising_" + gun_name:
 		return false
-	elif animation_playing == "Lowering_Pistol":
+	elif animation_playing == "Lowering_" + gun_name:
 		return false
 	elif animation_playing == "Climbing_Up_Box":
 		return false
@@ -162,8 +168,8 @@ func check_if_current_animation_is_falling()->bool:
 
 func check_if_current_animation_is_shooting()->bool:
 	var animation_playing = state_machine.get_current_node()
-	if animation_playing == "Shooting_Pistol":
-		change_animation("Aiming_Pistol")
+	if animation_playing == "Shooting_" + gun_name:
+		change_animation("Aiming_" + gun_name)
 		return true
 	return false
 
@@ -271,16 +277,16 @@ func _get_input()->Vector2:
 	if gun_out_state:
 		if aim_state:
 			if Input.is_action_just_released("aim"):
-				if check_equipped_gun() == PlayerInventory.GUNTYPES.PISTOL:
-					change_animation("Idle_Pistol")
+				if check_equipped_gun() != PlayerInventory.GUNTYPES.NONE:
+					change_animation("Idle_" + gun_name)
 					aim_state = false
 					change_mouse(null)
 					clear_aiming()
 					return velocity
 			elif Input.is_action_just_pressed("use_weapon"):
-				if check_equipped_gun() == PlayerInventory.GUNTYPES.PISTOL:
+				if check_equipped_gun() != PlayerInventory.GUNTYPES.NONE:
 					if PlayerInventory.gun_has_ammo_loaded():
-						change_animation("Shooting_Pistol")
+						change_animation("Shooting_" + gun_name)
 						PlayerInventory.use_gun()
 #						print(bullet_ray.get_collider())
 						var collisionNode = bullet_ray.get_collider()
@@ -291,12 +297,15 @@ func _get_input()->Vector2:
 							collisionNode = collisionNode.get_parent()
 							if collisionNode.is_in_group("Monster"):
 								 collisionNode.receive_damage(PlayerInventory.get_gun_damage()*damage_multiplier)
+					else:
+						$SFX.stream = load(_empty_gun_noise[check_equipped_gun()])
+						$SFX.play()
 					return velocity
 			else:
 				return velocity
 		elif Input.is_action_just_pressed("aim"):
-			if PlayerInventory.equipped_gun == PlayerInventory.GUNTYPES.PISTOL:
-				change_animation("Aiming_Pistol")
+			if PlayerInventory.equipped_gun != PlayerInventory.GUNTYPES.NONE:
+				change_animation("Aiming_" + gun_name)
 				change_mouse(target_mouse_reticle)
 				aim_state = true
 	#############################################
@@ -353,8 +362,8 @@ func _get_input()->Vector2:
 			gun_out_state = false
 			return velocity
 		else:
-			if check_equipped_gun() == PlayerInventory.GUNTYPES.PISTOL:
-				change_animation("Idle_Pistol")
+			if check_equipped_gun() != PlayerInventory.GUNTYPES.NONE:
+				change_animation("Idle_" + gun_name)
 				gun_out_state = true
 				return velocity
 
@@ -430,15 +439,15 @@ func _get_input()->Vector2:
 			velocity = velocity.normalized() * walk_speed
 			if velocity.length() != 0:
 				if gun_out_state:
-					if check_equipped_gun() == PlayerInventory.GUNTYPES.PISTOL:
-						change_animation("Walk_With_Pistol")
+					if check_equipped_gun() != PlayerInventory.GUNTYPES.NONE:
+						change_animation("Walk_With_" + gun_name)
 				else:
 					change_animation("Walking")
 		
 		if velocity.length() == 0:
 			if gun_out_state:
-				if check_equipped_gun() == PlayerInventory.GUNTYPES.PISTOL:
-					change_animation("Idle_Pistol")
+				if check_equipped_gun() != PlayerInventory.GUNTYPES.NONE:
+					change_animation("Idle_" + gun_name)
 			elif interact_state == false:
 				change_animation("Idle")
 	return velocity
@@ -452,7 +461,7 @@ func flip_sprite(state:bool)->void:
 			$Sprite.scale.x = 1
 
 func laser_pointer_to_mouse(target):
-	if state_machine.get_current_node() == "Aiming_Pistol":
+	if state_machine.get_current_node() == "Aiming_" + gun_name:
 		draw_line(bullet_ray.position, target, Color(255, 0, 0), 1)
 	
 

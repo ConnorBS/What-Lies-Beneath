@@ -1,0 +1,23 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/Shotgun_Fire.wav-f1f1347bb92d6bb8d3c1b3589eff2399.sample"
+
+[deps]
+
+source_file="res://Assets/Audio/Weapons/Shotgun_Fire.wav"
+dest_files=[ "res://.import/Shotgun_Fire.wav-f1f1347bb92d6bb8d3c1b3589eff2399.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

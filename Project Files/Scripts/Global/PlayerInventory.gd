@@ -128,7 +128,8 @@ func use_item(item): ###Use 1x Item
 func equip(item):
 	var current_equipment = get_equiped_item()
 	if current_equipment != null:
-		add_item(current_equipment)
+#		add_item(current_equipment)
+		unequip()
 	_equipped_gun = item
 	equipped_gun =_weapon_table[_equipped_gun.name]
 	remove_item(_equipped_gun)
@@ -142,6 +143,12 @@ func unequip():
 func get_equiped_item()->Inventory.Items:
 	return _equipped_gun
 	
+func get_weapon_type(gunTypeInt:int)-> String:
+	var gunTypeString =""
+	for key in _weapon_table.keys():
+		if _weapon_table[key] == gunTypeInt:
+			return key
+	return gunTypeString 
 	
 static func remove_item (item,inventoryType:Dictionary = _inventory)->void:
 	var key_to_remove = _get_key_of_item(item,inventoryType)

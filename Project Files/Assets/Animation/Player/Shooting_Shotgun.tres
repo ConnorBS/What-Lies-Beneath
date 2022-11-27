@@ -1,9 +1,9 @@
 [gd_resource type="Animation" load_steps=2 format=2]
 
-[ext_resource path="res://Assets/Audio/Weapons/Pistol_Fire.wav" type="AudioStream" id=1]
+[ext_resource path="res://Assets/Audio/Weapons/Shotgun_Fire.wav" type="AudioStream" id=1]
 
 [resource]
-resource_name = "Shooting_Pistol"
+resource_name = "Shooting_Shotgun"
 length = 0.6
 loop = true
 step = 0.05
@@ -43,7 +43,7 @@ tracks/2/keys = {
 "update": 1,
 "values": [ "Animation
 Place Holder
-Aiming_Pistol" ]
+Shooting_Shotgun" ]
 }
 tracks/3/type = "value"
 tracks/3/path = NodePath("SFX:stream")
@@ -52,7 +52,7 @@ tracks/3/loop_wrap = true
 tracks/3/imported = false
 tracks/3/enabled = true
 tracks/3/keys = {
-"times": PoolRealArray( 0.05 ),
+"times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
 "values": [ ExtResource( 1 ) ]
@@ -67,5 +67,5 @@ tracks/4/keys = {
 "times": PoolRealArray( 0.1 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ false ]
+"values": [ true ]
 }
