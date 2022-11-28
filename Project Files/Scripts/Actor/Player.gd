@@ -7,7 +7,7 @@ onready var bullet_ray = $Bullet
 onready var target_mouse_reticle = preload("res://Assets/UI/Mouse Cursors/Target.png")
 
 onready var _empty_gun_noise = {
-	PlayerInventory.GUNTYPES.PISTOL:"res://Assets/Audio/Weapons/Pistol_Fire.wav",
+	PlayerInventory.GUNTYPES.PISTOL:"res://Assets/Audio/Weapons/Pistol_Empty.wav",
 	PlayerInventory.GUNTYPES.SHOTGUN:"res://Assets/Audio/Weapons/Pistol_Empty.wav",
 }
 onready var stamina = $Stamina
@@ -294,12 +294,13 @@ func _get_input()->Vector2:
 							var damage_multiplier = 1
 							if collisionNode.is_in_group("CriticalHit"):
 								damage_multiplier = 2
+								print ("Critical Hit")
 							collisionNode = collisionNode.get_parent()
 							if collisionNode.is_in_group("Monster"):
 								 collisionNode.receive_damage(PlayerInventory.get_gun_damage()*damage_multiplier)
 					else:
-						$SFX.stream = load(_empty_gun_noise[check_equipped_gun()])
-						$SFX.play()
+						$GunNoises.stream = load(_empty_gun_noise[check_equipped_gun()])
+						$GunNoises.play()
 					return velocity
 			else:
 				return velocity

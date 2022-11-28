@@ -38,7 +38,7 @@ tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
-"times": PoolRealArray( 0 ),
+"times": PoolRealArray( 0.15 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
 "values": [ "Animation
@@ -46,7 +46,7 @@ Place Holder
 Shooting_Shotgun" ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("SFX:stream")
+tracks/3/path = NodePath("GunNoises:stream")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -58,13 +58,13 @@ tracks/3/keys = {
 "values": [ ExtResource( 1 ) ]
 }
 tracks/4/type = "value"
-tracks/4/path = NodePath("SFX:playing")
+tracks/4/path = NodePath("GunNoises:playing")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/imported = false
 tracks/4/enabled = true
 tracks/4/keys = {
-"times": PoolRealArray( 0.1 ),
+"times": PoolRealArray( 0.15 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
 "values": [ true ]

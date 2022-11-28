@@ -45,7 +45,8 @@
 [ext_resource path="res://Assets/Animation/Player/Raising_Shotgun.tres" type="Animation" id=43]
 [ext_resource path="res://Assets/Animation/Player/Lowering_Shotgun.tres" type="Animation" id=44]
 [ext_resource path="res://Assets/Animation/Player/Idle_Shotgun.tres" type="Animation" id=45]
-[ext_resource path="res://Assets/Audio/Weapons/Shotgun_Fire.wav" type="AudioStream" id=46]
+[ext_resource path="res://Assets/Audio/Weapons/Pistol_Fire.wav" type="AudioStream" id=46]
+[ext_resource path="res://Assets/Audio/Player/FootStep_Running_Gravel.wav" type="AudioStream" id=47]
 
 [sub_resource type="CapsuleShape2D" id=2]
 radius = 6.0
@@ -481,23 +482,6 @@ Place Holder
 Pulling_Out_Shotgun" ]
 }
 
-[sub_resource type="Animation" id=107]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/path = NodePath("CenterContainer/animationPlaceholder:text")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ "Animation
-Place Holder
-Idle" ]
-}
-
 [sub_resource type="RectangleShape2D" id=34]
 extents = Vector2( 10, 3.75 )
 
@@ -575,7 +559,6 @@ anims/Pushing_Idle = ExtResource( 28 )
 anims/Pushing_To_Standing = ExtResource( 34 )
 anims/Putting_In_Pistol = ExtResource( 1 )
 anims/Putting_In_Shotgun = ExtResource( 39 )
-anims/RESET = SubResource( 107 )
 anims/Raising_Pistol = ExtResource( 15 )
 anims/Raising_Shotgun = ExtResource( 43 )
 anims/Reload_Pistol = ExtResource( 9 )
@@ -657,7 +640,7 @@ collide_with_areas = true
 
 [node name="SFX" type="AudioStreamPlayer2D" parent="."]
 pause_mode = 2
-stream = ExtResource( 46 )
+stream = ExtResource( 47 )
 volume_db = -12.0
 pitch_scale = 0.6
 
@@ -736,6 +719,11 @@ step = 0.1
 value = 100.0
 percent_visible = false
 script = ExtResource( 27 )
+
+[node name="GunNoises" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 46 )
+pitch_scale = 0.95
+bus = "SoundEffect"
 
 [connection signal="area_entered" from="InteractableHitBox" to="." method="_on_InteractableHitBox_area_entered"]
 [connection signal="area_exited" from="InteractableHitBox" to="." method="_on_InteractableHitBox_area_exited"]
