@@ -297,7 +297,12 @@ func _get_input()->Vector2:
 								print ("Critical Hit")
 							collisionNode = collisionNode.get_parent()
 							if collisionNode.is_in_group("Monster"):
-								 collisionNode.receive_damage(PlayerInventory.get_gun_damage()*damage_multiplier)
+								collisionNode.receive_damage(PlayerInventory.get_gun_damage()*damage_multiplier)
+								collisionNode.blood_spray(bullet_ray.get_collision_point(),bullet_ray.cast_to.y/bullet_ray.cast_to.x)
+								var blood_spary_scene = preload("res://Scenes/Effect/BloodSpray.tscn")
+								var new_blood = blood_spary_scene.instance()
+								new_blood.position = bullet_ray.get_collision_point()
+								level_manager.add_child(new_blood)
 					else:
 						$GunNoises.stream = load(_empty_gun_noise[check_equipped_gun()])
 						$GunNoises.play()

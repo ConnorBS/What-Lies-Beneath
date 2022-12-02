@@ -40,7 +40,6 @@ func _play_death_animation():
 
 
 
-
 func change_animation(animationToChangeTo:String)->void:
 	if state_machine.get_current_node() != animationToChangeTo:
 		state_machine.travel(animationToChangeTo)

@@ -1,6 +1,7 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://Assets/Audio/BackgroundMusic/Why did you lie to me.mp3" type="AudioStream" id=1]
+[ext_resource path="res://Scenes/Actor/MonsterTemplate.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Assets/Levels/Inside Gas Station/GasStationInside.png" type="Texture" id=6]
 [ext_resource path="res://Scenes/Actor/Player.tscn" type="PackedScene" id=13]
 [ext_resource path="res://Scenes/Game Camera.tscn" type="PackedScene" id=14]
@@ -19,6 +20,8 @@ extents = Vector2( 68.875, 293.25 )
 
 [sub_resource type="RectangleShape2D" id=3]
 extents = Vector2( 1094.25, 151.75 )
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id=12]
 
 [sub_resource type="Gradient" id=10]
 
@@ -113,6 +116,18 @@ object_name = "Register"
 dialog_trigger = "Register"
 scale_of_interactable_box = Vector2( 1, 2 )
 
+[node name="Player2" parent="Floor1/ActorsAndObjects" instance=ExtResource( 13 )]
+position = Vector2( 138, 183 )
+
+[node name="AnimationTree" parent="Floor1/ActorsAndObjects/Player2" index="3"]
+parameters/playback = SubResource( 12 )
+
+[node name="AnimationPlayer" parent="Floor1/ActorsAndObjects/Player2/AnimationTree" index="0"]
+root_node = NodePath("../../../Player2")
+
+[node name="Bullet" parent="Floor1/ActorsAndObjects/Player2" index="7"]
+cast_to = Vector2( 200, -49 )
+
 [node name="Player" parent="Floor1/ActorsAndObjects" instance=ExtResource( 13 )]
 pause_mode = 1
 position = Vector2( 41, 179 )
@@ -136,5 +151,10 @@ texture = ExtResource( 18 )
 expand = true
 stretch_mode = 2
 
+[node name="Monster" parent="." instance=ExtResource( 2 )]
+position = Vector2( 198, 178 )
+
 [connection signal="dialogWindow" from="Floor1/ActorsAndObjects/Bloody Marks" to="." method="_on_open_dialogWindow"]
 [connection signal="dialogWindow" from="Floor1/ActorsAndObjects/Register" to="." method="_on_open_dialogWindow"]
+
+[editable path="Floor1/ActorsAndObjects/Player2"]

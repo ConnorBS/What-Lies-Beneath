@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://Scripts/Actor/MonsterTemplate.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Sprites/Monsters/CuddleBuddy/CuddleBuddy.png" type="Texture" id=2]
@@ -12,10 +12,7 @@
 
 [sub_resource type="CapsuleShape2D" id=2]
 radius = 6.0
-height = 40.0
-
-[sub_resource type="RectangleShape2D" id=75]
-extents = Vector2( 13, 9 )
+height = 32.0
 
 [sub_resource type="RectangleShape2D" id=45]
 extents = Vector2( 10, 9 )
@@ -83,7 +80,7 @@ collision_layer = 65536
 collision_mask = 65536
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="MonsterHitBox"]
-position = Vector2( 0, 8 )
+position = Vector2( -2, 11 )
 shape = SubResource( 2 )
 
 [node name="MonsterCriticalHitBox" type="Area2D" parent="." groups=["CriticalHit", "Monster"]]
@@ -91,9 +88,8 @@ position = Vector2( 0, -34 )
 collision_layer = 65536
 collision_mask = 65536
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="MonsterCriticalHitBox"]
-position = Vector2( 3, -14 )
-shape = SubResource( 75 )
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="MonsterCriticalHitBox"]
+polygon = PoolVector2Array( -5, -14, 2, -19, 4, -24, 6, -23, 9, -24, 15, -22, 16, -19, 15, -12, 8, -9, -8, -10 )
 
 [node name="InteractableHitBox" type="Area2D" parent="." groups=["Monster"]]
 position = Vector2( 1, -34 )

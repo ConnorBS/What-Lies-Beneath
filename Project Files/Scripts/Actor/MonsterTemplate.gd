@@ -3,15 +3,11 @@ extends Monster
 func _process(delta):
 	pass
 	
-#func _ready():
-#	$AnimationTree.active = true
-#	state_machine = $AnimationTree.get("parameters/playback")
-		
-#func _play_death_animation():
-#	change_animation("Death")
-#	pass
-#
-#func change_animation(animationToChangeTo:String)->void:
-#	if state_machine.get_current_node() != animationToChangeTo:
-#		state_machine.travel(animationToChangeTo)
-#		print (animationToChangeTo)
+onready var blood_spary_scene = preload("res://Scenes/Effect/BloodSpray.tscn")
+onready var monsterHitBox = $MonsterCriticalHitBox
+
+func blood_spray(position_to_use,slope):
+	print (position)
+	var new_blood = blood_spary_scene.instance()
+	new_blood.position = position_to_use
+	add_child(new_blood)
