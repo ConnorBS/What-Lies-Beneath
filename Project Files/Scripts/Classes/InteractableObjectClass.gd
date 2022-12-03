@@ -68,3 +68,4 @@ func load_pickup_state():
 
 func save_pickup_state():
 	pass
+

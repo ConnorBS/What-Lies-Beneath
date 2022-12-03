@@ -386,8 +386,10 @@ position = Vector2( 962, 323 )
 
 [node name="Background" type="TextureRect" parent="Floor2"]
 visible = false
-margin_right = 2022.0
-margin_bottom = 360.0
+margin_left = 541.0
+margin_top = 94.0
+margin_right = 2563.0
+margin_bottom = 454.0
 texture = ExtResource( 10 )
 __meta__ = {
 "_editor_description_": ""

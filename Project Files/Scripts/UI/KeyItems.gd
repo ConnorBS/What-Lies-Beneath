@@ -5,7 +5,7 @@ onready var _itemGridNode = get_node("%ItemGrid")
 onready var _keyItemScene = preload("res://Scenes/UI/Components/KeyItem.tscn")
 
 func load_window()->void:
-	PlayerInventory.pickup_KeyItem(InventoryLists.KeyItems["Item"][2])
+#	PlayerInventory.pickup_KeyItem(InventoryLists.KeyItems["Item"][2])
 	var keyList = PlayerInventory.get_key_list()
 	var itemList = PlayerInventory.get_item_list()
 	_update_keys(keyList)

@@ -13,6 +13,7 @@ const _map_fragments:Dictionary = {}
 const _locations:Dictionary = {}
 
 var _weapon_table = {"Pistol":GUNTYPES.PISTOL,"Shotgun":GUNTYPES.SHOTGUN}
+var _equipped_melee_weapon
 
 func _ready():
 	#############
@@ -33,7 +34,7 @@ func _ready():
 	journalPage = Inventory.JournalPage.new()
 	journalPage.pageNumber = 2
 	add_journal_Page(journalPage)
-	
+	pickup_KeyItem(InventoryLists.KeyItems["Item"][3])
 	
 	pass
 
@@ -51,7 +52,12 @@ func gun_has_ammo_loaded() -> bool:
 	if _equipped_gun != null:
 		return _equipped_gun.quantity > 0
 	return false
-	
+
+func get_melee_damage() -> int:
+	if _equipped_melee_weapon != null:
+		return 4
+	return 0
+		
 ###########################
 #### Player Inventory #####
 ###########################
@@ -275,8 +281,10 @@ static func get_item_list()->Array:
 		keyList.append(_key_items["Item"][item])
 	return keyList
 
-static func pickup_KeyItem(item:Inventory.KeyItems)->void:
+func pickup_KeyItem(item:Inventory.KeyItems)->void:
 	_key_items[item.type][item.slot].unlocked = true
+	if item == InventoryLists.KeyItems["Item"][3]:
+		_equipped_melee_weapon = item
 
 static func has_KeyItem(item_name)->bool:
 	for key in get_key_list():

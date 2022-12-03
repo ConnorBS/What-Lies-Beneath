@@ -33,6 +33,7 @@ var _interact_object
 var falling = false
 var flipped = false
 var dialog_state = false
+var melee_attack = false
 ###############################
 
 var previous_animation:String = ""
@@ -107,6 +108,8 @@ func check_if_current_animation_allows_movement() -> bool:
 	elif animation_playing == "Lowering_" + gun_name:
 		return false
 	elif animation_playing == "Climbing_Up_Box":
+		return false
+	elif animation_playing == "Melee_Attack":
 		return false
 		
 	#######CLimbing#######
@@ -187,7 +190,9 @@ func enable_ground_checker(prev_animation):
 		climb_box_state = false
 		push_box_state = false
 		change_collision_and_mask(self,current_floor-1,true)
-	
+func check_if_melee_is_done(prev_animation):
+	if prev_animation == "Melee_Attack":
+		melee_attack = false
 
 	
 func _process(_delta):
@@ -197,9 +202,10 @@ func _process(_delta):
 	if check_if_animation_has_changed():
 		check_if_current_animation_is_shooting()
 		enable_ground_checker(previous_animation)
+		check_if_melee_is_done(previous_animation)
 		$CenterContainer/animationPlaceholder.hide()
 		$CenterContainer/animationPlaceholder.text = "Animation\nPlace Holder\n"
-	if state_machine.get_current_node() == "Climbing_Up_Box":
+	if state_machine.get_current_node() == "Climbing_Up_Box" or  state_machine.get_current_node() == "Melee_Attack":
 		change_animation("Idle")
 	###############################################
 	################ Falling Logic#################
@@ -314,6 +320,13 @@ func _get_input()->Vector2:
 				change_animation("Aiming_" + gun_name)
 				change_mouse(target_mouse_reticle)
 				aim_state = true
+	elif Input.is_action_just_pressed("use_weapon") and !melee_attack and !push_box_state and !interact_state and !climb_box_state and !climbing:
+		print ("trying to attack for ",PlayerInventory.get_melee_damage())
+		if PlayerInventory.get_melee_damage() != 0:
+			change_animation("Melee_Attack")
+			melee_attack = true
+			return Vector2.ZERO
+			
 	#############################################
 	##############Interactions###################
 	#############################################
@@ -843,4 +856,40 @@ func _on_FadeOut_tween_completed(_object,_key):
 	_overhead_text_node.text = ""
 	_overhead_text_node.self_modulate.a = 1.0
 	playing_text = false
+	pass # Replace with function body.
+
+
+func _on_Melee_Attack_body_entered(body):
+	pass # Replace with function body.
+
+
+func _on_Melee_Attack_area_entered(area):
+ 	print ("hit ",area)
+	if area.is_in_group("Monster") and melee_attack:
+		print ("attack")
+		pass
+	pass # Replace with function body.
+
+
+func _on_Melee_Attack_area_exited(area):
+	pass # Replace with function body.
+
+
+func _on_Melee_Attack_area_shape_entered(area_rid, area, area_shape_index, local_shape_index):
+	pass # Replace with function body.
+
+
+func _on_Melee_Attack_area_shape_exited(area_rid, area, area_shape_index, local_shape_index):
+	pass # Replace with function body.
+
+
+func _on_Melee_Attack_body_exited(body):
+	pass # Replace with function body.
+
+
+func _on_Melee_Attack_body_shape_entered(body_rid, body, body_shape_index, local_shape_index):
+	pass # Replace with function body.
+
+
+func _on_Melee_Attack_body_shape_exited(body_rid, body, body_shape_index, local_shape_index):
 	pass # Replace with function body.

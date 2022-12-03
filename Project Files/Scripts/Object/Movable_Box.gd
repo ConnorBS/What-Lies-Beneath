@@ -105,3 +105,6 @@ func stand_on_box(is_on_box:bool):
 		update_collision_layer_and_mask($RightFallDown,top_floor+9,true)
 		
 	pass
+	
+func has_overhead_text():
+	return false

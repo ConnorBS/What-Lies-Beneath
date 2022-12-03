@@ -74,7 +74,7 @@ scale = Vector2( 0.471014, 0.471014 )
 texture = ExtResource( 2 )
 offset = Vector2( 8.60509e-06, -89.1693 )
 
-[node name="MonsterHitBox" type="Area2D" parent="." groups=["Player"]]
+[node name="MonsterHitBox" type="Area2D" parent="." groups=["Monster"]]
 position = Vector2( 0, -34 )
 collision_layer = 65536
 collision_mask = 65536
@@ -113,7 +113,7 @@ anims/Death = ExtResource( 4 )
 anims/Idle = ExtResource( 3 )
 anims/RESET = SubResource( 78 )
 
-[node name="GroundPosition" type="CollisionShape2D" parent="."]
+[node name="GroundPosition" type="CollisionShape2D" parent="." groups=["Monster"]]
 position = Vector2( 0, -4.25 )
 shape = SubResource( 34 )
 
