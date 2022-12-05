@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://Scripts/Actor/MonsterTemplate.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Sprites/Monsters/CuddleBuddy/CuddleBuddy.png" type="Texture" id=2]
@@ -62,6 +62,9 @@ bg_color = Color( 0, 0.324219, 0, 1 )
 
 [sub_resource type="StyleBoxFlat" id=74]
 bg_color = Color( 0.6, 0.6, 0.6, 0 )
+
+[sub_resource type="RectangleShape2D" id=81]
+extents = Vector2( 10, 6 )
 
 [node name="Monster" type="KinematicBody2D" groups=["Monster"]]
 light_mask = 3
@@ -254,6 +257,17 @@ value = 100.0
 percent_visible = false
 script = ExtResource( 27 )
 
+[node name="TouchDamage" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TouchDamage"]
+position = Vector2( 0, -4 )
+scale = Vector2( 1.3194, 1.33585 )
+shape = SubResource( 81 )
+
+[node name="WaitTillDamageCanOccurAgain" type="Timer" parent="TouchDamage"]
+one_shot = true
+
+[connection signal="area_entered" from="MonsterHitBox" to="." method="_on_MonsterHitBox_area_entered"]
 [connection signal="area_entered" from="InteractableHitBox" to="." method="_on_InteractableHitBox_area_entered"]
 [connection signal="area_exited" from="InteractableHitBox" to="." method="_on_InteractableHitBox_area_exited"]
 [connection signal="area_entered" from="ClimbingInterations/ClimbingHitBoxTop" to="." method="_on_ClimbingHitBoxTop_area_entered"]
@@ -264,3 +278,6 @@ script = ExtResource( 27 )
 [connection signal="tween_completed" from="OverheadText/FadeOut" to="." method="_on_FadeOut_tween_completed"]
 [connection signal="out_of_stamina" from="Stamina" to="." method="_on_Stamina_out_of_stamina"]
 [connection signal="stamina_filled" from="Stamina" to="." method="_on_Stamina_stamina_filled"]
+[connection signal="area_entered" from="TouchDamage" to="." method="_on_TouchDamage_area_entered"]
+[connection signal="body_entered" from="TouchDamage" to="." method="_on_TouchDamage_body_entered"]
+[connection signal="timeout" from="TouchDamage/WaitTillDamageCanOccurAgain" to="." method="_on_WaitTillDamageCanOccurAgain_timeout"]

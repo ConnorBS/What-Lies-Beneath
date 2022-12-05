@@ -1,4 +1,4 @@
-[gd_scene load_steps=178 format=2]
+[gd_scene load_steps=179 format=2]
 
 [ext_resource path="res://Assets/Animation/Player/Putting_In_Pistol.tres" type="Animation" id=1]
 [ext_resource path="res://Assets/Animation/Player/Walking.tres" type="Animation" id=2]
@@ -498,6 +498,33 @@ Place Holder
 Pulling_Out_Shotgun" ]
 }
 
+[sub_resource type="Animation" id=142]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite/MeleeAttack/CollisionPolygon2D:disabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite/MeleeAttack:monitoring")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ true ]
+}
+
 [sub_resource type="RectangleShape2D" id=34]
 extents = Vector2( 10, 3.75 )
 
@@ -530,14 +557,18 @@ texture = ExtResource( 49 )
 hframes = 3
 frame = 2
 
-[node name="Melee Attack" type="Area2D" parent="Sprite/MeleeSwipe"]
-position = Vector2( -26.5846, 48.1846 )
-scale = Vector2( 1.66154, 1.66154 )
+[node name="MeleeAttack" type="Area2D" parent="Sprite"]
+visible = false
+position = Vector2( 4.76837e-06, -7 )
+scale = Vector2( 1, 1 )
 collision_layer = 65536
 collision_mask = 65536
+monitorable = false
 priority = 10.0
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Sprite/MeleeSwipe/Melee Attack"]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Sprite/MeleeAttack"]
+position = Vector2( 11.6375, -3.99999 )
+scale = Vector2( 0.585052, 1.05807 )
 polygon = PoolVector2Array( 11, -53, 17, -51, 22, -45, 18, -38, 16, -36, 14, -35, 8, -33, 3, -33, 0, -42 )
 
 [node name="PlayerHitBox" type="Area2D" parent="." groups=["Player"]]
@@ -594,6 +625,7 @@ anims/Pushing_Idle = ExtResource( 28 )
 anims/Pushing_To_Standing = ExtResource( 34 )
 anims/Putting_In_Pistol = ExtResource( 1 )
 anims/Putting_In_Shotgun = ExtResource( 39 )
+anims/RESET = SubResource( 142 )
 anims/Raising_Pistol = ExtResource( 15 )
 anims/Raising_Shotgun = ExtResource( 43 )
 anims/Reload_Pistol = ExtResource( 9 )
@@ -761,14 +793,7 @@ stream = ExtResource( 46 )
 pitch_scale = 0.95
 bus = "SoundEffect"
 
-[connection signal="area_entered" from="Sprite/MeleeSwipe/Melee Attack" to="." method="_on_Melee_Attack_area_entered"]
-[connection signal="area_exited" from="Sprite/MeleeSwipe/Melee Attack" to="." method="_on_Melee_Attack_area_exited"]
-[connection signal="area_shape_entered" from="Sprite/MeleeSwipe/Melee Attack" to="." method="_on_Melee_Attack_area_shape_entered"]
-[connection signal="area_shape_exited" from="Sprite/MeleeSwipe/Melee Attack" to="." method="_on_Melee_Attack_area_shape_exited"]
-[connection signal="body_entered" from="Sprite/MeleeSwipe/Melee Attack" to="." method="_on_Melee_Attack_body_entered"]
-[connection signal="body_exited" from="Sprite/MeleeSwipe/Melee Attack" to="." method="_on_Melee_Attack_body_exited"]
-[connection signal="body_shape_entered" from="Sprite/MeleeSwipe/Melee Attack" to="." method="_on_Melee_Attack_body_shape_entered"]
-[connection signal="body_shape_exited" from="Sprite/MeleeSwipe/Melee Attack" to="." method="_on_Melee_Attack_body_shape_exited"]
+[connection signal="area_entered" from="Sprite/MeleeAttack" to="." method="_on_Melee_Attack_area_entered"]
 [connection signal="area_entered" from="InteractableHitBox" to="." method="_on_InteractableHitBox_area_entered"]
 [connection signal="area_exited" from="InteractableHitBox" to="." method="_on_InteractableHitBox_area_exited"]
 [connection signal="area_entered" from="ClimbingInterations/ClimbingHitBoxTop" to="." method="_on_ClimbingHitBoxTop_area_entered"]

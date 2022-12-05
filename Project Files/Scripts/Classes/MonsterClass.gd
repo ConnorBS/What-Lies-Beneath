@@ -13,6 +13,8 @@ export (int) var fall_speed = 160
 export (int) var current_floor = 1
 
 var _dead = false
+export (int) var touch_damage = 30
+var touch_damage_enabled = true
 
 func receive_damage(incoming_damage):
 	health -= incoming_damage
@@ -23,6 +25,10 @@ func receive_damage(incoming_damage):
 			_play_death_animation()
 			die()
 
+func melee_hit(damage):
+	receive_damage(damage)
+
+	
 func die():
 	$MonsterCriticalHitBox.queue_free()
 	$GroundPosition.queue_free()
@@ -43,3 +49,5 @@ func _play_death_animation():
 func change_animation(animationToChangeTo:String)->void:
 	if state_machine.get_current_node() != animationToChangeTo:
 		state_machine.travel(animationToChangeTo)
+
+

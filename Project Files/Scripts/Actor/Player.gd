@@ -192,8 +192,12 @@ func enable_ground_checker(prev_animation):
 		change_collision_and_mask(self,current_floor-1,true)
 func check_if_melee_is_done(prev_animation):
 	if prev_animation == "Melee_Attack":
-		melee_attack = false
+		reset_melee_action()
 
+func reset_melee_action():
+	melee_attack = false
+	melee_swipe_enemies_hit = []
+	
 	
 func _process(_delta):
 	###############################################
@@ -253,6 +257,8 @@ func _process(_delta):
 	######################################
 	if aim_state:
 		aiming_gun()
+#	if melee_attack:
+#		check_hit()
 	######################################
 	update_previous_animation()
 func _draw():
@@ -549,7 +555,7 @@ func aiming_gun(max_slope = .5/1)->void:
 	##########Set Mouse in Bounds#################################
 	##############################################################
 
-	var max_x = 2000
+	var max_x = 200
 	if flipped:
 		max_x = -max_x
 		clamp_mouse_to_aim(gun_position,-max_slope,max_x,gun_position.x)
@@ -575,10 +581,17 @@ func clamp_mouse_to_aim(starting_point:Vector2,slope:float,min_x:float,max_x:flo
 	var mouse_pos = get_local_mouse_position()
 	var new_mouse_pos = Vector2.ZERO
 	new_mouse_pos.x = clamp(mouse_pos.x,min_x,max_x)
+	new_mouse_pos.x = starting_point.x+max_x
 	## Using the formula y = mx + b
 	var min_y = -slope*(new_mouse_pos.x-starting_point.x)+starting_point.y
 	var max_y = slope*(new_mouse_pos.x-starting_point.x)+starting_point.y
 	new_mouse_pos.y = clamp(mouse_pos.y,min_y,max_y)
+	if Input.is_action_pressed("move_down"):
+		new_mouse_pos.y = starting_point.y+75
+	elif Input.is_action_pressed("move_up"):
+		new_mouse_pos.y = starting_point.y-75
+	else:
+		new_mouse_pos.y = starting_point.y
 	Input.warp_mouse_position(get_viewport().canvas_transform.xform(to_global(new_mouse_pos)))
 	
 	
@@ -859,37 +872,31 @@ func _on_FadeOut_tween_completed(_object,_key):
 	pass # Replace with function body.
 
 
-func _on_Melee_Attack_body_entered(body):
-	pass # Replace with function body.
-
-
 func _on_Melee_Attack_area_entered(area):
- 	print ("hit ",area)
-	if area.is_in_group("Monster") and melee_attack:
-		print ("attack")
-		pass
+	print ("hit ",area)
+	check_hit(area)
+#	if area.is_in_group("Monster") and melee_attack:
+#		area.get_parent().receive_damage(PlayerInventory.get_melee_damage())
+#		print ("attack")
+#		pass
 	pass # Replace with function body.
 
 
-func _on_Melee_Attack_area_exited(area):
-	pass # Replace with function body.
+var melee_swipe_enemies_hit:Array = []
 
+func check_hit(area):
+	if area.get_parent().is_in_group("Monster"):
+		if melee_swipe_enemies_hit.empty() or !melee_swipe_enemies_hit.has(area.get_parent()):
+			area.get_parent().melee_hit(PlayerInventory.get_melee_damage())
+			melee_swipe_enemies_hit.append(area.get_parent())
+			print(melee_swipe_enemies_hit)
+			var blood_spary_scene = preload("res://Scenes/Effect/BloodSpray.tscn")
+			var new_blood = blood_spary_scene.instance()
+			new_blood.position = $Sprite/MeleeAttack/CollisionPolygon2D.global_position+Vector2(8,-33)
+			level_manager.add_child(new_blood)
+		
 
-func _on_Melee_Attack_area_shape_entered(area_rid, area, area_shape_index, local_shape_index):
-	pass # Replace with function body.
-
-
-func _on_Melee_Attack_area_shape_exited(area_rid, area, area_shape_index, local_shape_index):
-	pass # Replace with function body.
-
-
-func _on_Melee_Attack_body_exited(body):
-	pass # Replace with function body.
-
-
-func _on_Melee_Attack_body_shape_entered(body_rid, body, body_shape_index, local_shape_index):
-	pass # Replace with function body.
-
-
-func _on_Melee_Attack_body_shape_exited(body_rid, body, body_shape_index, local_shape_index):
-	pass # Replace with function body.
+func receive_damage(damage):
+	print ("you received ",damage," damage")
+	PlayerState.receive_damage(damage)
+	
