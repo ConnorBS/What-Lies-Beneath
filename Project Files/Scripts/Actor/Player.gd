@@ -327,7 +327,7 @@ func _get_input()->Vector2:
 				change_mouse(target_mouse_reticle)
 				aim_state = true
 	elif Input.is_action_just_pressed("use_weapon") and !melee_attack and !push_box_state and !interact_state and !climb_box_state and !climbing:
-		print ("trying to attack for ",PlayerInventory.get_melee_damage())
+#		print ("trying to attack for ",PlayerInventory.get_melee_damage())
 		if PlayerInventory.get_melee_damage() != 0:
 			change_animation("Melee_Attack")
 			melee_attack = true
@@ -873,7 +873,7 @@ func _on_FadeOut_tween_completed(_object,_key):
 
 
 func _on_Melee_Attack_area_entered(area):
-	print ("hit ",area)
+#	print ("hit ",area)
 	check_hit(area)
 #	if area.is_in_group("Monster") and melee_attack:
 #		area.get_parent().receive_damage(PlayerInventory.get_melee_damage())
