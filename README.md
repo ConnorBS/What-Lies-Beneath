@@ -173,15 +173,15 @@ alt="IMAGE ALT TEXT HERE" width="240" height="180" border="10" /></a>
 
 ### Combat Milestone
 #### Player Combat
-- [ ] Shooting Gun While Aiming
-- [ ] Melee Animation
-- [ ] Check on Hit/Provide Damage
-- [ ] Taking damage 
+- [x] Shooting Gun While Aiming
+- [x] Melee Animation
+- [x] Check on Hit/Provide Damage
+- [x] Taking damage 
 - [ ] HP Recovery (Syringe)
 - [ ] Game Restart 
 #### Player Inventory
-- [ ] Check Equipped Item (Gun)
-- [ ] Provide Damage on Check
+- [x] Check Equipped Item (Gun)
+- [x] Provide Damage on Check
 <p align="right">(<a href="#what-lies-beneath">back to top</a>)</p>
 
 ### Enemies Milestone / Save Point Milestone
