@@ -1,4 +1,4 @@
-[gd_scene load_steps=179 format=2]
+[gd_scene load_steps=180 format=2]
 
 [ext_resource path="res://Assets/Animation/Player/Putting_In_Pistol.tres" type="Animation" id=1]
 [ext_resource path="res://Assets/Animation/Player/Walking.tres" type="Animation" id=2]
@@ -49,6 +49,7 @@
 [ext_resource path="res://Assets/Audio/Player/FootStep_Running_Gravel.wav" type="AudioStream" id=47]
 [ext_resource path="res://Assets/Animation/Player/Melee_Attack.tres" type="Animation" id=48]
 [ext_resource path="res://Assets/Sprites/Player/EthanMeleeAttackSwipe.png" type="Texture" id=49]
+[ext_resource path="res://Assets/UI/Mouse Cursors/Target.png" type="Texture" id=50]
 
 [sub_resource type="CapsuleShape2D" id=2]
 radius = 6.0
@@ -534,8 +535,8 @@ script = ExtResource( 11 )
 position = Vector2( 0, -2 )
 texture = ExtResource( 8 )
 offset = Vector2( 0, -30 )
-hframes = 4
-vframes = 7
+hframes = 5
+vframes = 8
 
 [node name="MeleeSwipe" type="Sprite" parent="Sprite"]
 visible = false
@@ -780,6 +781,11 @@ script = ExtResource( 27 )
 stream = ExtResource( 46 )
 pitch_scale = 0.95
 bus = "SoundEffect"
+
+[node name="Target" type="Sprite" parent="."]
+visible = false
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 50 )
 
 [connection signal="area_entered" from="Sprite/MeleeAttack" to="." method="_on_Melee_Attack_area_entered"]
 [connection signal="area_entered" from="InteractableHitBox" to="." method="_on_InteractableHitBox_area_entered"]

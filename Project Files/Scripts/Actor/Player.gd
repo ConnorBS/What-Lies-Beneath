@@ -4,7 +4,7 @@ onready var level_manager = get_parent().get_parent().get_parent()
 onready var state_machine = $AnimationTree.get("parameters/playback")
 onready var interact_pop_up_message = $InteractPopUp
 onready var bullet_ray = $Bullet
-onready var target_mouse_reticle = preload("res://Assets/UI/Mouse Cursors/Target.png")
+onready var _target = $Target
 
 onready var _empty_gun_noise = {
 	PlayerInventory.GUNTYPES.PISTOL:"res://Assets/Audio/Weapons/Pistol_Empty.wav",
@@ -85,13 +85,6 @@ func change_animation(animationToChangeTo:String)->void:
 		if animationToChangeTo == "Idle":
 				pass
 				
-func change_mouse(mouse_cursor)->void:
-	if mouse_cursor == null:
-		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-		Input.set_custom_mouse_cursor(null,Input.CURSOR_ARROW,Vector2.ZERO)
-	elif mouse_cursor == target_mouse_reticle:
-		Input.set_custom_mouse_cursor(mouse_cursor,Input.CURSOR_ARROW,Vector2(10,10))
-		Input.set_mouse_mode(Input.MOUSE_MODE_CONFINED)
 	
 func check_if_current_animation_allows_movement() -> bool:
 	var animation_playing = state_machine.get_current_node()
@@ -292,7 +285,6 @@ func _get_input()->Vector2:
 				if check_equipped_gun() != PlayerInventory.GUNTYPES.NONE:
 					change_animation("Idle_" + gun_name)
 					aim_state = false
-					change_mouse(null)
 					clear_aiming()
 					return velocity
 			elif Input.is_action_just_pressed("use_weapon"):
@@ -324,7 +316,6 @@ func _get_input()->Vector2:
 		elif Input.is_action_just_pressed("aim"):
 			if PlayerInventory.equipped_gun != PlayerInventory.GUNTYPES.NONE:
 				change_animation("Aiming_" + gun_name)
-				change_mouse(target_mouse_reticle)
 				aim_state = true
 	elif Input.is_action_just_pressed("use_weapon") and !melee_attack and !push_box_state and !interact_state and !climb_box_state and !climbing:
 #		print ("trying to attack for ",PlayerInventory.get_melee_damage())
@@ -485,25 +476,20 @@ func flip_sprite(state:bool)->void:
 		else:
 			$Sprite.scale.x = 1
 
-func laser_pointer_to_mouse(target):
-	if state_machine.get_current_node() == "Aiming_" + gun_name:
-		draw_line(bullet_ray.position, target, Color(255, 0, 0), 1)
-	
-
 
 func clear_aiming()->void:
 	bullet_ray.enabled = false
+	_target.hide()
 
-func aiming_gun(max_slope = .5/1)->void:
+func aiming_gun()->void:
 	bullet_ray.enabled = true
-	var target= get_local_mouse_position()
-	var direction_to_target 
-	var distance_to_travel = 2000
 	var gun_position = bullet_ray.position
+	var target_distance = 100
 	###################################################
 	##########Set origin position of gun###############
 	###################################################
 	if flipped:
+		target_distance = -target_distance
 		if bullet_ray.position.x > 0:
 			bullet_ray.position.x = -bullet_ray.position.x
 			gun_position.x = bullet_ray.position.x
@@ -512,88 +498,26 @@ func aiming_gun(max_slope = .5/1)->void:
 			bullet_ray.position.x = -bullet_ray.position.x
 			gun_position.x = bullet_ray.position.x
 			
-	####################################################
-	##############Avoid division by zero################
-	####################################################
-	if flipped:
-		
-		if target.x - gun_position.x == 0:
-			direction_to_target = Vector2(-1,0)
-		else:
-			direction_to_target = gun_position.direction_to(target)
-	else:
-		if gun_position.x - target.x == 0:
-			direction_to_target = Vector2(1,0)
-		else:
-			direction_to_target = gun_position.direction_to(target)
-	
+#
 	##############################################################
-	##########Limit range of gun##################################
+	##########Set Target Position and ray cast####################
 	##############################################################
-	
-	if direction_to_target.y > max_slope:
-		direction_to_target.y = max_slope
-		direction_to_target.x = sqrt(1-pow(direction_to_target.y,2))
-		if flipped:
-			direction_to_target.x = -direction_to_target.x
-
-	elif direction_to_target.y < -max_slope:
-		direction_to_target.y = -max_slope
-		direction_to_target.x = sqrt(1-pow(-direction_to_target.y,2))
-		if flipped:
-			direction_to_target.x = -direction_to_target.x
-	
-	if flipped:
-		if direction_to_target.x > 0:
-			direction_to_target.x = -direction_to_target.x 
-			
-	else:
-		if direction_to_target.x < 0:
-			direction_to_target.x = -direction_to_target.x 
-			
-	##############################################################
-	##########Set Mouse in Bounds#################################
-	##############################################################
-
-	var max_x = 200
-	if flipped:
-		max_x = -max_x
-		clamp_mouse_to_aim(gun_position,-max_slope,max_x,gun_position.x)
-	else:
-		
-		clamp_mouse_to_aim(gun_position,max_slope,gun_position.x,max_x)
-
-	##############################################################
-	#####Set Offical Target, and update RayCast to hit Target#####
-	##############################################################
-	target = gun_position+(distance_to_travel*direction_to_target)
-	bullet_ray.cast_to = target-gun_position
-	
-	###############################################################
-	#If target collides with something, set target to intersection#
-	###############################################################
-	if bullet_ray.is_colliding():
-		target = self.to_local(bullet_ray.get_collision_point())
+	set_target_position(gun_position,target_distance)
+	bullet_ray.cast_to = gun_position.direction_to(_target.position)*500
 
 
 
-func clamp_mouse_to_aim(starting_point:Vector2,slope:float,min_x:float,max_x:float):
-	var mouse_pos = get_local_mouse_position()
-	var new_mouse_pos = Vector2.ZERO
-	new_mouse_pos.x = clamp(mouse_pos.x,min_x,max_x)
-	new_mouse_pos.x = starting_point.x+max_x
-	## Using the formula y = mx + b
-	var min_y = -slope*(new_mouse_pos.x-starting_point.x)+starting_point.y
-	var max_y = slope*(new_mouse_pos.x-starting_point.x)+starting_point.y
-	new_mouse_pos.y = clamp(mouse_pos.y,min_y,max_y)
+func set_target_position(starting_point:Vector2,target_distance:int):
+	_target.show()
+	var target_position = starting_point
 	if Input.is_action_pressed("move_down"):
-		new_mouse_pos.y = starting_point.y+75
+		target_position.y = starting_point.y+75
 	elif Input.is_action_pressed("move_up"):
-		new_mouse_pos.y = starting_point.y-75
-	else:
-		new_mouse_pos.y = starting_point.y
-	Input.warp_mouse_position(get_viewport().canvas_transform.xform(to_global(new_mouse_pos)))
+		target_position.y = starting_point.y-75
 	
+	target_position.x += target_distance
+	_target.position = target_position
+
 	
 func update_interaction(in_range:bool,area)->void:
 	infront_of_interactable_object = in_range
