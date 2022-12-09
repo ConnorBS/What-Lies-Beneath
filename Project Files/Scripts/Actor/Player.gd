@@ -802,13 +802,7 @@ func _on_FadeOut_tween_completed(_object,_key):
 
 
 func _on_Melee_Attack_area_entered(area):
-#	print ("hit ",area)
 	check_hit(area)
-#	if area.is_in_group("Monster") and melee_attack:
-#		area.get_parent().receive_damage(PlayerInventory.get_melee_damage())
-#		print ("attack")
-#		pass
-	pass # Replace with function body.
 
 
 var melee_swipe_enemies_hit:Array = []
