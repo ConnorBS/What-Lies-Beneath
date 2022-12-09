@@ -177,8 +177,8 @@ alt="IMAGE ALT TEXT HERE" width="240" height="180" border="10" /></a>
 - [x] Melee Animation
 - [x] Check on Hit/Provide Damage
 - [x] Taking damage 
-- [ ] HP Recovery (Syringe)
-- [ ] Game Restart 
+- [x] HP Recovery (Syringe)
+- [x] Game Restart 
 #### Player Inventory
 - [x] Check Equipped Item (Gun)
 - [x] Provide Damage on Check
