@@ -14,6 +14,7 @@ const list_of_places_visited = []
 var _Max_Health = 100
 var _Current_Health:int
 
+signal player_died
 
 func get_player_name()->String:
 	return _player_name
@@ -34,8 +35,10 @@ func get_Player_Active()->bool:
 func set_Player_Health(new_health)->void:
 	_Current_Health = new_health
 	if _check_for_death():
-		####INSERT SOME KIND OF DEATH FUNCTION
+		emit_signal("player_died")
 		pass
+	elif _Current_Health >_Max_Health:
+		_Current_Health = _Max_Health
 
 func get_Player_Health()->int:
 	return _Current_Health
@@ -43,17 +46,12 @@ func get_Player_Max_Health()->int:
 	return _Max_Health
 
 func receive_damage(value):
-	_Current_Health -= value
-	if _check_for_death():
-		_Current_Health = 0
+	set_Player_Health(_Current_Health - value)
 	
 func heal(value:int)->void:
-	_Current_Health += value
-	if _check_for_death():
-		_Current_Health = 0
-#		print ("Dead")
-	elif _Current_Health > _Max_Health:
-		_Current_Health = _Max_Health
+	print ("Healing for ", value, " | Current Health = ",_Current_Health, " to:")
+	set_Player_Health(_Current_Health + value)
+	print (_Current_Health,"/",_Max_Health)
 	
 func _check_for_death()->bool:
 	if _Current_Health <= 0:

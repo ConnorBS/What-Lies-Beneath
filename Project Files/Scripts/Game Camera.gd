@@ -145,10 +145,10 @@ func _on_Interact_News_dialogWindow(trigger_name:String):
 ##############################################
 ############ Level Name Title ################
 ##############################################
-onready var  _black_box_node = $BlackBox
-onready var _level_name_label = $BlackBox/LevelName
-onready var _level_name_tween = $BlackBox/LevelName/LevelNameTween
-onready var _hold_timer = $BlackBox/LevelName/HoldTimer
+onready var  _black_box_node = $TitleCanvas/BlackBox
+onready var _level_name_label = $TitleCanvas/BlackBox/LevelName
+onready var _level_name_tween = $TitleCanvas/BlackBox/LevelName/LevelNameTween
+onready var _hold_timer = $TitleCanvas/BlackBox/LevelName/HoldTimer
 
 func _tween_in_level_name():
 	_level_name_tween.interpolate_property(_black_box_node,"modulate",Color(1,1,1,0),Color(1,1,1,1),2)

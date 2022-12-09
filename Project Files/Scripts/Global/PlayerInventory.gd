@@ -2,6 +2,7 @@ extends Node
 
 
 enum GUNTYPES {NONE,PISTOL,SHOTGUN,RIFLE}
+const SYRINGE_LIST = ["Small Plant","Medium Sized Plant","Large Sized Plant"] #Weakest -> Strongest
 
 onready var equipped_gun = GUNTYPES.NONE
 
@@ -14,6 +15,7 @@ const _locations:Dictionary = {}
 
 var _weapon_table = {"Pistol":GUNTYPES.PISTOL,"Shotgun":GUNTYPES.SHOTGUN}
 var _equipped_melee_weapon
+
 
 func _ready():
 	#############
@@ -315,3 +317,34 @@ func has_map(level) -> bool:
 				if map == level:
 					return true
 	return false
+
+
+###########################
+####   Syringe Logic  #####
+###########################
+
+func use_syringe()->void:
+	var syringe = find_best_syringe()
+	if syringe != null:
+		print ("Using Item: ",syringe.name)
+		syringe.use_item()
+		
+func find_best_syringe()->Inventory:
+	var syringe_array:Array = get_list_of_syringes()
+	if !syringe_array.empty():
+		var total_missing_health = PlayerState.get_Player_Max_Health()-PlayerState.get_Player_Health()
+		var syringe_to_use = null
+		for syringe_to_check in range(syringe_array.size()-1,-1,-1):
+			if syringe_array[syringe_to_check].value <= total_missing_health:
+				return syringe_array[syringe_to_check]
+			elif syringe_to_use == null or syringe_to_use.name != syringe_array[syringe_to_check].name:
+				syringe_to_use = syringe_array[syringe_to_check]
+		return syringe_to_use
+	return null
+
+func get_list_of_syringes()->Array:
+	var list_of_arrays = []
+	for itemName in SYRINGE_LIST:
+		list_of_arrays+= _get_player_inventory_list_of_matching_items_by_name(itemName)
+	return list_of_arrays
+	

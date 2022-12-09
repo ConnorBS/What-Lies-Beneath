@@ -1,5 +1,6 @@
 shader_type canvas_item;
 uniform int OCTAVES = 3;
+uniform int color;
 
 float rand(vec2 coord){
 	return fract(sin(dot(coord, vec2(12.9898, 78.233)))* 43758.5453123);
@@ -54,5 +55,6 @@ void fragment() {
 	smoke_fbm = sqrt(smoke_fbm);
 	smoke_fbm = clamp(smoke_fbm, 0.0, .6);
 	
-	COLOR = vec4(smoke_fbm);
+//	COLOR = vec4(smoke_fbm);
+	COLOR = vec4(1,1,1,1);
 }

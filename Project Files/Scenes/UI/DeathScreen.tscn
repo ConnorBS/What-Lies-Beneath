@@ -1,0 +1,104 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Themes/MainMenu_Overlay.tres" type="Theme" id=1]
+[ext_resource path="res://Scripts/UI/DeathScreen.gd" type="Script" id=2]
+[ext_resource path="res://Shaders/Smoke/fogShaderMaterial.tres" type="Material" id=3]
+
+[sub_resource type="Animation" id=3]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("ColorRect/Press:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("ColorRect/Press:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0.160784 ) ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "pulse text"
+length = 2.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("ColorRect/Press:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1, 2 ),
+"transitions": PoolRealArray( 1, 2, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0.160784 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0.160784 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("ColorRect/Press:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+
+[node name="DeathScreen" type="CanvasLayer"]
+script = ExtResource( 2 )
+
+[node name="ColorRect" type="ColorRect" parent="."]
+visible = false
+material = ExtResource( 3 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.396078, 0, 0, 0.784314 )
+
+[node name="Label" type="Label" parent="ColorRect"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource( 1 )
+text = "You Died"
+align = 1
+valign = 1
+
+[node name="Press" type="Label" parent="ColorRect"]
+visible = false
+modulate = Color( 1, 1, 1, 0.160784 )
+anchor_top = 0.466
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 0.399994
+margin_right = 343.0
+margin_bottom = 103.0
+rect_scale = Vector2( 0.75, 0.75 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource( 1 )
+text = "Press any Button to reload"
+align = 1
+valign = 1
+
+[node name="Tween" type="Tween" parent="."]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/RESET = SubResource( 3 )
+"anims/pulse text" = SubResource( 2 )
+
+[connection signal="tween_completed" from="Tween" to="." method="_on_Tween_tween_completed"]

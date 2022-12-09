@@ -34,6 +34,7 @@ var falling = false
 var flipped = false
 var dialog_state = false
 var melee_attack = false
+var dead = false
 ###############################
 
 var previous_animation:String = ""
@@ -70,6 +71,7 @@ var interactable_object = null
 func _ready():
 	$AnimationTree.active = true
 	level_manager.enable_floor(current_floor)
+	PlayerState.connect("player_died",self,"_on_player_death")
 	pass 
 
 func check_equipped_gun() -> int:
@@ -193,67 +195,68 @@ func reset_melee_action():
 	
 	
 func _process(_delta):
-	###############################################
-	#########Logic After Animation Change##########
-	###############################################
-	if check_if_animation_has_changed():
-		check_if_current_animation_is_shooting()
-		enable_ground_checker(previous_animation)
-		check_if_melee_is_done(previous_animation)
-		$CenterContainer/animationPlaceholder.hide()
-		$CenterContainer/animationPlaceholder.text = "Animation\nPlace Holder\n"
-	if state_machine.get_current_node() == "Climbing_Up_Box" or  state_machine.get_current_node() == "Melee_Attack":
-		change_animation("Idle")
-	###############################################
-	################ Falling Logic#################
-	###############################################
+	if !dead:
+		###############################################
+		#########Logic After Animation Change##########
+		###############################################
+		if check_if_animation_has_changed():
+			check_if_current_animation_is_shooting()
+			enable_ground_checker(previous_animation)
+			check_if_melee_is_done(previous_animation)
+			$CenterContainer/animationPlaceholder.hide()
+			$CenterContainer/animationPlaceholder.text = "Animation\nPlace Holder\n"
+		if state_machine.get_current_node() == "Climbing_Up_Box" or  state_machine.get_current_node() == "Melee_Attack":
+			change_animation("Idle")
+		###############################################
+		################ Falling Logic#################
+		###############################################
 
-	if falling:
-		PlayerState.set_Player_Active(false)
-		action_set_player_active_as_false = true
-		if global_position.y > falling_end_position.y:
-			landing()
-		else:
-			var _velocity = move_and_slide(falling_vector)
-	###############################################
-	#####Input Check if Animation allows it########
-	###############################################
-	elif check_if_current_animation_allows_movement() == true and !climb_box_state:
-		if action_set_player_active_as_false:
-			PlayerState.set_Player_Active(true)
-			action_set_player_active_as_false = false
-		var vector = _get_input()
-		if vector != Vector2.ZERO:
+		if falling:
+			PlayerState.set_Player_Active(false)
+			action_set_player_active_as_false = true
+			if global_position.y > falling_end_position.y:
+				landing()
+			else:
+				var _velocity = move_and_slide(falling_vector)
+		###############################################
+		#####Input Check if Animation allows it########
+		###############################################
+		elif check_if_current_animation_allows_movement() == true and !climb_box_state:
+			if action_set_player_active_as_false:
+				PlayerState.set_Player_Active(true)
+				action_set_player_active_as_false = false
+			var vector = _get_input()
+			if vector != Vector2.ZERO:
+				var _velocity = move_and_slide(vector)
+		elif !climb_box_positions.empty():
+			var _velocity = move_and_slide(climb_box(climb_box_positions))
+			if climb_box_positions.empty():
+				stand_on_box()
+		######################################
+		####Moves Sprite while Climbing#######
+		######################################
+		elif check_if_current_animation_transition_climbing():
+			var vector = snap_to_ladder(interactable_object)
+			vector.y = move_sprite_while_climbing().y
 			var _velocity = move_and_slide(vector)
-	elif !climb_box_positions.empty():
-		var _velocity = move_and_slide(climb_box(climb_box_positions))
-		if climb_box_positions.empty():
-			stand_on_box()
-	######################################
-	####Moves Sprite while Climbing#######
-	######################################
-	elif check_if_current_animation_transition_climbing():
-		var vector = snap_to_ladder(interactable_object)
-		vector.y = move_sprite_while_climbing().y
-		var _velocity = move_and_slide(vector)
-		
-	else:
-		PlayerState.set_Player_Active(false)
-		action_set_player_active_as_false = true
-		
-#	if interact_state == true:
-#		if Input.any_ke
-#			change_animation("Idle")
-#			interact_state = false
-	######################################
-	###########Aiming Gun#################
-	######################################
-	if aim_state:
-		aiming_gun()
-#	if melee_attack:
-#		check_hit()
-	######################################
-	update_previous_animation()
+			
+		else:
+			PlayerState.set_Player_Active(false)
+			action_set_player_active_as_false = true
+			
+	#	if interact_state == true:
+	#		if Input.any_ke
+	#			change_animation("Idle")
+	#			interact_state = false
+		######################################
+		###########Aiming Gun#################
+		######################################
+		if aim_state:
+			aiming_gun()
+	#	if melee_attack:
+	#		check_hit()
+		######################################
+		update_previous_animation()
 func _draw():
 	if aim_state:
 		###Removed Laser Pointer Visual
@@ -444,7 +447,9 @@ func _get_input()->Vector2:
 		else:
 			change_animation("Pushing_Idle")
 		return (velocity * push_box_speed) + snap_to_box(interactable_object.get_parent().snap_position())
-		
+	
+	elif Input.is_action_just_pressed("use_syringe"):
+		use_syringe()
 	else:
 		if (sprint_state == true) and (gun_out_state == false) and has_stamina:
 			velocity = velocity.normalized() * run_speed
@@ -823,4 +828,20 @@ func check_hit(area):
 func receive_damage(damage):
 	print ("you received ",damage," damage")
 	PlayerState.receive_damage(damage)
+	
+######################################################
+################Use Syringe###########################
+######################################################
+
+func use_syringe():
+	PlayerInventory.use_syringe()
+
+######################################################
+##############   Death     ###########################
+######################################################
+
+func _on_player_death():
+	dead = true
+	change_animation("Death")
+	$DeathScreen.show()
 	

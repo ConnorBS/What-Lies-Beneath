@@ -35,26 +35,23 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 color = Color( 0.396078, 0.396078, 0.396078, 1 )
 
-[node name="BlackBox" type="ColorRect" parent="."]
+[node name="TitleCanvas" type="CanvasLayer" parent="."]
+
+[node name="BlackBox" type="ColorRect" parent="TitleCanvas"]
+anchor_top = 0.775
 anchor_right = 1.0
-anchor_bottom = 1.0
+anchor_bottom = 0.905
 margin_left = -275.0
-margin_top = 40.0
 margin_right = 275.0
-margin_bottom = 81.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 color = Color( 0, 0, 0, 0.835294 )
 
-[node name="LevelName" type="Label" parent="BlackBox"]
+[node name="LevelName" type="Label" parent="TitleCanvas/BlackBox"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_top = -4.0
-margin_right = 556.0
-margin_bottom = 53.0
 grow_horizontal = 2
 grow_vertical = 2
-rect_scale = Vector2( 0.5, 0.5 )
 size_flags_horizontal = 7
 size_flags_vertical = 7
 custom_fonts/font = ExtResource( 3 )
@@ -62,10 +59,10 @@ text = "Level Name Title"
 align = 1
 valign = 1
 
-[node name="HoldTimer" type="Timer" parent="BlackBox/LevelName"]
+[node name="HoldTimer" type="Timer" parent="TitleCanvas/BlackBox/LevelName"]
 one_shot = true
 
-[node name="LevelNameTween" type="Tween" parent="BlackBox/LevelName"]
+[node name="LevelNameTween" type="Tween" parent="TitleCanvas/BlackBox/LevelName"]
 
-[connection signal="timeout" from="BlackBox/LevelName/HoldTimer" to="." method="_on_HoldTimer_timeout"]
-[connection signal="tween_completed" from="BlackBox/LevelName/LevelNameTween" to="." method="_on_LevelNameTween_tween_completed"]
+[connection signal="timeout" from="TitleCanvas/BlackBox/LevelName/HoldTimer" to="." method="_on_HoldTimer_timeout"]
+[connection signal="tween_completed" from="TitleCanvas/BlackBox/LevelName/LevelNameTween" to="." method="_on_LevelNameTween_tween_completed"]
