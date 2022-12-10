@@ -65,4 +65,4 @@ void fragment() {
 [resource]
 shader = SubResource( 1 )
 shader_param/OCTAVES = 4
-shader_param/color_hue = Plane( 0.6, 0, 0, 1 )
+shader_param/color_hue = Plane( 1, 1, 1, 1 )

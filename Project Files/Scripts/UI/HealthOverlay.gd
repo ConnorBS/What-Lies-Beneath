@@ -1,15 +1,21 @@
 extends ColorRect
 var _recorded_health
 var _recorded_max_health
-
+onready var green = $ColorRect.color
 #var _troubleshootingSlider:HSlider
 
 func set_health(healthValue,totalHealth)->void:
-	var healthPercentage:float =  1.0 - float(healthValue)/float(totalHealth)
-	if healthPercentage > 1.0:
-		self.material.set("shader_param/static_noise_intensity", 1.0)
+#	var healthPercentage:float =  1.0 - float(healthValue)/float(totalHealth)
+#	if healthPercentage > 1.0:
+#		self.material.set("shader_param/static_noise_intensity", 1.0)
+#	else:
+#		self.material.set("shader_param/static_noise_intensity", healthPercentage)
+	var colourhealthPercentage:float =  float(healthValue)/float(totalHealth)
+	if colourhealthPercentage > 1.0:
+		$ColorRect.color = green
 	else:
-		self.material.set("shader_param/static_noise_intensity", healthPercentage)
+		var topH = green.h
+		$ColorRect.color.h = green.h*colourhealthPercentage
 
 #func _ready():
 #	set_health(95,100)

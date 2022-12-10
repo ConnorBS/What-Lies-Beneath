@@ -59,7 +59,7 @@ func _tween_shrink(topLeft:Vector2,bottomRight:Vector2)->void:
 	_gameScreenResizeTween.interpolate_property(_gamePanelNode,"margin_top",_gamePanelNode.margin_top, topLeft.y,timeToTween)
 	_gameScreenResizeTween.interpolate_property(_gamePanelNode,"margin_right",_gamePanelNode.margin_right, bottomRight.x,timeToTween)
 	_gameScreenResizeTween.interpolate_property(_gamePanelNode,"margin_bottom",_gamePanelNode.margin_bottom, bottomRight.y,timeToTween)
-	_gameScreenResizeTween.interpolate_property(_healthOverlayNode,"self_modulate",_healthOverlayNode.self_modulate,Color(_healthOverlayNode.self_modulate.r,_healthOverlayNode.self_modulate.g,_healthOverlayNode.self_modulate.b,1.0), timeToTween)
+	_gameScreenResizeTween.interpolate_property(_healthOverlayNode,"modulate",_healthOverlayNode.modulate,Color(_healthOverlayNode.modulate.r,_healthOverlayNode.modulate.g,_healthOverlayNode.modulate.b,1.0), timeToTween)
 	
 	_gameScreenResizeTween.start()
 	pass
@@ -69,7 +69,7 @@ func _tween_grow(topLeft:Vector2,bottomRight:Vector2)->void:
 	_gameScreenResizeTween.interpolate_property(_gamePanelNode,"margin_top",_gamePanelNode.margin_top, topLeft.y,timeToTween)
 	_gameScreenResizeTween.interpolate_property(_gamePanelNode,"margin_right",_gamePanelNode.margin_right, bottomRight.x,timeToTween)
 	_gameScreenResizeTween.interpolate_property(_gamePanelNode,"margin_bottom",_gamePanelNode.margin_bottom, bottomRight.y,timeToTween)
-	_gameScreenResizeTween.interpolate_property(_healthOverlayNode,"self_modulate",_healthOverlayNode.self_modulate,Color(_healthOverlayNode.self_modulate.r,_healthOverlayNode.self_modulate.g,_healthOverlayNode.self_modulate.b,0.0), timeToTween)
+	_gameScreenResizeTween.interpolate_property(_healthOverlayNode,"modulate",_healthOverlayNode.modulate,Color(_healthOverlayNode.modulate.r,_healthOverlayNode.modulate.g,_healthOverlayNode.modulate.b,0.0), timeToTween)
 
 	_gameScreenResizeTween.start()
 	pass
