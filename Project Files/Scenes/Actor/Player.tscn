@@ -46,7 +46,7 @@
 [ext_resource path="res://Assets/Animation/Player/Lowering_Shotgun.tres" type="Animation" id=44]
 [ext_resource path="res://Assets/Animation/Player/Idle_Shotgun.tres" type="Animation" id=45]
 [ext_resource path="res://Assets/Audio/Weapons/Pistol_Fire.wav" type="AudioStream" id=46]
-[ext_resource path="res://Assets/Audio/Player/FootStep_Running_Gravel.wav" type="AudioStream" id=47]
+[ext_resource path="res://Assets/Audio/Player/FootStep_Gravel_Walking.wav" type="AudioStream" id=47]
 [ext_resource path="res://Assets/Animation/Player/Melee_Attack.tres" type="Animation" id=48]
 [ext_resource path="res://Assets/Sprites/Player/EthanMeleeAttackSwipe.png" type="Texture" id=49]
 [ext_resource path="res://Assets/UI/Mouse Cursors/Target.png" type="Texture" id=50]
