@@ -359,8 +359,9 @@ func _get_input()->Vector2:
 #				change_animation("Kneeling_Down")
 				$AnimationTree.pause_mode = Node.PAUSE_MODE_PROCESS
 				if interactable_object.get_parent().is_there_a_scene_change():
-					interactable_object.get_parent().change_scene_level()
 					change_animation("Idle")
+					interactable_object.get_parent().change_scene_level()
+					
 					return velocity
 				else:
 					change_animation("Kneeling_Down")
@@ -478,9 +479,10 @@ func flip_sprite(state:bool)->void:
 		flipped = state
 		if flipped:
 			$Sprite.scale.x = -1
+			$Shadow.scale.x = -0.4
 		else:
 			$Sprite.scale.x = 1
-
+			$Shadow.scale.x = 0.4
 
 func clear_aiming()->void:
 	bullet_ray.enabled = false

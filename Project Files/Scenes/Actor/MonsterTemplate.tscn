@@ -1,9 +1,10 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://Scripts/Actor/MonsterTemplate.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Sprites/Monsters/CuddleBuddy/CuddleBuddy.png" type="Texture" id=2]
 [ext_resource path="res://Assets/Animation/Monster/CuddleBuddy/Idle.tres" type="Animation" id=3]
 [ext_resource path="res://Assets/Animation/Monster/CuddleBuddy/Death.tres" type="Animation" id=4]
+[ext_resource path="res://Assets/Sprites/Player/Shadow.png" type="Texture" id=5]
 [ext_resource path="res://Assets/Audio/Player/FootStep_Gravel_Walking.wav" type="AudioStream" id=16]
 [ext_resource path="res://Assets/Sprites/Player/Light.png" type="Texture" id=17]
 [ext_resource path="res://Assets/UI/Button Images/Tab.png" type="Texture" id=18]
@@ -50,6 +51,30 @@ tracks/0/keys = {
 "update": 0,
 "values": [ Vector2( 0.471014, 0.471014 ) ]
 }
+tracks/1/type = "value"
+tracks/1/path = NodePath("../Sprite:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("../Sprite:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, -1 ) ]
+}
 
 [sub_resource type="RectangleShape2D" id=34]
 extents = Vector2( 10, 3.75 )
@@ -70,6 +95,14 @@ extents = Vector2( 10, 6 )
 light_mask = 3
 position = Vector2( 0, 1 )
 script = ExtResource( 1 )
+
+[node name="Shadow" type="Sprite" parent="."]
+modulate = Color( 0, 0, 0, 0.717647 )
+position = Vector2( 0, -2 )
+scale = Vector2( 0.4, 0.13 )
+z_as_relative = false
+texture = ExtResource( 5 )
+offset = Vector2( -5, -5 )
 
 [node name="Sprite" type="Sprite" parent="."]
 position = Vector2( 0, -1 )

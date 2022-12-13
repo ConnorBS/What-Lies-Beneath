@@ -1,4 +1,4 @@
-[gd_scene load_steps=184 format=2]
+[gd_scene load_steps=185 format=2]
 
 [ext_resource path="res://Assets/Animation/Player/Putting_In_Pistol.tres" type="Animation" id=1]
 [ext_resource path="res://Assets/Animation/Player/Walking.tres" type="Animation" id=2]
@@ -45,13 +45,14 @@
 [ext_resource path="res://Assets/Animation/Player/Raising_Shotgun.tres" type="Animation" id=43]
 [ext_resource path="res://Assets/Animation/Player/Lowering_Shotgun.tres" type="Animation" id=44]
 [ext_resource path="res://Assets/Animation/Player/Idle_Shotgun.tres" type="Animation" id=45]
-[ext_resource path="res://Assets/Audio/Weapons/Pistol_Fire.wav" type="AudioStream" id=46]
+[ext_resource path="res://Assets/Audio/Weapons/Shotgun_Fire.wav" type="AudioStream" id=46]
 [ext_resource path="res://Assets/Audio/Player/FootStep_Gravel_Walking.wav" type="AudioStream" id=47]
 [ext_resource path="res://Assets/Animation/Player/Melee_Attack.tres" type="Animation" id=48]
 [ext_resource path="res://Assets/Sprites/Player/EthanMeleeAttackSwipe.png" type="Texture" id=49]
 [ext_resource path="res://Assets/UI/Mouse Cursors/Target.png" type="Texture" id=50]
 [ext_resource path="res://Scenes/UI/DeathScreen.tscn" type="PackedScene" id=51]
 [ext_resource path="res://Assets/Animation/Player/Death.tres" type="Animation" id=52]
+[ext_resource path="res://Assets/Sprites/Player/Shadow.png" type="Texture" id=53]
 
 [sub_resource type="CapsuleShape2D" id=2]
 radius = 6.0
@@ -523,6 +524,18 @@ tracks/0/keys = {
 "update": 0,
 "values": [ false ]
 }
+tracks/1/type = "value"
+tracks/1/path = NodePath("GunFlash:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
 
 [sub_resource type="RectangleShape2D" id=34]
 extents = Vector2( 10, 3.75 )
@@ -541,8 +554,17 @@ light_mask = 3
 position = Vector2( 0, 1 )
 script = ExtResource( 11 )
 
+[node name="Shadow" type="Sprite" parent="."]
+modulate = Color( 0, 0, 0, 0.717647 )
+position = Vector2( 0, -2 )
+scale = Vector2( 0.4, 0.13 )
+z_as_relative = false
+texture = ExtResource( 53 )
+offset = Vector2( -5, -5 )
+
 [node name="Sprite" type="Sprite" parent="."]
 position = Vector2( 0, -2 )
+z_index = 1
 texture = ExtResource( 8 )
 offset = Vector2( 0, -30 )
 hframes = 5
@@ -646,6 +668,7 @@ position = Vector2( 0, -4.25 )
 shape = SubResource( 34 )
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
+visible = false
 margin_left = -69.0
 margin_right = 213.0
 margin_bottom = 50.0
@@ -710,14 +733,6 @@ pause_mode = 2
 stream = ExtResource( 47 )
 volume_db = -12.0
 pitch_scale = 0.6
-
-[node name="Light2D" type="Light2D" parent="."]
-position = Vector2( -1, -31 )
-texture = ExtResource( 17 )
-energy = 0.4
-__meta__ = {
-"_edit_lock_": true
-}
 
 [node name="ClimbingInterations" type="Node2D" parent="."]
 
@@ -799,6 +814,12 @@ scale = Vector2( 0.5, 0.5 )
 z_index = 100
 z_as_relative = false
 texture = ExtResource( 50 )
+
+[node name="GunFlash" type="Light2D" parent="."]
+visible = false
+position = Vector2( 30, -50 )
+texture = ExtResource( 17 )
+energy = 0.4
 
 [node name="DeathScreen" parent="." instance=ExtResource( 51 )]
 

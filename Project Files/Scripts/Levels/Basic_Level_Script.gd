@@ -7,6 +7,7 @@ export (Dictionary) var entrance_locations = {0:Vector2(200,200)}
 export (String) var level_name = "Outside Gas Station"
 export (AudioStream) var background_music
 
+
 onready var playerNode = find_node("Player")
 onready var _camera_node = playerNode.find_node("GameCamera")
 
@@ -35,7 +36,6 @@ func move_to_floor(new_floor,node_to_move):
 	current_floor = new_floor
 #	print (current_floor)
 
-
 #####Disable Backgrounds to avoid unintential overwriting
 func disable_floor(floor_to_disable):
 	var level_node = find_node(make_floor_name(floor_to_disable)).find_node("Background")
@@ -62,6 +62,8 @@ func set_player_pos(spawPointNumber:int)->void:
 		if spawnNode == null:
 			return
 	playerNode.position = spawnNode.position
+	playerNode.flip_sprite(spawnNode.flipped)
+	
 	playerNode.get_parent().remove_child(playerNode)
 	spawnNode.get_parent().add_child(playerNode)
 	playerNode.update_floor_collision(int(spawnNode.get_parent().get_parent().name[5]))
@@ -111,7 +113,7 @@ func clear_dialog():
 
 func change_level(SceneToLoad,PointToLoad):
 	var LoadingLevel = load(SceneToLoad).instance()
-	playerNode.change_animation("Walking")
+#	playerNode.change_animation("Walking")
 	PlayerState.Spawn_Point = PointToLoad
 	emit_signal("change_scene",self,LoadingLevel)
 	
@@ -124,3 +126,10 @@ func save_pickup_state_of_object_in_level(name_of_object,save_data) ->void:
 
 func load_pickup_state_of_object_in_level (name_of_object) -> Dictionary:
 	return PlayerState.load_item_pickup(level_name,name_of_object)
+
+################################################
+######### Monster     #######################
+################################################
+
+func monster_death(monster_node):
+	_camera_node.monster_death()

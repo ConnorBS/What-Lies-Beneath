@@ -327,5 +327,8 @@ margin_top = -202.0
 margin_right = 299.0
 margin_bottom = 176.0
 
+[node name="ScreenShake" type="Tween" parent="."]
+
 [connection signal="timeout" from="TitleCanvas/BlackBox/LevelName/HoldTimer" to="." method="_on_HoldTimer_timeout"]
 [connection signal="tween_completed" from="TitleCanvas/BlackBox/LevelName/LevelNameTween" to="." method="_on_LevelNameTween_tween_completed"]
+[connection signal="tween_all_completed" from="ScreenShake" to="." method="_on_ScreenShake_tween_all_completed"]

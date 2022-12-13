@@ -174,3 +174,29 @@ func _on_LevelNameTween_tween_completed(object, _key):
 
 func _on_HoldTimer_timeout():
 	_tween_out_level_name()
+
+
+##############################################
+############Monster Death  ################
+##############################################
+var screenshake = 0
+
+func monster_death():
+	print(offset_h)
+	$ScreenShake.interpolate_property(self,"offset_h",offset_h, .1,.1,Tween.TRANS_ELASTIC)
+	$ScreenShake.start()
+	screenshake += 1
+	pass
+
+
+func _on_ScreenShake_tween_all_completed():
+	if screenshake ==1:
+		$ScreenShake.interpolate_property(self,"offset_h",offset_h, -.1,.1,Tween.TRANS_ELASTIC)
+		$ScreenShake.start()
+		screenshake += 1
+		pass
+	else:
+		$ScreenShake.interpolate_property(self,"offset_h",offset_h, 0,.1,Tween.TRANS_EXPO)
+		$ScreenShake.start()
+		screenshake = 0
+	pass # Replace with function body.

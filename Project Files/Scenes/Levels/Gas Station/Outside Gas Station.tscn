@@ -249,6 +249,7 @@ position = Vector2( 778, 298 )
 [node name="GameCamera" parent="Floor1/ActorsAndObjects/Player" instance=ExtResource( 14 )]
 pause_mode = 2
 offset = Vector2( 0, -50 )
+zoom = Vector2( 0.2, 0.2 )
 
 [node name="Interact_News" parent="Floor1/ActorsAndObjects" instance=ExtResource( 15 )]
 modulate = Color( 1, 1, 1, 0.564706 )
@@ -373,11 +374,18 @@ position = Vector2( 1421, 359 )
 [node name="SpawnPoint1" parent="Floor1/ActorsAndObjects" instance=ExtResource( 28 )]
 position = Vector2( 36, 301 )
 
-[node name="SpawnPoint2" type="Position2D" parent="Floor1/ActorsAndObjects"]
+[node name="SpawnPoint2" parent="Floor1/ActorsAndObjects" instance=ExtResource( 28 )]
 position = Vector2( 1986, 300 )
+__meta__ = {
+"_editor_description_": ""
+}
+flipped = true
 
-[node name="SpawnPoint3" type="Position2D" parent="Floor1/ActorsAndObjects"]
+[node name="SpawnPoint3" parent="Floor1/ActorsAndObjects" instance=ExtResource( 28 )]
 position = Vector2( 770, 272 )
+__meta__ = {
+"_editor_description_": ""
+}
 
 [node name="Monster" parent="Floor1/ActorsAndObjects" instance=ExtResource( 30 )]
 position = Vector2( 962, 323 )
@@ -466,9 +474,6 @@ position = Vector2( 820, 131 )
 texture = ExtResource( 23 )
 centered = false
 offset = Vector2( 0, -37 )
-
-[node name="SpawnPoint3" type="Position2D" parent="Floor2/ActorsAndObjects"]
-position = Vector2( 638, 128 )
 
 [node name="FogShader" type="TextureRect" parent="."]
 material = SubResource( 4 )

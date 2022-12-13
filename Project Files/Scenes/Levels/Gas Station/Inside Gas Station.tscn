@@ -12,6 +12,7 @@
 [ext_resource path="res://Scenes/Object/Interactable_Ladder.tscn" type="PackedScene" id=19]
 [ext_resource path="res://Scenes/SpawnPoint1.tscn" type="PackedScene" id=28]
 
+
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 1182.5, 73.5 )
 

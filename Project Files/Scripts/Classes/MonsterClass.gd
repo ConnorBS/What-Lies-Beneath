@@ -4,8 +4,9 @@ class_name Monster
 onready var level_manager = get_parent().get_parent().get_parent()
 onready var state_machine = $AnimationTree.get("parameters/playback")
 
+signal monster_died
 
-export (int) var health = 25
+export (int) var health = 1
 export (int) var run_speed = 160
 export (int) var walk_speed = 80
 export (int) var fall_speed = 160
@@ -35,7 +36,7 @@ func die():
 	$MonsterHitBox.queue_free()
 	$InteractableHitBox.queue_free()
 	_dead = true
-	
+	_find_level_node().monster_death(self)
 		
 		
 func _play_death_animation():
@@ -43,7 +44,17 @@ func _play_death_animation():
 	pass
 
 
-
+func _find_level_node() -> Node:
+	var parent = get_parent()
+	while parent != null:
+		if parent.is_in_group("Level"):
+			return parent
+		elif parent == get_tree():
+			push_warning("Tried to find Level Node from Monster, no parents reporting as \"Level\" group")
+			parent = null
+		else:
+			parent = parent.get_parent()
+	return parent
 
 
 func change_animation(animationToChangeTo:String)->void:

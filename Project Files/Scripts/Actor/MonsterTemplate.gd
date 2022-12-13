@@ -15,9 +15,10 @@ func blood_spray(position_to_use,slope):
 	pass
 
 func _on_TouchDamage_area_entered(area):
-	if area.get_parent().is_in_group("Player") and touch_damage_enabled:
-		area.get_parent().receive_damage(touch_damage)
-		touch_damage_enabled = false
+	if !_dead:
+		if area.get_parent().is_in_group("Player") and touch_damage_enabled:
+			area.get_parent().receive_damage(touch_damage)
+			touch_damage_enabled = false
 		
 func _on_WaitTillDamageCanOccurAgain_timeout():
 	touch_damage_enabled = true
@@ -26,7 +27,8 @@ func _on_WaitTillDamageCanOccurAgain_timeout():
 
 
 func _on_TouchDamage_body_entered(body):
-	if body.is_in_group("Player") and touch_damage_enabled:
-		body.receive_damage(touch_damage)
-		touch_damage_enabled = false
-		$TouchDamage/WaitTillDamageCanOccurAgain.start()
+	if !_dead:
+		if body.is_in_group("Player") and touch_damage_enabled:
+			body.receive_damage(touch_damage)
+			touch_damage_enabled = false
+			$TouchDamage/WaitTillDamageCanOccurAgain.start()
