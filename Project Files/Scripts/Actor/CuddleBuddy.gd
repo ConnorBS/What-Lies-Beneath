@@ -17,6 +17,7 @@ var decisionMade = false
 
 func _ready():
 	walk_speed = -walk_speed
+	charge_speed = -charge_speed
 	load_enemy_state()
 
 
@@ -77,6 +78,7 @@ func flip():
 	change_animation("Idle")
 	self.scale.x = -self.scale.x
 	walk_speed = -walk_speed
+	charge_speed = -charge_speed
 	decision_made()
 	
 	print (name+ " has turned itself")
