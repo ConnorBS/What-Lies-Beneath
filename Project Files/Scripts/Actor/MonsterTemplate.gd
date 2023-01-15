@@ -7,6 +7,9 @@ func _process(delta):
 onready var blood_spary_scene = preload("res://Scenes/Effect/BloodSpray.tscn")
 onready var monsterHitBox = $MonsterCriticalHitBox
 
+func _ready():
+	load_enemy_state()
+	
 func blood_spray(position_to_use,slope):
 #	print (position)
 #	var new_blood = blood_spary_scene.instance()
@@ -19,6 +22,7 @@ func _on_TouchDamage_area_entered(area):
 		if area.get_parent().is_in_group("Player") and touch_damage_enabled:
 			area.get_parent().receive_damage(touch_damage)
 			touch_damage_enabled = false
+			save_enemy_state()
 		
 func _on_WaitTillDamageCanOccurAgain_timeout():
 	touch_damage_enabled = true
@@ -32,3 +36,5 @@ func _on_TouchDamage_body_entered(body):
 			body.receive_damage(touch_damage)
 			touch_damage_enabled = false
 			$TouchDamage/WaitTillDamageCanOccurAgain.start()
+			save_enemy_state()
+

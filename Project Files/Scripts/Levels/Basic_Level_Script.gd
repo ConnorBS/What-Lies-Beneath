@@ -131,5 +131,12 @@ func load_pickup_state_of_object_in_level (name_of_object) -> Dictionary:
 ######### Monster     #######################
 ################################################
 
+
+func save_enemy_state_in_level(name_of_enemy,save_data) ->void:
+	PlayerState.save_enemy_state(level_name,name_of_enemy,save_data)
+
+func load_enemy_state_in_level (name_of_enemy) -> Dictionary:
+	return PlayerState.load_enemy_state(level_name,name_of_enemy)
+
 func monster_death(monster_node):
 	_camera_node.monster_death()

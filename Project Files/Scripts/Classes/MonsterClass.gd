@@ -17,6 +17,9 @@ var _dead = false
 export (int) var touch_damage = 30
 var touch_damage_enabled = true
 
+var loot_drop = []
+
+onready var monsterName = get_parent().get_parent().name+" - "+self.name
 func receive_damage(incoming_damage):
 	health -= incoming_damage
 	print (health)
@@ -25,9 +28,11 @@ func receive_damage(incoming_damage):
 		if _dead != true:
 			_play_death_animation()
 			die()
+	save_enemy_state()
 
 func melee_hit(damage):
 	receive_damage(damage)
+	save_enemy_state()
 
 	
 func die():
@@ -62,3 +67,32 @@ func change_animation(animationToChangeTo:String)->void:
 		state_machine.travel(animationToChangeTo)
 
 
+
+func load_enemy_state():
+	var load_data = _find_level_node().load_enemy_state_in_level(monsterName)
+	if !load_data.empty():
+		_dead = load_data["dead"]
+		health = load_data["health"]
+		loot_drop = load_data["loot_drop"]
+		
+		if _dead:
+			
+			$MonsterCriticalHitBox.queue_free()
+			$GroundPosition.queue_free()
+			$MonsterHitBox.queue_free()
+			$InteractableHitBox.queue_free()
+			change_animation("Dead")
+			
+		if _dead and loot_drop.empty():
+			print("Nothing of value here: "+self.name)
+	else: ### If it's not in the save file, it should be, so adds current state into memory
+		save_enemy_state()
+
+func save_enemy_state():
+	var save_data = {
+		"dead":_dead,
+		"health":health,
+		"loot_drop":loot_drop
+		}
+	
+	_find_level_node().save_enemy_state_in_level(monsterName,save_data)

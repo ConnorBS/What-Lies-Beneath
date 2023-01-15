@@ -9,6 +9,7 @@ var _current_level
 var _player_name:String = "Ethan"
 const doors_unlocked = {}
 const item_pickups = {}
+const enemy_state = {}
 const list_of_places_visited = []
 ###### Health ######
 var _Max_Health = 100
@@ -145,3 +146,26 @@ static func check_all_item_pickups_in_level(level_name) -> bool:
 				return false
 	
 	return true
+
+####################################################################
+################  Enemy Saving State                ################
+####################################################################
+
+
+#item_pickups
+static func save_enemy_state (level_name:String,object_name:String,save_data:Dictionary) -> void:
+	if !enemy_state.empty():
+		if enemy_state.has(level_name):
+			enemy_state[level_name][object_name] = save_data
+		else:
+			enemy_state[level_name] ={object_name:save_data}
+	else:
+		enemy_state[level_name] ={object_name:save_data}
+static func load_enemy_state (level_name:String,object_name:String) -> Dictionary:
+	var save_data:Dictionary = {}
+	if !enemy_state.empty():
+		if enemy_state.has(level_name):
+			if enemy_state[level_name].has(object_name):
+				for type in enemy_state[level_name][object_name].keys():
+					save_data[type] = enemy_state[level_name][object_name][type]
+	return save_data

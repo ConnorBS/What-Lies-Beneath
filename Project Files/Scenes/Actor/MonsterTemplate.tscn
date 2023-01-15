@@ -1,10 +1,11 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=28 format=2]
 
 [ext_resource path="res://Scripts/Actor/MonsterTemplate.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Sprites/Monsters/CuddleBuddy/CuddleBuddy.png" type="Texture" id=2]
 [ext_resource path="res://Assets/Animation/Monster/CuddleBuddy/Idle.tres" type="Animation" id=3]
 [ext_resource path="res://Assets/Animation/Monster/CuddleBuddy/Death.tres" type="Animation" id=4]
 [ext_resource path="res://Assets/Sprites/Player/Shadow.png" type="Texture" id=5]
+[ext_resource path="res://Assets/Animation/Monster/CuddleBuddy/Dead.tres" type="Animation" id=6]
 [ext_resource path="res://Assets/Audio/Player/FootStep_Gravel_Walking.wav" type="AudioStream" id=16]
 [ext_resource path="res://Assets/Sprites/Player/Light.png" type="Texture" id=17]
 [ext_resource path="res://Assets/UI/Button Images/Tab.png" type="Texture" id=18]
@@ -18,6 +19,9 @@ height = 32.0
 [sub_resource type="RectangleShape2D" id=45]
 extents = Vector2( 10, 9 )
 
+[sub_resource type="AnimationNodeAnimation" id=82]
+animation = "Dead"
+
 [sub_resource type="AnimationNodeAnimation" id=79]
 animation = "Death"
 
@@ -26,14 +30,21 @@ animation = "Idle"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=80]
 
+[sub_resource type="AnimationNodeStateMachineTransition" id=83]
+switch_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=84]
+
 [sub_resource type="AnimationNodeStateMachine" id=77]
+states/Dead/node = SubResource( 82 )
+states/Dead/position = Vector2( 575, 186 )
 states/Death/node = SubResource( 79 )
-states/Death/position = Vector2( 580, 102 )
+states/Death/position = Vector2( 575, 100 )
 states/Idle/node = SubResource( 76 )
 states/Idle/position = Vector2( 414, 100 )
-transitions = [ "Idle", "Death", SubResource( 80 ) ]
+transitions = [ "Idle", "Death", SubResource( 80 ), "Death", "Dead", SubResource( 83 ), "Idle", "Dead", SubResource( 84 ) ]
 start_node = "Idle"
-end_node = "Death"
+end_node = "Dead"
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=26]
 
@@ -145,6 +156,7 @@ parameters/playback = SubResource( 26 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="AnimationTree"]
 reset_on_save = false
+anims/Dead = ExtResource( 6 )
 anims/Death = ExtResource( 4 )
 anims/Idle = ExtResource( 3 )
 anims/RESET = SubResource( 78 )

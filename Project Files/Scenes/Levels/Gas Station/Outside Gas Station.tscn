@@ -249,7 +249,6 @@ position = Vector2( 778, 298 )
 [node name="GameCamera" parent="Floor1/ActorsAndObjects/Player" instance=ExtResource( 14 )]
 pause_mode = 2
 offset = Vector2( 0, -50 )
-zoom = Vector2( 0.2, 0.2 )
 
 [node name="Interact_News" parent="Floor1/ActorsAndObjects" instance=ExtResource( 15 )]
 modulate = Color( 1, 1, 1, 0.564706 )
