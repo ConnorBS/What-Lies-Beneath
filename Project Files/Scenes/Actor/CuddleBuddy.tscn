@@ -1,0 +1,473 @@
+[gd_scene load_steps=32 format=2]
+
+[ext_resource path="res://Assets/Sprites/Monsters/CuddleBuddy/CuddleBuddySpriteSheet.png" type="Texture" id=1]
+[ext_resource path="res://Scripts/Actor/CuddleBuddy.gd" type="Script" id=2]
+[ext_resource path="res://Assets/Animation/Monster/CuddleBuddy/Idle.tres" type="Animation" id=3]
+[ext_resource path="res://Assets/Animation/Monster/CuddleBuddy/Death.tres" type="Animation" id=4]
+[ext_resource path="res://Assets/Sprites/Player/Shadow.png" type="Texture" id=5]
+[ext_resource path="res://Assets/Animation/Monster/CuddleBuddy/Dead.tres" type="Animation" id=6]
+[ext_resource path="res://Assets/Audio/Player/FootStep_Gravel_Walking.wav" type="AudioStream" id=16]
+[ext_resource path="res://Assets/Sprites/Player/Light.png" type="Texture" id=17]
+[ext_resource path="res://Assets/UI/Button Images/Tab.png" type="Texture" id=18]
+[ext_resource path="res://Assets/Fonts/DynamicFonts/Player_Ingame_Text.tres" type="DynamicFont" id=19]
+[ext_resource path="res://Scripts/Actor/Player_Stamina.gd" type="Script" id=27]
+
+[sub_resource type="CapsuleShape2D" id=2]
+radius = 6.0
+height = 32.0
+
+[sub_resource type="RectangleShape2D" id=45]
+extents = Vector2( 10, 9 )
+
+[sub_resource type="AnimationNodeAnimation" id=82]
+animation = "Dead"
+
+[sub_resource type="AnimationNodeAnimation" id=79]
+animation = "Death"
+
+[sub_resource type="AnimationNodeAnimation" id=76]
+animation = "Idle"
+
+[sub_resource type="AnimationNodeAnimation" id=85]
+animation = "Walk"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=80]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=83]
+switch_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=84]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=86]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=87]
+
+[sub_resource type="AnimationNodeStateMachine" id=77]
+states/Dead/node = SubResource( 82 )
+states/Dead/position = Vector2( 575, 186 )
+states/Death/node = SubResource( 79 )
+states/Death/position = Vector2( 575, 100 )
+states/Idle/node = SubResource( 76 )
+states/Idle/position = Vector2( 414, 100 )
+states/Walk/node = SubResource( 85 )
+states/Walk/position = Vector2( 505, 8 )
+transitions = [ "Idle", "Death", SubResource( 80 ), "Death", "Dead", SubResource( 83 ), "Idle", "Dead", SubResource( 84 ), "Idle", "Walk", SubResource( 86 ), "Walk", "Idle", SubResource( 87 ) ]
+start_node = "Idle"
+end_node = "Dead"
+graph_offset = Vector2( 0, -32.1989 )
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id=26]
+
+[sub_resource type="Animation" id=78]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("../Sprite:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("../Sprite:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("../Sprite:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( -1, -38 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("../Sprite:frame_coords")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, 2 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("../MonsterCriticalHitBox/CollisionPolygon2D:rotation_degrees")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ -17.2168 ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("../MonsterCriticalHitBox/CollisionPolygon2D:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 3, -4 ) ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("../Sprite:offset")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ) ]
+}
+
+[sub_resource type="Animation" id=88]
+resource_name = "Walk"
+length = 0.8
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("../Sprite:frame_coords")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ Vector2( 0, 0 ), Vector2( 1, 0 ), Vector2( 2, 0 ), Vector2( 3, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("../CenterContainer/animationPlaceholder:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("../Sprite:offset")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 2, 9 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("../MonsterCriticalHitBox/CollisionPolygon2D:rotation_degrees")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("../MonsterCriticalHitBox/CollisionPolygon2D:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ) ]
+}
+
+[sub_resource type="RectangleShape2D" id=34]
+extents = Vector2( 10, 3.75 )
+
+[sub_resource type="RectangleShape2D" id=46]
+extents = Vector2( 10, 3 )
+
+[sub_resource type="StyleBoxFlat" id=73]
+bg_color = Color( 0, 0.324219, 0, 1 )
+
+[sub_resource type="StyleBoxFlat" id=74]
+bg_color = Color( 0.6, 0.6, 0.6, 0 )
+
+[sub_resource type="RectangleShape2D" id=81]
+extents = Vector2( 10, 6 )
+
+[node name="CuddleBuddy" type="KinematicBody2D" groups=["Monster"]]
+light_mask = 3
+position = Vector2( 0, 1 )
+script = ExtResource( 2 )
+walk_speed = 500
+
+[node name="Shadow" type="Sprite" parent="."]
+modulate = Color( 0, 0, 0, 0.717647 )
+position = Vector2( 0, -2 )
+scale = Vector2( 0.4, 0.13 )
+z_as_relative = false
+texture = ExtResource( 5 )
+offset = Vector2( -5, -5 )
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( -1, -38 )
+texture = ExtResource( 1 )
+offset = Vector2( 2, 9 )
+hframes = 9
+vframes = 3
+frame = 3
+
+[node name="MonsterHitBox" type="Area2D" parent="." groups=["Monster"]]
+position = Vector2( 0, -34 )
+collision_layer = 65536
+collision_mask = 65536
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MonsterHitBox"]
+position = Vector2( -2, 11 )
+shape = SubResource( 2 )
+
+[node name="MonsterCriticalHitBox" type="Area2D" parent="." groups=["CriticalHit", "Monster"]]
+position = Vector2( 0, -34 )
+collision_layer = 65536
+collision_mask = 65536
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="MonsterCriticalHitBox"]
+polygon = PoolVector2Array( -5, -14, 2, -19, 4, -24, 6, -23, 9, -24, 13.0636, -25.2654, 16, -19, 15, -12, 8, -9, -8.07198, -7.73584 )
+
+[node name="InteractableHitBox" type="Area2D" parent="." groups=["Monster"]]
+position = Vector2( 1, -34 )
+collision_layer = 1024
+collision_mask = 1024
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractableHitBox"]
+position = Vector2( -1, 25 )
+shape = SubResource( 45 )
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+pause_mode = 2
+tree_root = SubResource( 77 )
+anim_player = NodePath("AnimationPlayer")
+active = true
+parameters/playback = SubResource( 26 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="AnimationTree"]
+reset_on_save = false
+anims/Dead = ExtResource( 6 )
+anims/Death = ExtResource( 4 )
+anims/Idle = ExtResource( 3 )
+anims/RESET = SubResource( 78 )
+anims/Walk = SubResource( 88 )
+
+[node name="GroundPosition" type="CollisionShape2D" parent="." groups=["Monster"]]
+position = Vector2( 0, -4.25 )
+shape = SubResource( 34 )
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+margin_left = -69.0
+margin_right = 213.0
+margin_bottom = 50.0
+rect_scale = Vector2( 0.5, 0.5 )
+
+[node name="animationPlaceholder" type="Label" parent="CenterContainer"]
+visible = false
+margin_left = 100.0
+margin_top = 1.0
+margin_right = 181.0
+margin_bottom = 49.0
+grow_horizontal = 2
+grow_vertical = 2
+rect_pivot_offset = Vector2( 40, 28 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Animation
+Place Holder
+Idle"
+align = 1
+valign = 1
+
+[node name="InteractPopUp" type="HBoxContainer" parent="."]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -19.0
+margin_top = -23.0
+margin_right = 60.0
+margin_bottom = -4.0
+rect_scale = Vector2( 0.5, 0.5 )
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="TextureRect" type="TextureRect" parent="InteractPopUp"]
+margin_right = 20.0
+margin_bottom = 19.0
+rect_min_size = Vector2( 20, 18 )
+texture = ExtResource( 18 )
+stretch_mode = 6
+
+[node name="Interact" type="Label" parent="InteractPopUp"]
+margin_left = 24.0
+margin_right = 79.0
+margin_bottom = 19.0
+custom_fonts/font = ExtResource( 19 )
+text = "Interact"
+align = 1
+valign = 1
+
+[node name="SFX" type="AudioStreamPlayer2D" parent="."]
+pause_mode = 2
+stream = ExtResource( 16 )
+volume_db = -12.0
+pitch_scale = 0.6
+
+[node name="Light2D" type="Light2D" parent="."]
+visible = false
+position = Vector2( -1, -31 )
+texture = ExtResource( 17 )
+energy = 0.4
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="ClimbingInterations" type="Node2D" parent="."]
+visible = false
+
+[node name="ClimbingHitBoxTop" type="Area2D" parent="ClimbingInterations"]
+position = Vector2( 1, -27 )
+collision_layer = 7168
+collision_mask = 7168
+monitoring = false
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ClimbingInterations/ClimbingHitBoxTop"]
+position = Vector2( -1, -24 )
+shape = SubResource( 46 )
+
+[node name="ClimbingHitBoxBottom" type="Area2D" parent="ClimbingInterations"]
+position = Vector2( 1, -34 )
+collision_layer = 7168
+collision_mask = 7168
+monitoring = false
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ClimbingInterations/ClimbingHitBoxBottom"]
+position = Vector2( -1, 22 )
+shape = SubResource( 46 )
+
+[node name="OverheadText" type="Label" parent="."]
+margin_left = -84.0
+margin_top = -79.0
+margin_right = 85.0
+margin_bottom = -60.0
+grow_horizontal = 2
+grow_vertical = 2
+rect_scale = Vector2( 0.5, 0.5 )
+rect_pivot_offset = Vector2( 84, 10 )
+size_flags_horizontal = 6
+size_flags_vertical = 2
+custom_fonts/font = ExtResource( 19 )
+align = 1
+valign = 1
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="TextDelay" type="Timer" parent="OverheadText"]
+wait_time = 0.09
+one_shot = true
+
+[node name="FadeOut" type="Tween" parent="OverheadText"]
+
+[node name="Voice" type="AudioStreamPlayer2D" parent="."]
+position = Vector2( -19, -23 )
+scale = Vector2( 0.5, 0.5 )
+bus = "Voice"
+
+[node name="Stamina" type="ProgressBar" parent="."]
+visible = false
+margin_left = 15.0
+margin_top = -27.0
+margin_right = 30.0
+margin_bottom = -24.0
+rect_rotation = -90.0
+custom_styles/fg = SubResource( 73 )
+custom_styles/bg = SubResource( 74 )
+step = 0.1
+value = 100.0
+percent_visible = false
+script = ExtResource( 27 )
+
+[node name="TouchDamage" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TouchDamage"]
+position = Vector2( 0, -4 )
+scale = Vector2( 1.3194, 1.33585 )
+shape = SubResource( 81 )
+
+[node name="WaitTillDamageCanOccurAgain" type="Timer" parent="TouchDamage"]
+one_shot = true
+
+[node name="PlayerVision" type="RayCast2D" parent="."]
+position = Vector2( -4, -30 )
+scale = Vector2( 0.5, 0.5 )
+enabled = true
+cast_to = Vector2( -108, 0 )
+collision_mask = 2147483904
+collide_with_areas = true
+
+[node name="WallVision" type="RayCast2D" parent="."]
+position = Vector2( -4, -30 )
+scale = Vector2( 0.5, 0.5 )
+cast_to = Vector2( -36, 0 )
+collision_mask = 0
+
+[node name="DecisionTimer" type="Timer" parent="."]
+
+[connection signal="area_entered" from="MonsterHitBox" to="." method="_on_MonsterHitBox_area_entered"]
+[connection signal="area_entered" from="InteractableHitBox" to="." method="_on_InteractableHitBox_area_entered"]
+[connection signal="area_exited" from="InteractableHitBox" to="." method="_on_InteractableHitBox_area_exited"]
+[connection signal="area_entered" from="ClimbingInterations/ClimbingHitBoxTop" to="." method="_on_ClimbingHitBoxTop_area_entered"]
+[connection signal="area_exited" from="ClimbingInterations/ClimbingHitBoxTop" to="." method="_on_ClimbingHitBoxTop_area_exited"]
+[connection signal="area_entered" from="ClimbingInterations/ClimbingHitBoxBottom" to="." method="_on_ClimbingHitBoxBottom_area_entered"]
+[connection signal="area_exited" from="ClimbingInterations/ClimbingHitBoxBottom" to="." method="_on_ClimbingHitBoxBottom_area_exited"]
+[connection signal="timeout" from="OverheadText/TextDelay" to="." method="_on_TextDelay_timeout"]
+[connection signal="tween_completed" from="OverheadText/FadeOut" to="." method="_on_FadeOut_tween_completed"]
+[connection signal="out_of_stamina" from="Stamina" to="." method="_on_Stamina_out_of_stamina"]
+[connection signal="stamina_filled" from="Stamina" to="." method="_on_Stamina_stamina_filled"]
+[connection signal="area_entered" from="TouchDamage" to="." method="_on_TouchDamage_area_entered"]
+[connection signal="body_entered" from="TouchDamage" to="." method="_on_TouchDamage_body_entered"]
+[connection signal="timeout" from="TouchDamage/WaitTillDamageCanOccurAgain" to="." method="_on_WaitTillDamageCanOccurAgain_timeout"]
+[connection signal="timeout" from="DecisionTimer" to="." method="_on_DecisionTimer_timeout"]

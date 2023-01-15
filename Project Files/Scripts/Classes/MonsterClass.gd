@@ -9,6 +9,7 @@ signal monster_died
 export (int) var health = 1
 export (int) var run_speed = 160
 export (int) var walk_speed = 80
+export (int) var charge_speed = 1000
 export (int) var fall_speed = 160
 
 export (int) var current_floor = 1
@@ -74,6 +75,7 @@ func load_enemy_state():
 		_dead = load_data["dead"]
 		health = load_data["health"]
 		loot_drop = load_data["loot_drop"]
+		self.position = load_data["position"]
 		
 		if _dead:
 			
@@ -92,7 +94,8 @@ func save_enemy_state():
 	var save_data = {
 		"dead":_dead,
 		"health":health,
-		"loot_drop":loot_drop
+		"loot_drop":loot_drop,
+		"position":self.position
 		}
 	
 	_find_level_node().save_enemy_state_in_level(monsterName,save_data)

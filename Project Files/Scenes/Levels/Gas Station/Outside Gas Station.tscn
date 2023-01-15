@@ -29,7 +29,7 @@
 [ext_resource path="res://Scenes/Object/ExitZone.tscn" type="PackedScene" id=27]
 [ext_resource path="res://Scenes/SpawnPoint1.tscn" type="PackedScene" id=28]
 [ext_resource path="res://Assets/Audio/BackgroundMusic/Unseen Town.wav" type="AudioStream" id=29]
-[ext_resource path="res://Scenes/Actor/MonsterTemplate.tscn" type="PackedScene" id=30]
+[ext_resource path="res://Scenes/Actor/CuddleBuddy.tscn" type="PackedScene" id=30]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 1182.5, 73.5 )
@@ -286,6 +286,10 @@ texture = ExtResource( 10 )
 centered = false
 offset = Vector2( -524, -159 )
 
+[node name="CuddleBuddy" parent="Floor1/ActorsAndObjects" instance=ExtResource( 30 )]
+position = Vector2( 976, 298 )
+charge_speed = 2500
+
 [node name="GasBuildingOverHang" type="Sprite" parent="Floor1/ActorsAndObjects"]
 modulate = Color( 1, 1, 1, 0.564706 )
 position = Vector2( 628, 284 )
@@ -385,9 +389,6 @@ position = Vector2( 770, 272 )
 __meta__ = {
 "_editor_description_": ""
 }
-
-[node name="Monster" parent="Floor1/ActorsAndObjects" instance=ExtResource( 30 )]
-position = Vector2( 962, 323 )
 
 [node name="Floor2" type="Node2D" parent="."]
 
