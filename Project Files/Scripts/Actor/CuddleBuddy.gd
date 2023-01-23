@@ -5,7 +5,7 @@ onready var monsterHitBox = $MonsterCriticalHitBox
 onready var playerVisionNode = $PlayerVision
 onready var wallVisionNode =  $WallVision
 onready var decisionTimerNode = $DecisionTimer
-
+onready var attackZoneNode = $AttackZone
 export (float) var chance_to_turn = 0.5
 export (float) var chance_to_walk = 0.5
 export (float) var time_to_make_decision = 5.0
@@ -14,6 +14,7 @@ enum STATE {IDLE,WALK,CHARGE,ATTACK}
 var currentState = STATE.IDLE
 var justFlipped = false
 var decisionMade = false
+var playerInAttackZone = false
 
 func _ready():
 	walk_speed = -walk_speed
@@ -73,6 +74,15 @@ func charge():
 	decision_made()
 	
 	print (name+ " is now Charging")
+	
+func attack():
+	currentState = STATE.ATTACK
+	change_animation("Idle")
+	change_animation("Attack")
+	decision_made(1.8)
+	print(name+ " is now Attacking")
+	pass
+
 func flip():
 	currentState = STATE.IDLE
 	change_animation("Idle")
@@ -83,9 +93,9 @@ func flip():
 	
 	print (name+ " has turned itself")
 	
-func decision_made():
+func decision_made(optional_time = time_to_make_decision):
 	decisionMade = true
-	decisionTimerNode.wait_time = time_to_make_decision
+	decisionTimerNode.wait_time = optional_time
 	decisionTimerNode.start()
 	
 func walk_forward():
@@ -135,4 +145,19 @@ func reset_state():
 func _on_DecisionTimer_timeout():
 #	if currentState == STATE.WALK:
 #		change_animation("idle")
-	reset_state()
+	if currentState == STATE.ATTACK and playerInAttackZone:
+		attack()
+	else:
+		reset_state()
+
+
+func _on_AttackZone_body_entered(body):
+	playerInAttackZone = true
+	attack()
+	
+	pass # Replace with function body.
+
+
+func _on_AttackZone_body_exited(body):
+	playerInAttackZone  = false
+	pass # Replace with function body.

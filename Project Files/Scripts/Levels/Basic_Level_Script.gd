@@ -6,7 +6,7 @@ var current_floor
 export (Dictionary) var entrance_locations = {0:Vector2(200,200)}
 export (String) var level_name = "Outside Gas Station"
 export (AudioStream) var background_music
-
+export (bool) var save_enemies = true
 
 onready var playerNode = find_node("Player")
 onready var _camera_node = playerNode.find_node("GameCamera")
@@ -133,10 +133,13 @@ func load_pickup_state_of_object_in_level (name_of_object) -> Dictionary:
 
 
 func save_enemy_state_in_level(name_of_enemy,save_data) ->void:
-	PlayerState.save_enemy_state(level_name,name_of_enemy,save_data)
+	if save_enemies:
+		PlayerState.save_enemy_state(level_name,name_of_enemy,save_data)
 
 func load_enemy_state_in_level (name_of_enemy) -> Dictionary:
-	return PlayerState.load_enemy_state(level_name,name_of_enemy)
+	if save_enemies:
+		return PlayerState.load_enemy_state(level_name,name_of_enemy)
+	return {}
 
 func monster_death(monster_node):
 	_camera_node.monster_death()
