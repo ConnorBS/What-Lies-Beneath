@@ -59,7 +59,10 @@ func get_melee_damage() -> int:
 	if _equipped_melee_weapon != null:
 		return 4
 	return 0
-		
+
+func get_melee_weapon():
+	return _equipped_melee_weapon
+	
 ###########################
 #### Player Inventory #####
 ###########################

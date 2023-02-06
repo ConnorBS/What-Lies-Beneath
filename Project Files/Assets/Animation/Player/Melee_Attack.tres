@@ -2,7 +2,7 @@
 
 [resource]
 resource_name = "Melee_Attack"
-length = 0.5
+length = 2.8
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame_coords")
@@ -11,10 +11,10 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.2 ),
-"transitions": PoolRealArray( 1, 1 ),
+"times": PoolRealArray( 0, 0.2, 0.4, 0.8, 1.2, 1.4, 1.6, 1.8, 2, 2.2, 2.4, 2.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
 "update": 1,
-"values": [ Vector2( 2, 3 ), Vector2( 3, 3 ) ]
+"values": [ Vector2( 0, 14 ), Vector2( 1, 14 ), Vector2( 2, 14 ), Vector2( 3, 14 ), Vector2( 4, 14 ), Vector2( 5, 14 ), Vector2( 6, 14 ), Vector2( 7, 14 ), Vector2( 8, 14 ), Vector2( 9, 14 ), Vector2( 10, 14 ), Vector2( 11, 14 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("CenterContainer/animationPlaceholder:text")
@@ -40,65 +40,29 @@ tracks/2/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ true ]
+"values": [ false ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("Sprite/MeleeSwipe:frame_coords")
+tracks/3/path = NodePath("Sprite/MeleeAttack:monitoring")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
 tracks/3/enabled = true
 tracks/3/keys = {
-"times": PoolRealArray( 0.1, 0.2, 0.3 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
+"times": PoolRealArray( 1.1, 1.2, 1.5, 1.6, 1.8, 2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
 "update": 1,
-"values": [ Vector2( 0, 0 ), Vector2( 1, 0 ), Vector2( 2, 0 ) ]
+"values": [ false, true, true, false, true, false ]
 }
 tracks/4/type = "value"
-tracks/4/path = NodePath("Sprite/MeleeSwipe:visible")
+tracks/4/path = NodePath("Sprite/MeleeAttack:visible")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/imported = false
 tracks/4/enabled = true
 tracks/4/keys = {
-"times": PoolRealArray( 0, 0.1, 0.4, 0.5 ),
-"transitions": PoolRealArray( 1, 1, 1, 1 ),
-"update": 1,
-"values": [ false, true, true, false ]
-}
-tracks/5/type = "value"
-tracks/5/path = NodePath("Sprite/MeleeAttack:monitoring")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/keys = {
-"times": PoolRealArray( 0, 0.1, 0.4, 0.5 ),
-"transitions": PoolRealArray( 1, 1, 1, 1 ),
-"update": 1,
-"values": [ false, true, true, false ]
-}
-tracks/6/type = "value"
-tracks/6/path = NodePath("Sprite/MeleeAttack/CollisionPolygon2D:position")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/imported = false
-tracks/6/enabled = true
-tracks/6/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5 ),
+"times": PoolRealArray( 1.1, 1.2, 1.5, 1.6, 1.8, 2 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
-"update": 0,
-"values": [ Vector2( 11.6375, -3.99999 ), Vector2( 11.6375, -3.99999 ), Vector2( 20, 10 ), Vector2( 25, 25 ), Vector2( 25, 25 ), Vector2( 11.6375, -3.99999 ) ]
-}
-tracks/7/type = "value"
-tracks/7/path = NodePath("Sprite/MeleeAttack:visible")
-tracks/7/interp = 1
-tracks/7/loop_wrap = true
-tracks/7/imported = false
-tracks/7/enabled = true
-tracks/7/keys = {
-"times": PoolRealArray( 0, 0.1, 0.4, 0.5 ),
-"transitions": PoolRealArray( 1, 1, 1, 1 ),
 "update": 1,
-"values": [ false, true, true, false ]
+"values": [ false, true, true, false, true, false ]
 }

@@ -2,7 +2,7 @@
 
 [resource]
 resource_name = "Raising_Pistol"
-length = 0.4
+length = 0.001
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame_coords")
 tracks/0/interp = 1
@@ -13,7 +13,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 0.2 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 1,
-"values": [ Vector2( 0, 6 ), Vector2( 3, 3 ) ]
+"values": [ Vector2( 0, 5 ), Vector2( 0, 9 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("CenterContainer/animationPlaceholder:visible")

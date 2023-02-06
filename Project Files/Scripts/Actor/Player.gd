@@ -73,6 +73,8 @@ func _ready():
 	$AnimationTree.active = true
 	level_manager.enable_floor(current_floor)
 	PlayerState.connect("player_died",self,"_on_player_death")
+	if PlayerInventory.get_melee_weapon() != null:
+		get_node("Sprite").texture = load("res://Assets/Sprites/Player/Ethan_With_Crowbar.png")
 	pass 
 
 func check_equipped_gun() -> int:
