@@ -841,3 +841,12 @@ func _on_player_death():
 	change_animation("Death")
 	$DeathScreen.show()
 	
+######################################################
+##############   Lights    ###########################
+######################################################
+
+func set_the_lights(turnOnLight):
+	if turnOnLight:
+		find_node("FlashLight").enabled = true
+	else:
+		find_node("FlashLight").enabled = false

@@ -1,4 +1,4 @@
-extends Node
+extends Node2D
 
 export (int) var level_width = 2022
 export (int) var level_height = 360
@@ -7,6 +7,8 @@ export (Dictionary) var entrance_locations = {0:Vector2(200,200)}
 export (String) var level_name = "Outside Gas Station"
 export (AudioStream) var background_music
 export (bool) var save_enemies = true
+
+export (bool) var requires_lighting = false
 
 onready var playerNode = find_node("Player")
 onready var _camera_node = playerNode.find_node("GameCamera")
@@ -25,6 +27,8 @@ func _ready():
 	get_tree().get_root().get_node("GameScreen").update_backgroundMusic(background_music)
 	PlayerState.set_current_level(level_name)
 	_camera_node.enter_scene(level_name)
+	
+	set_lighting(requires_lighting)
 	pass
 
 func move_to_floor(new_floor,node_to_move):
@@ -143,3 +147,12 @@ func load_enemy_state_in_level (name_of_enemy) -> Dictionary:
 
 func monster_death(monster_node):
 	_camera_node.monster_death()
+
+################################################
+######### Lighting Config #######################
+################################################
+
+func set_lighting(needs_lighting):
+	if needs_lighting:
+		self.modulate = Color(.40,.40,.40)
+	playerNode.set_the_lights(needs_lighting)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=185 format=2]
+[gd_scene load_steps=186 format=2]
 
 [ext_resource path="res://Assets/Animation/Player/Putting_In_Pistol.tres" type="Animation" id=1]
 [ext_resource path="res://Assets/Animation/Player/Walking.tres" type="Animation" id=2]
@@ -53,6 +53,7 @@
 [ext_resource path="res://Scenes/UI/DeathScreen.tscn" type="PackedScene" id=51]
 [ext_resource path="res://Assets/Animation/Player/Death.tres" type="Animation" id=52]
 [ext_resource path="res://Assets/Sprites/Player/Shadow.png" type="Texture" id=53]
+[ext_resource path="res://Assets/Sprites/Player/FlashLight.png" type="Texture" id=54]
 
 [sub_resource type="CapsuleShape2D" id=2]
 radius = 6.0
@@ -566,7 +567,6 @@ offset = Vector2( -5, -5 )
 
 [node name="Sprite" type="Sprite" parent="."]
 position = Vector2( 0, -2 )
-z_index = 1
 texture = ExtResource( 8 )
 offset = Vector2( 0, -30 )
 hframes = 5
@@ -593,6 +593,12 @@ priority = 10.0
 position = Vector2( 11.6375, -3.99999 )
 scale = Vector2( 0.585052, 1.05807 )
 polygon = PoolVector2Array( 11, -53, 17, -51, 22, -45, 18, -38, 16, -36, 14, -35, 8, -33, 3, -33, 0, -42 )
+
+[node name="FlashLight" type="Light2D" parent="Sprite"]
+position = Vector2( 200, -24 )
+scale = Vector2( 0.421543, 0.421543 )
+texture = ExtResource( 54 )
+energy = 1.95
 
 [node name="PlayerHitBox" type="Area2D" parent="." groups=["Player"]]
 position = Vector2( 0, -34 )

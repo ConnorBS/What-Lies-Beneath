@@ -38,13 +38,14 @@ shader_param/tile_factor_2 = 0.3
 shader_param/noise_texture_2 = ExtResource( 18 )
 shader_param/gradient_texture = SubResource( 11 )
 
-[node name="Inside Gas Station" type="Node" groups=["Level"]]
+[node name="Inside Gas Station" type="Node2D" groups=["Level"]]
 pause_mode = 1
 script = ExtResource( 16 )
 level_width = 673
 level_height = 216
 level_name = "Inside Gas Station"
 background_music = ExtResource( 1 )
+requires_lighting = true
 
 [node name="FlatBackground" type="TextureRect" parent="."]
 margin_right = 40.0
