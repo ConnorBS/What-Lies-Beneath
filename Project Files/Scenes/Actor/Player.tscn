@@ -595,7 +595,7 @@ scale = Vector2( 0.585052, 1.05807 )
 polygon = PoolVector2Array( 11, -53, 17, -51, 22, -45, 18, -38, 16, -36, 14, -35, 8, -33, 3, -33, 0, -42 )
 
 [node name="FlashLight" type="Light2D" parent="Sprite"]
-position = Vector2( 200, -24 )
+position = Vector2( 155, -41 )
 scale = Vector2( 0.421543, 0.421543 )
 texture = ExtResource( 54 )
 energy = 1.95

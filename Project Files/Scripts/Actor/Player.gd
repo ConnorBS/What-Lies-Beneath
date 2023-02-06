@@ -35,6 +35,7 @@ var flipped = false
 var dialog_state = false
 var melee_attack = false
 var dead = false
+var flashlight_state = false
 ###############################
 
 var previous_animation:String = ""
@@ -274,6 +275,13 @@ func _input(event):
 
 func _get_input()->Vector2:
 	var velocity = Vector2.ZERO
+	
+	
+	##############################################
+	##########Flash Light Logic###################
+	##############################################
+	if Input.is_action_just_pressed("flashlight"):
+		toggle_light()
 	if !PlayerState.get_Player_Active():
 		return velocity
 	##############################################
@@ -846,7 +854,17 @@ func _on_player_death():
 ######################################################
 
 func set_the_lights(turnOnLight):
+	flashlight_state = turnOnLight
 	if turnOnLight:
 		find_node("FlashLight").enabled = true
 	else:
 		find_node("FlashLight").enabled = false
+
+func toggle_light():
+	if flashlight_state:
+		var flashlightNode = find_node("FlashLight")
+		if flashlightNode.enabled == true:
+			flashlightNode.enabled = false
+		else:
+			flashlightNode.enabled = true
+		
