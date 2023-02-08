@@ -29,6 +29,7 @@ func _ready():
 	_camera_node.enter_scene(level_name)
 	
 	set_lighting(requires_lighting)
+	SaveAndLoad.load_game()
 	pass
 
 func move_to_floor(new_floor,node_to_move):
@@ -117,6 +118,8 @@ func clear_dialog():
 
 func change_level(SceneToLoad,PointToLoad):
 	var LoadingLevel = load(SceneToLoad).instance()
+	
+	SaveAndLoad.save_game()
 #	playerNode.change_animation("Walking")
 	PlayerState.Spawn_Point = PointToLoad
 	emit_signal("change_scene",self,LoadingLevel)
@@ -147,6 +150,7 @@ func load_enemy_state_in_level (name_of_enemy) -> Dictionary:
 
 func monster_death(monster_node):
 	_camera_node.monster_death()
+	SaveAndLoad.save_game()
 
 ################################################
 ######### Lighting Config #######################

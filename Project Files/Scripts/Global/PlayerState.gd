@@ -17,6 +17,60 @@ var _Current_Health:int
 
 signal player_died
 
+#################################################
+######   Save / Load Functions ##################
+#################################################
+
+func get_save_state()-> Dictionary:
+	
+	return {
+		"doors_unlocked":doors_unlocked,
+		"item_pickups":item_pickups,
+		"enemy_state": enemy_state,
+		"list_of_places_visited":list_of_places_visited,
+		
+		"_Max_Health":_Max_Health,
+		"_Current_Health":_Current_Health,
+		
+		"_Player_ACTIVE": _Player_ACTIVE,
+		"Spawn_Point":Spawn_Point,
+		"_current_level":_current_level,
+		"_player_name":_player_name,
+		
+		
+	}
+func write_load_state(load_data:Dictionary)->void:
+	var tables_to_load = [doors_unlocked, item_pickups, enemy_state, list_of_places_visited]
+	for table in tables_to_load:
+		table.clear()
+		
+	if !load_data.empty():
+		write_new_const_dict(doors_unlocked, load_data["doors_unlocked"])
+		write_new_const_dict(item_pickups, load_data["item_pickups"])
+		write_new_const_dict(enemy_state, load_data["enemy_state"])
+		for item in load_data["list_of_places_visited"]:
+			list_of_places_visited.append(item)
+			
+		_Max_Health = load_data["_Max_Health"]
+		_Current_Health = load_data["_Current_Health"]
+		
+		_Player_ACTIVE = load_data["_Player_ACTIVE"]
+		Spawn_Point = load_data["Spawn_Point"]
+		_current_level = load_data["_current_level"]
+		_player_name = load_data["_player_name"]
+		
+	pass
+
+
+func write_new_const_dict(old_dict, new_dict):
+	var keys = new_dict.keys()
+	for key in keys:
+		old_dict[key] = new_dict[key]
+	
+	
+################################################
+	
+	
 func get_player_name()->String:
 	return _player_name
 

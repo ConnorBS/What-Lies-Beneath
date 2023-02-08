@@ -16,7 +16,42 @@ const _locations:Dictionary = {}
 var _weapon_table = {"Pistol":GUNTYPES.PISTOL,"Shotgun":GUNTYPES.SHOTGUN}
 var _equipped_melee_weapon
 
+func get_save_state()-> Dictionary:
+	
+	return {
+		"_inventory":_inventory,
+		"_key_items":_key_items,
+		"_map_fragments": _map_fragments,
+		"_locations":_locations,
+		"equipped_gun":_equipped_gun,
+		"_equipped_melee_weapon":_equipped_melee_weapon,
+		
+	}
+func write_load_state(load_data:Dictionary)->void:
+	var tables_to_load = [_inventory, _key_items, _map_fragments, _locations]
+	for table in tables_to_load:
+		clear_dictionary(table)
+		
+	if !load_data.empty():
+		write_new_const_dict(_inventory, load_data["_inventory"])
+		write_new_const_dict(_key_items, load_data["_key_items"])
+		write_new_const_dict(_map_fragments, load_data["_map_fragments"])
+		write_new_const_dict(_locations, load_data["_locations"])
+		equipped_gun = load_data["_equipped_gun"]
+		_equipped_melee_weapon = load_data["_equipped_melee_weapon"]
+	pass
 
+static func clear_dictionary (dict_to_clear:Dictionary):
+#	var keys = dict_to_clear.keys()
+#	for key in keys:
+	dict_to_clear.clear()
+
+func write_new_const_dict(old_dict, new_dict):
+	var keys = new_dict.keys()
+	for key in keys:
+		old_dict[key] = new_dict[key]
+	
+	
 func _ready():
 	#############
 #	Load Items
