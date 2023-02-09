@@ -4,7 +4,7 @@ extends Node
 enum GUNTYPES {NONE,PISTOL,SHOTGUN,RIFLE}
 const SYRINGE_LIST = ["Small Plant","Medium Sized Plant","Large Sized Plant"] #Weakest -> Strongest
 
-onready var equipped_gun = GUNTYPES.NONE
+onready var equipped_gun_type = GUNTYPES.NONE
 
 ###### Inventory ######
 var _equipped_gun:Inventory.Items
@@ -23,7 +23,8 @@ func get_save_state()-> Dictionary:
 		"_key_items":_key_items,
 		"_map_fragments": _map_fragments,
 		"_locations":_locations,
-		"equipped_gun":_equipped_gun,
+		"_equipped_gun":_equipped_gun,
+		"equipped_gun_type":equipped_gun_type,
 		"_equipped_melee_weapon":_equipped_melee_weapon,
 		
 	}
@@ -37,7 +38,8 @@ func write_load_state(load_data:Dictionary)->void:
 		write_new_const_dict(_key_items, load_data["_key_items"])
 		write_new_const_dict(_map_fragments, load_data["_map_fragments"])
 		write_new_const_dict(_locations, load_data["_locations"])
-		equipped_gun = load_data["_equipped_gun"]
+		_equipped_gun = load_data["_equipped_gun"]
+		equipped_gun_type = load_data["equipped_gun_type"]
 		_equipped_melee_weapon = load_data["_equipped_melee_weapon"]
 	pass
 
@@ -177,13 +179,13 @@ func equip(item):
 #		add_item(current_equipment)
 		unequip()
 	_equipped_gun = item
-	equipped_gun =_weapon_table[_equipped_gun.name]
+	equipped_gun_type =_weapon_table[_equipped_gun.name]
 	remove_item(_equipped_gun)
 
 func unequip():
 	var item_to_unequip = _equipped_gun
 	_equipped_gun = null
-	equipped_gun = GUNTYPES.NONE
+	equipped_gun_type = GUNTYPES.NONE
 	add_item(item_to_unequip)
 	
 func get_equiped_item()->Inventory.Items:

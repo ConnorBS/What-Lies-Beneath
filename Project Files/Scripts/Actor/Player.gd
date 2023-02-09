@@ -64,7 +64,7 @@ var falling_vector = Vector2.ZERO
 
 var action_set_player_active_as_false = false
 
-var gun_selected = PlayerInventory.equipped_gun
+var gun_selected = PlayerInventory.equipped_gun_type
 var gun_name:String = ""
 var interactable_object = null
 
@@ -78,7 +78,7 @@ func _ready():
 	pass 
 
 func check_equipped_gun() -> int:
-	gun_selected = PlayerInventory.equipped_gun
+	gun_selected = PlayerInventory.equipped_gun_type
 	gun_name = PlayerInventory.get_weapon_type(gun_selected)
 #	print (gun_selected)
 	return gun_selected
@@ -327,7 +327,7 @@ func _get_input()->Vector2:
 			else:
 				return velocity
 		elif Input.is_action_just_pressed("aim"):
-			if PlayerInventory.equipped_gun != PlayerInventory.GUNTYPES.NONE:
+			if PlayerInventory.equipped_gun_type != PlayerInventory.GUNTYPES.NONE:
 				change_animation("Aiming_" + gun_name)
 				aim_state = true
 	elif Input.is_action_just_pressed("use_weapon") and !melee_attack and !push_box_state and !interact_state and !climb_box_state and !climbing:

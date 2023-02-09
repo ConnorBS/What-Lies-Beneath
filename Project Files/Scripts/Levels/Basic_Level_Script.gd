@@ -21,6 +21,8 @@ signal change_scene
 
 func _ready():
 	
+	SaveAndLoad.load_game()
+	
 	set_player_pos(PlayerState.Spawn_Point)
 	$FogShader.rect_size = Vector2(level_width,level_height)
 	current_floor = playerNode.current_floor
@@ -29,7 +31,6 @@ func _ready():
 	_camera_node.enter_scene(level_name)
 	
 	set_lighting(requires_lighting)
-	SaveAndLoad.load_game()
 	pass
 
 func move_to_floor(new_floor,node_to_move):

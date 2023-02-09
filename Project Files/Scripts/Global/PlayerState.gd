@@ -7,10 +7,10 @@ var _Player_ACTIVE = true
 var Spawn_Point = 3
 var _current_level
 var _player_name:String = "Ethan"
-const doors_unlocked = {}
-const item_pickups = {}
-const enemy_state = {}
-const list_of_places_visited = []
+var doors_unlocked = {}
+var item_pickups = {}
+var enemy_state = {}
+var list_of_places_visited = []
 ###### Health ######
 var _Max_Health = 100
 var _Current_Health:int
@@ -176,7 +176,7 @@ func does_dialog_exist(dialogLevel,dialogTrigger)->bool:
 #################################################################
 
 #item_pickups
-static func save_item_pickup (level_name:String,object_name:String,save_data:Dictionary) -> void:
+func save_item_pickup (level_name:String,object_name:String,save_data:Dictionary) -> void:
 	if !item_pickups.empty():
 		if item_pickups.has(level_name):
 			item_pickups[level_name][object_name] = save_data
@@ -184,7 +184,7 @@ static func save_item_pickup (level_name:String,object_name:String,save_data:Dic
 			item_pickups[level_name] ={object_name:save_data}
 	else:
 		item_pickups[level_name] ={object_name:save_data}
-static func load_item_pickup (level_name:String,object_name:String) -> Dictionary:
+func load_item_pickup (level_name:String,object_name:String) -> Dictionary:
 	var save_data:Dictionary = {}
 	if !item_pickups.empty():
 		if item_pickups.has(level_name):
@@ -193,7 +193,7 @@ static func load_item_pickup (level_name:String,object_name:String) -> Dictionar
 					save_data[type] = item_pickups[level_name][object_name][type]
 	return save_data
 	
-static func check_all_item_pickups_in_level(level_name) -> bool:
+func check_all_item_pickups_in_level(level_name) -> bool:
 	if item_pickups.has(level_name):
 		for object_name in item_pickups[level_name].keys():
 			if item_pickups[level_name][object_name]["collected"] == false:
@@ -207,7 +207,7 @@ static func check_all_item_pickups_in_level(level_name) -> bool:
 
 
 #item_pickups
-static func save_enemy_state (level_name:String,object_name:String,save_data:Dictionary) -> void:
+func save_enemy_state (level_name:String,object_name:String,save_data:Dictionary) -> void:
 	if !enemy_state.empty():
 		if enemy_state.has(level_name):
 			enemy_state[level_name][object_name] = save_data
@@ -215,7 +215,7 @@ static func save_enemy_state (level_name:String,object_name:String,save_data:Dic
 			enemy_state[level_name] ={object_name:save_data}
 	else:
 		enemy_state[level_name] ={object_name:save_data}
-static func load_enemy_state (level_name:String,object_name:String) -> Dictionary:
+func load_enemy_state (level_name:String,object_name:String) -> Dictionary:
 	var save_data:Dictionary = {}
 	if !enemy_state.empty():
 		if enemy_state.has(level_name):
