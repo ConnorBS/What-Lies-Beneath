@@ -253,6 +253,7 @@ offset = Vector2( 0, -50 )
 
 [node name="Interact_News" parent="Floor1/ActorsAndObjects" instance=ExtResource( 15 )]
 modulate = Color( 1, 1, 1, 0.564706 )
+position = Vector2( 848, 243 )
 texture = ExtResource( 12 )
 object_name = "NewsStand"
 spriteToLoad = ExtResource( 12 )
@@ -265,7 +266,7 @@ map_pieces_to_unlock = "City"
 
 [node name="GasStationDoor" parent="Floor1/ActorsAndObjects" instance=ExtResource( 15 )]
 modulate = Color( 1, 1, 1, 0.564706 )
-position = Vector2( 762, 244 )
+position = Vector2( 772, 245 )
 object_name = "Gas Station Door"
 key_needed = "Gas Station Key"
 scene_to_change_location = "res://Scenes/Levels/Gas Station/Inside Gas Station.tscn"
@@ -290,6 +291,7 @@ offset = Vector2( -524, -159 )
 [node name="CuddleBuddy" parent="Floor1/ActorsAndObjects" instance=ExtResource( 30 )]
 position = Vector2( 976, 298 )
 charge_speed = 2500
+lootable_items = [ "Pistol" ]
 
 [node name="GasBuildingOverHang" type="Sprite" parent="Floor1/ActorsAndObjects"]
 modulate = Color( 1, 1, 1, 0.564706 )

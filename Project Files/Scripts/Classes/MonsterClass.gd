@@ -4,6 +4,8 @@ class_name Monster
 onready var level_manager = get_parent().get_parent().get_parent()
 onready var state_machine = $AnimationTree.get("parameters/playback")
 
+onready var corpseLootableBox = preload("res://Scenes/Object/Interactable_Object.tscn")
+
 signal monster_died
 
 export (int) var health = 1
@@ -13,6 +15,8 @@ export (int) var charge_speed = 1000
 export (int) var fall_speed = 160
 
 export (int) var current_floor = 1
+
+export (Array) var lootable_items:Array
 
 var _dead = false
 export (int) var touch_damage = 30
@@ -43,6 +47,8 @@ func die():
 	$InteractableHitBox.queue_free()
 	_dead = true
 	_find_level_node().monster_death(self)
+	if !lootable_items.empty():
+		make_lootable_body()
 		
 		
 func _play_death_animation():
@@ -84,8 +90,8 @@ func load_enemy_state():
 			$MonsterHitBox.queue_free()
 			$InteractableHitBox.queue_free()
 			change_animation("Dead")
-			
-		if _dead and loot_drop.empty():
+			make_lootable_body()
+		if _dead and lootable_items.empty():
 			print("Nothing of value here: "+self.name)
 	else: ### If it's not in the save file, it should be, so adds current state into memory
 		save_enemy_state()
@@ -99,3 +105,10 @@ func save_enemy_state():
 		}
 	
 	_find_level_node().save_enemy_state_in_level(monsterName,save_data)
+
+func make_lootable_body():
+	var lootable_corpse = corpseLootableBox.instance()
+	lootable_corpse.object_name = self.name+"_Corpse"
+	lootable_corpse.inventory_items_to_add = lootable_items
+	self.add_child(lootable_corpse)
+	pass

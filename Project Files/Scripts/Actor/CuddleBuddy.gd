@@ -10,6 +10,8 @@ export (float) var chance_to_turn = 0.5
 export (float) var chance_to_walk = 0.5
 export (float) var time_to_make_decision = 5.0
 
+
+
 enum STATE {IDLE,WALK,CHARGE,ATTACK}
 var currentState = STATE.IDLE
 var justFlipped = false
