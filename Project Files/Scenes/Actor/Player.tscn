@@ -46,7 +46,7 @@
 [ext_resource path="res://Assets/Animation/Player/Lowering_Shotgun.tres" type="Animation" id=44]
 [ext_resource path="res://Assets/Animation/Player/Idle_Shotgun.tres" type="Animation" id=45]
 [ext_resource path="res://Assets/Animation/Player/Running_Crowbar.tres" type="Animation" id=46]
-[ext_resource path="res://Assets/Audio/Player/FootStep_Gravel_Walking.wav" type="AudioStream" id=47]
+[ext_resource path="res://Assets/Audio/Player/FootStep_Running_Gravel.wav" type="AudioStream" id=47]
 [ext_resource path="res://Assets/Animation/Player/Melee_Attack.tres" type="Animation" id=48]
 [ext_resource path="res://Assets/Audio/Weapons/Pistol_Fire.wav" type="AudioStream" id=49]
 [ext_resource path="res://Assets/UI/Mouse Cursors/Target.png" type="Texture" id=50]
@@ -544,6 +544,7 @@ texture = ExtResource( 8 )
 offset = Vector2( 0, -30 )
 hframes = 12
 vframes = 17
+frame = 24
 
 [node name="MeleeAttack" type="Area2D" parent="Sprite"]
 visible = false
@@ -651,9 +652,9 @@ rect_scale = Vector2( 0.5, 0.5 )
 
 [node name="animationPlaceholder" type="Label" parent="CenterContainer"]
 visible = false
-margin_left = 80.0
+margin_left = 88.0
 margin_top = 1.0
-margin_right = 202.0
+margin_right = 194.0
 margin_bottom = 49.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -662,7 +663,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "Animation
 Place Holder
-Idle"
+Running Crowbar"
 align = 1
 valign = 1
 
@@ -705,7 +706,7 @@ cast_to = Vector2( 200, 0 )
 collision_mask = 98304
 collide_with_areas = true
 
-[node name="SFX" type="AudioStreamPlayer2D" parent="."]
+[node name="FootstepSFX" type="AudioStreamPlayer2D" parent="."]
 pause_mode = 2
 stream = ExtResource( 47 )
 volume_db = -12.0

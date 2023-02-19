@@ -66,7 +66,7 @@ func load_Inventory_Types ()->Dictionary:
 					new_item.stackable = new_item.max_quantity > 1
 					new_item.weapon = (csv[5] == "TRUE")
 					new_item.texture = csv[6]
-					new_item.reload_to = (null if (csv[7] == "") else csv[7])
+					new_item.reload_to = ("" if (csv[7] == "") else csv[7])
 					if Types.keys().has(new_item.name):
 						push_warning("InventoryLists.load_Inventory_Types has overwritten a Types Dictionary Value")
 					Types[new_item.name] = new_item

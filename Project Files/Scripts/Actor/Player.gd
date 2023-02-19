@@ -10,6 +10,18 @@ onready var _empty_gun_noise = {
 	PlayerInventory.GUNTYPES.PISTOL:"res://Assets/Audio/Weapons/Pistol_Empty.wav",
 	PlayerInventory.GUNTYPES.SHOTGUN:"res://Assets/Audio/Weapons/Pistol_Empty.wav",
 }
+onready var _footstep_sfx ={
+	"Walking":{
+		"Gravel":"res://Assets/Audio/Player/FootStep_Gravel_Walking.wav",
+		"Wood":"res://Assets/Audio/Player/FootStep_Gravel_Walking.wav",
+	},
+	"Running":{
+		"Gravel":"res://Assets/Audio/Player/FootStep_Running_Gravel.wav",
+		"Wood":"res://Assets/Audio/Player/FootStep_Running_Gravel.wav",
+	}
+}
+
+onready var _on_material = "Gravel"
 onready var stamina = $Stamina
 var has_stamina = true
 export (int) var run_speed = 160
@@ -401,10 +413,13 @@ func _get_input()->Vector2:
 	###############Sprint Logic###################
 	##############################################
 	if Input.is_action_just_pressed("toggle_sprint"):
+		player_sprinting(!sprint_state)
 		sprint_state = !sprint_state
 	if Input.is_action_pressed("sprint"):
+		player_sprinting(true)
 		sprint_state = true
 	elif Input.is_action_just_released("sprint"):
+		player_sprinting(false)
 		sprint_state = false
 	
 	##############################################
@@ -760,8 +775,25 @@ func landing():
 	falling = false
 	change_animation("Idle")
 	change_collision_and_mask(self,current_floor-1,true)
-	
-	
+
+##################################
+#######Running/Walking############
+##################################
+
+func player_sprinting(sprint_state_active):
+	sprint_state = sprint_state_active
+	if sprint_state == false: #Walking
+		if _footstep_sfx["Walking"].has(_on_material):
+			$FootstepSFX.stream = load(_footstep_sfx["Walking"][_on_material])
+		else:
+			$FootstepSFX.stream = load(_footstep_sfx["Walking"]["Gravel"])
+	else:
+		if _footstep_sfx["Running"].has(_on_material):
+			print(_footstep_sfx["Running"][_on_material])
+			$FootstepSFX.stream = load(_footstep_sfx["Running"][_on_material])
+		else:
+			$FootstepSFX.stream = load(_footstep_sfx["Running"]["Gravel"])
+
 ##################################
 ##########Dialog##################
 ##################################

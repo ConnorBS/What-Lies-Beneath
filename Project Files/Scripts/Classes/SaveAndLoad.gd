@@ -1,4 +1,6 @@
-extends Node
+extends Resource
+
+class_name SaveAndLoad
 
 
 
@@ -7,7 +9,9 @@ static func save_game()-> void:
 	var saveGame = File.new()
 	saveGame.open("user://savegame.save", File.WRITE)
 	
-	
+	var save_playerstate = PlayerState.get_save_state()
+	var save_playerInventory = PlayerInventory.get_save_state()
+	print (save_playerInventory)
 	saveGame.store_line(to_json(PlayerState.get_save_state()))
 	saveGame.store_line(to_json(PlayerInventory.get_save_state()))
 	

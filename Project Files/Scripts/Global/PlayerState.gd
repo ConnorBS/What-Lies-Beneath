@@ -3,17 +3,17 @@ extends Node
 ###########################
 ######## Variables ########
 ###########################
-var _Player_ACTIVE = true
-var Spawn_Point = 3
-var _current_level
-var _player_name:String = "Ethan"
-var doors_unlocked = {}
-var item_pickups = {}
-var enemy_state = {}
-var list_of_places_visited = []
+export var _Player_ACTIVE:bool = true
+export var Spawn_Point:int = 3
+export var _current_level:String
+export var _player_name:String = "Ethan"
+export var doors_unlocked = {}
+export var item_pickups = {}
+export var enemy_state = {}
+export var list_of_places_visited = []
 ###### Health ######
-var _Max_Health = 100
-var _Current_Health:int
+export var _Max_Health = 100
+export var _Current_Health:int
 
 signal player_died
 

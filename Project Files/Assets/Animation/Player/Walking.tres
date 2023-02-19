@@ -1,6 +1,4 @@
-[gd_resource type="Animation" load_steps=2 format=2]
-
-[ext_resource path="res://Assets/Audio/Player/FootStep_Gravel_Walking.wav" type="AudioStream" id=1]
+[gd_resource type="Animation" format=2]
 
 [resource]
 resource_name = "Walking"
@@ -19,7 +17,7 @@ tracks/0/keys = {
 "values": [ Vector2( 0, 1 ), Vector2( 1, 1 ), Vector2( 2, 1 ), Vector2( 3, 1 ) ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("SFX:playing")
+tracks/1/path = NodePath("FootstepSFX:playing")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -29,16 +27,4 @@ tracks/1/keys = {
 "transitions": PoolRealArray( 1, 1, 1, 1 ),
 "update": 1,
 "values": [ true, false, true, false ]
-}
-tracks/2/type = "value"
-tracks/2/path = NodePath("SFX:stream")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ ExtResource( 1 ) ]
 }

@@ -19,10 +19,10 @@ var _equipped_melee_weapon
 func get_save_state()-> Dictionary:
 	
 	return {
-		"_inventory":_inventory,
-		"_key_items":_key_items,
-		"_map_fragments": _map_fragments,
-		"_locations":_locations,
+		"_inventory":_inventory.duplicate(),
+		"_key_items":_key_items.duplicate(),
+		"_map_fragments": _map_fragments.duplicate(),
+		"_locations":_locations.duplicate(),
 		"_equipped_gun":_equipped_gun,
 		"equipped_gun_type":equipped_gun_type,
 		"_equipped_melee_weapon":_equipped_melee_weapon,

@@ -21,7 +21,7 @@ signal change_scene
 
 func _ready():
 	
-	SaveAndLoad.load_game()
+#	SaveAndLoad.load_game()
 	
 	set_player_pos(PlayerState.Spawn_Point)
 	$FogShader.rect_size = Vector2(level_width,level_height)

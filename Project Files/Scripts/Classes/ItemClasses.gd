@@ -1,18 +1,19 @@
 extends Resource
 class_name Inventory
 
+
 class Items:
 	enum COMMANDS {USE,EQUIP,RELOAD,REMOVE}
-	var texture
-	var name
-	var use
-	var value
-	var stackable
-	var description
-	var quantity = 0
-	var max_quantity = 99
-	var reload_to = null
-	var weapon:bool = false
+	export var texture:String
+	export var name:String
+	export var use:String
+	export var value:int
+	export var stackable:bool
+	export var description:String
+	export var quantity:int = 0
+	export var max_quantity:int = 99
+	export var reload_to:String = ""
+	export var weapon:bool = false
 	
 	func is_type(type:String):
 		return type == "Inventory.Items"
@@ -47,19 +48,19 @@ class Items:
 			PlayerInventory.equip(self)
 			
 	func reload_item():
-		if (use == "Reload" or use == "Equip") and reload_to != null:
+		if (use == "Reload" or use == "Equip") and reload_to != "":
 			PlayerInventory.reload_item(self)
 
 
 
 class KeyItems:
-	var slot:int
-	var name:String
-	var description:String
-	var unlocked:bool = false
-	var collected_texture:String
-	var unkown_texture:String = "res://Assets/KeyItems/Blank-Keys.png"
-	var type:String = "Item" # or "Key"
+	export var slot:int
+	export var name:String
+	export var description:String
+	export var unlocked:bool = false
+	export var collected_texture:String
+	export var unkown_texture:String = "res://Assets/KeyItems/Blank-Keys.png"
+	export var type:String = "Item" # or "Key"
 	
 	
 	func is_type(type_to_check:String):
@@ -67,10 +68,10 @@ class KeyItems:
 	
 
 class MapFragments:
-	var name:String
-	var maps_unlocked:Array = []
-	var collected:bool = false
-	var type:String = "MapFragment"
+	export var name:String
+	export var maps_unlocked:Array = []
+	export var collected:bool = false
+	export var type:String = "MapFragment"
 	func is_type(type_to_check:String):
 		return type_to_check == "Inventory.MapFragments"
 
@@ -82,9 +83,9 @@ class Locations:
 	pass
 
 class JournalPage:
-	var pageName:String
-	var pageNumber:int
-	var audioFile:String
+	export var pageName:String
+	export var pageNumber:int
+	export var audioFile:String
 	
 	func is_audio_present()->bool:
 		if audioFile == "":return false
