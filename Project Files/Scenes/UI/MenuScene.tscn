@@ -7,6 +7,7 @@
 [sub_resource type="ShaderMaterial" id=6]
 shader = ExtResource( 10 )
 shader_param/OCTAVES = 4
+shader_param/color = null
 
 [sub_resource type="Gradient" id=14]
 offsets = PoolRealArray( 0, 0.531008, 1 )
@@ -87,8 +88,6 @@ texture = SubResource( 11 )
 expand = true
 
 [node name="MainMenu" parent="." instance=ExtResource( 1 )]
-margin_right = 4096.0
-margin_bottom = 2400.0
 
 [node name="Map" type="Control" parent="."]
 margin_left = -2000.0

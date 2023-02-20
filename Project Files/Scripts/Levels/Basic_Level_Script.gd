@@ -19,9 +19,10 @@ var _current_dialog_window
 var _dialog_queue = []
 signal change_scene
 
+
 func _ready():
 	
-	SaveAndLoad.load_game()
+#	SaveAndLoad.load_game()
 	
 	set_player_pos(PlayerState.Spawn_Point)
 	$FogShader.rect_size = Vector2(level_width,level_height)
@@ -77,9 +78,14 @@ func set_player_pos(spawPointNumber:int)->void:
 
 
 func _on_open_dialogWindow(trigger_name:String):
+	
+	
 #	playerNode.change_animation("Walking")
 	var dialog_window = _dialog_window_scene.instance()
-	dialog_window.load_window(level_name,trigger_name)
+	if trigger_name == "Save_Load":
+		dialog_window.load_window("GeneralUI",trigger_name)
+	else:
+		dialog_window.load_window(level_name,trigger_name)
 	dialog_window.connect("dialogClosed",self,"_on_close_dialogWindow")
 	get_parent().get_parent().add_child(dialog_window)
 	get_tree().paused = true
@@ -87,6 +93,8 @@ func _on_open_dialogWindow(trigger_name:String):
 	pass # Replace with function body.
 
 func _on_open_dialogWindow_system_message(array_of_text:Array):
+	
+	
 	var dialog_window = _dialog_window_scene.instance()
 	dialog_window.load_system_window(array_of_text)
 	dialog_window.connect("dialogClosed",self,"_on_close_dialogWindow")
@@ -120,7 +128,7 @@ func clear_dialog():
 func change_level(SceneToLoad,PointToLoad):
 	var LoadingLevel = load(SceneToLoad).instance()
 	
-	SaveAndLoad.save_game()
+#	SaveAndLoad.save_game()
 #	playerNode.change_animation("Walking")
 	PlayerState.Spawn_Point = PointToLoad
 	emit_signal("change_scene",self,LoadingLevel)

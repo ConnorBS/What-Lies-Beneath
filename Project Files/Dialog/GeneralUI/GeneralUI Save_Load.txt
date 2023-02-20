@@ -1,0 +1,7 @@
+PC: What should I do?
+: [1] Save Game [2] Load Last Save
+[1]
+PC: I feel a bit better now...
+[2]
+PC: Ugh my headache is worse!
+[RESUME]

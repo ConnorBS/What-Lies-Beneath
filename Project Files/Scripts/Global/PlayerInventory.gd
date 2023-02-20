@@ -257,6 +257,7 @@ func unequip():
 	equipped_gun_type = GUNTYPES.NONE
 	if item_to_unequip != null:
 		add_item(item_to_unequip)
+		
 	
 func get_equiped_item()->Inventory.Items:
 	return _equipped_gun

@@ -216,6 +216,7 @@ func _on_LevelTransition_animation_finished(anim_name):
 		var parent_node = node_current.get_parent()
 		node_current.queue_free()
 		var _ignore_value = node_to_change.connect("change_scene",self,"_on_change_scene")
+		_ignore_value = node_to_change.connect("load_game",SaveAndLoad,"load_game")
 		parent_node.add_child(node_to_change)
 		parent_node.move_child(node_to_change,0)
 		

@@ -49,6 +49,9 @@ var currently_investigating = false
 
 var choice_unlocked = false
 var end_scene = false
+
+var generalUI_dialog = false
+var generalUI_save_load = false
 signal dialogClosed
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -69,6 +72,11 @@ func _ready():
 		tween_in_investigation()
 	
 func load_window(level_name:String,trigger_name:String):
+	if level_name == "GeneralUI":
+		generalUI_dialog = true
+		if trigger_name == "Save_Load":
+			generalUI_save_load = true
+			
 	dialogFile =DialogManager.get_dialog(level_name,trigger_name)
 	audioFile = next_audio_file(dialogFile)
 	pictureFile = next_picture_file(dialogFile)
@@ -604,8 +612,18 @@ func pause_dialog(state):
 	
 func change_to_next_scene():
 #	print ("change scene function here")
+			
 	PlayerState.set_Player_Active(true)
 	PlayerState.update_dialog(dialog_level_name,dialog_trigger_name,true,playerChoices)
+	
+	### Save Game Logic
+	if generalUI_save_load:
+		if playerChoices[0] == 1: #(Save Selected)
+			SaveAndLoad.save_game()
+		elif playerChoices[0] == 2:
+			SaveAndLoad.load_game()
+	########
+	
 	emit_signal("dialogClosed")
 	_dialog_tween.interpolate_property($InvestigationItem,"self_modulate", Color(1,1,1,1), Color(1,1,1,0),0.8)
 	_dialog_tween.interpolate_property(Dialog,"modulate", Color(1,1,1,1), Color(1,1,1,0),0.8)
@@ -625,7 +643,9 @@ func _on_DialogWindow_choiceMade(choice):
 	gameState = regular
 	playerChoices.append(choice)
 	PlayerState.update_dialog(dialog_level_name,dialog_trigger_name,true,playerChoices)
+	
 	play_next_dialog()
+	
 	pass # Replace with function body.
 
 

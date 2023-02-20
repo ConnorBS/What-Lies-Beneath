@@ -28,25 +28,19 @@ _global_script_classes=[ {
 "class": "Monster",
 "language": "GDScript",
 "path": "res://Scripts/Classes/MonsterClass.gd"
-}, {
-"base": "Resource",
-"class": "SaveAndLoad",
-"language": "GDScript",
-"path": "res://Scripts/Classes/SaveAndLoad.gd"
 } ]
 _global_script_class_icons={
 "InteractableObjects": "",
 "Inventory": "",
 "MenuClass": "",
-"Monster": "",
-"SaveAndLoad": ""
+"Monster": ""
 }
 
 [application]
 
 config/name="What Lies Beneath"
 config/description="A side-scrolling horror game"
-run/main_scene="res://Scenes/GameScreen.tscn"
+run/main_scene="res://Scenes/StartScreen.tscn"
 boot_splash/image="res://Assets/UI/Loading Screens/WLB Poster.png"
 boot_splash/bg_color=Color( 0, 0, 0, 1 )
 config/icon="res://icon.png"
@@ -63,6 +57,8 @@ PlayerState="*res://Scripts/Global/PlayerState.gd"
 Settings="*res://Scripts/Global/Settings.gd"
 InventoryLists="*res://Scripts/Global/InventoryLists.gd"
 DialogManager="*res://Scripts/Global/DialogManager.gd"
+LevelDirectory="*res://Scripts/Global/LevelDirectory.gd"
+SaveAndLoad="*res://Scripts/Global/SaveAndLoad.gd"
 
 [display]
 

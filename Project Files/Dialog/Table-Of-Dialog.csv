@@ -2,3 +2,4 @@ Level,Trigger,Address(Optional)
 Inside Gas Station,Register,
 Inside Gas Station,Bloody Marks,
 Outside Gas Station,Newspaper,res://Dialog/Outside Gas Station/Outside Gas Station Newspaper.txt
+GeneralUI,Save_Load,
