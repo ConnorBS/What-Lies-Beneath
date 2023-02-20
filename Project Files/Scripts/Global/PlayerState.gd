@@ -5,6 +5,7 @@ extends Node
 ###########################
 export var _Player_ACTIVE:bool = true
 export var Spawn_Point:int = 3
+var loading_from_file = false
 var player_position:Vector2
 export var _current_level:String = "Outside Gas Station" #Default/NewGame
 export var _player_name:String = "Ethan" #Default/Newgame

@@ -1,6 +1,5 @@
 extends Node
 
-var currently_Loading = false
 static func is_there_a_saved_game()->bool:
 	var check_for_save = File.new()
 	if check_for_save.file_exists("user://savegame.save"):
@@ -21,26 +20,32 @@ func save_game()-> void:
 	pass
 
 func load_game()->void:
-	currently_Loading = true
 	var loadGame = File.new()
 	if not loadGame.file_exists("user://savegame.save"):
 		return
 	loadGame.open("user://savegame.save",File.READ)
 	print (loadGame.get_len())
-	if !loadGame.eof_reached() and loadGame.get_len() > 1:
-		PlayerState.write_load_state(parse_json(loadGame.get_line()))
-		PlayerInventory.write_load_state(parse_json (loadGame.get_line()))
+	PlayerState.loading_from_file = true
 	
-	loadGame.close()
-	
-	get_tree().change_scene("res://Scenes/GameScreen.tscn")
-	currently_Loading = false
+	if get_tree().root.get_node("GameScreen") == null:
+		get_tree().change_scene("res://Scenes/GameScreen.tscn")
+	else:
+		var loading_game_node = load(LevelDirectory.lookup_level(PlayerState._current_level)).instance()
+#		print (loading_game_node)
+		loading_game_node
+		get_tree().root.get_node("GameScreen")._on_change_scene(null, loading_game_node)
+
 #	print_Nodes()
 #	var current_game_node = get_node("/root/GameScreen/MainMenu/GameWindowPanel/ViewportContainer/Viewport").get_child(0)
 #
 #	var loading_game_node = load(LevelDirectory.lookup_level(PlayerState._current_level)).instance()
 #	get_tree().root.find_node("GameScreen")._on_change_scene(current_game_node,loading_game_node)
 #
+	if !loadGame.eof_reached() and loadGame.get_len() > 1:
+		PlayerState.write_load_state(parse_json(loadGame.get_line()))
+		PlayerInventory.write_load_state(parse_json (loadGame.get_line()))
+	
+	loadGame.close()
 	pass
 
 

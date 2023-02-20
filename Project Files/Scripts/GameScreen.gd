@@ -211,7 +211,7 @@ func _on_MainMenu_KeyItems():
 onready var node_current:Node = null
 var node_to_change:Node = null
 
-func _on_change_scene(node:Node,new_node:Node):
+func _on_change_scene(node,new_node:Node):
 	_levelTranslationNode.play("SmokeTransitionUP")
 	node_current = node
 	node_to_change = new_node
@@ -219,11 +219,13 @@ func _on_change_scene(node:Node,new_node:Node):
 
 func _on_LevelTransition_animation_finished(anim_name):
 	if anim_name == "SmokeTransitionUP":
-		var parent_node = node_current.get_parent()
-		node_current.queue_free()
+		if node_current != null:
+			node_current.queue_free()
+		elif _viewportNode.get_child(0) != null:
+			_viewportNode.get_child(0).queue_free()
 		var _ignore_value = node_to_change.connect("change_scene",self,"_on_change_scene")
-		parent_node.add_child(node_to_change)
-		parent_node.move_child(node_to_change,0)
+		_viewportNode.add_child(node_to_change)
+		_viewportNode.move_child(node_to_change,0)
 		
 		_levelTranslationNode.play("SmokeTransitionDown")
 	if anim_name == "SmokeTransitionDown":

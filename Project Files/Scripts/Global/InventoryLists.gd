@@ -33,7 +33,6 @@ func load_KeyItems()->Dictionary:
 	file.close()
 	return KeyItems
 
-
 func get_KeyItem(name_of_KeyItem):
 	if name_of_KeyItem != null:
 		for id in KeyItems["Key"]:
@@ -41,6 +40,19 @@ func get_KeyItem(name_of_KeyItem):
 				return KeyItems["Key"][id]
 		for id in KeyItems["Item"]:
 			if KeyItems["Item"][id].name == name_of_KeyItem:
+				return KeyItems["Item"][id]
+	return null
+
+func get_Key_by_slot(slot_of_KeyItem:int):
+	if slot_of_KeyItem != null:
+		for id in KeyItems["Key"]:
+			if KeyItems["Key"][id].slot == slot_of_KeyItem:
+				return KeyItems["Key"][id]
+
+func get_KeyItem_by_slot(slot_of_KeyItem:int):
+	if slot_of_KeyItem != null:
+		for id in KeyItems["Item"]:
+			if KeyItems["Item"][id].slot == slot_of_KeyItem:
 				return KeyItems["Item"][id]
 	return null
 

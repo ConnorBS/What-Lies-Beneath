@@ -61,9 +61,9 @@ func summarize(dictionary_to_summarize)->Dictionary:
 			summary["Key"] = {}
 			summary["Item"] = {}
 			for keys in dictionary_to_summarize["Key"]:
-				summary["Key"][dictionary_to_summarize["Key"][keys].name] = dictionary_to_summarize["Key"][keys].unlocked
+				summary["Key"][int(dictionary_to_summarize["Key"][keys].slot)] = dictionary_to_summarize["Key"][keys].unlocked
 			for keys in dictionary_to_summarize["Item"]:
-				summary["Item"][dictionary_to_summarize["Item"][keys].name] = dictionary_to_summarize["Item"][keys].unlocked
+				summary["Item"][int(dictionary_to_summarize["Item"][keys].slot)] = dictionary_to_summarize["Item"][keys].unlocked
 		elif is_map:
 			for keys in dictionary_to_summarize:
 				summary[dictionary_to_summarize[keys].name] = dictionary_to_summarize[keys].unlocked
@@ -100,13 +100,15 @@ func write_new_const_dict(old_dict, new_dict):
 			old_dict[i] = item
 			
 	elif old_dict == _key_items:
+#		print("old keyitem dictionary: ",old_dict)
 		_key_items["Key"] = {}
 		_key_items["Item"]= {}
 		for key in keys:
 			for itemKey in new_dict[key]:
-				var keyItem_Object = InventoryLists.get_KeyItem(itemKey)
+				var keyItem_Object = InventoryLists.get_KeyItem_by_slot(int(itemKey)) if key=="Item" else InventoryLists.get_Key_by_slot(int(itemKey))
 				keyItem_Object.unlocked = new_dict[key][itemKey]
-				_key_items[key][itemKey] = keyItem_Object
+				_key_items[key][int(itemKey)] = keyItem_Object
+		print("key_items: ",_key_items)
 		
 	elif old_dict == _map_fragments:
 		for key in keys:
@@ -393,12 +395,17 @@ static func get_key_list()->Array:
 	return keyList
 
 static func get_item_list()->Array:
-	var keyList:Array = []
+	var keyItemList:Array = []
 	for item in _key_items["Item"].keys():
-		keyList.append(_key_items["Item"][item])
-	return keyList
+		keyItemList.append(_key_items["Item"][item])
+	return keyItemList
 
 func pickup_KeyItem(item:Inventory.KeyItems)->void:
+	print(_key_items)
+	print (_key_items[item.type])
+	print(item.slot," is part of the dictionary? ",_key_items[item.type].has(item.slot))
+	print(1," just the number is part of the dictionary? ",_key_items[item.type].has(1))
+	print("1"," just the string is part of the dictionary? ",_key_items[item.type].has("1"))
 	_key_items[item.type][item.slot].unlocked = true
 	if item == InventoryLists.KeyItems["Item"][3]:
 		_equipped_melee_weapon = item
