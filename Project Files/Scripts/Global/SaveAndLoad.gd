@@ -1,13 +1,13 @@
 extends Node
 
-
+var currently_Loading = false
 static func is_there_a_saved_game()->bool:
 	var check_for_save = File.new()
 	if check_for_save.file_exists("user://savegame.save"):
 		return true
 	return false
 	
-static func save_game()-> void:
+func save_game()-> void:
 	
 	var saveGame = File.new()
 	saveGame.open("user://savegame.save", File.WRITE)
@@ -17,12 +17,11 @@ static func save_game()-> void:
 	print (save_playerInventory)
 	saveGame.store_line(to_json(PlayerState.get_save_state()))
 	saveGame.store_line(to_json(PlayerInventory.get_save_state()))
-	
 	saveGame.close()
 	pass
 
 func load_game()->void:
-	
+	currently_Loading = true
 	var loadGame = File.new()
 	if not loadGame.file_exists("user://savegame.save"):
 		return
@@ -32,10 +31,10 @@ func load_game()->void:
 		PlayerState.write_load_state(parse_json(loadGame.get_line()))
 		PlayerInventory.write_load_state(parse_json (loadGame.get_line()))
 	
-	
 	loadGame.close()
 	
 	get_tree().change_scene("res://Scenes/GameScreen.tscn")
+	currently_Loading = false
 #	print_Nodes()
 #	var current_game_node = get_node("/root/GameScreen/MainMenu/GameWindowPanel/ViewportContainer/Viewport").get_child(0)
 #

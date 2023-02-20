@@ -20,7 +20,7 @@ func _on_Tween_tween_completed(object, key):
 func _process(_delta):
 	if dead:
 		if did_a_key_get_pressed():
-			get_tree().reload_current_scene()
+			SaveAndLoad.load_game()
 
 func did_a_key_get_pressed():
 	for i in InputMap.get_actions():

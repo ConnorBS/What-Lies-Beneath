@@ -19,12 +19,15 @@ var _current_dialog_window
 var _dialog_queue = []
 signal change_scene
 
+var loaded_from_file
 
 func _ready():
 	
 #	SaveAndLoad.load_game()
-	
-	set_player_pos(PlayerState.Spawn_Point)
+	if SaveAndLoad.currently_Loading:
+		playerNode.position = PlayerState.player_position
+	else:
+		set_player_pos(PlayerState.Spawn_Point)
 	$FogShader.rect_size = Vector2(level_width,level_height)
 	current_floor = playerNode.current_floor
 	get_tree().get_root().get_node("GameScreen").update_backgroundMusic(background_music)

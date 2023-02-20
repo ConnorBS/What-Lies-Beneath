@@ -5,8 +5,9 @@ extends Node
 ###########################
 export var _Player_ACTIVE:bool = true
 export var Spawn_Point:int = 3
-export var _current_level:String
-export var _player_name:String = "Ethan"
+var player_position:Vector2
+export var _current_level:String = "Outside Gas Station" #Default/NewGame
+export var _player_name:String = "Ethan" #Default/Newgame
 export var doors_unlocked = {}
 export var item_pickups = {}
 export var enemy_state = {}
@@ -36,7 +37,8 @@ func get_save_state()-> Dictionary:
 		"Spawn_Point":Spawn_Point,
 		"_current_level":_current_level,
 		"_player_name":_player_name,
-		
+		"player_position.x":player_position.x,
+		"player_position.y":player_position.y
 		
 	}
 func write_load_state(load_data:Dictionary)->void:
@@ -58,7 +60,8 @@ func write_load_state(load_data:Dictionary)->void:
 		Spawn_Point = load_data["Spawn_Point"]
 		_current_level = load_data["_current_level"]
 		_player_name = load_data["_player_name"]
-		
+		player_position.x = load_data["player_position.x"]
+		player_position.y = load_data["player_position.y"]
 	pass
 
 
@@ -73,7 +76,8 @@ func write_new_const_dict(old_dict, new_dict):
 	
 func get_player_name()->String:
 	return _player_name
-
+func update_player_position(new_position):
+	player_position = new_position
 ###########################
 ###### Player Active ######
 ###########################

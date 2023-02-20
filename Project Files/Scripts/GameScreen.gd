@@ -43,8 +43,14 @@ var _window_state = MENU_WINDOWS.Main
 
 func _ready():
 	_fill_screen_with_game()
+	_load_current_level()
 	pass # Replace with function body.
 
+func _load_current_level():
+	var level_to_load = LevelDirectory.lookup_level(PlayerState._current_level)
+	var new_level_node = load(level_to_load).instance()
+	_viewportNode.add_child(new_level_node)
+	new_level_node.connect("change_scene",self,"_on_change_scene")
 #############################################
 ######## Game Window Transtiontions #########
 #############################################
@@ -216,7 +222,6 @@ func _on_LevelTransition_animation_finished(anim_name):
 		var parent_node = node_current.get_parent()
 		node_current.queue_free()
 		var _ignore_value = node_to_change.connect("change_scene",self,"_on_change_scene")
-		_ignore_value = node_to_change.connect("load_game",SaveAndLoad,"load_game")
 		parent_node.add_child(node_to_change)
 		parent_node.move_child(node_to_change,0)
 		

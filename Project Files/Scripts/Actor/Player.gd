@@ -243,6 +243,7 @@ func _process(_delta):
 			var vector = _get_input()
 			if vector != Vector2.ZERO:
 				var _velocity = move_and_slide(vector)
+				PlayerState.update_player_position(self.position)
 		elif !climb_box_positions.empty():
 			var _velocity = move_and_slide(climb_box(climb_box_positions))
 			if climb_box_positions.empty():
