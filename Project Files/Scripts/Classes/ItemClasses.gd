@@ -1,6 +1,9 @@
 extends Resource
 class_name Inventory
 
+static func find_Item_Type(name_of_Item):
+	
+	pass
 
 class Items:
 	enum COMMANDS {USE,EQUIP,RELOAD,REMOVE}
@@ -54,7 +57,7 @@ class Items:
 
 
 class KeyItems:
-	export var slot:int
+	export var slot:int	
 	export var name:String
 	export var description:String
 	export var unlocked:bool = false
@@ -70,7 +73,7 @@ class KeyItems:
 class MapFragments:
 	export var name:String
 	export var maps_unlocked:Array = []
-	export var collected:bool = false
+	export var unlocked:bool = false
 	export var type:String = "MapFragment"
 	func is_type(type_to_check:String):
 		return type_to_check == "Inventory.MapFragments"

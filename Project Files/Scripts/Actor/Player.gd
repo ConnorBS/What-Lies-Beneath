@@ -333,7 +333,7 @@ func _get_input()->Vector2:
 								new_blood.position = bullet_ray.get_collision_point()
 								level_manager.add_child(new_blood)
 					else:
-						$GunNoises.stream = load(_empty_gun_noise[check_equipped_gun()])
+						$GunNoises.stream = load(_empty_gun_noise[int(check_equipped_gun())])
 						$GunNoises.play()
 					return velocity
 			else:

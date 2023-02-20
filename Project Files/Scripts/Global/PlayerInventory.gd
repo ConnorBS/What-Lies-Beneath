@@ -11,7 +11,8 @@ var _equipped_gun:Inventory.Items
 const _inventory:Dictionary = {}
 const _key_items:Dictionary = {}
 const _map_fragments:Dictionary = {}
-const _locations:Dictionary = {}
+#const _locations:Dictionary = {}
+
 
 var _weapon_table = {"Pistol":GUNTYPES.PISTOL,"Shotgun":GUNTYPES.SHOTGUN}
 var _equipped_melee_weapon
@@ -19,29 +20,71 @@ var _equipped_melee_weapon
 func get_save_state()-> Dictionary:
 	
 	return {
-		"_inventory":_inventory.duplicate(),
-		"_key_items":_key_items.duplicate(),
-		"_map_fragments": _map_fragments.duplicate(),
-		"_locations":_locations.duplicate(),
-		"_equipped_gun":_equipped_gun,
+		"_inventory":summarize(_inventory),
+		"_key_items":summarize(_key_items),
+		"_map_fragments": summarize(_map_fragments),
+#		"_locations":summarize(_locations),
+		"_journal_Pages":summarize(_journal_Pages),
+		"_equipped_gun":(null if _equipped_gun == null else _equipped_gun.name),
 		"equipped_gun_type":equipped_gun_type,
-		"_equipped_melee_weapon":_equipped_melee_weapon,
+		"_equipped_melee_weapon":(null if _equipped_melee_weapon == null else{_equipped_melee_weapon.name:_equipped_melee_weapon.unlocked}),
+		"current_Page" :current_Page
 		
 	}
 func write_load_state(load_data:Dictionary)->void:
-	var tables_to_load = [_inventory, _key_items, _map_fragments, _locations]
+	var tables_to_load = [_inventory, _key_items, _map_fragments]#, _locations]
+	unequip() ##Clear weapons
 	for table in tables_to_load:
 		clear_dictionary(table)
-		
+	
 	if !load_data.empty():
 		write_new_const_dict(_inventory, load_data["_inventory"])
 		write_new_const_dict(_key_items, load_data["_key_items"])
 		write_new_const_dict(_map_fragments, load_data["_map_fragments"])
-		write_new_const_dict(_locations, load_data["_locations"])
-		_equipped_gun = load_data["_equipped_gun"]
+#		write_new_const_dict(_locations, load_data["_locations"])
+
+		#_equipped_gun =#
+		equip(find_weapon_in_inventory(load_data["_equipped_gun"]))
 		equipped_gun_type = load_data["equipped_gun_type"]
-		_equipped_melee_weapon = load_data["_equipped_melee_weapon"]
+		_equipped_melee_weapon = null if !_key_items["Item"].has(load_data["_equipped_melee_weapon"].keys()[0]) else _key_items["Item"][load_data["_equipped_melee_weapon"].keys()[0]]
+		current_Page = load_data["current_Page"]
 	pass
+
+func summarize(dictionary_to_summarize)->Dictionary:
+	var summary = {}
+	if typeof(dictionary_to_summarize) == TYPE_DICTIONARY:
+		var is_inventory = dictionary_to_summarize == _inventory
+		var is_key_item = dictionary_to_summarize == _key_items
+		var is_map = dictionary_to_summarize == _map_fragments
+	#	var is_journal = dictionary_to_summarize == _journal_Pages
+		if is_key_item:
+			summary["Key"] = {}
+			summary["Item"] = {}
+			for keys in dictionary_to_summarize["Key"]:
+				summary["Key"][dictionary_to_summarize["Key"][keys].name] = dictionary_to_summarize["Key"][keys].unlocked
+			for keys in dictionary_to_summarize["Item"]:
+				summary["Item"][dictionary_to_summarize["Item"][keys].name] = dictionary_to_summarize["Item"][keys].unlocked
+		elif is_map:
+			for keys in dictionary_to_summarize:
+				summary[dictionary_to_summarize[keys].name] = dictionary_to_summarize[keys].unlocked
+		
+
+		elif is_inventory:
+			for keys in dictionary_to_summarize:
+				if is_inventory:
+					summary[dictionary_to_summarize[keys].name]=dictionary_to_summarize[keys].quantity
+				else:
+					summary[dictionary_to_summarize[keys].name]=1
+			##Add Gun
+			if _equipped_gun != null:
+				summary[_equipped_gun.name] =_equipped_gun.quantity
+	else:
+		for i in dictionary_to_summarize.size():
+			summary[i] = {"pageName":dictionary_to_summarize[i].pageName,"pageNumber":dictionary_to_summarize[i].pageNumber,"audioFile":dictionary_to_summarize[i].audioFile}
+	
+	return summary
+	
+
 
 static func clear_dictionary (dict_to_clear:Dictionary):
 #	var keys = dict_to_clear.keys()
@@ -50,10 +93,35 @@ static func clear_dictionary (dict_to_clear:Dictionary):
 
 func write_new_const_dict(old_dict, new_dict):
 	var keys = new_dict.keys()
-	for key in keys:
-		old_dict[key] = new_dict[key]
-	
-	
+	if old_dict == _inventory:
+		for i in keys.size():
+			var item = InventoryLists._duplicate_item(keys[i])
+			item.quantity = new_dict[keys[i]]
+			old_dict[i] = item
+			
+	elif old_dict == _key_items:
+		_key_items["Key"] = {}
+		_key_items["Item"]= {}
+		for key in keys:
+			for itemKey in new_dict[key]:
+				var keyItem_Object = InventoryLists.get_KeyItem(itemKey)
+				keyItem_Object.unlocked = new_dict[key][itemKey]
+				_key_items[key][itemKey] = keyItem_Object
+		
+	elif old_dict == _map_fragments:
+		for key in keys:
+			var map = InventoryLists.get_MapFragmenets(key)
+			map.unlocked = new_dict[key]
+			_map_fragments[key]=map
+
+		
+	else:##Journal pages
+		for key in keys:
+			var journalPage = Inventory.JournalPage.new()
+			journalPage.audioFile = new_dict[key]["audioFile"]
+			journalPage.pageName = new_dict[key]["pageName"]
+			journalPage.pageNumber = new_dict[key]["pageNumber"]
+			_journal_Pages.append(journalPage)
 func _ready():
 	#############
 #	Load Items
@@ -143,8 +211,8 @@ func add_item(item):
 			_add_item_to_inventory(item,_inventory)
 	elif item.is_type("Inventory.KeyItems"):
 			_add_item_to_inventory(item,_key_items)
-	elif item.is_type("Inventory.Locations"):
-			_add_item_to_inventory(item,_locations)
+#	elif item.is_type("Inventory.Locations"):
+#			_add_item_to_inventory(item,_locations)
 	
 static func _add_item_to_inventory(item,inventoryType:Dictionary = _inventory):
 	if inventoryType.empty():
@@ -170,23 +238,25 @@ func use_item(item): ###Use 1x Item
 			remove_item(item,_inventory)
 	elif item.is_type("Inventory.KeyItems"):
 			_add_item_to_inventory(item,_key_items)
-	elif item.is_type("Inventory.Locations"):
-			_add_item_to_inventory(item,_locations)
+#	elif item.is_type("Inventory.Locations"):
+#			_add_item_to_inventory(item,_locations)
 
 func equip(item):
-	var current_equipment = get_equiped_item()
-	if current_equipment != null:
-#		add_item(current_equipment)
-		unequip()
-	_equipped_gun = item
-	equipped_gun_type =_weapon_table[_equipped_gun.name]
-	remove_item(_equipped_gun)
+	if item != null:
+		var current_equipment = get_equiped_item()
+		if current_equipment != null:
+	#		add_item(current_equipment)
+			unequip()
+		_equipped_gun = item
+		equipped_gun_type =_weapon_table[_equipped_gun.name]
+		remove_item(_equipped_gun)
 
 func unequip():
 	var item_to_unequip = _equipped_gun
 	_equipped_gun = null
 	equipped_gun_type = GUNTYPES.NONE
-	add_item(item_to_unequip)
+	if item_to_unequip != null:
+		add_item(item_to_unequip)
 	
 func get_equiped_item()->Inventory.Items:
 	return _equipped_gun
@@ -255,7 +325,11 @@ static func get_list_of_inventory()->Array:
 		listOfItems.append(_inventory[i])
 	return listOfItems
 
-
+static func find_weapon_in_inventory(name):
+	for key in _inventory:
+		if _inventory[key].name == name:
+			return _inventory[key]
+	return null
 ###########################
 ##### Memo Inventory #####
 ###########################
@@ -341,18 +415,18 @@ static func has_KeyItem(item_name)->bool:
 ####   Player Maps    #####
 ###########################
 func _load_base_MapFragments() -> void:
-	var base_map_fragments = InventoryLists.load_MapFragemnts()
+	var base_map_fragments = InventoryLists.load_MapFragments()
 	for map_names in base_map_fragments.keys():
 		_map_fragments[map_names] = base_map_fragments[map_names]
 		
 func collect_MapFragment(map_fragment:String):
 	if _map_fragments.keys().has(map_fragment):
-		_map_fragments[map_fragment].collected = true
+		_map_fragments[map_fragment].unlocked = true
 
 
 func has_map(level) -> bool:
 	for map_name in _map_fragments.keys():
-		if _map_fragments[map_name].collected:
+		if _map_fragments[map_name].unlocked:
 			for map in _map_fragments[map_name].maps_unlocked:
 				if map == level:
 					return true

@@ -81,7 +81,9 @@ func load_enemy_state():
 		_dead = load_data["dead"]
 		health = load_data["health"]
 		loot_drop = load_data["loot_drop"]
-		self.position = load_data["position"]
+		var new_pos =Vector2(load_data["position.x"],load_data["position.y"])
+		print (new_pos)
+		self.position = new_pos
 		
 		if _dead:
 			
@@ -101,7 +103,8 @@ func save_enemy_state():
 		"dead":_dead,
 		"health":health,
 		"loot_drop":loot_drop,
-		"position":self.position
+		"position.x":self.position.x,
+		"position.y":self.position.y
 		}
 	
 	_find_level_node().save_enemy_state_in_level(monsterName,save_data)

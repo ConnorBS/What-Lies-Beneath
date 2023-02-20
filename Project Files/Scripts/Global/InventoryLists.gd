@@ -98,7 +98,7 @@ static func get_item(name_to_pull,item_quantity = 1)->Inventory.Items:
 ###################################
 ######## Map Fragments ############
 ###################################
-func load_MapFragemnts()->Dictionary:
+func load_MapFragments()->Dictionary:
 	var file = File.new()
 	file.open(MapFragmentListCSV, file.READ)
 	if file.get_error() == 0:
@@ -116,7 +116,40 @@ func load_MapFragemnts()->Dictionary:
 					
 					
 					if MapFragments.keys().has(new_map.name):
-						push_warning("InventoryLists.load_MapFragemnts() has overwritten a MapFragments Dictionary Value")
+						push_warning("InventoryLists.load_MapFragments() has overwritten a MapFragments Dictionary Value")
 					MapFragments[new_map.name] = new_map
 	file.close()
 	return MapFragments
+
+static func get_MapFragmenets(name_of_map)->Inventory.MapFragments:
+	var mapFragment:Inventory.MapFragments
+	if MapFragments.has(name_of_map):
+		mapFragment = MapFragments[name_of_map]
+	
+	return mapFragment
+####################################
+######## General ###################
+####################################
+#
+#static func find_item_type(name_of_item)->String:
+#	for item_name in Types:
+#		if name_of_item == item_name:
+#			return "Inventory.Items"
+#	for key_name in KeyItems["Key"]:
+#		if name_of_item == key_name:
+#			return "Inventory.KeyItems"
+#	for keyitem_name in KeyItems["Item"]:
+#		if name_of_item == keyitem_name:
+#			return "Inventory.KeyItems"
+#	for map_name in MapFragments:
+#		if name_of_item == map_name:
+#			return "Inventory.MapFragments"
+#	for item_name in Types:
+#		if name_of_item == item_name:
+#			return "Inventory.Items"
+#
+#
+#	return ""
+#
+#
+		
