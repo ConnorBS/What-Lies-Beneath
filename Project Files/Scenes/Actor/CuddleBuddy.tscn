@@ -243,6 +243,7 @@ extents = Vector2( 10, 6 )
 light_mask = 3
 position = Vector2( 0, 1 )
 script = ExtResource( 2 )
+health = 12
 walk_speed = 500
 
 [node name="Shadow" type="Sprite" parent="."]
@@ -258,7 +259,7 @@ position = Vector2( -1, -38 )
 texture = ExtResource( 1 )
 hframes = 9
 vframes = 3
-frame = 19
+frame = 18
 
 [node name="MonsterHitBox" type="Area2D" parent="." groups=["Monster"]]
 position = Vector2( 0, -34 )

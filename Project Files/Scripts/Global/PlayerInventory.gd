@@ -27,10 +27,16 @@ func get_save_state()-> Dictionary:
 		"_journal_Pages":summarize(_journal_Pages),
 		"_equipped_gun":(null if _equipped_gun == null else _equipped_gun.name),
 		"equipped_gun_type":equipped_gun_type,
-		"_equipped_melee_weapon":(null if _equipped_melee_weapon == null else{_equipped_melee_weapon.name:_equipped_melee_weapon.unlocked}),
+#		"_equipped_melee_weapon":(null if _equipped_melee_weapon == null else{_equipped_melee_weapon.name:_equipped_melee_weapon.unlocked}),
 		"current_Page" :current_Page
 		
 	}
+func update_melee_weapon():
+	for items in get_key_list():
+		if items.name == "Crowbar":
+			if items.unlocked:
+				_equipped_melee_weapon = items
+	
 func write_load_state(load_data:Dictionary)->void:
 	var tables_to_load = [_inventory, _key_items, _map_fragments]#, _locations]
 	unequip() ##Clear weapons
@@ -46,8 +52,9 @@ func write_load_state(load_data:Dictionary)->void:
 		#_equipped_gun =#
 		equip(find_weapon_in_inventory(load_data["_equipped_gun"]))
 		equipped_gun_type = load_data["equipped_gun_type"]
-		_equipped_melee_weapon = null if !_key_items["Item"].has(load_data["_equipped_melee_weapon"].keys()[0]) else _key_items["Item"][load_data["_equipped_melee_weapon"].keys()[0]]
+#		_equipped_melee_weapon = null if load_data["_equipped_melee_weapon"].has(load_data["_equipped_melee_weapon"].keys()[0]) else _key_items["Item"][load_data["_equipped_melee_weapon"].keys()[0]]
 		current_Page = load_data["current_Page"]
+		update_melee_weapon()
 	pass
 
 func summarize(dictionary_to_summarize)->Dictionary:
