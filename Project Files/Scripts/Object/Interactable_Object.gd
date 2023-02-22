@@ -67,6 +67,8 @@ func pickup_items():
 		
 	_collected = true
 	save_pickup_state()
+	if dialog_trigger == "":
+		remove_interaction()
 	
 	if text_array.size() > 1:
 		_find_level_node()._on_open_dialogWindow_system_message(text_array)

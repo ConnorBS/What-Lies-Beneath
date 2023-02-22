@@ -15,7 +15,7 @@ export var enemy_state = {}
 export var list_of_places_visited = []
 ###### Health ######
 export var _Max_Health = 100
-export var _Current_Health:int
+export var _Current_Health:int = 100
 
 signal player_died
 

@@ -9,8 +9,8 @@ func get_dialog(level_name:String,trigger_name:String)->String:
 	return _dictionary_of_dialogs[level_name][trigger_name]
 
 func _ready():
-	print(load_dialog_directory())
-	
+	load_dialog_directory()
+#
 
 func load_dialog_directory()->Dictionary:
 	var file = File.new()

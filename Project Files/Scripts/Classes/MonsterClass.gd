@@ -113,5 +113,6 @@ func make_lootable_body():
 	var lootable_corpse = corpseLootableBox.instance()
 	lootable_corpse.object_name = self.name+"_Corpse"
 	lootable_corpse.inventory_items_to_add = lootable_items
+	lootable_corpse.dialog_one_time_trigger = true
 	self.add_child(lootable_corpse)
 	pass

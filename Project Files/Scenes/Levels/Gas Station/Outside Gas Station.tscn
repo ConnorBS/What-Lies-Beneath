@@ -297,7 +297,7 @@ offset = Vector2( -524, -159 )
 [node name="CuddleBuddy" parent="Floor1/ActorsAndObjects" instance=ExtResource( 30 )]
 position = Vector2( 976, 298 )
 charge_speed = 2500
-lootable_items = [ "Pistol" ]
+lootable_items = [ [ "Small Bullets", 5 ] ]
 
 [node name="GasBuildingOverHang" type="Sprite" parent="Floor1/ActorsAndObjects"]
 modulate = Color( 1, 1, 1, 0.564706 )
