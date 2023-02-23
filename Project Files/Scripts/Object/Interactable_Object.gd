@@ -22,6 +22,7 @@ var _inventory_item_pickups:Array
 var _key_item_pickup:Inventory.KeyItems
 var _map_item_pickup
 
+signal item_looted
 
 func _ready():
 	self.texture = spriteToLoad
@@ -39,7 +40,7 @@ func _ready():
 ########     Items     ##########
 #################################
 func make_inventory_items(inventory_list) -> Array:
-	var new_inventory_list = []
+	var new_inventory_list = [] 
 	if inventory_list != null or !inventory_list.empty():
 		for item in inventory_list:
 			new_inventory_list.append(InventoryLists.get_item(item[0],item[1]))
@@ -67,6 +68,8 @@ func pickup_items():
 		
 	_collected = true
 	save_pickup_state()
+	emit_signal("item_looted")
+	
 	if dialog_trigger == "":
 		remove_interaction()
 	
@@ -84,6 +87,8 @@ func load_pickup_state():
 			dialog_trigger_count = load_data["dialog_trigger_count"]
 			
 			if dialog_one_time_trigger and dialog_trigger_count > 0 :
+				remove_interaction()
+			elif _collected and (dialog_trigger == "" or dialog_trigger == null):
 				remove_interaction()
 		else: ### If it's not in the save file, it should be, so adds current state into memory
 			save_pickup_state()
@@ -107,7 +112,7 @@ func _process(_delta):
 ######### Dialog Text ###########
 #################################
 func trigger_dialog():
-	if dialog_trigger == "" or dialog_trigger == null:
+	if (dialog_trigger == "" or dialog_trigger == null):
 		pass
 	else:
 		if dialog_one_time_trigger == false or dialog_trigger_count == 0:

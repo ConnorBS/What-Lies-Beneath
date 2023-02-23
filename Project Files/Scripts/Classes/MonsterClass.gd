@@ -17,6 +17,7 @@ export (int) var fall_speed = 160
 export (int) var current_floor = 1
 
 export (Array) var lootable_items:Array
+export (bool) var looted:bool = false
 
 var _dead = false
 export (int) var touch_damage = 30
@@ -49,6 +50,8 @@ func die():
 	_find_level_node().monster_death(self)
 	if !lootable_items.empty():
 		make_lootable_body()
+	
+	save_enemy_state()
 		
 		
 func _play_death_animation():
@@ -81,6 +84,7 @@ func load_enemy_state():
 		_dead = load_data["dead"]
 		health = load_data["health"]
 		loot_drop = load_data["loot_drop"]
+		looted = load_data["looted"]
 		var new_pos =Vector2(load_data["position.x"],load_data["position.y"])
 		print (new_pos)
 		self.position = new_pos
@@ -103,16 +107,24 @@ func save_enemy_state():
 		"dead":_dead,
 		"health":health,
 		"loot_drop":loot_drop,
+		"looted":looted,
 		"position.x":self.position.x,
-		"position.y":self.position.y
+		"position.y":self.position.y,
 		}
 	
 	_find_level_node().save_enemy_state_in_level(monsterName,save_data)
 
 func make_lootable_body():
-	var lootable_corpse = corpseLootableBox.instance()
-	lootable_corpse.object_name = self.name+"_Corpse"
-	lootable_corpse.inventory_items_to_add = lootable_items
-	lootable_corpse.dialog_one_time_trigger = true
-	self.add_child(lootable_corpse)
+	if !lootable_items.empty() and !looted:
+		var lootable_corpse = corpseLootableBox.instance()
+		lootable_corpse.object_name = self.name+"_Corpse"
+		lootable_corpse.inventory_items_to_add = lootable_items
+		lootable_corpse.dialog_one_time_trigger = true
+		self.add_child(lootable_corpse)
+		lootable_corpse.connect("item_looted",self,"item_looted")
 	pass
+
+func item_looted():
+	looted = true
+	
+	save_enemy_state()

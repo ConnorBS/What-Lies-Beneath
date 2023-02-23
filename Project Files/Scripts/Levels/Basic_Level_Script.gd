@@ -164,7 +164,6 @@ func load_enemy_state_in_level (name_of_enemy) -> Dictionary:
 
 func monster_death(monster_node):
 	_camera_node.monster_death()
-	SaveAndLoad.save_game()
 
 ################################################
 ######### Lighting Config #######################

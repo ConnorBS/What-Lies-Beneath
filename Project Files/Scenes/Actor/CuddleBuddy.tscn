@@ -259,7 +259,7 @@ position = Vector2( -1, -38 )
 texture = ExtResource( 1 )
 hframes = 9
 vframes = 3
-frame = 18
+frame = 19
 
 [node name="MonsterHitBox" type="Area2D" parent="." groups=["Monster"]]
 position = Vector2( 0, -34 )
@@ -481,7 +481,6 @@ collision_mask = 0
 
 [node name="DecisionTimer" type="Timer" parent="."]
 
-[connection signal="area_entered" from="MonsterHitBox" to="." method="_on_MonsterHitBox_area_entered"]
 [connection signal="area_entered" from="MonsterCriticalHitBox" to="." method="_on_TouchDamage_area_entered"]
 [connection signal="body_entered" from="MonsterCriticalHitBox" to="." method="_on_TouchDamage_body_entered"]
 [connection signal="area_entered" from="InteractableHitBox" to="." method="_on_InteractableHitBox_area_entered"]

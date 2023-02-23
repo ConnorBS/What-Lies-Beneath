@@ -147,7 +147,9 @@ func reset_state():
 func _on_DecisionTimer_timeout():
 #	if currentState == STATE.WALK:
 #		change_animation("idle")
-	if currentState == STATE.ATTACK and playerInAttackZone:
+	if _dead:
+		return
+	elif currentState == STATE.ATTACK and playerInAttackZone:
 		attack()
 	else:
 		reset_state()
