@@ -128,6 +128,11 @@ func _on_Options_pressed():
 	pass # Replace with function body.
 
 func _on_Use_pressed():
+	
+	if get_parent()._viewportNode.get_child(0).playerNode.interaction_item(item_selected):
+#		get_parent().unpause()
+		pass
+		
 	var is_item_being_removed = item_selected.use_item()
 	if is_item_being_removed:
 		item_list = PlayerInventory.get_list_of_inventory()

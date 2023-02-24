@@ -399,6 +399,13 @@ __meta__ = {
 "_editor_description_": ""
 }
 
+[node name="HoleInTheWall" parent="Floor1/ActorsAndObjects" instance=ExtResource( 15 )]
+position = Vector2( 622, 258 )
+object_name = "Hole"
+overhead_text = "There is a hole behind the pillar"
+item_needed = "Small Sized Plant"
+dialog_of_item_needed = "The hole feels... hungry"
+
 [node name="Floor2" type="Node2D" parent="."]
 
 [node name="Background" type="TextureRect" parent="Floor2"]

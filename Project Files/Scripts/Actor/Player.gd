@@ -29,6 +29,8 @@ export (int) var walk_speed = 80
 export (int) var fall_speed = 160
 var push_box_speed = 40
 
+export (bool) var allow_all_4_directions_of_movement = false
+
 enum BOX_SIDE {NONE,LEFT,RIGHT}
 ###############################
 #########Player States#########
@@ -435,14 +437,16 @@ func _get_input()->Vector2:
 		if !push_box_state:
 			flip_sprite(true)
 	if Input.is_action_pressed("move_up"):
-		velocity.y -= 1
+		if allow_all_4_directions_of_movement:
+			velocity.y -= 1
 		#####Climbs Box####
 		if push_box_state:
 			trigger_climb_on_box()
 			
 			return climb_box(interactable_object.get_parent().player_climb())
 	if Input.is_action_pressed("move_down") and !push_box_state:
-		velocity.y += 1
+		if allow_all_4_directions_of_movement:
+			velocity.y += 1
 		
 	##############################################
 	###################Climbing ##################
@@ -531,11 +535,12 @@ func aiming_gun()->void:
 			bullet_ray.position.x = -bullet_ray.position.x
 			gun_position.x = bullet_ray.position.x
 			
+
 #
 	##############################################################
 	##########Set Target Position and ray cast####################
 	##############################################################
-	set_target_position(gun_position,target_distance)
+#	set_target_position(gun_position,target_distance)
 	bullet_ray.cast_to = gun_position.direction_to(_target.position)*500
 
 
@@ -551,6 +556,20 @@ func set_target_position(starting_point:Vector2,target_distance:int):
 	target_position.x += target_distance
 	_target.position = target_position
 
+
+func interaction_item(item):
+	if item != null and interactable_object != null:
+		if interactable_object.get_parent().use_item(item):
+			get_tree().root.get_node("/root/GameScreen").unpause()
+			gun_out_state =false
+			$AnimationTree.pause_mode = Node.PAUSE_MODE_PROCESS
+			change_animation("Kneeling_Down")
+			interactable_object.get_parent().trigger_dialog()
+			PlayerState.set_Player_Active(false)
+			_on_InteractableHitBox_area_exited(interactable_object)
+			dialog_state = true
+			####Could hold out from saying interact State to be triggered by dialog/cutscene time
+			interact_state = true
 	
 func update_interaction(in_range:bool,area)->void:
 	infront_of_interactable_object = in_range

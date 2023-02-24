@@ -116,7 +116,14 @@ func _process(_delta):
 ###########################################
 ########### Menu Transitions ##############
 ###########################################
-
+func unpause():
+	_menuMusicNode.stop()
+	_viewportNode.gui_disable_input = true
+	_tween_grow(Vector2.ZERO,_fullDimensions)
+	menu_visible = false
+	get_tree().paused = false
+	PlayerState.set_Player_Active(true)
+	play_background_music()
 
 ###Buttons call these functions to triger transitions
 func _update_window(new_window:int)->void:

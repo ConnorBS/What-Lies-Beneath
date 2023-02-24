@@ -22,6 +22,11 @@ var _inventory_item_pickups:Array
 var _key_item_pickup:Inventory.KeyItems
 var _map_item_pickup
 
+
+export (String) var item_needed
+export (String) var dialog_of_item_needed
+var item_need_completed = false
+
 signal item_looted
 
 func _ready():
@@ -33,6 +38,8 @@ func _ready():
 	_key_item_pickup = make_key_item(key_item_to_add)
 	_map_item_pickup = make_map_item(map_pieces_to_unlock)
 	
+	if item_needed == "":
+		item_need_completed = true
 	load_pickup_state()
 	#####
 
@@ -85,6 +92,7 @@ func load_pickup_state():
 			_collected = load_data["collected"]
 			overhead_trigger_count = load_data["overhead_trigger_count"]
 			dialog_trigger_count = load_data["dialog_trigger_count"]
+			item_need_completed = load_data["item_need_completed"]
 			
 			if dialog_one_time_trigger and dialog_trigger_count > 0 :
 				remove_interaction()
@@ -98,7 +106,8 @@ func save_pickup_state():
 		var save_data = {
 			"collected":_collected,
 			"overhead_trigger_count":overhead_trigger_count,
-			"dialog_trigger_count":dialog_trigger_count
+			"dialog_trigger_count":dialog_trigger_count,
+			"item_need_completed":item_need_completed
 			}
 		
 		_find_level_node().save_pickup_state_of_object_in_level(object_name,save_data)
@@ -108,6 +117,12 @@ func _process(_delta):
 	if Engine.editor_hint:
 		$Area2D/CollisionShape2D.scale = scale_of_interactable_box
 
+func use_item(item) -> bool:
+	if item != null:
+		if item_needed == item.name and item_need_completed == false:
+			item_need_completed = true
+			return true
+	return false
 #################################
 ######### Dialog Text ###########
 #################################
@@ -115,11 +130,13 @@ func trigger_dialog():
 	if (dialog_trigger == "" or dialog_trigger == null):
 		pass
 	else:
-		if dialog_one_time_trigger == false or dialog_trigger_count == 0:
+		if (dialog_one_time_trigger == false or dialog_trigger_count == 0) and (item_need_completed or item_needed == ""):
 			dialog_trigger_count += 1
 			_find_level_node()._on_open_dialogWindow(dialog_trigger)
 			if dialog_one_time_trigger:
 				remove_interaction()
+		elif item_need_completed == false:
+			_find_level_node()._on_open_dialogWindow_system_message([dialog_of_item_needed])
 		else: 
 			pass
 	if _collected == false:

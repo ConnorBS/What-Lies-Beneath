@@ -11,6 +11,7 @@ export (int) var spawn_point = 1
 
 export (Texture) var spriteToLoad:Texture
 
+
 var _collected = false
 
 static func change_collision_and_mask(node,floor_update:int,state:bool):
