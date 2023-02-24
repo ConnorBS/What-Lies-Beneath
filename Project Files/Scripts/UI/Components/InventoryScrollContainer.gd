@@ -40,3 +40,9 @@ func update_label(new_quantity):
 
 func clear_label():
 	$Label.text = ""
+
+func grey_out(state):
+	if state == true:
+		$ItemTexture.modulate = Color.darkred
+	else:
+		$ItemTexture.modulate = Color.white

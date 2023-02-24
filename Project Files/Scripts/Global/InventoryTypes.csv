@@ -1,8 +1,8 @@
-ItemName,Description,Use,UseValue,MaxQuantity,Weapon,TextureLocation,ReloadTo
-Small Plant,Just smelling it reminds me of my youth,Heal,25,1,FALSE,res://Assets/Sprites/Items/Plant_Small.png,
-Medium Sized Plant,It calms my heart and ,Heal,60,1,FALSE,res://Assets/Sprites/Items/Plant_Medium.png,
-Large Sized Plant,"You know, there are a lot of studies out there that report that these plants have more restorative properties than what Western Medicine understands",Heal,100,1,FALSE,res://Assets/Sprites/Items/Plant_Large.png,
-Pistol,Some kind of pistol. Never seen one up close like this before...,Equip,2,12,TRUE,res://Assets/Sprites/Equipment/WWII Weapons/Colt M1911.png,Small Bullets
-Shotgun,"Doesn't hold much for ammo, but I need to be careful around this weapon",Equip,5,2,TRUE,res://Assets/Sprites/Equipment/WWII Weapons/BAR.png,Shotgun Shells
-Small Bullets,Looks to fit a pistol I believe,Reload,1,99,FALSE,res://Assets/KeyItems/Blank-Keys.png,Pistol
-Shotgun Shells,Looks to be a shotgun shell. I wonder if I have to remove the Red Plastic before I try putting it in the gun...,Reload,1,99,FALSE,res://Assets/KeyItems/Blank-Keys.png,Shotgun
+ItemName,Description,Use,UseValue,MaxQuantity,Weapon,TextureLocation,ReloadTo,CombinableWith,CombinesTo
+Small Sized Plant,Just smelling it reminds me of my youth,Heal,25,1,FALSE,res://Assets/Sprites/Items/Plant_Small.png,,Small Sized Plant,Medium Sized Plant
+Medium Sized Plant,It calms my heart and soothes my soul,Heal,60,1,FALSE,res://Assets/Sprites/Items/Plant_Medium.png,,Medium Sized Plant,Large Sized Plant
+Large Sized Plant,"You know, there are a lot of studies out there that report that these plants have more restorative properties than what Western Medicine understands",Heal,100,1,FALSE,res://Assets/Sprites/Items/Plant_Large.png,,,
+Pistol,Some kind of pistol. Never seen one up close like this before...,Equip,2,12,TRUE,res://Assets/Sprites/Equipment/WWII Weapons/Colt M1911.png,Small Bullets,,
+Shotgun,"Doesn't hold much for ammo, but I need to be careful around this weapon",Equip,5,2,TRUE,res://Assets/Sprites/Equipment/WWII Weapons/BAR.png,Shotgun Shells,,
+Small Bullets,Looks to fit a pistol I believe,Reload,1,99,FALSE,res://Assets/KeyItems/Blank-Keys.png,Pistol,,
+Shotgun Shells,Looks to be a shotgun shell. I wonder if I have to remove the Red Plastic before I try putting it in the gun...,Reload,1,99,FALSE,res://Assets/KeyItems/Blank-Keys.png,Shotgun,,

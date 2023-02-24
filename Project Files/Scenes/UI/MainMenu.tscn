@@ -178,26 +178,34 @@ enabled_focus_mode = 0
 text = "Use"
 underline = 2
 
-[node name="Equip" type="LinkButton" parent="MarginContainer/VBoxContainer/TopRow/Command/Panel/VBoxContainer"]
+[node name="Combine" type="LinkButton" parent="MarginContainer/VBoxContainer/TopRow/Command/Panel/VBoxContainer"]
 margin_top = 25.0
 margin_right = 282.0
 margin_bottom = 46.0
+enabled_focus_mode = 0
+text = "Combine"
+underline = 2
+
+[node name="Equip" type="LinkButton" parent="MarginContainer/VBoxContainer/TopRow/Command/Panel/VBoxContainer"]
+margin_top = 50.0
+margin_right = 282.0
+margin_bottom = 71.0
 enabled_focus_mode = 0
 text = "Equip"
 underline = 2
 
 [node name="Reload" type="LinkButton" parent="MarginContainer/VBoxContainer/TopRow/Command/Panel/VBoxContainer"]
-margin_top = 50.0
+margin_top = 75.0
 margin_right = 282.0
-margin_bottom = 71.0
+margin_bottom = 96.0
 enabled_focus_mode = 0
 text = "Reload"
 underline = 2
 
 [node name="Remove" type="LinkButton" parent="MarginContainer/VBoxContainer/TopRow/Command/Panel/VBoxContainer"]
-margin_top = 75.0
+margin_top = 100.0
 margin_right = 282.0
-margin_bottom = 96.0
+margin_bottom = 121.0
 enabled_focus_mode = 0
 text = "Remove"
 underline = 2
@@ -396,6 +404,7 @@ texture_pressed = ExtResource( 17 )
 
 [connection signal="focus_entered" from="MarginContainer/VBoxContainer/TopRow/Equipment/Panel" to="." method="_on_Equipment_Panel_focus_entered"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/TopRow/Command/Panel/VBoxContainer/Use" to="." method="_on_Use_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/TopRow/Command/Panel/VBoxContainer/Combine" to="." method="_on_Combine_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/TopRow/Command/Panel/VBoxContainer/Equip" to="." method="_on_Equip_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/TopRow/Command/Panel/VBoxContainer/Reload" to="." method="_on_Reload_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/TopRow/Command/Panel/VBoxContainer/Remove" to="." method="_on_Remove_pressed"]

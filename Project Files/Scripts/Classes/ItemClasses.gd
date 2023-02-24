@@ -6,7 +6,7 @@ static func find_Item_Type(name_of_Item):
 	pass
 
 class Items:
-	enum COMMANDS {USE,EQUIP,RELOAD,REMOVE}
+	enum COMMANDS {USE,COMBINABLE,EQUIP,RELOAD,REMOVE}
 	export var texture:String
 	export var name:String
 	export var use:String
@@ -17,20 +17,24 @@ class Items:
 	export var max_quantity:int = 99
 	export var reload_to:String = ""
 	export var weapon:bool = false
+	export var combinableWith:String
+	export var combinableTo:String
+	
 	
 	func is_type(type:String):
 		return type == "Inventory.Items"
 		
 		
 	func get_item_commands()->Dictionary:
+		var combinable = combinableWith != ""
 		if use == "Heal":
-			return {COMMANDS.USE : true, COMMANDS.EQUIP : false , COMMANDS.RELOAD : false, COMMANDS.REMOVE : true}
+			return {COMMANDS.USE : true, COMMANDS.COMBINABLE:combinable, COMMANDS.EQUIP : false , COMMANDS.RELOAD : false, COMMANDS.REMOVE : true}
 		elif use == "Equip" and weapon == true:
-			return {COMMANDS.USE : false, COMMANDS.EQUIP : true, COMMANDS.RELOAD : true, COMMANDS.REMOVE : true}
+			return {COMMANDS.USE : false,COMMANDS.COMBINABLE:combinable, COMMANDS.EQUIP : true, COMMANDS.RELOAD : true, COMMANDS.REMOVE : true}
 		elif use == "Reload":
-			return {COMMANDS.USE : false, COMMANDS.EQUIP : false, COMMANDS.RELOAD : true, COMMANDS.REMOVE : true}
+			return {COMMANDS.USE : false,COMMANDS.COMBINABLE:combinable, COMMANDS.EQUIP : false, COMMANDS.RELOAD : true, COMMANDS.REMOVE : true}
 		push_warning("Inventory.Items does not have a matching command expected for get_item_commands()")
-		return {COMMANDS.USE : false, COMMANDS.EQUIP : false, COMMANDS.RELOAD : false, COMMANDS.REMOVE : false}
+		return {COMMANDS.USE : false,COMMANDS.COMBINABLE:combinable, COMMANDS.EQUIP : false, COMMANDS.RELOAD : false, COMMANDS.REMOVE : false}
 	
 	func use_item()->bool:
 		if use == "Heal":
@@ -53,6 +57,15 @@ class Items:
 	func reload_item():
 		if (use == "Reload" or use == "Equip") and reload_to != "":
 			PlayerInventory.reload_item(self)
+	
+	func combine(other_item) -> String:
+		if combinableWith == other_item.name:
+			PlayerInventory.add_item(InventoryLists.get_item(combinableTo))
+			PlayerInventory.remove_item(other_item)
+			PlayerInventory.remove_item(self)
+			return combinableTo
+		
+		return ""
 
 
 

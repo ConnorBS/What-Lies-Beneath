@@ -25,6 +25,10 @@ var _noEquipmentNode:Label = null
 
 var equipment_node_selected = false
 
+
+var firstCombinableItem #:Inventory.Items
+
+
 export (Color) var selected_color = Color(.77,0,0,1)
 export (Color) var non_selected_color = Color(1,1,1,1)
 
@@ -37,7 +41,7 @@ var pressed = false
 func _process(_delta):
 	if Input.is_key_pressed(KEY_1):
 		if pressed == false:
-			var item = InventoryLists.get_item("Small Plant",1)
+			var item = InventoryLists.get_item("Small Sized Plant",1)
 			PlayerInventory.add_item(item)
 			update_inventory_scroll()
 			pressed = true
@@ -233,8 +237,16 @@ func update_inventory_scroll()->void:
 	for i in _itemRowNode.get_child_count():
 		if item_to_display[i] == null:
 			_itemRowNode.get_child(i).update_item(null)
+			
 		else:
 			_itemRowNode.get_child(i).update_item(item_list[item_to_display[i]])
+			
+			if item_list[item_to_display[i]] == firstCombinableItem:
+				_itemRowNode.get_child(i).grey_out(true)
+			else:
+				_itemRowNode.get_child(i).grey_out(false)
+		
+			
 	if equipment_node_selected == false:
 		item_selected = _itemRowNode.get_child(2).item
 	update_text(item_selected)
@@ -257,7 +269,7 @@ func update_commands(item_to_use:Inventory.Items)->void:
 		for i in _commandButtonContainerNode.get_child_count():
 			if commands_to_display[i]:
 				_commandButtonContainerNode.get_child(i).show()
-				if i == 1:
+				if i == 2:
 					if equipment_node_selected:
 						_commandButtonContainerNode.get_child(i).text = "Unequip"
 					else:
@@ -393,3 +405,27 @@ func select_selector_node(state=true):
 		update_commands(item_selected)
 	else:
 		_itemScrollSelectionWindowNode.self_modulate = non_selected_color
+
+#####################
+#######Combine ######
+#####################
+
+
+func _on_Combine_pressed():
+	if firstCombinableItem == null:
+	
+		_itemNameLabel.text = "Select Next Item"
+		_itemDescriptionLabel.text = "Select another item to combine with "+item_selected.name+"."
+		firstCombinableItem = item_selected
+	elif firstCombinableItem != item_selected:
+		var name_of_combinedItem = firstCombinableItem.combine(item_selected)
+		if name_of_combinedItem != "":
+			_on_Item_Scroll_Previous_pressed()
+			_itemNameLabel.text = name_of_combinedItem
+			_itemDescriptionLabel.text = "Succesfully Combined to create "+name_of_combinedItem
+		firstCombinableItem = null 
+	else:
+		firstCombinableItem = null
+	update_inventory_scroll()
+	update_Item_Scroll_position()
+	pass # Replace with function body.

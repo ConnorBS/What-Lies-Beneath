@@ -79,6 +79,8 @@ func load_Inventory_Types ()->Dictionary:
 					new_item.weapon = (csv[5] == "TRUE")
 					new_item.texture = csv[6]
 					new_item.reload_to = ("" if (csv[7] == "") else csv[7])
+					new_item.combinableWith = ("" if (csv[8] == "") else csv[8])
+					new_item.combinableTo = ("" if (csv[9] == "") else csv[9])
 					if Types.keys().has(new_item.name):
 						push_warning("InventoryLists.load_Inventory_Types has overwritten a Types Dictionary Value")
 					Types[new_item.name] = new_item
@@ -99,6 +101,8 @@ static func _duplicate_item(name_to_pull)->Inventory.Items:
 	item.weapon = dict_Item.weapon
 	item.texture = dict_Item.texture 
 	item.reload_to = dict_Item.reload_to
+	item.combinableWith = dict_Item.combinableWith
+	item.combinableTo = dict_Item.combinableTo
 	return item
 	
 static func get_item(name_to_pull,item_quantity = 1)->Inventory.Items:
