@@ -103,6 +103,7 @@ func change_animation(animationToChangeTo:String)->void:
 		#print (animationToChangeTo)
 		if animationToChangeTo == "Idle":
 				pass
+		
 				
 	
 func check_if_current_animation_allows_movement() -> bool:
@@ -123,7 +124,10 @@ func check_if_current_animation_allows_movement() -> bool:
 		return false
 	elif animation_playing == "Melee_Attack":
 		return false
-		
+	elif "Reload_" in animation_playing:
+		return false
+	elif "Shooting_" in animation_playing:
+		return false
 	#######CLimbing#######
 	elif check_if_current_animation_transition_climbing():
 		return false
@@ -183,7 +187,7 @@ func check_if_current_animation_is_falling()->bool:
 
 func check_if_current_animation_is_shooting()->bool:
 	var animation_playing = state_machine.get_current_node()
-	if animation_playing == "Shooting_" + gun_name:
+	if animation_playing == "Shooting_" + gun_name or animation_playing == "Reload_"+gun_name:
 		change_animation("Aiming_" + gun_name)
 		return true
 	return false
@@ -335,12 +339,14 @@ func _get_input()->Vector2:
 								var new_blood = blood_spary_scene.instance()
 								new_blood.position = bullet_ray.get_collision_point()
 								level_manager.add_child(new_blood)
+					elif PlayerInventory.reload_item(PlayerInventory.get_gun()):
+						change_animation("Reload_"+gun_name)
 					else:
 						$GunNoises.stream = load(_empty_gun_noise[int(check_equipped_gun())])
 						$GunNoises.play()
 					return velocity
-			else:
-				return velocity
+#			else:
+#				return velocity
 		elif Input.is_action_just_pressed("aim"):
 			if PlayerInventory.equipped_gun_type != PlayerInventory.GUNTYPES.NONE:
 				change_animation("Aiming_" + gun_name)
@@ -492,14 +498,20 @@ func _get_input()->Vector2:
 			if velocity.length() != 0:
 				if gun_out_state:
 					if check_equipped_gun() != PlayerInventory.GUNTYPES.NONE:
-						change_animation("Walk_With_" + gun_name)
+						if aim_state:
+							change_animation("Walk_With_"+gun_name+"_Drawn")
+						else:
+							change_animation("Walk_With_" + gun_name)
 				else:
 					change_animation("Walking")
 		
 		if velocity.length() == 0:
 			if gun_out_state:
 				if check_equipped_gun() != PlayerInventory.GUNTYPES.NONE:
-					change_animation("Idle_" + gun_name)
+					if aim_state:
+						change_animation("Aiming_"+gun_name)
+					else:
+						change_animation("Idle_" + gun_name)
 			elif interact_state == false:
 				change_animation("Idle")
 	return velocity

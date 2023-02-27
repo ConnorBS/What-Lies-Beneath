@@ -159,6 +159,11 @@ func use_gun() -> bool:
 		return _equipped_gun.use_item()
 	return false
 
+func get_gun():
+	if _equipped_gun !=null:
+		return _equipped_gun
+	return false
+	
 func get_gun_damage() -> int:
 	if _equipped_gun != null:
 		return _equipped_gun.value
@@ -305,6 +310,8 @@ func reload_item(item):
 					ammo_to_use[0].quantity -= 1
 					if ammo_to_use[0].quantity <= 0:
 						remove_item(ammo_to_use.pop_front(),_inventory)
+		return true
+	return false
 						
 						
 	
