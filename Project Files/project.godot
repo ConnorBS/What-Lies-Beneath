@@ -183,6 +183,7 @@ flashlight={
 2d_physics/layer_1="Level1"
 2d_physics/layer_2="Level2"
 2d_physics/layer_3="Level3"
+2d_physics/layer_5="Terrain"
 2d_physics/layer_9="PlayerHitBox"
 2d_physics/layer_11="InteractableObjectFloor1"
 2d_physics/layer_12="InteractableObjectFloor2"

@@ -12,12 +12,12 @@ onready var _empty_gun_noise = {
 }
 onready var _footstep_sfx ={
 	"Walking":{
-		"Gravel":"res://Assets/Audio/Player/FootStep_Gravel_Walking.wav",
-		"Wood":"res://Assets/Audio/Player/FootStep_Gravel_Walking.wav",
+		"Gravel":"res://Assets/Audio/Player/FootStep_Walking_Gravel.wav",
+		"Wood":"res://Assets/Audio/Player/FootStep_Walking_Wood.ogg",
 	},
 	"Running":{
 		"Gravel":"res://Assets/Audio/Player/FootStep_Running_Gravel.wav",
-		"Wood":"res://Assets/Audio/Player/FootStep_Running_Gravel.wav",
+		"Wood":"res://Assets/Audio/Player/FootStep_Running_Wood.ogg",
 	}
 }
 
@@ -604,6 +604,8 @@ func _on_InteractableHitBox_area_entered(area):
 	
 	if area.is_in_group("Fall"):
 		falling_trigger(area,true)
+	if area.is_in_group("Terrain"):
+		terrain_entered(area)
 
 
 func _on_InteractableHitBox_area_exited(area):
@@ -934,3 +936,14 @@ func toggle_light():
 		else:
 			flashlightNode.enabled = true
 		
+
+######################################################
+##############   FootSteps ###########################
+######################################################
+
+func terrain_entered(area):
+	if area.is_in_group("Gravel"):
+		_on_material = "Gravel"
+	elif area.is_in_group("Wood"):
+		_on_material = "Wood"
+	player_sprinting(sprint_state)

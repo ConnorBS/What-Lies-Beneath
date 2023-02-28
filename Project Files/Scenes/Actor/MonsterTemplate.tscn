@@ -6,7 +6,7 @@
 [ext_resource path="res://Assets/Animation/Monster/CuddleBuddy/Death.tres" type="Animation" id=4]
 [ext_resource path="res://Assets/Sprites/Player/Shadow.png" type="Texture" id=5]
 [ext_resource path="res://Assets/Animation/Monster/CuddleBuddy/Dead.tres" type="Animation" id=6]
-[ext_resource path="res://Assets/Audio/Player/FootStep_Gravel_Walking.wav" type="AudioStream" id=16]
+[ext_resource path="res://Assets/Audio/Player/FootStep_Walking_Gravel.wav" type="AudioStream" id=16]
 [ext_resource path="res://Assets/Sprites/Player/Light.png" type="Texture" id=17]
 [ext_resource path="res://Assets/UI/Button Images/Tab.png" type="Texture" id=18]
 [ext_resource path="res://Assets/Fonts/DynamicFonts/Player_Ingame_Text.tres" type="DynamicFont" id=19]

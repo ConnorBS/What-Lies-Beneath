@@ -1,7 +1,8 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://Assets/Audio/BackgroundMusic/Why did you lie to me.mp3" type="AudioStream" id=1]
 [ext_resource path="res://Scenes/Actor/CuddleBuddy.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scenes/Effect/FootStep_Terrain.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Assets/Levels/Inside Gas Station/GasStationInside.png" type="Texture" id=6]
 [ext_resource path="res://Scenes/Actor/Player.tscn" type="PackedScene" id=13]
 [ext_resource path="res://Scenes/Game Camera.tscn" type="PackedScene" id=14]
@@ -134,6 +135,10 @@ position = Vector2( 29, 161 )
 scale = Vector2( 1, 1.2 )
 scene_to_change_location = "res://Scenes/Levels/Gas Station/Outside Gas Station.tscn"
 spawn_point = 3
+
+[node name="Terrain" parent="Floor1/ActorsAndObjects" instance=ExtResource( 3 )]
+position = Vector2( 50, 178 )
+terrain_type = "Wood"
 
 [node name="FogShader" type="TextureRect" parent="."]
 material = SubResource( 4 )
