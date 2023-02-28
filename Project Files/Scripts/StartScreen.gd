@@ -17,7 +17,7 @@ func _on_Continue_pressed():
 
 
 func _on_StartNewGame_pressed():
-	get_tree().change_scene(newGame_scene)
+	var _new_scene = get_tree().change_scene(newGame_scene)
 	pass # Replace with function body.
 
 

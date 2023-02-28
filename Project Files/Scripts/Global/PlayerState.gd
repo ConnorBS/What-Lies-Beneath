@@ -109,13 +109,13 @@ func receive_damage(value):
 	set_Player_Health(_Current_Health - value)
 	
 func heal(value:int)->void:
-	print ("Healing for ", value, " | Current Health = ",_Current_Health, " to:")
+#	print ("Healing for ", value, " | Current Health = ",_Current_Health, " to:")
 	set_Player_Health(_Current_Health + value)
-	print (_Current_Health,"/",_Max_Health)
+#	print (_Current_Health,"/",_Max_Health)
 	
 func _check_for_death()->bool:
 	if _Current_Health <= 0:
-		print ("DEAD")
+#		print ("DEAD")
 		return true
 	return false
 

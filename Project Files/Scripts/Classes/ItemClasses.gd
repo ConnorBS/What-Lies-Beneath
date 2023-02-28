@@ -1,9 +1,6 @@
 extends Resource
 class_name Inventory
 
-static func find_Item_Type(name_of_Item):
-	
-	pass
 
 class Items:
 	enum COMMANDS {USE,COMBINABLE,EQUIP,RELOAD,REMOVE}

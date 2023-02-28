@@ -14,7 +14,7 @@ func set_health(healthValue,totalHealth)->void:
 	if colourhealthPercentage > 1.0:
 		$ColorRect.color = green
 	else:
-		var topH = green.h
+#		var topH = green.h
 		$ColorRect.color.h = green.h*colourhealthPercentage
 
 #func _ready():

@@ -119,6 +119,7 @@ func _on_close_dialogWindow(clear_node = false):
 		playerNode.dialog_closed()
 #		_current_dialog_window =null
 	else:
+		
 		_current_dialog_window.queue_free()
 		_current_dialog_window = _dialog_queue.pop_front()
 		get_parent().get_parent().add_child(_current_dialog_window)
@@ -162,7 +163,7 @@ func load_enemy_state_in_level (name_of_enemy) -> Dictionary:
 		return PlayerState.load_enemy_state(level_name,name_of_enemy)
 	return {}
 
-func monster_death(monster_node):
+func monster_death(_monster_node):
 	_camera_node.monster_death()
 
 ################################################

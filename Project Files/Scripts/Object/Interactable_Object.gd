@@ -10,7 +10,7 @@ export (String) var overhead_text= ""
 export (AudioStream) var overhead_voice_over = null
 var overhead_trigger_count:int = 0
 
-signal dialogWindow
+#signal dialogWindow
 
 export (Vector2) var scale_of_interactable_box = Vector2(1,1)
 

@@ -13,11 +13,11 @@ onready var _empty_gun_noise = {
 onready var _footstep_sfx ={
 	"Walking":{
 		"Gravel":"res://Assets/Audio/Player/FootStep_Walking_Gravel.wav",
-		"Wood":"res://Assets/Audio/Player/FootStep_Walking_Wood.ogg",
+		"Wood":"res://Assets/Audio/Player/FootStep_Walking_Wood.wav",
 	},
 	"Running":{
 		"Gravel":"res://Assets/Audio/Player/FootStep_Running_Gravel.wav",
-		"Wood":"res://Assets/Audio/Player/FootStep_Running_Wood.ogg",
+		"Wood":"res://Assets/Audio/Player/FootStep_Running_Wood.wav",
 	}
 }
 
@@ -81,12 +81,15 @@ var action_set_player_active_as_false = false
 var gun_selected = PlayerInventory.equipped_gun_type
 var gun_name:String = ""
 var interactable_object = null
+var footstep_recently_changed = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	footstep_recently_changed =true
+	player_sprinting(sprint_state)
 	$AnimationTree.active = true
 	level_manager.enable_floor(current_floor)
-	PlayerState.connect("player_died",self,"_on_player_death")
+	var _new_connection = PlayerState.connect("player_died",self,"_on_player_death")
 	if PlayerInventory.get_melee_weapon() != null:
 		get_node("Sprite").texture = load("res://Assets/Sprites/Player/Ethan_With_Crowbar.png")
 	pass 
@@ -185,12 +188,10 @@ func check_if_current_animation_is_falling()->bool:
 		return true
 	return false
 
-func check_if_current_animation_is_shooting()->bool:
+func check_if_current_animation_is_shooting():
 	var animation_playing = state_machine.get_current_node()
 	if animation_playing == "Shooting_" + gun_name or animation_playing == "Reload_"+gun_name:
 		change_animation("Aiming_" + gun_name)
-		return true
-	return false
 
 func update_previous_animation():
 	if state_machine.get_current_node() != previous_animation:
@@ -323,14 +324,14 @@ func _get_input()->Vector2:
 				if check_equipped_gun() != PlayerInventory.GUNTYPES.NONE:
 					if PlayerInventory.gun_has_ammo_loaded():
 						change_animation("Shooting_" + gun_name)
-						PlayerInventory.use_gun()
+						var _does_gun_get_used = PlayerInventory.use_gun()
 #						print(bullet_ray.get_collider())
 						var collisionNode = bullet_ray.get_collider()
 						if collisionNode != null:
 							var damage_multiplier = 1
 							if collisionNode.is_in_group("CriticalHit"):
 								damage_multiplier = 2
-								print ("Critical Hit")
+#								print ("Critical Hit")
 							collisionNode = collisionNode.get_parent()
 							if collisionNode.is_in_group("Monster"):
 								collisionNode.receive_damage(PlayerInventory.get_gun_damage()*damage_multiplier)
@@ -815,18 +816,27 @@ func landing():
 ##################################
 
 func player_sprinting(sprint_state_active):
-	sprint_state = sprint_state_active
-	if sprint_state == false: #Walking
-		if _footstep_sfx["Walking"].has(_on_material):
-			$FootstepSFX.stream = load(_footstep_sfx["Walking"][_on_material])
+	if sprint_state != sprint_state_active:
+		sprint_state = sprint_state_active
+		footstep_recently_changed = true
+	if footstep_recently_changed:
+		var streamFile:String
+		if sprint_state == false: #Walking
+			if _footstep_sfx["Walking"].has(_on_material):
+				$FootstepSFX.stream = load(_footstep_sfx["Walking"][_on_material])
+				streamFile = _footstep_sfx["Walking"][_on_material]
+			else:
+				$FootstepSFX.stream = load(_footstep_sfx["Walking"]["Gravel"])
+				streamFile = _footstep_sfx["Walking"]["Gravel"]
 		else:
-			$FootstepSFX.stream = load(_footstep_sfx["Walking"]["Gravel"])
-	else:
-		if _footstep_sfx["Running"].has(_on_material):
-			print(_footstep_sfx["Running"][_on_material])
-			$FootstepSFX.stream = load(_footstep_sfx["Running"][_on_material])
-		else:
-			$FootstepSFX.stream = load(_footstep_sfx["Running"]["Gravel"])
+			if _footstep_sfx["Running"].has(_on_material):
+				$FootstepSFX.stream = load(_footstep_sfx["Running"][_on_material])
+				streamFile = _footstep_sfx["Running"][_on_material]
+			else:
+				$FootstepSFX.stream = load(_footstep_sfx["Running"]["Gravel"])
+				streamFile = _footstep_sfx["Running"]["Gravel"]
+		footstep_recently_changed = false
+		print(streamFile)
 
 ##################################
 ##########Dialog##################
@@ -890,7 +900,7 @@ func check_hit(area):
 		if melee_swipe_enemies_hit.empty() or !melee_swipe_enemies_hit.has(area.get_parent()):
 			area.get_parent().melee_hit(PlayerInventory.get_melee_damage())
 			melee_swipe_enemies_hit.append(area.get_parent())
-			print(melee_swipe_enemies_hit)
+#			print(melee_swipe_enemies_hit)
 			var blood_spary_scene = preload("res://Scenes/Effect/BloodSpray.tscn")
 			var new_blood = blood_spary_scene.instance()
 			new_blood.position = $Sprite/MeleeAttack/CollisionPolygon2D.global_position+Vector2(8,-33)
@@ -898,7 +908,7 @@ func check_hit(area):
 		
 
 func receive_damage(damage):
-	print ("you received ",damage," damage")
+#	print ("you received ",damage," damage")
 	PlayerState.receive_damage(damage)
 	
 ######################################################
@@ -943,7 +953,13 @@ func toggle_light():
 
 func terrain_entered(area):
 	if area.is_in_group("Gravel"):
-		_on_material = "Gravel"
+		if _on_material != "Gravel":
+			_on_material = "Gravel"
+			footstep_recently_changed = true
 	elif area.is_in_group("Wood"):
-		_on_material = "Wood"
-	player_sprinting(sprint_state)
+		if _on_material != "Wood":
+			_on_material = "Wood"
+			footstep_recently_changed = true
+	
+	if footstep_recently_changed:
+		player_sprinting(sprint_state)

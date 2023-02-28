@@ -6,7 +6,7 @@ onready var state_machine = $AnimationTree.get("parameters/playback")
 
 onready var corpseLootableBox = preload("res://Scenes/Object/Interactable_Object.tscn")
 
-signal monster_died
+#signal monster_died
 
 export (int) var health = 1
 export (int) var run_speed = 160
@@ -28,7 +28,7 @@ var loot_drop = []
 onready var monsterName = get_parent().get_parent().name+" - "+self.name
 func receive_damage(incoming_damage):
 	health -= incoming_damage
-	print (health)
+#	print (health)
 	if health <= 0:
 		health = 0
 		if _dead != true:
@@ -42,10 +42,7 @@ func melee_hit(damage):
 
 	
 func die():
-	$MonsterCriticalHitBox.queue_free()
-	$GroundPosition.queue_free()
-	$MonsterHitBox.queue_free()
-	$InteractableHitBox.queue_free()
+	disable_hitboxes()
 	_dead = true
 	_find_level_node().monster_death(self)
 	if !lootable_items.empty():
@@ -86,19 +83,16 @@ func load_enemy_state():
 		loot_drop = load_data["loot_drop"]
 		looted = load_data["looted"]
 		var new_pos =Vector2(load_data["position.x"],load_data["position.y"])
-		print (new_pos)
+#		print (new_pos)
 		self.position = new_pos
 		
 		if _dead:
-			
-			$MonsterCriticalHitBox.queue_free()
-			$GroundPosition.queue_free()
-			$MonsterHitBox.queue_free()
-			$InteractableHitBox.queue_free()
 			change_animation("Dead")
+			disable_hitboxes()
 			make_lootable_body()
 		if _dead and lootable_items.empty():
-			print("Nothing of value here: "+self.name)
+#			print("Nothing of value here: "+self.name)
+			pass
 	else: ### If it's not in the save file, it should be, so adds current state into memory
 		save_enemy_state()
 
@@ -128,3 +122,13 @@ func item_looted():
 	looted = true
 	
 	save_enemy_state()
+
+func disable_hitboxes():
+
+	$MonsterCriticalHitBox.monitoring = false
+	$MonsterCriticalHitBox.monitorable = false
+	$GroundPosition.disabled = true
+	$MonsterHitBox.monitoring = false
+	$MonsterHitBox.monitorable = false
+	$InteractableHitBox.monitoring = false
+	$InteractableHitBox.monitorable = false

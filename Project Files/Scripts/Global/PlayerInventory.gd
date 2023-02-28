@@ -25,7 +25,7 @@ func get_save_state()-> Dictionary:
 		"_map_fragments": summarize(_map_fragments),
 #		"_locations":summarize(_locations),
 		"_journal_Pages":summarize(_journal_Pages),
-		"_equipped_gun":(null if _equipped_gun == null else _equipped_gun.name),
+		"_equipped_gun":("" if _equipped_gun == null else _equipped_gun.name),
 		"equipped_gun_type":equipped_gun_type,
 #		"_equipped_melee_weapon":(null if _equipped_melee_weapon == null else{_equipped_melee_weapon.name:_equipped_melee_weapon.unlocked}),
 		"current_Page" :current_Page
@@ -115,7 +115,7 @@ func write_new_const_dict(old_dict, new_dict):
 				var keyItem_Object = InventoryLists.get_KeyItem_by_slot(int(itemKey)) if key=="Item" else InventoryLists.get_Key_by_slot(int(itemKey))
 				keyItem_Object.unlocked = new_dict[key][itemKey]
 				_key_items[key][int(itemKey)] = keyItem_Object
-		print("key_items: ",_key_items)
+#		print("key_items: ",_key_items)
 		
 	elif old_dict == _map_fragments:
 		for key in keys:
@@ -154,7 +154,7 @@ func _ready():
 	
 	pass
 
-func use_gun() -> bool:
+func use_gun():
 	if _equipped_gun != null:
 		return _equipped_gun.use_item()
 	return false
@@ -343,9 +343,10 @@ static func get_list_of_inventory()->Array:
 	return listOfItems
 
 static func find_weapon_in_inventory(name):
-	for key in _inventory:
-		if _inventory[key].name == name:
-			return _inventory[key]
+	if name != null or name != "":
+		for key in _inventory:
+			if _inventory[key].name == name:
+				return _inventory[key]
 	return null
 ###########################
 ##### Memo Inventory #####
@@ -415,11 +416,11 @@ static func get_item_list()->Array:
 	return keyItemList
 
 func pickup_KeyItem(item:Inventory.KeyItems)->void:
-	print(_key_items)
-	print (_key_items[item.type])
-	print(item.slot," is part of the dictionary? ",_key_items[item.type].has(item.slot))
-	print(1," just the number is part of the dictionary? ",_key_items[item.type].has(1))
-	print("1"," just the string is part of the dictionary? ",_key_items[item.type].has("1"))
+#	print(_key_items)
+#	print (_key_items[item.type])
+#	print(item.slot," is part of the dictionary? ",_key_items[item.type].has(item.slot))
+#	print(1," just the number is part of the dictionary? ",_key_items[item.type].has(1))
+#	print("1"," just the string is part of the dictionary? ",_key_items[item.type].has("1"))
 	_key_items[item.type][item.slot].unlocked = true
 	if item == InventoryLists.KeyItems["Item"][3]:
 		_equipped_melee_weapon = item
@@ -462,7 +463,7 @@ func has_map(level) -> bool:
 func use_syringe()->void:
 	var syringe = find_best_syringe()
 	if syringe != null:
-		print ("Using Item: ",syringe.name)
+#		print ("Using Item: ",syringe.name)
 		syringe.use_item()
 		
 func find_best_syringe()->Inventory:

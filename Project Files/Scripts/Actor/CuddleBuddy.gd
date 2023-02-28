@@ -59,9 +59,9 @@ func _process(delta):
 						idle()
 						
 		if currentState == STATE.WALK:
-			move_and_slide(Vector2(walk_speed,0)*delta,Vector2.UP)
+			var _movement = move_and_slide(Vector2(walk_speed,0)*delta,Vector2.UP)
 		elif currentState == STATE.CHARGE:
-			move_and_slide(Vector2(charge_speed,0)*delta,Vector2.UP)
+			var _movement = move_and_slide(Vector2(charge_speed,0)*delta,Vector2.UP)
 			
 	pass
 
@@ -69,20 +69,20 @@ func idle():
 	currentState = STATE.IDLE
 	change_animation("Idle")
 	decision_made()
-	print (name+ " is now Idling")
+#	print (name+ " is now Idling")
 func charge():
 	currentState = STATE.CHARGE
 	change_animation("Walk")
 	decision_made()
 	
-	print (name+ " is now Charging")
+#	print (name+ " is now Charging")
 	
 func attack():
 	currentState = STATE.ATTACK
 	change_animation("Idle")
 	change_animation("Attack")
 	decision_made(1.8)
-	print(name+ " is now Attacking")
+#	print(name+ " is now Attacking")
 	pass
 
 func flip():
@@ -93,7 +93,7 @@ func flip():
 	charge_speed = -charge_speed
 	decision_made()
 	
-	print (name+ " has turned itself")
+#	print (name+ " has turned itself")
 	
 func decision_made(optional_time = time_to_make_decision):
 	decisionMade = true
@@ -104,10 +104,10 @@ func walk_forward():
 	currentState = STATE.WALK
 	change_animation("Walk")
 	decision_made()
-	print (name+ " is now Walking")
+#	print (name+ " is now Walking")
 	pass
 	
-func blood_spray(position_to_use,slope):
+func blood_spray(_position_to_use,_slope):
 #	print (position)
 #	var new_blood = blood_spary_scene.instance()
 #	new_blood.position = position_to_use
@@ -155,13 +155,15 @@ func _on_DecisionTimer_timeout():
 		reset_state()
 
 
-func _on_AttackZone_body_entered(body):
-	playerInAttackZone = true
-	attack()
+func _on_AttackZone_body_entered(_body):
+	if !_dead:
+		playerInAttackZone = true
+		attack()
 	
 	pass # Replace with function body.
 
 
-func _on_AttackZone_body_exited(body):
-	playerInAttackZone  = false
+func _on_AttackZone_body_exited(_body):
+	if !_dead:
+		playerInAttackZone  = false
 	pass # Replace with function body.

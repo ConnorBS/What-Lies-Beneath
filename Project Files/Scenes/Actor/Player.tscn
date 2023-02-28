@@ -604,7 +604,7 @@ texture = ExtResource( 8 )
 offset = Vector2( 0, -30 )
 hframes = 12
 vframes = 17
-frame = 100
+frame = 24
 
 [node name="MeleeAttack" type="Area2D" parent="Sprite"]
 visible = false

@@ -656,8 +656,8 @@ func _on_DialogWindowPanel_investigate():
 	pass # Replace with function body.
 
 
-func _on_InvestigationTween_tween_completed(object, key):
-	print(object, key)
+func _on_InvestigationTween_tween_completed(object, _key):
+#	print(object, key)
 	if end_scene:
 		if object.self_modulate == Color(1,1,1,0):
 			emit_signal("dialogClosed",true)

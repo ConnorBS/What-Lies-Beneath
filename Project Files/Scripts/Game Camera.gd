@@ -182,7 +182,7 @@ func _on_HoldTimer_timeout():
 var screenshake = 0
 
 func monster_death():
-	print(offset_h)
+#	print(offset_h)
 	$ScreenShake.interpolate_property(self,"offset_h",offset_h, .1,.1,Tween.TRANS_ELASTIC)
 	$ScreenShake.start()
 	screenshake += 1

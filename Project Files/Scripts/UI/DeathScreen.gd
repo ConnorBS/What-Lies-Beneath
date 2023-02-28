@@ -13,7 +13,7 @@ func tween_in():
 func show():
 	tween_in()
 
-func _on_Tween_tween_completed(object, key):
+func _on_Tween_tween_completed(_object, _key):
 	dead = true
 	$AnimationPlayer.play("pulse text")
 	

@@ -145,6 +145,3 @@ material = SubResource( 4 )
 texture = ExtResource( 18 )
 expand = true
 stretch_mode = 2
-
-[connection signal="dialogWindow" from="Floor1/ActorsAndObjects/Bloody Marks" to="." method="_on_open_dialogWindow"]
-[connection signal="dialogWindow" from="Floor1/ActorsAndObjects/Register" to="." method="_on_open_dialogWindow"]

@@ -12,7 +12,7 @@ func _ready():
 	load_dialog_directory()
 #
 
-func load_dialog_directory()->Dictionary:
+func load_dialog_directory():
 	var file = File.new()
 	file.open(_table_of_dialog_location, file.READ_WRITE)
 	if file.get_error() == 0:
@@ -40,5 +40,5 @@ func load_dialog_directory()->Dictionary:
 	else:
 		push_error("Could not find the Table-Of-Dialog.csv file")
 	file.close()
-	return _dictionary_of_dialogs
+#	return _dictionary_of_dialogs
 
