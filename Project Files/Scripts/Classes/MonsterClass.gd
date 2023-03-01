@@ -127,8 +127,18 @@ func disable_hitboxes():
 
 	$MonsterCriticalHitBox.monitoring = false
 	$MonsterCriticalHitBox.monitorable = false
+	$MonsterCriticalHitBox.get_child(0).disabled = true
 	$GroundPosition.disabled = true
 	$MonsterHitBox.monitoring = false
 	$MonsterHitBox.monitorable = false
+	$MonsterHitBox.get_child(0).disabled = true
 	$InteractableHitBox.monitoring = false
 	$InteractableHitBox.monitorable = false
+	$InteractableHitBox.get_child(0).disabled = true
+	$AttackZone.monitoring = false
+	$AttackZone.monitorable = false
+	$AttackZone.get_child(0).disabled = true
+	$TouchDamage.monitoring = false
+	$TouchDamage.monitorable = false
+	$TouchDamage.get_child(0).disabled = true
+	$PlayerVision.enabled = false

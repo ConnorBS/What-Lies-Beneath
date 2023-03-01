@@ -621,6 +621,7 @@ scale = Vector2( 0.585052, 1.05807 )
 polygon = PoolVector2Array( -25.6388, -70.8838, -13.674, -66.1582, -1.70926, -51.0363, -15.3833, -42.5303, -30.7665, -41.5852, -17.0925, -51.0363 )
 
 [node name="FlashLight" type="Light2D" parent="Sprite"]
+visible = false
 position = Vector2( 155, -41 )
 scale = Vector2( 0.421543, 0.421543 )
 texture = ExtResource( 54 )
@@ -863,6 +864,10 @@ texture = ExtResource( 50 )
 
 [node name="DeathScreen" parent="." instance=ExtResource( 51 )]
 
+[node name="InteractablePause" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+
 [connection signal="area_entered" from="Sprite/MeleeAttack" to="." method="_on_Melee_Attack_area_entered"]
 [connection signal="area_entered" from="InteractableHitBox" to="." method="_on_InteractableHitBox_area_entered"]
 [connection signal="area_exited" from="InteractableHitBox" to="." method="_on_InteractableHitBox_area_exited"]
@@ -874,3 +879,4 @@ texture = ExtResource( 50 )
 [connection signal="tween_completed" from="OverheadText/FadeOut" to="." method="_on_FadeOut_tween_completed"]
 [connection signal="out_of_stamina" from="Stamina" to="." method="_on_Stamina_out_of_stamina"]
 [connection signal="stamina_filled" from="Stamina" to="." method="_on_Stamina_stamina_filled"]
+[connection signal="timeout" from="InteractablePause" to="." method="_on_InteractablePause_timeout"]

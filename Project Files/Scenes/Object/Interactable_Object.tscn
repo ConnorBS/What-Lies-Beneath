@@ -26,7 +26,6 @@ color_initial_ramp = SubResource( 13 )
 [node name="InteractableObject" type="Sprite"]
 script = ExtResource( 1 )
 floor_placement = 1
-dialog_trigger = "Hole"
 
 [node name="Area2D" type="Area2D" parent="." groups=["Interact"]]
 collision_layer = 1024

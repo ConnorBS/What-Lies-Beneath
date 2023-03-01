@@ -295,7 +295,7 @@ centered = false
 offset = Vector2( -524, -159 )
 
 [node name="CuddleBuddy" parent="Floor1/ActorsAndObjects" instance=ExtResource( 30 )]
-position = Vector2( 976, 298 )
+position = Vector2( 949, 273 )
 charge_speed = 2500
 lootable_items = [ [ "Small Bullets", 5 ] ]
 
@@ -402,6 +402,8 @@ __meta__ = {
 [node name="HoleInTheWall" parent="Floor1/ActorsAndObjects" instance=ExtResource( 15 )]
 position = Vector2( 622, 258 )
 object_name = "Hole"
+dialog_trigger = "Hole"
+dialog_one_time_trigger = true
 overhead_text = "There is a hole behind the pillar"
 item_needed = "Small Sized Plant"
 dialog_of_item_needed = "The hole feels... hungry"

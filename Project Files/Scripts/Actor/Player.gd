@@ -83,6 +83,8 @@ var gun_name:String = ""
 var interactable_object = null
 var footstep_recently_changed = false
 
+var interacted_interactable = null
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	footstep_recently_changed =true
@@ -363,7 +365,7 @@ func _get_input()->Vector2:
 	##############Interactions###################
 	#############################################
 	if infront_of_interactable_object:
-		if Input.is_action_just_pressed("interact"):
+		if Input.is_action_just_pressed("interact") and(interactable_object != interacted_interactable):
 			gun_out_state =false
 			###############################
 			##########Climbing#############
@@ -398,8 +400,9 @@ func _get_input()->Vector2:
 				else:
 					change_animation("Kneeling_Down")
 				interactable_object.get_parent().trigger_dialog()
+				pause_interactable_option()
 				PlayerState.set_Player_Active(false)
-				_on_InteractableHitBox_area_exited(interactable_object)
+#				_on_InteractableHitBox_area_exited(interactable_object)
 				dialog_state = true
 				####Could hold out from saying interact State to be triggered by dialog/cutscene time
 				interact_state = true
@@ -553,13 +556,13 @@ func aiming_gun()->void:
 	##############################################################
 	##########Set Target Position and ray cast####################
 	##############################################################
-#	set_target_position(gun_position,target_distance)
+	set_target_position(gun_position,target_distance)
 	bullet_ray.cast_to = gun_position.direction_to(_target.position)*500
 
 
 
 func set_target_position(starting_point:Vector2,target_distance:int):
-	_target.show()
+#	_target.show()
 	var target_position = starting_point
 	if Input.is_action_pressed("move_down"):
 		target_position.y = starting_point.y+75
@@ -591,6 +594,11 @@ func update_interaction(in_range:bool,area)->void:
 		interact_pop_up_message.show()
 	else:
 		interact_pop_up_message.hide()
+		
+
+func get_player_in_interaction():
+	
+	return null
 
 
 func _on_InteractableHitBox_area_entered(area):
@@ -935,8 +943,10 @@ func set_the_lights(turnOnLight):
 	flashlight_state = turnOnLight
 	if turnOnLight:
 		find_node("FlashLight").enabled = true
+		find_node("FlashLight").show()
 	else:
 		find_node("FlashLight").enabled = false
+		find_node("FlashLight").hide()
 
 func toggle_light():
 	if flashlight_state:
@@ -963,3 +973,15 @@ func terrain_entered(area):
 	
 	if footstep_recently_changed:
 		player_sprinting(sprint_state)
+
+
+func pause_interactable_option():
+	interact_pop_up_message.hide()
+	interacted_interactable = interactable_object
+	$InteractablePause.start()
+
+func _on_InteractablePause_timeout():
+	if interactable_object == interacted_interactable and interactable_object != null:
+		interacted_interactable = null
+		interact_pop_up_message.show()
+	pass # Replace with function body.

@@ -291,6 +291,11 @@ static func remove_item (item,inventoryType:Dictionary = _inventory)->void:
 		
 		var _item_deleted = inventoryType.erase(key_to_remove)
 
+func remove_one_item(item:Inventory.Items,qnty=1,inventoryType:Dictionary = _inventory):
+	item.quantity -=1
+	if item.quantity <= 0:
+		remove_item(item,inventoryType)
+	
 func reload_item(item):
 	var reload_to_item_in_inventory = _get_player_inventory_list_of_matching_items_by_name(item.reload_to,_inventory)
 	var item_in_equipment = get_equiped_item()

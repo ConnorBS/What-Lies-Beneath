@@ -1,9 +1,11 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Scripts/StartScreen.gd" type="Script" id=1]
 [ext_resource path="res://Assets/UI/Loading Screens/WLB Poster.png" type="Texture" id=2]
 [ext_resource path="res://Themes/MainMenu_Bottom_Row_Buttons.theme" type="Theme" id=3]
 [ext_resource path="res://Shaders/Smoke/fogShaderMaterial.tres" type="Material" id=4]
+[ext_resource path="res://Assets/Audio/BackgroundMusic/Did Not You Promise Me.mp3" type="AudioStream" id=5]
+[ext_resource path="res://Assets/Audio/BackgroundMusic/Start Game.wav" type="AudioStream" id=6]
 
 [node name="StartScreen" type="Control"]
 anchor_right = 1.0
@@ -70,6 +72,18 @@ enabled_focus_mode = 0
 text = "Quit"
 underline = 2
 
+[node name="StartGameButton" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 6 )
+bus = "SoundEffect"
+
+[node name="BackgroundMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 5 )
+autoplay = true
+bus = "Music"
+
+[node name="Loading" type="Tween" parent="."]
+
 [connection signal="pressed" from="VBoxContainer/Continue" to="." method="_on_Continue_pressed"]
 [connection signal="pressed" from="VBoxContainer/StartNewGame" to="." method="_on_StartNewGame_pressed"]
 [connection signal="pressed" from="VBoxContainer/Quit" to="." method="_on_Quit_pressed"]
+[connection signal="tween_completed" from="Loading" to="." method="_on_Loading_tween_completed"]

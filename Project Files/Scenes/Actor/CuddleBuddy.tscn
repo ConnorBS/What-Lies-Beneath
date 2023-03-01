@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=2]
+[gd_scene load_steps=36 format=2]
 
 [ext_resource path="res://Assets/Sprites/Monsters/CuddleBuddy/CuddleBuddySpriteSheet.png" type="Texture" id=1]
 [ext_resource path="res://Scripts/Actor/CuddleBuddy.gd" type="Script" id=2]
@@ -9,7 +9,6 @@
 [ext_resource path="res://Assets/Animation/Monster/CuddleBuddy/Attack.tres" type="Animation" id=7]
 [ext_resource path="res://Assets/Audio/Player/FootStep_Walking_Gravel.wav" type="AudioStream" id=16]
 [ext_resource path="res://Assets/Sprites/Player/Light.png" type="Texture" id=17]
-[ext_resource path="res://Assets/UI/Button Images/Tab.png" type="Texture" id=18]
 [ext_resource path="res://Assets/Fonts/DynamicFonts/Player_Ingame_Text.tres" type="DynamicFont" id=19]
 [ext_resource path="res://Scripts/Actor/Player_Stamina.gd" type="Script" id=27]
 
@@ -259,7 +258,7 @@ position = Vector2( -1, -38 )
 texture = ExtResource( 1 )
 hframes = 9
 vframes = 3
-frame = 18
+frame = 19
 
 [node name="MonsterHitBox" type="Area2D" parent="." groups=["Monster"]]
 position = Vector2( 0, -34 )
@@ -337,37 +336,6 @@ size_flags_vertical = 3
 text = "Animation
 Place Holder
 Idle"
-align = 1
-valign = 1
-
-[node name="InteractPopUp" type="HBoxContainer" parent="."]
-visible = false
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -19.0
-margin_top = -23.0
-margin_right = 60.0
-margin_bottom = -4.0
-rect_scale = Vector2( 0.5, 0.5 )
-__meta__ = {
-"_edit_use_anchors_": true
-}
-
-[node name="TextureRect" type="TextureRect" parent="InteractPopUp"]
-margin_right = 20.0
-margin_bottom = 19.0
-rect_min_size = Vector2( 20, 18 )
-texture = ExtResource( 18 )
-stretch_mode = 6
-
-[node name="Interact" type="Label" parent="InteractPopUp"]
-margin_left = 24.0
-margin_right = 79.0
-margin_bottom = 19.0
-custom_fonts/font = ExtResource( 19 )
-text = "Interact"
 align = 1
 valign = 1
 

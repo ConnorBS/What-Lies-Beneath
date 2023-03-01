@@ -129,15 +129,18 @@ func _on_Options_pressed():
 
 func _on_Use_pressed():
 	
+	var node_check = get_parent()._viewportNode.get_child(0).playerNode
 	if get_parent()._viewportNode.get_child(0).playerNode.interaction_item(item_selected):
+		PlayerInventory.remove_one_item(item_selected)
+		update_Item_Scroll_position()
 #		get_parent().unpause()
 		pass
+	else:
+		var is_item_being_removed = item_selected.use_item()
+		if is_item_being_removed:
+			item_list = PlayerInventory.get_list_of_inventory()
+			update_Item_Scroll_position()
 		
-	var is_item_being_removed = item_selected.use_item()
-	if is_item_being_removed:
-		item_list = PlayerInventory.get_list_of_inventory()
-		update_Item_Scroll_position()
-	
 	update_inventory_scroll()
 	pass # Replace with function body.
 
