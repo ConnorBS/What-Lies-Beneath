@@ -23,7 +23,7 @@ func set_hitboxes_state(state:bool):
 	if children_nodes != null:
 		for node in children_nodes:
 			if node is Area2D:
-				node.monitorable = state
+				node.set_deferred("monitorable", state)
 				node.monitoring = state
 
 func is_there_a_scene_change():

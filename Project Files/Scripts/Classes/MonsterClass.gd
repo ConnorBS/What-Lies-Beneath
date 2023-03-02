@@ -114,7 +114,7 @@ func make_lootable_body():
 		lootable_corpse.object_name = self.name+"_Corpse"
 		lootable_corpse.inventory_items_to_add = lootable_items
 		lootable_corpse.dialog_one_time_trigger = true
-		self.add_child(lootable_corpse)
+		self.call_deferred("add_child",lootable_corpse)
 		lootable_corpse.connect("item_looted",self,"item_looted")
 	pass
 
@@ -126,19 +126,19 @@ func item_looted():
 func disable_hitboxes():
 
 	$MonsterCriticalHitBox.monitoring = false
-	$MonsterCriticalHitBox.monitorable = false
-	$MonsterCriticalHitBox.get_child(0).disabled = true
-	$GroundPosition.disabled = true
+	$MonsterCriticalHitBox.set_deferred("monitorable", false)
+	$MonsterCriticalHitBox.get_child(0).set_deferred("disabled", true)
+	$GroundPosition.set_deferred("disabled", true)
 	$MonsterHitBox.monitoring = false
-	$MonsterHitBox.monitorable = false
-	$MonsterHitBox.get_child(0).disabled = true
+	$MonsterHitBox.set_deferred("monitorable", false)
+	$MonsterHitBox.get_child(0).set_deferred("disabled", true)
 	$InteractableHitBox.monitoring = false
-	$InteractableHitBox.monitorable = false
-	$InteractableHitBox.get_child(0).disabled = true
+	$InteractableHitBox.set_deferred("monitorable", false)
+	$InteractableHitBox.get_child(0).set_deferred("disabled", true)
 	$AttackZone.monitoring = false
-	$AttackZone.monitorable = false
-	$AttackZone.get_child(0).disabled = true
+	$AttackZone.set_deferred("monitorable", false)
+	$AttackZone.get_child(0).set_deferred("disabled", true)
 	$TouchDamage.monitoring = false
-	$TouchDamage.monitorable = false
-	$TouchDamage.get_child(0).disabled = true
+	$TouchDamage.set_deferred("monitorable", false)
+	$TouchDamage.get_child(0).set_deferred("disabled", true)
 	$PlayerVision.enabled = false

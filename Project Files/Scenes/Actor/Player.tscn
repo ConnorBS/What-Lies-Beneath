@@ -604,7 +604,7 @@ texture = ExtResource( 8 )
 offset = Vector2( 0, -30 )
 hframes = 12
 vframes = 17
-frame = 24
+frame = 179
 
 [node name="MeleeAttack" type="Area2D" parent="Sprite"]
 visible = false
@@ -732,7 +732,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "Animation
 Place Holder
-Aiming_Pistol"
+Melee Attack"
 align = 1
 valign = 1
 
@@ -853,6 +853,11 @@ script = ExtResource( 27 )
 [node name="GunNoises" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 49 )
 pitch_scale = 0.95
+bus = "SoundEffect"
+
+[node name="MeleeNoise" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 49 )
+pitch_scale = 3.5
 bus = "SoundEffect"
 
 [node name="Target" type="Sprite" parent="."]

@@ -292,7 +292,7 @@ static func remove_item (item,inventoryType:Dictionary = _inventory)->void:
 		var _item_deleted = inventoryType.erase(key_to_remove)
 
 func remove_one_item(item:Inventory.Items,qnty=1,inventoryType:Dictionary = _inventory):
-	item.quantity -=1
+	item.quantity -=qnty
 	if item.quantity <= 0:
 		remove_item(item,inventoryType)
 	

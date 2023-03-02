@@ -139,7 +139,7 @@ func does_audio_exist(new_audio)->bool:
 func next_picture_file(exisiting_file=dialogFile):
 	if exisiting_file != null and exisiting_file != "":
 		var new_texture = exisiting_file.left(exisiting_file.length()-4)+str(playerPosition+1)+".png"
-		if does_audio_exist(new_texture):
+		if does_texture_exist(new_texture):
 			return new_texture
 	return null
 	
@@ -624,7 +624,7 @@ func change_to_next_scene():
 			SaveAndLoad.load_game()
 	########
 	
-	emit_signal("dialogClosed")
+	emit_signal("dialogClosed",false)
 	_dialog_tween.interpolate_property($InvestigationItem,"self_modulate", Color(1,1,1,1), Color(1,1,1,0),0.8)
 	_dialog_tween.interpolate_property(Dialog,"modulate", Color(1,1,1,1), Color(1,1,1,0),0.8)
 	_dialog_tween.interpolate_property(NextButton,"modulate", Color(1,1,1,1), Color(1,1,1,0),0.8)

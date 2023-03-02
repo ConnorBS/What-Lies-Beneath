@@ -28,14 +28,15 @@ func _on_Quit_pressed():
 	pass # Replace with function body.
 
 func load_animation():
+	$VBoxContainer.hide()
 	$StartGameButton.play()
 	$Loading.interpolate_property($BackgroundImage,"modulate",Color(1,1,1,1),Color(1,1,1,0),2.5)
 	$Loading.interpolate_property($VBoxContainer,"modulate",Color(1,1,1,1),Color(1,1,1,0),2.5)
 	$Loading.interpolate_property($BackgroundMusic,"volume_db",0,-80,2.5,Tween.EASE_IN)
-	$BackgroundMusic.volume_db
+
 	$Loading.start()
 
-func _on_Loading_tween_completed(object, key):
+func _on_Loading_tween_completed(_object, _key):
 	if button_pressed == BUTTON.START:
 		var _new_scene = get_tree().change_scene(newGame_scene)
 	elif button_pressed == BUTTON.CONTINUE:

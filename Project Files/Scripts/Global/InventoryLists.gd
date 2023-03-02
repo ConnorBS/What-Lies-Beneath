@@ -31,6 +31,7 @@ func load_KeyItems()->Dictionary:
 						push_warning("InventoryLists.load_KeyItems() has overwritten a KeyItems Dictionary Value")
 					KeyItems[new_item.type][new_item.slot] = new_item
 	file.close()
+	print ("KeyItems: ",KeyItems)
 	return KeyItems
 
 func get_KeyItem(name_of_KeyItem):
@@ -85,6 +86,7 @@ func load_Inventory_Types ()->Dictionary:
 						push_warning("InventoryLists.load_Inventory_Types has overwritten a Types Dictionary Value")
 					Types[new_item.name] = new_item
 	file.close()
+	print("Types: ", Types)
 	return Types
 
 static func _duplicate_item(name_to_pull)->Inventory.Items:
@@ -135,6 +137,7 @@ func load_MapFragments()->Dictionary:
 						push_warning("InventoryLists.load_MapFragments() has overwritten a MapFragments Dictionary Value")
 					MapFragments[new_map.name] = new_map
 	file.close()
+	print ("MapFragments :",MapFragments)
 	return MapFragments
 
 static func get_MapFragmenets(name_of_map)->Inventory.MapFragments:

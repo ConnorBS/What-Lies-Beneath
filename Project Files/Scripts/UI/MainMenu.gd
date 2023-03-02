@@ -129,7 +129,7 @@ func _on_Options_pressed():
 
 func _on_Use_pressed():
 	
-	var node_check = get_parent()._viewportNode.get_child(0).playerNode
+#	var _node_check = get_parent()._viewportNode.get_child(0).playerNode
 	if get_parent()._viewportNode.get_child(0).playerNode.interaction_item(item_selected):
 		PlayerInventory.remove_one_item(item_selected)
 		update_Item_Scroll_position()
