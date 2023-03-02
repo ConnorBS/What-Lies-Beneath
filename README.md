@@ -248,7 +248,7 @@ Don't forget to give the project a star! Thanks again!
 <!-- CONTACT -->
 ## Contact
 
-Connor Sutherland-Stewart - [@Connor_BS](https://twitter.com/Connor_BS) - connor.b.stewart.36@gmail.com
+Connor Sutherland-Stewart - [@Connor_BS](https://twitter.com/Connor_BS) - connorbs@offthegroundgames.com
 
 <p align="right">(<a href="#what-lies-beneath">back to top</a>)</p>
 
