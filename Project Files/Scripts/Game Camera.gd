@@ -6,7 +6,7 @@ onready var player_node = get_parent()
 var min_pos = Vector2.ZERO
 var max_pos = Vector2.ZERO
 onready var old_pos = position
-onready var camera_length_to_border = get_viewport().size/2*self.zoom
+onready var camera_length_to_border =Vector2(1024,600)/2*self.zoom
 
 var _viewportMargins
 var _viewportNode 
@@ -20,7 +20,7 @@ var buff
 
 func _ready():
 #	print (get_viewport())
-#	print (get_viewport().size)
+	print (get_viewport().size)
 #	print (get_viewport().size/2*self.zoom)
 	base_zoom = zoom
 	max_pos = Vector2(level_node.level_width,level_node.level_height)

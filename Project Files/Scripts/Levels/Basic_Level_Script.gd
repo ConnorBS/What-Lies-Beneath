@@ -98,8 +98,6 @@ func _on_open_dialogWindow(trigger_name:String):
 	pass # Replace with function body.
 
 func _on_open_dialogWindow_system_message(array_of_text:Array):
-	
-	
 	var dialog_window = _dialog_window_scene.instance()
 	dialog_window.load_system_window(array_of_text)
 	dialog_window.connect("dialogClosed",self,"_on_close_dialogWindow")
@@ -121,6 +119,7 @@ func _on_close_dialogWindow(clear_node = false):
 	else:
 		
 		_current_dialog_window.queue_free()
+		_current_dialog_window = null
 		_current_dialog_window = _dialog_queue.pop_front()
 		get_parent().get_parent().add_child(_current_dialog_window)
 

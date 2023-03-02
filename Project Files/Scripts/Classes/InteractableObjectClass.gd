@@ -39,6 +39,7 @@ func change_scene_level():
 			locked = true
 			
 	if locked:
+		print ("_on_open_dialogWindow_system_message (",object_name," is locked)")
 		_find_level_node()._on_open_dialogWindow_system_message([object_name+" is locked"])
 		pass
 	

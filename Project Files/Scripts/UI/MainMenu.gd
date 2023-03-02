@@ -218,10 +218,12 @@ func _disable_buttons(state=true)->void:
 func _on_Item_Scroll_Previous_pressed():
 	get_parent().click_success()
 	update_Item_Scroll_position(-1)
+	_on_Selector_focus_entered()
 	
 func _on_Item_Scroll_Next_pressed():
 	get_parent().click_success()
 	update_Item_Scroll_position(1)
+	_on_Selector_focus_entered()
 	pass # Replace with function body.
 
 func update_inventory_scroll()->void:

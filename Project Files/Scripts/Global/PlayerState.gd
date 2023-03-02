@@ -19,6 +19,8 @@ export var _Current_Health:int = 100
 
 signal player_died
 
+var is_gun_in_hand_for_change_scene = false
+
 #################################################
 ######   Save / Load Functions ##################
 #################################################

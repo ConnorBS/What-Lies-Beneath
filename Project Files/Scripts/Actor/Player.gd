@@ -85,6 +85,9 @@ var footstep_recently_changed = false
 
 var interacted_interactable = null
 
+var attack2 = false
+var no_second_attack_yet = false
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	footstep_recently_changed =true
@@ -94,6 +97,11 @@ func _ready():
 	var _new_connection = PlayerState.connect("player_died",self,"_on_player_death")
 	if PlayerInventory.get_melee_weapon() != null:
 		get_node("Sprite").texture = load("res://Assets/Sprites/Player/Ethan_With_Crowbar.png")
+	
+	gun_out_state = PlayerState.is_gun_in_hand_for_change_scene
+	if gun_out_state:
+		change_animation("Idle_" + gun_name)
+		
 	pass 
 
 func check_equipped_gun() -> int:
@@ -127,7 +135,7 @@ func check_if_current_animation_allows_movement() -> bool:
 		return false
 	elif animation_playing == "Climbing_Up_Box":
 		return false
-	elif animation_playing == "Melee_Attack":
+	elif animation_playing == "Melee_Attack" or animation_playing == "Melee_Attack2":
 		return false
 	elif "Reload_" in animation_playing:
 		return false
@@ -210,12 +218,16 @@ func enable_ground_checker(prev_animation):
 		push_box_state = false
 		change_collision_and_mask(self,current_floor-1,true)
 func check_if_melee_is_done(prev_animation):
-	if prev_animation == "Melee_Attack":
+	if prev_animation == "Melee_Attack" or prev_animation == "Melee_Attack2":
 		reset_melee_action()
 
 func reset_melee_action():
-	melee_attack = false
 	melee_swipe_enemies_hit = []
+	if !state_machine.get_current_node() ==  "Melee_Attack2":
+		melee_attack = false
+		attack2 = false
+	
+		
 	
 	
 func _process(_delta):
@@ -223,13 +235,20 @@ func _process(_delta):
 		###############################################
 		#########Logic After Animation Change##########
 		###############################################
+#		print (state_machine.get_current_node() )
 		if check_if_animation_has_changed():
 			check_if_current_animation_is_shooting()
 			enable_ground_checker(previous_animation)
 			check_if_melee_is_done(previous_animation)
 			$CenterContainer/animationPlaceholder.hide()
 			$CenterContainer/animationPlaceholder.text = "Animation\nPlace Holder\n"
-		if state_machine.get_current_node() == "Climbing_Up_Box" or  state_machine.get_current_node() == "Melee_Attack":
+		if state_machine.get_current_node() == "Climbing_Up_Box":
+			change_animation("Idle")
+		if  state_machine.get_current_node() == "Melee_Attack" and attack2 == false:
+			change_animation("Idle")
+		elif state_machine.get_current_node() == "Melee_Attack" and attack2 == true:
+			change_animation("Melee_Attack2")
+		elif state_machine.get_current_node() == "Melee_Attack2" and previous_animation == "Melee_Attack":
 			change_animation("Idle")
 		###############################################
 		################ Falling Logic#################
@@ -264,6 +283,14 @@ func _process(_delta):
 			var vector = snap_to_ladder(interactable_object)
 			vector.y = move_sprite_while_climbing().y
 			var _velocity = move_and_slide(vector)
+		
+		elif melee_attack and attack2  == false:
+			print ("Looking for Attack2 == False and Input.is_action_just_pressed('use_weapon')" )
+			print ("Attack2 = ",attack2,"  || useweapon pressed = ",Input.is_action_just_pressed("use_weapon"))
+			if Input.is_action_just_pressed("use_weapon"):
+				attack2 = true
+				change_animation("Melee_Attack2")
+				
 			
 		else:
 			PlayerState.set_Player_Active(false)
@@ -316,7 +343,7 @@ func _get_input()->Vector2:
 #		return velocity
 	if gun_out_state:
 		if aim_state:
-			if Input.is_action_just_released("aim"):
+			if Input.is_action_just_released("aim") or !Input.is_action_pressed("aim"):
 				if check_equipped_gun() != PlayerInventory.GUNTYPES.NONE:
 					change_animation("Idle_" + gun_name)
 					aim_state = false
@@ -366,14 +393,13 @@ func _get_input()->Vector2:
 	#############################################
 	if infront_of_interactable_object:
 		if Input.is_action_just_pressed("interact") and(interactable_object != interacted_interactable):
+			PlayerState.is_gun_in_hand_for_change_scene = gun_out_state
 			gun_out_state =false
 			###############################
 			##########Climbing#############
 			###############################
 			if interactable_object.is_in_group("Ladder"):
-				if climbing:
-					climbing_state (false)
-				else:
+				if !climbing:
 					climbing_state (true)
 				return velocity
 			##############################
@@ -392,6 +418,8 @@ func _get_input()->Vector2:
 			else:
 #				change_animation("Kneeling_Down")
 				$AnimationTree.pause_mode = Node.PAUSE_MODE_PROCESS
+				
+				pause_interactable_option()
 				if interactable_object.get_parent().is_there_a_scene_change():
 					change_animation("Idle")
 					interactable_object.get_parent().change_scene_level()
@@ -400,7 +428,6 @@ func _get_input()->Vector2:
 				else:
 					change_animation("Kneeling_Down")
 				interactable_object.get_parent().trigger_dialog()
-				pause_interactable_option()
 				PlayerState.set_Player_Active(false)
 #				_on_InteractableHitBox_area_exited(interactable_object)
 				dialog_state = true
@@ -425,15 +452,15 @@ func _get_input()->Vector2:
 	##############################################
 	###############Sprint Logic###################
 	##############################################
-	if Input.is_action_just_pressed("toggle_sprint"):
-		player_sprinting(!sprint_state)
-		sprint_state = !sprint_state
-	if Input.is_action_pressed("sprint"):
-		player_sprinting(true)
-		sprint_state = true
-	elif Input.is_action_just_released("sprint"):
-		player_sprinting(false)
-		sprint_state = false
+	if gun_out_state == false:
+		if Input.is_action_just_pressed("toggle_sprint"):
+			player_sprinting(!sprint_state)
+		if Input.is_action_pressed("sprint"):
+			player_sprinting(true)
+			sprint_state = true
+		elif Input.is_action_just_released("sprint"):
+			player_sprinting(false)
+			sprint_state = false
 	
 	##############################################
 	#############Movement Logic###################
@@ -452,11 +479,16 @@ func _get_input()->Vector2:
 		#####Climbs Box####
 		if push_box_state:
 			trigger_climb_on_box()
-			
 			return climb_box(interactable_object.get_parent().player_climb())
+		elif climbing:
+			velocity.y -= 1
+			
 	if Input.is_action_pressed("move_down") and !push_box_state:
 		if allow_all_4_directions_of_movement:
 			velocity.y += 1
+		elif climbing:
+			velocity.y += 1
+		
 		
 	##############################################
 	###################Climbing ##################
@@ -590,8 +622,10 @@ func interaction_item(item):
 func update_interaction(in_range:bool,area)->void:
 	infront_of_interactable_object = in_range
 	interactable_object = area
-	if in_range:
+	if in_range and !climbing:
 		interact_pop_up_message.show()
+	elif climbing:
+		interact_pop_up_message.hide()
 	else:
 		interact_pop_up_message.hide()
 		
@@ -656,6 +690,8 @@ func climbing_state(state):
 		$InteractableHitBox.monitoring = false
 		change_collision_and_mask(self,current_floor-1,false)
 		level_manager.move_to_floor(interactable_object.get_parent().floor_placement,self)
+		aim_state = false
+		interact_pop_up_message.hide()
 	else:
 		$ClimbingInterations/ClimbingHitBoxBottom.set_deferred("monitoring", false)
 		$ClimbingInterations/ClimbingHitBoxTop.set_deferred("monitoring", false)
@@ -976,11 +1012,14 @@ func terrain_entered(area):
 
 
 func pause_interactable_option():
+	print ("interactable Options paused")
 	interact_pop_up_message.hide()
 	interacted_interactable = interactable_object
 	$InteractablePause.start()
 
 func _on_InteractablePause_timeout():
+	
+	print ("interactable Options resume?")
 	if interactable_object == interacted_interactable and interactable_object != null:
 		interacted_interactable = null
 		interact_pop_up_message.show()

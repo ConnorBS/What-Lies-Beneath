@@ -57,11 +57,12 @@ func _process(delta):
 						walk_forward()
 					else:
 						idle()
-						
+		
 		if currentState == STATE.WALK:
 			var _movement = move_and_slide(Vector2(walk_speed,0)*delta,Vector2.UP)
 		elif currentState == STATE.CHARGE:
 			var _movement = move_and_slide(Vector2(charge_speed,0)*delta,Vector2.UP)
+		
 			
 	pass
 
@@ -119,6 +120,7 @@ func _on_TouchDamage_area_entered(area):
 		if area.get_parent().is_in_group("Player") and touch_damage_enabled:
 			area.get_parent().receive_damage(touch_damage)
 			touch_damage_enabled = false
+			$TouchDamage/WaitTillDamageCanOccurAgain.start()
 			save_enemy_state()
 		
 func _on_WaitTillDamageCanOccurAgain_timeout():

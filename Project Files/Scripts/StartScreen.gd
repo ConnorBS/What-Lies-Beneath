@@ -14,11 +14,13 @@ func _ready():
 		continue_button.queue_free()
 
 func _on_Continue_pressed():
+	button_pressed = BUTTON.CONTINUE
 	load_animation()
 	pass # Replace with function body.
 
 
 func _on_StartNewGame_pressed():
+	button_pressed = BUTTON.START
 	load_animation()
 	pass # Replace with function body.
 

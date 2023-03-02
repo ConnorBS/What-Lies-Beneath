@@ -465,6 +465,7 @@ position = Vector2( 550, 165 )
 collision_layer = 0
 collision_mask = 0
 script = ExtResource( 26 )
+fall_distance = 135.0
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Floor2/FallDown" groups=["Fall"]]
 position = Vector2( -15, 0 )

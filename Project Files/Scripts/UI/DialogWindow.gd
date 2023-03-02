@@ -625,9 +625,9 @@ func change_to_next_scene():
 	########
 	
 	emit_signal("dialogClosed",false)
-	_dialog_tween.interpolate_property($InvestigationItem,"self_modulate", Color(1,1,1,1), Color(1,1,1,0),0.8)
-	_dialog_tween.interpolate_property(Dialog,"modulate", Color(1,1,1,1), Color(1,1,1,0),0.8)
-	_dialog_tween.interpolate_property(NextButton,"modulate", Color(1,1,1,1), Color(1,1,1,0),0.8)
+	_dialog_tween.interpolate_property($InvestigationItem,"self_modulate", Color(1,1,1,1), Color(1,1,1,0),0.1)
+	_dialog_tween.interpolate_property(Dialog,"modulate", Color(1,1,1,1), Color(1,1,1,0),0.1)
+	_dialog_tween.interpolate_property(NextButton,"modulate", Color(1,1,1,1), Color(1,1,1,0),0.1)
 	_dialog_tween.start()
 	end_scene = true
 	pass

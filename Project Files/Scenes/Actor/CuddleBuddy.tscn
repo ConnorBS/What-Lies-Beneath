@@ -246,6 +246,7 @@ position = Vector2( 0, 1 )
 script = ExtResource( 2 )
 health = 12
 walk_speed = 500
+touch_damage = 75
 
 [node name="Shadow" type="Sprite" parent="."]
 modulate = Color( 0, 0, 0, 0.717647 )
