@@ -50,6 +50,7 @@ var dialog_state = false
 var melee_attack = false
 var dead = false
 var flashlight_state = false
+var toggle_sprint = false
 ###############################
 
 var previous_animation:String = ""
@@ -458,13 +459,18 @@ func _get_input()->Vector2:
 	##############################################
 	if gun_out_state == false:
 		if Input.is_action_just_pressed("toggle_sprint"):
-			player_sprinting(!sprint_state)
+			toggle_sprint = !toggle_sprint
+			player_sprinting(toggle_sprint)
 		if Input.is_action_pressed("sprint"):
 			player_sprinting(true)
 			sprint_state = true
 		elif Input.is_action_just_released("sprint"):
 			player_sprinting(false)
 			sprint_state = false
+		elif !Input.is_action_pressed("sprint") and !toggle_sprint:
+			player_sprinting(false)
+			sprint_state = false
+			
 	
 	##############################################
 	#############Movement Logic###################
