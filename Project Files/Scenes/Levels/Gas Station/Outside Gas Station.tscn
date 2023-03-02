@@ -381,7 +381,7 @@ __meta__ = {
 }
 
 [node name="Crate" parent="Floor1/ActorsAndObjects" instance=ExtResource( 25 )]
-position = Vector2( 338, 294 )
+position = Vector2( 337, 271 )
 
 [node name="SpawnPoint1" parent="Floor1/ActorsAndObjects" instance=ExtResource( 28 )]
 position = Vector2( 36, 301 )

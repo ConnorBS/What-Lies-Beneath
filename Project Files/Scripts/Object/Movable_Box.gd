@@ -17,6 +17,7 @@ var moving = false
 
 func _ready():
 	update_floor(floor_placement)
+	load_pickup_state()
 
 func update_collision_layer_and_mask(node,floor_to_adjust,state):
 	node.set_collision_layer_bit(floor_to_adjust,state)
@@ -57,6 +58,7 @@ func _process(_delta):
 
 func player_latched (state)->Vector2:
 	player_grabbed = state
+	save_pickup_state()
 	return snap_position()
 	
 func snap_position()->Vector2:
@@ -108,3 +110,34 @@ func stand_on_box(is_on_box:bool):
 	
 func has_overhead_text():
 	return false
+	
+func load_pickup_state():
+	if self.name != "":
+		var load_data = _find_level_node().load_pickup_state_of_object_in_level(get_parent().get_parent().name+"_"+self.name)
+		if !load_data.empty():
+			self.position.y = load_data["position.y"]
+			self.position.x = load_data["position.x"]
+			
+		else: ### If it's not in the save file, it should be, so adds current state into memory
+			save_pickup_state()
+
+func save_pickup_state():
+	if self.name != "":
+		var save_data = {
+			"position.y":self.position.y,
+			"position.x":self.position.x,
+			}
+		_find_level_node().save_pickup_state_of_object_in_level(get_parent().get_parent().name+"_"+self.name,save_data)
+
+
+func _find_level_node() -> Node:
+	var parent = get_parent()
+	while parent != null:
+		if parent.is_in_group("Level"):
+			return parent
+		elif parent == get_tree():
+			push_warning("Tried to find Level Node from Interactable Object, no parents reporting as \"Level\" group")
+			parent = null
+		else:
+			parent = parent.get_parent()
+	return parent

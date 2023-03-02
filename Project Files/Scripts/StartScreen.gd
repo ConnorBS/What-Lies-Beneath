@@ -38,9 +38,10 @@ func load_animation():
 
 	$Loading.start()
 
-func _on_Loading_tween_completed(_object, _key):
-	if button_pressed == BUTTON.START:
-		var _new_scene = get_tree().change_scene(newGame_scene)
-	elif button_pressed == BUTTON.CONTINUE:
-		SaveAndLoad.load_game()
+func _on_Loading_tween_completed(_object, key):
+	if key == ":volume_db":
+		if button_pressed == BUTTON.START:
+			var _new_scene = get_tree().change_scene(newGame_scene)
+		elif button_pressed == BUTTON.CONTINUE:
+			SaveAndLoad.load_game()
 	pass # Replace with function body.

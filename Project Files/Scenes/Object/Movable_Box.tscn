@@ -53,7 +53,7 @@ position = Vector2( -24, -62 )
 
 [node name="GroundShape" type="CollisionPolygon2D" parent="."]
 position = Vector2( -31, -62 )
-polygon = PoolVector2Array( 0, 62, 7, 55, 55, 55, 62, 62 )
+polygon = PoolVector2Array( 1, 62, 1, 55, 61, 55, 61, 62 )
 
 [node name="LeftFallDown" type="Area2D" parent="." groups=["Fall"]]
 collision_layer = 0

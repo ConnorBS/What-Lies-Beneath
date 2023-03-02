@@ -84,7 +84,7 @@ var interactable_object = null
 var footstep_recently_changed = false
 
 var interacted_interactable = null
-
+var box_object = null
 var attack2 = false
 var no_second_attack_yet = false
 
@@ -405,11 +405,15 @@ func _get_input()->Vector2:
 			##############################
 			######Interactable Object#####
 			##############################
-			if interactable_object.is_in_group("Box"):
+			if interactable_object.is_in_group("Box") or box_object != null:
 				if push_box_state:
-					return push_box(false,interactable_object)
+					var value_for_push_box= push_box(false,box_object)
+					box_object = null
+					return value_for_push_box
 				else:
-					return push_box(true,interactable_object)
+					box_object = interactable_object
+					return push_box(true,box_object)
+					
 			elif interact_state:
 				change_animation("Kneeling_Up")
 				$AnimationTree.pause_mode = Node.PAUSE_MODE_INHERIT
@@ -506,7 +510,7 @@ func _get_input()->Vector2:
 	##############################################
 	################## Pushing ###################
 	##############################################
-	elif push_box_state:		
+	elif push_box_state:
 		if velocity.x < 0 :
 			if flipped:
 				change_animation("Pushing_Box")
@@ -519,7 +523,7 @@ func _get_input()->Vector2:
 				change_animation("Pushing_Box")
 		else:
 			change_animation("Pushing_Idle")
-		return (velocity * push_box_speed) + snap_to_box(interactable_object.get_parent().snap_position())
+		return (velocity * push_box_speed) + snap_to_box(box_object.get_parent().snap_position())
 	
 	elif Input.is_action_just_pressed("use_syringe"):
 		use_syringe()
@@ -776,6 +780,7 @@ func _on_Stamina_stamina_filled():
 ###############Push Boxes##################
 ###########################################
 func push_box(state:bool,box_area2D:Area2D)->Vector2:
+
 	if push_box_state != state:
 		push_box_state = state
 		if push_box_state:
@@ -828,6 +833,8 @@ func stand_on_box():
 	
 func trigger_climb_on_box():
 	climb_box_state=true
+	
+	box_object = null
 	var new_floor = interactable_object.get_parent().top_floor
 	level_manager.move_to_floor(new_floor,self)
 	change_animation("Climbing_Up_Box")
