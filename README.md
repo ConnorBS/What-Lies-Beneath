@@ -186,21 +186,42 @@ alt="IMAGE ALT TEXT HERE" width="240" height="180" border="10" /></a>
 
 ### Enemies Milestone / Save Point Milestone
 #### Enemy AI Types
-- [ ] The Lost – The remnants of a person. Doesn't focus on the player and shuffles on its own, until it sees the player and goes straight to the player. Takes 2-3 hits
-- [ ] Rabid Dog – Sprints to player on line of sight.
-#### Enemy Interactions
-- [ ] On Player Touch, Damages Player
-- [ ] Attack Animations
-- [ ] Attack hitboxes
-- [ ] Critical hitbox damage
-- [ ] On Kill, Enemy is destroyed and removed
-- [ ] On Entry, Enemy States are stored and loaded back
-#### Save Objects
-#### Start Menu
-- [ ] New Game
-- [ ] Load Game
-- [ ] Quit
-#### Player Death, Load Save
+- [x] CuddleBuddy – The remnants of a person. Doesn't focus on the player and shuffles on its own, until it sees the player and goes straight to the player. Takes 2-3 hits
+- [x] Enemy Interactions
+- [x] On Player Touch, Damages Player
+- [x] Attack Animations
+- [x] Attack hitboxes
+- [x] Critical hitbox damage
+- [x] On Kill Logic
+- [x] Enemy is destroyed and corpse on ground
+- [x] Corpse is lootable
+- [x] On Entry, Enemy States are stored and loaded back
+- [x] Option for Level to Ignore saving the enemy to reset enemy placement
+
+#### Object in world where the character can save
+- [x] Start Menu
+- [x] New Game
+- [x] Load Game
+- [x] Quit
+- [x] On Death, Load Last Save
+#### Item Usage Enhancements
+- [x] Use Items on World Objects
+- [x] Combine Items in Inventory
+#### Lighting Enhancements
+- [x] Flashlight for Ethan
+- [x] Flashlight Button
+- [x] Dark Option for Level
+#### Clean-Up
+##### Connect the new audio files for the following actions: 
+- [x] Dry Fire
+- [x] Shooting
+- [x] Reloading
+- [x] Walking on wood/Concrete
+- [x] Area2D to inform which file to play
+- [x] Add Crowbar Animation Walking Animation
+- [x] Update Crowbar Attacking Animation
+- [x] Remove the text on the interaction
+
 <p align="right">(<a href="#what-lies-beneath">back to top</a>)</p>
 
 
