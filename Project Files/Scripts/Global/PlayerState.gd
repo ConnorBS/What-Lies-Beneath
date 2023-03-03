@@ -8,6 +8,7 @@ export var Spawn_Point:int = 3
 var loading_from_file = false
 var player_position:Vector2
 export var _current_level:String = "Outside Gas Station" #Default/NewGame
+var _save_point_level:String = "Outside Gas Station" 
 export var _player_name:String = "Ethan" #Default/Newgame
 export var doors_unlocked = {}
 export var item_pickups = {}
@@ -38,7 +39,7 @@ func get_save_state()-> Dictionary:
 		
 		"_Player_ACTIVE": _Player_ACTIVE,
 		"Spawn_Point":Spawn_Point,
-		"_current_level":_current_level,
+		"_save_point_level":_save_point_level,
 		"_player_name":_player_name,
 		"player_position.x":player_position.x,
 		"player_position.y":player_position.y
@@ -61,7 +62,11 @@ func write_load_state(load_data:Dictionary)->void:
 		
 		_Player_ACTIVE = load_data["_Player_ACTIVE"]
 		Spawn_Point = load_data["Spawn_Point"]
-		_current_level = load_data["_current_level"]
+		if load_data.has("_save_point_level"):
+			_save_point_level = load_data["_save_point_level"]
+		else:
+			_save_point_level = load_data["_current_level"]
+		_current_level = _save_point_level
 		_player_name = load_data["_player_name"]
 		player_position.x = load_data["player_position.x"]
 		player_position.y = load_data["player_position.y"]

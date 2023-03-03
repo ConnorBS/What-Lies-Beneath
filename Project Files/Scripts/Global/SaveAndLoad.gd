@@ -26,7 +26,7 @@ func load_game()->void:
 	if !get_tree().root.has_node("GameScreen"):
 		var _new_scene = get_tree().change_scene("res://Scenes/GameScreen.tscn")
 	else:
-		var loading_game_node = load(LevelDirectory.lookup_level(PlayerState._current_level)).instance()
+		var loading_game_node = load(LevelDirectory.lookup_level(PlayerState._save_point_level)).instance()
 #		
 		get_tree().root.get_node("GameScreen")._on_change_scene(null, loading_game_node)
 
