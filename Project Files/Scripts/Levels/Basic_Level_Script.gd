@@ -32,7 +32,8 @@ func _ready():
 		
 	$FogShader.rect_size = Vector2(level_width,level_height)
 	current_floor = playerNode.current_floor
-	get_tree().get_root().get_node("GameScreen").update_backgroundMusic(background_music)
+	if get_tree().get_root().find_node("GameScreen") != null:
+		get_tree().get_root().get_node("GameScreen").update_backgroundMusic(background_music)
 	PlayerState.set_current_level(level_name)
 	_camera_node.enter_scene(level_name)
 	

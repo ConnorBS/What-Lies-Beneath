@@ -616,7 +616,7 @@ texture = ExtResource( 8 )
 offset = Vector2( 0, -30 )
 hframes = 12
 vframes = 17
-frame = 174
+frame = 108
 
 [node name="MeleeAttack" type="Area2D" parent="Sprite"]
 visible = false
@@ -733,9 +733,10 @@ margin_bottom = 50.0
 rect_scale = Vector2( 0.5, 0.5 )
 
 [node name="animationPlaceholder" type="Label" parent="CenterContainer"]
-margin_left = 86.0
+visible = false
+margin_left = 97.0
 margin_top = 1.0
-margin_right = 196.0
+margin_right = 184.0
 margin_bottom = 49.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -744,7 +745,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "Animation
 Place Holder
-Climbing_Up_Box"
+Aiming_Pistol"
 align = 1
 valign = 1
 

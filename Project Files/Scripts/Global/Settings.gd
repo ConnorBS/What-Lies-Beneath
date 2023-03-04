@@ -23,7 +23,7 @@ var text_speed = 0.5;
 var _soundVolume = 1
 var _voiceVolume = 1
 var _musicVolume = 1
-var _masterVolume = 1
+var _masterVolume =  1.0
 
 func _ready():
 	update_audio_bus_configurations()
