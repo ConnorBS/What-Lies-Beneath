@@ -81,6 +81,12 @@ func _process(_delta):
 			PlayerInventory.add_item(item)
 			update_inventory_scroll()
 			pressed = true
+	elif Input.is_key_pressed(KEY_8):
+		if pressed == false:
+			var item = InventoryLists.get_item("Crowbar",1)
+			PlayerInventory.add_item(item)
+			update_inventory_scroll()
+			pressed = true
 			
 			
 		

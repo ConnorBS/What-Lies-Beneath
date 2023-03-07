@@ -321,6 +321,7 @@ one_shot = true
 [node name="LevelNameTween" type="Tween" parent="TitleCanvas/BlackBox/LevelName"]
 
 [node name="StaticShader" type="ColorRect" parent="."]
+visible = false
 material = SubResource( 18 )
 margin_left = -282.0
 margin_top = -202.0

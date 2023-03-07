@@ -1,10 +1,10 @@
 extends Node
 
 
-enum GUNTYPES {NONE,PISTOL,SHOTGUN,RIFLE}
+enum WEAPON_TYPES {NONE,PISTOL,SHOTGUN,RIFLE,CROWBAR}
 const SYRINGE_LIST = ["Small Plant","Medium Sized Plant","Large Sized Plant"] #Weakest -> Strongest
 
-onready var equipped_gun_type = GUNTYPES.NONE
+onready var equipped_gun_type = WEAPON_TYPES.NONE
 
 ###### Inventory ######
 var _equipped_gun:Inventory.Items
@@ -14,8 +14,8 @@ const _map_fragments:Dictionary = {}
 #const _locations:Dictionary = {}
 
 
-var _weapon_table = {"Pistol":GUNTYPES.PISTOL,"Shotgun":GUNTYPES.SHOTGUN}
-var _equipped_melee_weapon
+var _weapon_table = {"Pistol":WEAPON_TYPES.PISTOL,"Shotgun":WEAPON_TYPES.SHOTGUN,"Crowbar":WEAPON_TYPES.CROWBAR}
+#var _equipped_melee_weapon
 
 func get_save_state()-> Dictionary:
 	
@@ -31,11 +31,11 @@ func get_save_state()-> Dictionary:
 		"current_Page" :current_Page
 		
 	}
-func update_melee_weapon():
-	for items in get_key_list():
-		if items.name == "Crowbar":
-			if items.unlocked:
-				_equipped_melee_weapon = items
+#func update_melee_weapon():
+#	for items in get_key_list():
+#		if items.name == "Crowbar":
+#			if items.unlocked:
+#				_equipped_melee_weapon = items
 	
 func write_load_state(load_data:Dictionary)->void:
 	var tables_to_load = [_inventory, _key_items, _map_fragments]#, _locations]
@@ -54,7 +54,7 @@ func write_load_state(load_data:Dictionary)->void:
 		equipped_gun_type = load_data["equipped_gun_type"]
 #		_equipped_melee_weapon = null if load_data["_equipped_melee_weapon"].has(load_data["_equipped_melee_weapon"].keys()[0]) else _key_items["Item"][load_data["_equipped_melee_weapon"].keys()[0]]
 		current_Page = load_data["current_Page"]
-		update_melee_weapon()
+#		update_melee_weapon()
 	pass
 
 func summarize(dictionary_to_summarize)->Dictionary:
@@ -174,13 +174,13 @@ func gun_has_ammo_loaded() -> bool:
 		return _equipped_gun.quantity > 0
 	return false
 
-func get_melee_damage() -> int:
-	if _equipped_melee_weapon != null:
-		return 4
-	return 0
+#func get_melee_damage() -> int:
+#	if _equipped_melee_weapon != null:
+#		return 4
+#	return 0
 
-func get_melee_weapon():
-	return _equipped_melee_weapon
+#func get_melee_weapon():
+#	return _equipped_melee_weapon
 	
 ###########################
 #### Player Inventory #####
@@ -268,7 +268,7 @@ func equip(item):
 func unequip():
 	var item_to_unequip = _equipped_gun
 	_equipped_gun = null
-	equipped_gun_type = GUNTYPES.NONE
+	equipped_gun_type = WEAPON_TYPES.NONE
 	if item_to_unequip != null:
 		add_item(item_to_unequip)
 		
@@ -427,8 +427,8 @@ func pickup_KeyItem(item:Inventory.KeyItems)->void:
 #	print(1," just the number is part of the dictionary? ",_key_items[item.type].has(1))
 #	print("1"," just the string is part of the dictionary? ",_key_items[item.type].has("1"))
 	_key_items[item.type][item.slot].unlocked = true
-	if item == InventoryLists.KeyItems["Item"][3]:
-		_equipped_melee_weapon = item
+#	if item == InventoryLists.KeyItems["Item"][3]:
+#		_equipped_melee_weapon = item
 
 static func has_KeyItem(item_name)->bool:
 	for key in get_key_list():
