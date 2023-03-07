@@ -164,14 +164,15 @@ func get_gun():
 		return _equipped_gun
 	return false
 	
-func get_gun_damage() -> int:
+func get_weapon_damage() -> int:
 	if _equipped_gun != null:
 		return _equipped_gun.value
 	return 0
 
 func gun_has_ammo_loaded() -> bool:
 	if _equipped_gun != null:
-		return _equipped_gun.quantity > 0
+		if equipped_gun_type != WEAPON_TYPES.CROWBAR and equipped_gun_type != WEAPON_TYPES.NONE:
+			return _equipped_gun.quantity > 0
 	return false
 
 #func get_melee_damage() -> int:

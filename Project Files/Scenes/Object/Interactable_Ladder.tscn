@@ -4,10 +4,10 @@
 [ext_resource path="res://Scripts/Object/Interactable_Ladder.gd" type="Script" id=2]
 
 [sub_resource type="RectangleShape2D" id=13]
-extents = Vector2( 10, 3.125 )
+extents = Vector2( 10, 15.5625 )
 
 [sub_resource type="RectangleShape2D" id=12]
-extents = Vector2( 10, 3.25 )
+extents = Vector2( 10, 15.125 )
 
 [node name="Ladder" type="Sprite"]
 position = Vector2( 3, 56 )
@@ -20,6 +20,7 @@ collision_layer = 0
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Bottom"]
+position = Vector2( 0, 12.4375 )
 shape = SubResource( 13 )
 
 [node name="Top" type="Area2D" parent="." groups=["Interact", "Ladder", "Ladder_Top"]]
@@ -27,5 +28,5 @@ collision_layer = 0
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Top"]
-position = Vector2( 0, -113 )
+position = Vector2( 0, -124.875 )
 shape = SubResource( 12 )

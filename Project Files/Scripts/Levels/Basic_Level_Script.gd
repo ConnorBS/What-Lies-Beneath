@@ -2,6 +2,9 @@ extends Node2D
 
 export (int) var level_width = 2022
 export (int) var level_height = 360
+export (int) var floor1_y =0
+export (int) var floor2_y =0
+export (int) var floor3_y =0
 var current_floor 
 export (Dictionary) var entrance_locations = {0:Vector2(200,200)}
 export (String) var level_name = "Outside Gas Station"
@@ -40,6 +43,14 @@ func _ready():
 	set_lighting(requires_lighting)
 	pass
 
+func get_floor_y (floorNum):
+	if floorNum == 1:
+		return floor1_y
+	elif floorNum == 2:
+		return floor2_y
+	else:
+		return floor3_y
+		
 func move_to_floor(new_floor,node_to_move):
 	disable_floor(current_floor)
 	yield(get_tree(), "idle_frame")

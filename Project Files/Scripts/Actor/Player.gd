@@ -52,6 +52,8 @@ var melee_attack = false
 var dead = false
 var flashlight_state = false
 var toggle_sprint = false
+
+var weapon_out_state_pressed_while_animation = false
 ###############################
 
 var previous_animation:String = ""
@@ -90,6 +92,9 @@ var box_object = null
 var attack2 = false
 var no_second_attack_yet = false
 
+
+var current_floor_y = 0
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	footstep_recently_changed =true
@@ -114,6 +119,7 @@ func check_equipped_weapon() -> int:
 	
 func change_animation(animationToChangeTo:String)->void:
 	if state_machine.get_current_node() != animationToChangeTo:
+		print("Player animation: ",animationToChangeTo)
 		state_machine.travel(animationToChangeTo)
 		#print (animationToChangeTo)
 		if animationToChangeTo == "Idle":
@@ -247,19 +253,18 @@ func _process(_delta):
 		if state_machine.get_current_node() == "Climbing_Up_Box":
 			change_animation("Idle")
 		if  state_machine.get_current_node() == "Melee_Attack" and attack2 == false:
-			change_animation("Idle")
+			change_animation("Aiming_Crowbar")
 		elif state_machine.get_current_node() == "Melee_Attack" and attack2 == true:
 			change_animation("Melee_Attack2")
 		elif state_machine.get_current_node() == "Melee_Attack2" and previous_animation == "Melee_Attack":
-			change_animation("Idle")
+			change_animation("Aiming_Crowbar")
 		###############################################
 		################ Falling Logic#################
 		###############################################
 
 		if falling:
-			PlayerState.set_Player_Active(false)
-			action_set_player_active_as_false = true
-			if global_position.y > falling_end_position.y:
+			player_active_state_change(false)
+			if global_position.y > current_floor_y:
 				landing()
 			else:
 				var _velocity = move_and_slide(falling_vector)
@@ -267,9 +272,7 @@ func _process(_delta):
 		#####Input Check if Animation allows it########
 		###############################################
 		elif check_if_current_animation_allows_movement() == true and !climb_box_state:
-			if action_set_player_active_as_false:
-				PlayerState.set_Player_Active(true)
-				action_set_player_active_as_false = false
+			player_active_state_change(true)
 			var vector = _get_input()
 			if vector != Vector2.ZERO:
 				var _velocity = move_and_slide(vector)
@@ -284,19 +287,31 @@ func _process(_delta):
 		elif check_if_current_animation_transition_climbing():
 			var vector = snap_to_ladder(interactable_object)
 			vector.y = move_sprite_while_climbing().y
+			if vector.y >0:
+				if global_position.y >= current_floor_y:
+					vector = Vector2.ZERO
+			else:
+				if global_position.y <= current_floor_y:
+					vector = Vector2.ZERO
 			var _velocity = move_and_slide(vector)
-		
+			
+		elif  Input.is_action_just_pressed("equip_gun"):
+			weapon_out_state_pressed_while_animation = !weapon_out_state_pressed_while_animation
+			
 		elif melee_attack and attack2  == false:
 			print ("Looking for Attack2 == False and Input.is_action_just_pressed('use_weapon')" )
 			print ("Attack2 = ",attack2,"  || useweapon pressed = ",Input.is_action_just_pressed("use_weapon"))
 			if Input.is_action_just_pressed("use_weapon"):
 				attack2 = true
 				change_animation("Melee_Attack2")
+			
 				
 			
 		else:
-			PlayerState.set_Player_Active(false)
-			action_set_player_active_as_false = true
+			player_active_state_change(false)
+			if weapon_out_state:
+				if Input.is_action_just_pressed("equip_gun"):
+					weapon_out_state_pressed_while_animation = !weapon_out_state_pressed_while_animation
 			
 	#	if interact_state == true:
 	#		if Input.any_ke
@@ -316,8 +331,20 @@ func _draw():
 		###Removed Laser Pointer Visual
 		aiming_gun()
 
-
-
+func player_active_state_change(state):
+	PlayerState.set_Player_Active(state)
+	action_set_player_active_as_false = !state
+	if state == true:
+		if weapon_out_state_pressed_while_animation == true:
+			if weapon_out_state:
+				change_animation("Idle")
+				weapon_out_state = false
+			elif check_equipped_weapon() != PlayerInventory.WEAPON_TYPES.NONE:
+				change_animation("Idle_"+weapon_name)
+				weapon_out_state = true
+		weapon_out_state_pressed_while_animation = false
+			
+		
 ### Checking to break Interact State ("Kneeling_Down")
 func _input(event):
 	if interact_state == true:
@@ -373,22 +400,23 @@ func _get_input()->Vector2:
 #								print ("Critical Hit")
 							collisionNode = collisionNode.get_parent()
 							if collisionNode.is_in_group("Monster"):
-								collisionNode.receive_damage(PlayerInventory.get_gun_damage()*damage_multiplier)
+								collisionNode.receive_damage(PlayerInventory.get_weapon_damage()*damage_multiplier)
 								collisionNode.blood_spray(bullet_ray.get_collision_point(),bullet_ray.cast_to.y/bullet_ray.cast_to.x)
 								var blood_spary_scene = preload("res://Scenes/Effect/BloodSpray.tscn")
 								var new_blood = blood_spary_scene.instance()
 								new_blood.position = bullet_ray.get_collision_point()
 								level_manager.add_child(new_blood)
-					elif weapon == PlayerInventory.WEAPON_TYPES.CROWBAR:
-						change_animation("Melee_Attack")
-						melee_attack = true
-						return Vector2.ZERO
+					
 					elif PlayerInventory.reload_item(PlayerInventory.get_gun()):
 						change_animation("Reload_"+weapon_name)
 					else:
 						$GunNoises.stream = load(_empty_gun_noise[int(check_equipped_weapon())])
 						$GunNoises.play()
 					return velocity
+				elif weapon == PlayerInventory.WEAPON_TYPES.CROWBAR:
+					change_animation("Melee_Attack")
+					melee_attack = true
+					return Vector2.ZERO
 #			else:
 #				return velocity
 		elif Input.is_action_just_pressed("aim"):
@@ -398,7 +426,9 @@ func _get_input()->Vector2:
 					aim_state = true
 				else:
 					melee_ready_state = true
-			
+	else:
+		aim_state = false
+		melee_ready_state =false
 	#############################################
 	##############Interactions###################
 	#############################################
@@ -554,7 +584,7 @@ func _get_input()->Vector2:
 			if velocity.length() != 0:
 				if weapon_out_state:
 					if check_equipped_weapon() != PlayerInventory.WEAPON_TYPES.NONE:
-						if aim_state:
+						if aim_state or melee_ready_state:
 							change_animation("Walk_With_"+weapon_name+"_Drawn")
 						else:
 							change_animation("Walk_With_" + weapon_name)
@@ -564,7 +594,7 @@ func _get_input()->Vector2:
 		if velocity.length() == 0:
 			if weapon_out_state:
 				if check_equipped_weapon() != PlayerInventory.WEAPON_TYPES.NONE:
-					if aim_state:
+					if aim_state or melee_ready_state:
 						change_animation("Aiming_"+weapon_name)
 					else:
 						change_animation("Idle_" + weapon_name)
@@ -756,11 +786,12 @@ func move_sprite_while_climbing():
 	if animation_playing == "Standing_To_Climbing_Up":
 		vector = Vector2(0,-1) * (climb_speed *1)
 	elif animation_playing == "Standing_To_Climbing_Down":
+		current_floor_y = level_manager.get_floor_y(interactable_object.get_parent().down_floor)
 		vector = Vector2(0,1) * climb_speed * 2.5
 	elif animation_playing == "Climbing_Up_To_Standing":
 		vector = Vector2.UP * climb_speed * 2.75
 	elif animation_playing == "Climbing_Down_To_Standing":
-		vector = Vector2.DOWN
+		vector = Vector2.DOWN*climb_speed
 	return vector
 
 func move_a_floor(new_floor):
@@ -769,6 +800,7 @@ func move_a_floor(new_floor):
 	change_collision_and_mask($InteractableHitBox,new_floor+9,true)
 	
 	level_manager.move_to_floor(new_floor,self)
+	current_floor_y = level_manager.get_floor_y(new_floor)
 	pass
 	
 func update_floor_collision(new_floor):
@@ -867,11 +899,13 @@ func falling_trigger(area:Area2D,state:bool):
 		if falling:
 			interactable_object = area
 			falling_start_position = global_position
-			falling_end_position =falling_start_position + Vector2(0,area.fall_distance)
-			falling_vector = Vector2(0,area.fall_distance)
+			
+			falling_end_position =Vector2(falling_start_position.x,level_manager.get_floor_y(area.down_floor))
+			falling_vector = Vector2(0,area.fall_speed)
 			change_animation("Falling")
 			move_a_floor(area.down_floor)
 			current_floor = area.down_floor
+			current_floor_y = level_manager.get_floor_y(current_floor)
 			
 func landing():
 	falling = false
@@ -965,7 +999,7 @@ var melee_swipe_enemies_hit:Array = []
 func check_hit(area):
 	if area.get_parent().is_in_group("Monster"):
 		if melee_swipe_enemies_hit.empty() or !melee_swipe_enemies_hit.has(area.get_parent()):
-			area.get_parent().melee_hit(PlayerInventory.get_melee_damage())
+			area.get_parent().melee_hit(PlayerInventory.get_weapon_damage())
 			melee_swipe_enemies_hit.append(area.get_parent())
 #			print(melee_swipe_enemies_hit)
 			var blood_spary_scene = preload("res://Scenes/Effect/BloodSpray.tscn")

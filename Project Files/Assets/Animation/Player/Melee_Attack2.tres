@@ -2,7 +2,7 @@
 
 [resource]
 resource_name = "Melee_Attack2"
-length = 1.2
+length = 0.8
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame_coords")
 tracks/0/interp = 1
@@ -10,10 +10,10 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8, 1 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"times": PoolRealArray( 0, 0.2, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
 "update": 1,
-"values": [ Vector2( 6, 14 ), Vector2( 7, 14 ), Vector2( 8, 14 ), Vector2( 9, 14 ), Vector2( 10, 14 ), Vector2( 11, 14 ) ]
+"values": [ Vector2( 6, 14 ), Vector2( 7, 14 ), Vector2( 8, 14 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("CenterContainer/animationPlaceholder:text")
@@ -72,7 +72,7 @@ tracks/5/loop_wrap = true
 tracks/5/imported = false
 tracks/5/enabled = true
 tracks/5/keys = {
-"times": PoolRealArray( 0, 0.1, 0.8 ),
+"times": PoolRealArray( 0, 0.1, 0.6 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 1,
 "values": [ false, true, false ]

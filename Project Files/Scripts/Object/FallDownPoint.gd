@@ -4,7 +4,7 @@ extends Area2D
 export (int) var down_floor = 1
 export (int) var floor_placement = 2
 export (bool) var hitboxes_enabled = true
-export (float) var fall_distance = 100.00
+var fall_speed = 135
 
 func _ready():
 	
