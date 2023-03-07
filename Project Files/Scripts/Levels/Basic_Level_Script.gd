@@ -17,6 +17,8 @@ onready var playerNode = find_node("Player")
 onready var _camera_node = playerNode.find_node("GameCamera")
 
 onready var _dialog_window_scene = preload("res://Scenes/UI/DialogWindow.tscn")
+
+
 var _current_dialog_window
 
 var _dialog_queue = []
@@ -185,3 +187,10 @@ func set_lighting(needs_lighting):
 	if needs_lighting:
 		self.modulate = Color(.40,.40,.40)
 	playerNode.set_the_lights(needs_lighting)
+	
+##################################################
+######### Drop Item ##############################
+##################################################
+
+func drop_item(item):
+	playerNode.drop_item(item)

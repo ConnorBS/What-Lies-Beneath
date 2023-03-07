@@ -18,13 +18,28 @@ var justFlipped = false
 var decisionMade = false
 var playerInAttackZone = false
 
+var lock_in_y
+
 func _ready():
+	lock_in_y = position.y
 	walk_speed = -walk_speed
 	charge_speed = -charge_speed
-	load_enemy_state()
+	var level_node = _find_level_node()
+	if level_node.save_enemies:
+		load_enemy_state()
+		
+#	position.y = level_node.get_floor_y(find_floor())
 
 
-
+func find_floor():
+	var nameOfFloor = get_parent().get_parent().name
+	
+	if nameOfFloor == "Floor1":
+		return 1
+	if nameOfFloor == "Floor2":
+		return 2
+	if nameOfFloor == "Floor3":
+		return 3
 
 func _process(delta):
 	if _dead == false:
@@ -60,8 +75,12 @@ func _process(delta):
 		
 		if currentState == STATE.WALK:
 			var _movement = move_and_slide(Vector2(walk_speed,0)*delta,Vector2.UP)
+#			print (_movement)
 		elif currentState == STATE.CHARGE:
 			var _movement = move_and_slide(Vector2(charge_speed,0)*delta,Vector2.UP)
+#			print (_movement)
+		
+		position.y = lock_in_y
 		
 			
 	pass

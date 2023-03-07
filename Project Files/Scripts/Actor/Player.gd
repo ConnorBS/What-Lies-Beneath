@@ -6,6 +6,10 @@ onready var interact_pop_up_message = $InteractPopUp
 onready var bullet_ray = $Bullet
 onready var _target = $Target
 
+
+onready var _lootableObject = preload("res://Scenes/Object/Interactable_Object.tscn")
+
+
 onready var _empty_gun_noise = {
 	PlayerInventory.WEAPON_TYPES.PISTOL:"res://Assets/Audio/Weapons/Pistol_Empty.wav",
 	PlayerInventory.WEAPON_TYPES.SHOTGUN:"res://Assets/Audio/Weapons/Pistol_Empty.wav",
@@ -419,7 +423,7 @@ func _get_input()->Vector2:
 					return Vector2.ZERO
 #			else:
 #				return velocity
-		elif Input.is_action_just_pressed("aim"):
+		elif Input.is_action_just_pressed("aim") or Input.is_action_pressed("aim"):
 			if PlayerInventory.equipped_gun_type != PlayerInventory.WEAPON_TYPES.NONE:
 				change_animation("Aiming_" + weapon_name)
 				if PlayerInventory.equipped_gun_type != PlayerInventory.WEAPON_TYPES.CROWBAR:
@@ -1012,6 +1016,10 @@ func receive_damage(damage):
 #	print ("you received ",damage," damage")
 	PlayerState.receive_damage(damage)
 	
+	
+	
+	
+	
 ######################################################
 ################Use Syringe###########################
 ######################################################
@@ -1081,3 +1089,20 @@ func _on_InteractablePause_timeout():
 		interacted_interactable = null
 		interact_pop_up_message.show()
 	pass # Replace with function body.
+	
+
+##################Drop Item ##################
+
+func drop_item(item):
+	make_lootable_object(item)
+	pass	
+func make_lootable_object(item):
+	var lootable_item = _lootableObject.instance()
+	lootable_item.is_player_drop = true
+	lootable_item.object_name = item.name+"_Loot_Object"
+	lootable_item.inventory_items_to_add = [[item.name,item.quantity]]
+	lootable_item.dialog_one_time_trigger = true
+	get_parent().add_child(lootable_item)
+	lootable_item.position = self.position
+	_lootableObject.connect("item_looted",self,"item_looted")
+	pass

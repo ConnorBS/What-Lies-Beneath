@@ -5,6 +5,8 @@ signal Memo
 signal KeyItems
 signal Options
 
+signal Remove_Item
+
 onready var _itemRowNode = $MarginContainer/VBoxContainer/ItemRow
 
 onready var _itemScrollButtons = $ItemScrollButtonMarginContainer/HBoxContainer
@@ -15,6 +17,9 @@ onready var _itemDescriptionLabel = $MarginContainer/VBoxContainer/ItemDescripti
 onready var _commandButtonContainerNode = $MarginContainer/VBoxContainer/TopRow/Command/Panel/VBoxContainer
 
 onready var _equipmentNode = $MarginContainer/VBoxContainer/TopRow/Equipment/Panel/InventoryScrollContainer
+
+
+
 #onready var 
 
 var item_hover_over = 0
@@ -176,6 +181,8 @@ func _on_Reload_pressed():
 	
 	
 func _on_Remove_pressed():
+	
+	emit_signal("Remove_Item", item_selected)
 	if equipment_node_selected:
 		PlayerInventory.unequip()
 		PlayerInventory.remove_item(item_selected)

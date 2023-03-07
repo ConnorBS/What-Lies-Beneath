@@ -239,3 +239,8 @@ func _on_LevelTransition_animation_finished(anim_name):
 		PlayerState.set_Player_Active(true)
 	pass # Replace with function body.
 
+
+
+func _on_MainMenu_Remove_Item(item):
+	_viewportNode.get_child(0).drop_item(item)
+	pass # Replace with function body.

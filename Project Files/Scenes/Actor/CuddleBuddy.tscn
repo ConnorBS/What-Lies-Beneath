@@ -261,7 +261,7 @@ position = Vector2( -1, -38 )
 texture = ExtResource( 1 )
 hframes = 9
 vframes = 3
-frame = 19
+frame = 18
 
 [node name="MonsterHitBox" type="Area2D" parent="." groups=["Monster"]]
 position = Vector2( 0, -34 )

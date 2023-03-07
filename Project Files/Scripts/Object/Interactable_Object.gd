@@ -27,6 +27,8 @@ export (String) var item_needed
 export (String) var dialog_of_item_needed
 var item_need_completed = false
 
+var is_player_drop = false
+
 signal item_looted
 
 func _ready():
@@ -40,7 +42,8 @@ func _ready():
 	
 	if item_needed == "":
 		item_need_completed = true
-	load_pickup_state()
+	if is_player_drop == false:
+		load_pickup_state()
 	#####
 
 #################################

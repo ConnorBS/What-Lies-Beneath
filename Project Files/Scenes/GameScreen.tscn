@@ -349,6 +349,7 @@ pause_mode = 2
 [connection signal="Map" from="MainMenu" to="." method="_on_MainMenu_Map"]
 [connection signal="Memo" from="MainMenu" to="." method="_on_MainMenu_Memo"]
 [connection signal="Options" from="MainMenu" to="." method="_on_MainMenu_Options"]
+[connection signal="Remove_Item" from="MainMenu" to="." method="_on_MainMenu_Remove_Item"]
 [connection signal="Back" from="Map" to="." method="_on_Back"]
 [connection signal="Back" from="Memo" to="." method="_on_Back"]
 [connection signal="Back" from="KeyItems" to="." method="_on_Back"]
