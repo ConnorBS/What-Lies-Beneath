@@ -6,7 +6,13 @@ onready var player_node = get_parent()
 var min_pos = Vector2.ZERO
 var max_pos = Vector2.ZERO
 onready var old_pos = position
+onready var new_pos = position
 onready var camera_length_to_border =Vector2(1024,600)/2*self.zoom
+
+onready var base_offset = self.offset
+
+var old_offset
+var new_offset
 
 var _viewportMargins
 var _viewportNode 
@@ -46,20 +52,20 @@ func update_against_boundaries(length_to_border = camera_length_to_border)->void
 	elif global_position.y + length_to_border.y  > max_pos.y - offset.y:
 		global_position.y = max_pos.y - length_to_border.y - offset.y
 
-func dynamic_Camera(new_pos)->Vector2:
+func dynamic_Camera(new_position)->Vector2:
 	###Right
 	var change = Vector2.ZERO
-	if old_pos.x - new_pos.x < 0:
+	if old_pos.x - new_position.x < 0:
 		change.x += 1
 	###Left
-	elif old_pos.x - new_pos.x > 0:
+	elif old_pos.x - new_position.x > 0:
 		change.x += -1
 	
 	###Up
-	if old_pos.y - new_pos.y < 0:
+	if old_pos.y - new_position.y < 0:
 		change.y += -1
 	###Down
-	elif old_pos.y - new_pos.y > 0:
+	elif old_pos.y - new_position.y > 0:
 		change.y += 1
 	
 	return change
@@ -80,11 +86,11 @@ func update_camera(direction):
 			camera_swing.y = camera_swing_max.y
 		elif camera_swing.y < -camera_swing_max.y:
 			camera_swing.y = -camera_swing_max.y
-	position = camera_swing/2
+	new_pos = (camera_swing)
 	
 func cameraSnap():
-	camera_swing = camera_swing/1.01
-	if camera_swing < Vector2(5,5) and camera_swing > -Vector2(5,5):
+	camera_swing = camera_swing *.98
+	if camera_swing < Vector2(3,3) and camera_swing > -Vector2(3,3):
 		camera_swing = Vector2.ZERO
 		
 func update_zoom():
@@ -118,11 +124,22 @@ func center():
 	update_camera(self.get_camera_screen_center().direction_to(player_node.position))
 	update_against_boundaries(_find_border_length())
 	pass
-func _process(_delta):
+func _process(delta):
 	update_camera(dynamic_Camera(player_node.position))
+	old_pos = player_node.position
+	print("old pos: ",old_pos)
+	print ("new pos: ",new_pos)
+	if new_pos != Vector2.ZERO:
+		position = lerp(position,new_pos,delta*10)
+	else:
+		position = Vector2.ZERO
+	
 	update_against_boundaries()
 	update_zoom()
-	old_pos = player_node.position
+	print("Offset: ",offset)
+	print("camera position: ",position)
+	print("lerp position: ", position)
+	
 	pass
 
 #########################################
