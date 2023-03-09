@@ -27,6 +27,7 @@ var loot_drop = []
 
 onready var monsterName = get_parent().get_parent().name+" - "+self.name
 func receive_damage(incoming_damage):
+	damage_received_charge_player()
 	health -= incoming_damage
 #	print (health)
 	if health <= 0:
@@ -40,6 +41,8 @@ func melee_hit(damage):
 	receive_damage(damage)
 	save_enemy_state()
 
+func damage_received_charge_player():
+	pass
 	
 func die():
 	disable_hitboxes()

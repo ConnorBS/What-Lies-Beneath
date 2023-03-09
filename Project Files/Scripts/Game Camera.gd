@@ -122,6 +122,12 @@ func _find_viewportNode()->Viewport:
 		return node.get_parent()
 func center():
 	update_camera(self.get_camera_screen_center().direction_to(player_node.position))
+	position = new_pos/2
+#	if new_pos != Vector2.ZERO:
+#		position = lerp(position,new_pos,delta*10)
+#	else:
+#		position = Vector2.ZERO
+#
 	update_against_boundaries(_find_border_length())
 	pass
 func _process(delta):

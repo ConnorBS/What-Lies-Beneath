@@ -15,10 +15,13 @@ export (float) var time_to_make_decision = 5.0
 enum STATE {IDLE,WALK,CHARGE,ATTACK}
 var currentState = STATE.IDLE
 var justFlipped = false
+var flipState = false
 var decisionMade = false
 var playerInAttackZone = false
 
 var lock_in_y
+
+var player_inflicted_damage = false
 
 func _ready():
 	lock_in_y = position.y
@@ -48,30 +51,8 @@ func _process(delta):
 			if currentState != STATE.CHARGE and currentState != STATE.ATTACK:
 				charge()
 		
-		elif decisionMade == false:
-			if wallVisionNode.is_colliding():
-					if roll_chance(chance_to_turn):
-						flip()
-						if roll_chance(chance_to_walk):
-							walk_forward()
-						else:
-							idle()
-					else:
-						idle()
-						
-			elif currentState == STATE.IDLE:
-				if justFlipped:
-					if roll_chance(chance_to_walk):
-						walk_forward()
-					else:
-						idle()
-				else:
-					if roll_chance(chance_to_turn):
-						flip()
-					if roll_chance(chance_to_walk):
-						walk_forward()
-					else:
-						idle()
+		make_decision()
+		
 		
 		if currentState == STATE.WALK:
 			var _movement = move_and_slide(Vector2(walk_speed,0)*delta,Vector2.UP)
@@ -84,7 +65,31 @@ func _process(delta):
 		
 			
 	pass
-
+func make_decision():
+	if decisionMade == false:
+		if wallVisionNode.is_colliding():
+				if roll_chance(chance_to_turn):
+					flip()
+					if roll_chance(chance_to_walk):
+						walk_forward()
+					else:
+						idle()
+				else:
+					idle()
+					
+		elif currentState == STATE.IDLE:
+			if justFlipped:
+				if roll_chance(chance_to_walk):
+					walk_forward()
+				else:
+					idle()
+			else:
+				if roll_chance(chance_to_turn):
+					flip()
+				if roll_chance(chance_to_walk):
+					walk_forward()
+				else:
+					idle()
 func idle():
 	currentState = STATE.IDLE
 	change_animation("Idle")
@@ -106,6 +111,7 @@ func attack():
 	pass
 
 func flip():
+	flipState = !flipState
 	currentState = STATE.IDLE
 	change_animation("Idle")
 	self.scale.x = -self.scale.x
@@ -146,7 +152,21 @@ func _on_WaitTillDamageCanOccurAgain_timeout():
 	touch_damage_enabled = true
 	
 
-
+func damage_received_charge_player():
+	player_inflicted_damage = true
+	var player_node = _find_level_node().playerNode
+	print (player_node.position.x, " - ",self.position.x ," = ",player_node.position.x - self.position.x)
+	if player_node.position.x - self.position.x> 0 :
+		if flipState == false:
+			flip()
+	else:
+		if flipState == true:
+			flip()
+		
+	charge()
+	decisionTimerNode.stop()
+	decisionMade = true
+	
 func _on_TouchDamage_body_entered(body):
 	if !_dead:
 		if body.is_in_group("Player") and touch_damage_enabled:
@@ -164,6 +184,7 @@ func reset_state():
 	currentState = STATE.IDLE
 	decisionMade = false
 	justFlipped = false
+	flipState = false
 	
 func _on_DecisionTimer_timeout():
 #	if currentState == STATE.WALK:
