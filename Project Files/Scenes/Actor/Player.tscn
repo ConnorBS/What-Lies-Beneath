@@ -741,12 +741,14 @@ texture = ExtResource( 8 )
 offset = Vector2( 0, -30 )
 hframes = 12
 vframes = 17
-frame = 175
+frame = 3
 
 [node name="MeleeAttack" type="Area2D" parent="Sprite"]
+visible = false
 position = Vector2( 4.76837e-06, -7 )
 collision_layer = 65536
 collision_mask = 65536
+monitoring = false
 monitorable = false
 priority = 10.0
 
@@ -863,9 +865,9 @@ rect_scale = Vector2( 0.5, 0.5 )
 
 [node name="animationPlaceholder" type="Label" parent="CenterContainer"]
 visible = false
-margin_left = 99.0
+margin_left = 100.0
 margin_top = 1.0
-margin_right = 183.0
+margin_right = 181.0
 margin_bottom = 49.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -874,7 +876,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "Animation
 Place Holder
-Melee Attack"
+Idle"
 align = 1
 valign = 1
 
@@ -978,6 +980,7 @@ scale = Vector2( 0.5, 0.5 )
 bus = "Voice"
 
 [node name="Stamina" type="ProgressBar" parent="."]
+visible = false
 margin_left = 15.0
 margin_top = -27.0
 margin_right = 30.0
