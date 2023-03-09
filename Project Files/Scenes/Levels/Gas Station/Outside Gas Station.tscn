@@ -125,56 +125,70 @@ position = Vector2( 2090, 157 )
 shape = SubResource( 2 )
 
 [node name="GasStation" type="StaticBody2D" parent="Floor1/Background"]
+collision_layer = 0
+collision_mask = 0
 __meta__ = {
 "_edit_lock_": true
 }
 
 [node name="PillarPost" type="CollisionPolygon2D" parent="Floor1/Background/GasStation"]
 polygon = PoolVector2Array( 515, 232, 509, 226, 519, 226, 524, 232 )
+disabled = true
 
 [node name="PillarPost2" type="CollisionPolygon2D" parent="Floor1/Background/GasStation"]
 position = Vector2( 105, 52 )
 polygon = PoolVector2Array( 515, 232, 509, 226, 519, 226, 524, 232 )
+disabled = true
 
 [node name="PillarPost3" type="CollisionPolygon2D" parent="Floor1/Background/GasStation"]
 position = Vector2( 449, 51 )
 polygon = PoolVector2Array( 515, 232, 509, 226, 519, 226, 524, 232 )
+disabled = true
 
 [node name="PillarPost4" type="CollisionPolygon2D" parent="Floor1/Background/GasStation"]
 position = Vector2( 668, 18 )
 polygon = PoolVector2Array( 515, 232, 509, 226, 519, 226, 524, 232 )
+disabled = true
 
 [node name="Ballon" type="CollisionPolygon2D" parent="Floor1/Background/GasStation"]
 position = Vector2( 686, 18 )
 polygon = PoolVector2Array( 506, 232, 503, 228, 520, 227, 522, 230 )
+disabled = true
 
 [node name="Ladder" type="CollisionPolygon2D" parent="Floor1/Background/GasStation"]
 position = Vector2( 580, 29 )
 polygon = PoolVector2Array( 498, 230, 499, 227, 521, 227, 522, 230 )
+disabled = true
 
 [node name="PillarPost5" type="CollisionPolygon2D" parent="Floor1/Background/GasStation"]
 position = Vector2( 613, -25 )
 polygon = PoolVector2Array( 515, 232, 509, 226, 519, 226, 524, 232 )
+disabled = true
 
 [node name="GasPump" type="CollisionPolygon2D" parent="Floor1/Background/GasStation"]
 position = Vector2( 613, -25 )
 polygon = PoolVector2Array( 422, 279, 411, 270, 425, 269, 435, 279 )
+disabled = true
 
 [node name="GasPump2" type="CollisionPolygon2D" parent="Floor1/Background/GasStation"]
 position = Vector2( 704, -24 )
 polygon = PoolVector2Array( 422, 279, 411, 270, 425, 269, 435, 279 )
+disabled = true
 
 [node name="GasPump3" type="CollisionPolygon2D" parent="Floor1/Background/GasStation"]
 position = Vector2( 686, -57 )
 polygon = PoolVector2Array( 422, 280, 411, 270, 425, 269, 435, 279 )
+disabled = true
 
 [node name="GasPump4" type="CollisionPolygon2D" parent="Floor1/Background/GasStation"]
 position = Vector2( 597, -58 )
 polygon = PoolVector2Array( 422, 280, 411, 270, 425, 269, 435, 279 )
+disabled = true
 
 [node name="BuildingFootPrint" type="CollisionPolygon2D" parent="Floor1/Background/GasStation"]
 position = Vector2( 597, -58 )
 polygon = PoolVector2Array( 16, 303, -56, 267, 335, 268, 355, 302, 359, 307, 359, 314, 245, 314, 240, 310, 240, 303 )
+disabled = true
 
 [node name="Bullet Collisions" type="StaticBody2D" parent="Floor1/Background"]
 collision_layer = 32768
@@ -185,46 +199,57 @@ __meta__ = {
 
 [node name="PillarPost1" type="CollisionPolygon2D" parent="Floor1/Background/Bullet Collisions"]
 polygon = PoolVector2Array( 512, 212, 513, 194, 521, 195, 521, 211, 516, 215 )
+disabled = true
 
 [node name="PillarPost2" type="CollisionPolygon2D" parent="Floor1/Background/Bullet Collisions"]
 position = Vector2( 105, 51 )
 polygon = PoolVector2Array( 513, 218, 513, 194, 521, 195, 522, 221, 517, 221 )
+disabled = true
 
 [node name="PillarPost3" type="CollisionPolygon2D" parent="Floor1/Background/Bullet Collisions"]
 position = Vector2( 450, 51 )
 polygon = PoolVector2Array( 513, 206, 513, 194, 519, 194, 519, 214, 516, 220 )
+disabled = true
 
 [node name="PillarPost4" type="CollisionPolygon2D" parent="Floor1/Background/Bullet Collisions"]
 position = Vector2( 668, 17 )
 polygon = PoolVector2Array( 513, 218, 513, 194, 521, 195, 522, 221, 517, 221 )
+disabled = true
 
 [node name="PillarPost5" type="CollisionPolygon2D" parent="Floor1/Background/Bullet Collisions"]
 position = Vector2( 612, -26 )
 polygon = PoolVector2Array( 513, 218, 513, 194, 521, 195, 522, 221, 517, 221 )
+disabled = true
 
 [node name="GasPump1" type="CollisionPolygon2D" parent="Floor1/Background/Bullet Collisions"]
 position = Vector2( 502, -18 )
 polygon = PoolVector2Array( 511, 219, 511, 214, 513, 207, 519, 202, 525, 209, 523, 216, 516, 219 )
+disabled = true
 
 [node name="GasPump2" type="CollisionPolygon2D" parent="Floor1/Background/Bullet Collisions"]
 position = Vector2( 516, 12 )
 polygon = PoolVector2Array( 514, 228, 512, 217, 510, 208, 518, 211, 526, 212, 524, 234, 519, 235 )
+disabled = true
 
 [node name="GasPump3" type="CollisionPolygon2D" parent="Floor1/Background/Bullet Collisions"]
 position = Vector2( 589, -17 )
 polygon = PoolVector2Array( 511, 219, 511, 214, 513, 207, 519, 202, 525, 209, 523, 216, 516, 219 )
+disabled = true
 
 [node name="GasPump4" type="CollisionPolygon2D" parent="Floor1/Background/Bullet Collisions"]
 position = Vector2( 607, 13 )
 polygon = PoolVector2Array( 514, 228, 512, 217, 510, 208, 518, 211, 526, 212, 524, 234, 519, 235 )
+disabled = true
 
 [node name="Roof" type="CollisionPolygon2D" parent="Floor1/Background/Bullet Collisions"]
 position = Vector2( 120, -34 )
 polygon = PoolVector2Array( 424, 179, 454, 178, 505, 179, 821, 205, 853, 223, 852, 238, 500, 239 )
+disabled = true
 
 [node name="Roof2" type="CollisionPolygon2D" parent="Floor1/Background/Bullet Collisions"]
 position = Vector2( 120, -34 )
 polygon = PoolVector2Array( 424, 202, 452, 203, 487, 214, 499, 242, 430, 227 )
+disabled = true
 
 [node name="Ladder" parent="Floor1/Background" instance=ExtResource( 19 )]
 position = Vector2( 1091, 259 )

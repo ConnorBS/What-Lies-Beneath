@@ -47,7 +47,9 @@ func find_floor():
 func _process(delta):
 	if _dead == false:
 		
-		if playerVisionNode.is_colliding():
+		if playerVisionNode.is_colliding() or player_inflicted_damage:
+			if player_inflicted_damage and !playerVisionNode.is_colliding():
+				flip()
 			if currentState != STATE.CHARGE and currentState != STATE.ATTACK:
 				charge()
 		
@@ -154,18 +156,22 @@ func _on_WaitTillDamageCanOccurAgain_timeout():
 
 func damage_received_charge_player():
 	player_inflicted_damage = true
-	var player_node = _find_level_node().playerNode
-	print (player_node.position.x, " - ",self.position.x ," = ",player_node.position.x - self.position.x)
-	if player_node.position.x - self.position.x> 0 :
-		if flipState == false:
-			flip()
-	else:
-		if flipState == true:
-			flip()
-		
-	charge()
-	decisionTimerNode.stop()
-	decisionMade = true
+	playerVisionNode.cast_to.x *= 100
+#	var player_node = _find_level_node().playerNode
+#	print (player_node.position.x, " - ",self.position.x ," = ",player_node.position.x - self.position.x)
+#	if player_node.position.x - self.position.x> 0 :
+#		if flipState == false:
+#			flip()
+#	else:
+#		if flipState == true:
+#			flip()
+#
+#	charge()
+#	decisionTimerNode.stop()
+#	decisionMade = true
+#
+#	if playerVisionNode.is_colliding() == false:
+#		flip()
 	
 func _on_TouchDamage_body_entered(body):
 	if !_dead:

@@ -133,8 +133,8 @@ func center():
 func _process(delta):
 	update_camera(dynamic_Camera(player_node.position))
 	old_pos = player_node.position
-	print("old pos: ",old_pos)
-	print ("new pos: ",new_pos)
+#	print("old pos: ",old_pos)
+#	print ("new pos: ",new_pos)
 	if new_pos != Vector2.ZERO:
 		position = lerp(position,new_pos,delta*10)
 	else:
@@ -142,9 +142,9 @@ func _process(delta):
 	
 	update_against_boundaries()
 	update_zoom()
-	print("Offset: ",offset)
-	print("camera position: ",position)
-	print("lerp position: ", position)
+#	print("Offset: ",offset)
+#	print("camera position: ",position)
+#	print("lerp position: ", position)
 	
 	pass
 
