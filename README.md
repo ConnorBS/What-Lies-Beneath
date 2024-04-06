@@ -88,7 +88,7 @@
 
 ### Built With
 <h2>
-<a href="https://godotengine.org"> <img src="https://godotengine.org/themes/godotengine/assets/logo.svg" width=20% height=%20>
+<a href="https://godotengine.org/download/archive/3.5.1-stable/"> <img src="https://godotengine.org/assets/logo.svg" width=20% height=%20>
 
   Version 3.5
 </a>
